@@ -1,11 +1,11 @@
-const { GOALS, SETTLEMENT_PLANS, CHILD_PLANS } = require('../../utils/constants')
+const { GOALS, SETTLEMENT_PLANS, CHILD_PLANS, RELATIONSHIP_AVAILABILITY, MARITAL_HISTORY, CHILDREN_STATUS, DISTANCE_ACCEPTANCE, SMOKING_STATUS, SMOKING_ACCEPTANCE } = require('../../utils/constants')
 const { getProfile, saveSection, saveDraft, recordEvent } = require('../../utils/storage')
 const { getStatusBarHeight } = require('../../utils/window')
 const { acceptNavigationTap, getQuestionIndex, getMotionClass, showQuestion } = require('../../utils/question-flow')
 
-const TOTAL_QUESTIONS = 13
+const TOTAL_QUESTIONS = 19
 const QUESTION_OFFSET = 4
-const QUESTION_COUNT = 4
+const QUESTION_COUNT = 10
 const STEP = 2
 
 function ageFromBirthDate(value) {
@@ -23,6 +23,12 @@ Page({
     goals: GOALS,
     settlementPlans: SETTLEMENT_PLANS,
     childPlans: CHILD_PLANS,
+    availabilityOptions: RELATIONSHIP_AVAILABILITY,
+    maritalHistoryOptions: MARITAL_HISTORY,
+    childrenStatusOptions: CHILDREN_STATUS,
+    distanceAcceptanceOptions: DISTANCE_ACCEPTANCE,
+    smokingStatusOptions: SMOKING_STATUS,
+    smokingAcceptanceOptions: SMOKING_ACCEPTANCE,
     ageOptions: [],
     minAgeIndex: 0,
     maxAgeIndex: 0,
@@ -44,7 +50,13 @@ Page({
       settlementPlan: '',
       targetAgeMin: '',
       targetAgeMax: '',
-      childPlan: ''
+      childPlan: '',
+      availability: '',
+      maritalHistory: '',
+      childrenStatus: '',
+      distanceAcceptance: '',
+      smokingStatus: '',
+      smokingAcceptance: ''
     },
     isEditing: false
   },
@@ -65,11 +77,11 @@ Page({
       targetAgeMax: Math.min(70, ownAge + 5)
     }
     const form = Object.assign({}, this.data.form, defaults, profile.relationship || {})
-    const required = [form.goal, form.settlementPlan]
+    const required = [form.goal, form.settlementPlan, form.targetAgeMin && form.targetAgeMax, true, form.availability, form.maritalHistory, form.childrenStatus, form.distanceAcceptance, form.smokingStatus, form.smokingAcceptance]
     const firstMissing = required.findIndex(value => !value)
     const savedQuestion = profile.currentStep === STEP && Number.isInteger(profile.currentQuestion)
       ? profile.currentQuestion
-      : firstMissing === -1 ? 2 : firstMissing
+      : firstMissing === -1 ? QUESTION_COUNT - 1 : firstMissing
     const fallbackQuestion = isEditing ? 0 : savedQuestion
     const currentQuestion = getQuestionIndex(query, fallbackQuestion, QUESTION_COUNT)
     this.setData(Object.assign({
@@ -107,6 +119,12 @@ Page({
     const value = event.currentTarget && event.currentTarget.dataset ? event.currentTarget.dataset.value : event.detail.value
     this.updateForm('childPlan', value)
   },
+  chooseAvailability(event) { this.updateForm('availability', event.currentTarget.dataset.value) },
+  chooseMaritalHistory(event) { this.updateForm('maritalHistory', event.currentTarget.dataset.value) },
+  chooseChildrenStatus(event) { this.updateForm('childrenStatus', event.currentTarget.dataset.value) },
+  chooseDistanceAcceptance(event) { this.updateForm('distanceAcceptance', event.currentTarget.dataset.value) },
+  chooseSmokingStatus(event) { this.updateForm('smokingStatus', event.currentTarget.dataset.value) },
+  chooseSmokingAcceptance(event) { this.updateForm('smokingAcceptance', event.currentTarget.dataset.value) },
 
   changeMinAge(event) {
     const value = Number(event.detail.value[0])
@@ -162,13 +180,13 @@ Page({
 
   getQuestionState(index, form, isEditing = this.data.isEditing) {
     const ageValid = Boolean(form.targetAgeMin && form.targetAgeMax && Number(form.targetAgeMin) <= Number(form.targetAgeMax))
-    const valid = [Boolean(form.goal), Boolean(form.settlementPlan), ageValid, true]
+    const valid = [Boolean(form.goal), Boolean(form.settlementPlan), ageValid, true, Boolean(form.availability), Boolean(form.maritalHistory), Boolean(form.childrenStatus), Boolean(form.distanceAcceptance), Boolean(form.smokingStatus), Boolean(form.smokingAcceptance)]
     return {
       questionNumber: QUESTION_OFFSET + index + 1,
       progress: (QUESTION_OFFSET + index + 1) / TOTAL_QUESTIONS,
       canContinue: valid[index],
       continueLabel: index === QUESTION_COUNT - 1
-        ? (isEditing ? '保存关系期待' : form.childPlan ? '进入个人资料' : '暂时跳过')
+        ? (isEditing ? '保存关系期待' : '进入个人资料')
         : '继续'
     }
   },

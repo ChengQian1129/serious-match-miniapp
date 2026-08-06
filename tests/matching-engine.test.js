@@ -2,7 +2,7 @@ const assert = require('node:assert/strict')
 const { buildCandidateComparison } = require('../cloudfunctions/datingProfile/matching-engine')
 
 function profile(gender, targetGender, birthDate, ageMin, ageMax) {
-  return { status: 'active', matching: { matchingPoolConsentAt: 1 }, basic: { gender, targetGender, birthDate }, relationship: { targetAgeMin: ageMin, targetAgeMax: ageMax, goal: 'marriage', settlementPlan: 'stay_dalian', childPlan: 'want' } }
+  return { status: 'active', matching: { matchingPoolConsentAt: 1 }, basic: { gender, targetGender, birthDate }, relationship: { targetAgeMin: ageMin, targetAgeMax: ageMax, goal: 'marriage', settlementPlan: 'stay_dalian', childPlan: 'want', availability: 'single_ready', maritalHistory: 'never_married', childrenStatus: 'none', distanceAcceptance: 'dalian_only', smokingStatus: 'never', smokingAcceptance: 'never' } }
 }
 function evaluation(options = {}) {
   const dimensions = {}
@@ -24,7 +24,17 @@ assert.equal('score' in result, false)
 
 const blocked = buildCandidateComparison(left, evaluation(), profile('male', 'male', '1995-01-01', 25, 38), evaluation())
 assert.equal(blocked.hardConditions.some(item => item.status === 'blocked'), true)
-assert.ok(blocked.unknowns.includes('双方单身且当前可进入关系'))
+assert.equal(blocked.hardConditions.find(item => item.id === 'relationship_availability').status, 'pass')
+
+const unavailableProfile = profile('female', 'male', '1995-01-01', 25, 38)
+unavailableProfile.relationship.availability = 'single_not_ready'
+const unavailable = buildCandidateComparison(left, evaluation(), unavailableProfile, evaluation())
+assert.equal(unavailable.hardConditions.find(item => item.id === 'relationship_availability').status, 'blocked')
+
+const smokingProfile = profile('female', 'male', '1995-01-01', 25, 38)
+smokingProfile.relationship.smokingStatus = 'regularly'
+const smoking = buildCandidateComparison(left, evaluation(), smokingProfile, evaluation())
+assert.equal(smoking.reality.find(item => item.id === 'smoking_boundary').status, 'confirm')
 
 const incomplete = buildCandidateComparison({ status: 'active', matching: { matchingPoolConsentAt: 1 }, basic: { gender: 'male', targetGender: 'female' }, relationship: {} }, null, right, evaluation())
 assert.equal(incomplete.hardConditions.find(item => item.id === 'right_age_preference').status, 'missing')

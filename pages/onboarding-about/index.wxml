@@ -11,7 +11,7 @@
       <view class="question-progress">
         <view class="question-progress__bar" style="transform: scaleX({{progress}});"></view>
       </view>
-      <text class="question-top__count">{{questionNumber}} / 13</text>
+      <text class="question-top__count">{{questionNumber}} / 19</text>
     </view>
   </view>
 

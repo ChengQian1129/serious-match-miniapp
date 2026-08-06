@@ -45,6 +45,48 @@ const CHILD_PLANS = [
   { label: '暂不填写', value: 'skip' }
 ]
 
+const RELATIONSHIP_AVAILABILITY = [
+  { label: '目前单身，也愿意认真了解关系', value: 'single_ready' },
+  { label: '目前单身，但暂时不适合进入关系', value: 'single_not_ready' },
+  { label: '情况较复杂，暂不说明', value: 'undisclosed' }
+]
+
+const MARITAL_HISTORY = [
+  { label: '未婚', value: 'never_married' },
+  { label: '离异', value: 'divorced' },
+  { label: '丧偶', value: 'widowed' },
+  { label: '暂不说明', value: 'undisclosed' }
+]
+
+const CHILDREN_STATUS = [
+  { label: '目前没有孩子', value: 'none' },
+  { label: '有孩子，目前不共同生活', value: 'not_living_together' },
+  { label: '有孩子，目前共同生活', value: 'living_together' },
+  { label: '暂不说明', value: 'undisclosed' }
+]
+
+const DISTANCE_ACCEPTANCE = [
+  { label: '只考虑在大连生活的人', value: 'dalian_only' },
+  { label: '可以接受周边城市', value: 'nearby' },
+  { label: '可短期异地，需有明确计划', value: 'temporary_long_distance' },
+  { label: '可以再具体商量', value: 'open' }
+]
+
+const SMOKING_STATUS = [
+  { label: '不吸烟', value: 'never' },
+  { label: '偶尔吸烟', value: 'occasionally' },
+  { label: '经常吸烟', value: 'regularly' },
+  { label: '正在戒烟', value: 'quitting' },
+  { label: '暂不说明', value: 'undisclosed' }
+]
+
+const SMOKING_ACCEPTANCE = [
+  { label: '不能接受对方吸烟', value: 'never' },
+  { label: '可以接受偶尔吸烟', value: 'occasionally' },
+  { label: '可以接受', value: 'any' },
+  { label: '可以再具体商量', value: 'open' }
+]
+
 const WORK_STATUSES = [
   { label: '全职工作', value: 'full_time' },
   { label: '自由职业', value: 'freelance' },
@@ -75,6 +117,12 @@ module.exports = {
   GOALS,
   SETTLEMENT_PLANS,
   CHILD_PLANS,
+  RELATIONSHIP_AVAILABILITY,
+  MARITAL_HISTORY,
+  CHILDREN_STATUS,
+  DISTANCE_ACCEPTANCE,
+  SMOKING_STATUS,
+  SMOKING_ACCEPTANCE,
   WORK_STATUSES,
   INDUSTRIES
 }

@@ -4,8 +4,8 @@ const { labelOf } = require('../../utils/formatters')
 const { getStatusBarHeight } = require('../../utils/window')
 const { acceptNavigationTap, getQuestionIndex, getMotionClass, showQuestion } = require('../../utils/question-flow')
 
-const TOTAL_QUESTIONS = 13
-const QUESTION_OFFSET = 8
+const TOTAL_QUESTIONS = 19
+const QUESTION_OFFSET = 14
 const QUESTION_COUNT = 5
 const STEP = 3
 
@@ -31,8 +31,8 @@ Page({
     workStatusPickerValue: [],
     industryPickerValue: [],
     currentQuestion: 0,
-    questionNumber: 9,
-    progress: 9 / TOTAL_QUESTIONS,
+    questionNumber: 15,
+    progress: 15 / TOTAL_QUESTIONS,
     canContinue: false,
     continueLabel: '继续',
     nameError: '',
@@ -288,8 +288,8 @@ Page({
         return
       }
       this._draftDirty = true
-      this.persistDraft(2, 3)
-      wx.redirectTo({ url: '/pages/onboarding-relationship/index?question=3&direction=back' })
+      this.persistDraft(2, 9)
+      wx.redirectTo({ url: '/pages/onboarding-relationship/index?question=9&direction=back' })
       return
     }
     this.transitionTo(this.data.currentQuestion - 1, 'back')

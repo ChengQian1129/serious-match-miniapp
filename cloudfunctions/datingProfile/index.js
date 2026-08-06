@@ -22,6 +22,12 @@ const allowed = {
   goal: new Set(['long_term', 'marriage', 'natural', 'open', 'unsure']),
   settlementPlan: new Set(['stay_dalian', 'may_leave', 'decide_together', 'unsure']),
   childPlan: new Set(['want', 'negotiable', 'unsure', 'no', 'skip', '']),
+  availability: new Set(['single_ready', 'single_not_ready', 'undisclosed', '']),
+  maritalHistory: new Set(['never_married', 'divorced', 'widowed', 'undisclosed', '']),
+  childrenStatus: new Set(['none', 'not_living_together', 'living_together', 'undisclosed', '']),
+  distanceAcceptance: new Set(['dalian_only', 'nearby', 'temporary_long_distance', 'open', '']),
+  smokingStatus: new Set(['never', 'occasionally', 'regularly', 'quitting', 'undisclosed', '']),
+  smokingAcceptance: new Set(['never', 'occasionally', 'any', 'open', '']),
   workStatus: new Set(['full_time', 'freelance', 'business', 'student', 'not_working', 'other', '']),
   industry: new Set(['internet', 'telecom', 'education', 'healthcare', 'finance', 'manufacturing', 'creative', 'business_service', 'public_service', 'other', ''])
 }
@@ -409,7 +415,13 @@ function sanitizeProfile(profile) {
       settlementPlan: requireAllowed('settlementPlan', relationship.settlementPlan, '定居计划'),
       targetAgeMin,
       targetAgeMax,
-      childPlan: requireAllowed('childPlan', relationship.childPlan || '', '孩子计划')
+      childPlan: requireAllowed('childPlan', relationship.childPlan || '', '孩子计划'),
+      availability: requireAllowed('availability', relationship.availability || '', '关系状态'),
+      maritalHistory: requireAllowed('maritalHistory', relationship.maritalHistory || '', '婚姻情况'),
+      childrenStatus: requireAllowed('childrenStatus', relationship.childrenStatus || '', '子女情况'),
+      distanceAcceptance: requireAllowed('distanceAcceptance', relationship.distanceAcceptance || '', '异地接受度'),
+      smokingStatus: requireAllowed('smokingStatus', relationship.smokingStatus || '', '吸烟情况'),
+      smokingAcceptance: requireAllowed('smokingAcceptance', relationship.smokingAcceptance || '', '吸烟接受度')
     },
     about: {
       displayName,

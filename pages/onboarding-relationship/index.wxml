@@ -11,7 +11,7 @@
       <view class="question-progress">
         <view class="question-progress__bar" style="transform: scaleX({{progress}});"></view>
       </view>
-      <text class="question-top__count">{{questionNumber}} / 13</text>
+      <text class="question-top__count">{{questionNumber}} / 19</text>
     </view>
   </view>
 
@@ -62,7 +62,7 @@
       <view wx:if="{{ageError}}" class="field-error">{{ageError}}</view>
     </block>
 
-    <block wx:else>
+    <block wx:elif="{{currentQuestion === 3}}">
       <view class="question-title">关于未来是否要孩子？</view>
       <view class="question-desc">这是选填项，也可以直接跳过。</view>
       <view class="question-control choice-list">
@@ -75,6 +75,13 @@
         </button>
       </view>
     </block>
+
+    <block wx:elif="{{currentQuestion === 4}}"><view class="question-title">你现在方便认真认识一个人吗？</view><view class="question-desc">这只用于判断目前是否适合进入资源池。</view><view class="question-control choice-list"><button wx:for="{{availabilityOptions}}" wx:key="value" class="choice-option {{form.availability === item.value ? 'choice-option--selected' : ''}}" data-value="{{item.value}}" bind:tap="chooseAvailability"><text>{{item.label}}</text><text wx:if="{{form.availability === item.value}}" class="choice-option__check">✓</text></button></view></block>
+    <block wx:elif="{{currentQuestion === 5}}"><view class="question-title">你的婚姻情况是？</view><view class="question-desc">仅用于人工匹配前的基础核对，不会公开展示。</view><view class="question-control choice-list"><button wx:for="{{maritalHistoryOptions}}" wx:key="value" class="choice-option {{form.maritalHistory === item.value ? 'choice-option--selected' : ''}}" data-value="{{item.value}}" bind:tap="chooseMaritalHistory"><text>{{item.label}}</text><text wx:if="{{form.maritalHistory === item.value}}" class="choice-option__check">✓</text></button></view></block>
+    <block wx:elif="{{currentQuestion === 6}}"><view class="question-title">关于孩子，目前的情况是？</view><view class="question-desc">这是基础事实，不会写入公开分享内容。</view><view class="question-control choice-list"><button wx:for="{{childrenStatusOptions}}" wx:key="value" class="choice-option {{form.childrenStatus === item.value ? 'choice-option--selected' : ''}}" data-value="{{item.value}}" bind:tap="chooseChildrenStatus"><text>{{item.label}}</text><text wx:if="{{form.childrenStatus === item.value}}" class="choice-option__check">✓</text></button></view></block>
+    <block wx:elif="{{currentQuestion === 7}}"><view class="question-title">你能接受怎样的距离安排？</view><view class="question-desc">用于判断现实见面和长期生活是否可行。</view><view class="question-control choice-list"><button wx:for="{{distanceAcceptanceOptions}}" wx:key="value" class="choice-option {{form.distanceAcceptance === item.value ? 'choice-option--selected' : ''}}" data-value="{{item.value}}" bind:tap="chooseDistanceAcceptance"><text>{{item.label}}</text><text wx:if="{{form.distanceAcceptance === item.value}}" class="choice-option__check">✓</text></button></view></block>
+    <block wx:elif="{{currentQuestion === 8}}"><view class="question-title">你的吸烟情况是？</view><view class="question-desc">仅作现实生活习惯核对。</view><view class="question-control choice-list"><button wx:for="{{smokingStatusOptions}}" wx:key="value" class="choice-option {{form.smokingStatus === item.value ? 'choice-option--selected' : ''}}" data-value="{{item.value}}" bind:tap="chooseSmokingStatus"><text>{{item.label}}</text><text wx:if="{{form.smokingStatus === item.value}}" class="choice-option__check">✓</text></button></view></block>
+    <block wx:else><view class="question-title">你能接受对方吸烟吗？</view><view class="question-desc">之后可以随时修改，也可以在认识前进一步说明。</view><view class="question-control choice-list"><button wx:for="{{smokingAcceptanceOptions}}" wx:key="value" class="choice-option {{form.smokingAcceptance === item.value ? 'choice-option--selected' : ''}}" data-value="{{item.value}}" bind:tap="chooseSmokingAcceptance"><text>{{item.label}}</text><text wx:if="{{form.smokingAcceptance === item.value}}" class="choice-option__check">✓</text></button></view></block>
   </view>
 </view>
 

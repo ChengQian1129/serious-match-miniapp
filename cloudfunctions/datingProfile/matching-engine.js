@@ -27,6 +27,17 @@ function ageRangeStatus(age, relationship) {
 }
 function activeProfile(profile) { return Boolean(profile && profile.status === 'active' && profile.matching && profile.matching.matchingPoolConsentAt) }
 function reportEvaluation(report) { return report && report.evaluation && report.evaluation.dimensions ? report.evaluation : null }
+function availabilityStatus(left, right) {
+  const values = [left && left.relationship && left.relationship.availability, right && right.relationship && right.relationship.availability]
+  if (values.some(value => !value || value === 'undisclosed')) return 'missing'
+  return values.every(value => value === 'single_ready') ? 'pass' : 'blocked'
+}
+function smokingDirection(acceptance, status) {
+  if (!acceptance || !status || status === 'undisclosed') return 'missing'
+  if (acceptance === 'any' || acceptance === 'open' || status === 'never') return 'aligned'
+  if (acceptance === 'occasionally' && ['occasionally', 'quitting'].includes(status)) return 'aligned'
+  return 'confirm'
+}
 
 function hardConditions(left, right) {
   const leftAge = ageOf(left)
@@ -42,10 +53,7 @@ function hardConditions(left, right) {
     { id: 'right_gender_preference', label: 'B 的性别期待', status: leftBasic.gender && rightBasic.gender ? (acceptsGender(rightBasic.targetGender, leftBasic.gender) ? 'pass' : 'blocked') : 'missing' },
     { id: 'left_age_preference', label: 'A 的年龄范围', status: ageRangeStatus(rightAge, leftRelationship) },
     { id: 'right_age_preference', label: 'B 的年龄范围', status: ageRangeStatus(leftAge, rightRelationship) },
-    { id: 'relationship_availability', label: '双方单身且当前可进入关系', status: 'missing' },
-    { id: 'marriage_children_history', label: '双方婚姻史与子女情况', status: 'missing' },
-    { id: 'smoking_boundary', label: '双方吸烟边界', status: 'missing' },
-    { id: 'distance_boundary', label: '双方是否接受异地', status: 'missing' }
+    { id: 'relationship_availability', label: '双方单身且当前可进入关系', status: availabilityStatus(left, right) }
   ]
 }
 
@@ -59,6 +67,13 @@ function realityChecks(left, right) {
   else rows.push({ id: 'settlement_plan', label: '长期生活计划', status: 'missing' })
   if (a.childPlan && b.childPlan) rows.push({ id: 'child_plan', label: '孩子计划', status: a.childPlan === b.childPlan ? 'aligned' : 'confirm' })
   else rows.push({ id: 'child_plan', label: '孩子计划', status: 'missing' })
+  if (a.maritalHistory && b.maritalHistory && a.childrenStatus && b.childrenStatus) rows.push({ id: 'family_history', label: '婚姻史与子女情况', status: 'confirm' })
+  else rows.push({ id: 'family_history', label: '婚姻史与子女情况', status: 'missing' })
+  if (a.distanceAcceptance && b.distanceAcceptance) rows.push({ id: 'distance_acceptance', label: '异地接受度', status: a.distanceAcceptance === b.distanceAcceptance ? 'aligned' : 'confirm' })
+  else rows.push({ id: 'distance_acceptance', label: '异地接受度', status: 'missing' })
+  const leftSmoking = smokingDirection(a.smokingAcceptance, b.smokingStatus)
+  const rightSmoking = smokingDirection(b.smokingAcceptance, a.smokingStatus)
+  rows.push({ id: 'smoking_boundary', label: '吸烟边界', status: leftSmoking === 'missing' || rightSmoking === 'missing' ? 'missing' : leftSmoking === 'aligned' && rightSmoking === 'aligned' ? 'aligned' : 'confirm' })
   return rows
 }
 
