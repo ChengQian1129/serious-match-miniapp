@@ -604,6 +604,30 @@ exports.main = async event => {
       return { ok: true, data: { inviteId: code, comparison: compareReportSummaries(ownerReport, guestReport) } }
     }
 
+    if (event.action === 'assessmentDelete') {
+      await removeOwnDocuments(assessmentReports, OPENID)
+      await removeOwnDocuments(assessmentSessions, OPENID)
+      await removeOwnCompareInvites(OPENID)
+      const existing = await findOwnProfile(OPENID)
+      if (existing) {
+        await profiles.doc(OPENID).update({
+          data: {
+            status: 'paused',
+            matching: Object.assign({}, existing.matching, { activeAssessmentReportId: '', reportVersion: 0 }),
+            updatedAt: db.serverDate()
+          }
+        })
+      }
+      return { ok: true, data: { deleted: true, profilePaused: Boolean(existing) } }
+    }
+
+    if (event.action === 'deleteProfileOnly') {
+      const existing = await findOwnProfile(OPENID)
+      if (existing) await profiles.doc(OPENID).remove()
+      await removeOwnCompareInvites(OPENID)
+      return { ok: true, data: { deleted: true } }
+    }
+
     if (event.action === 'get') {
       const document = await findOwnProfile(OPENID)
       return {

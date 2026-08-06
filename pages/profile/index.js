@@ -1,7 +1,7 @@
-const { getProfile, hasProfile, setStatus, deleteProfile, markCloudSynced, needsCloudSync } = require('../../utils/storage')
+const { getProfile, hasProfile, setStatus, deleteMatchingProfile, deleteProfile, markCloudSynced, needsCloudSync } = require('../../utils/storage')
 const { buildProfileView, maskPhone } = require('../../utils/formatters')
 const { navigateOnce, resetNavigation } = require('../../utils/navigation')
-const { config: cloudConfig, isCloudReady, saveProfileToCloud, setCloudStatus, deleteCloudProfile, cloudErrorMessage } = require('../../utils/cloud')
+const { config: cloudConfig, isCloudReady, saveProfileToCloud, setCloudStatus, deleteCloudProfile, deleteCloudProfileOnly, cloudErrorMessage } = require('../../utils/cloud')
 
 Page({
   data: {
@@ -15,6 +15,9 @@ Page({
     isDeleting: false,
     showMenu: false,
     showDeleteDialog: false,
+    deleteMode: 'profile',
+    deleteDialogTitle: '',
+    deleteDialogContent: '',
     deleteConfirmButton: { content: '删除', theme: 'danger', variant: 'base' }
   },
 
@@ -127,14 +130,16 @@ Page({
     navigateOnce(this, 'navigateTo', { url: '/pages/privacy/index' })
   },
 
-  requestDelete() {
+  requestDeleteProfile() { this.requestDelete('profile') },
+  requestDeleteAll() { this.requestDelete('all') },
+  requestDelete(mode) {
     if (this._profileSyncing) {
       this.closeMenu()
       wx.showToast({ title: '资料同步中，请稍候', icon: 'none' })
       return
     }
     this.closeMenu()
-    this.setData({ showDeleteDialog: true })
+    this.setData({ showDeleteDialog: true, deleteMode: mode, deleteDialogTitle: mode === 'all' ? '删除全部资料？' : '退出匹配池并删除档案？', deleteDialogContent: mode === 'all' ? '云端档案、问卷、报告、手机号和本机记录都会被清除，删除后无法恢复。' : '匿名档案和手机号会从资源池删除，关系说明书仍然保留。' })
   },
 
   cancelDelete() {
@@ -149,11 +154,16 @@ Page({
     }
     if (this.data.isDeleting) return
     this.setData({ showDeleteDialog: false, isDeleting: true })
-    deleteCloudProfile({
+    const deleteCloud = this.data.deleteMode === 'all' ? deleteCloudProfile : deleteCloudProfileOnly
+    deleteCloud({
       success: () => {
-        deleteProfile()
+        if (this.data.deleteMode === 'all') {
+          deleteProfile()
+        } else {
+          deleteMatchingProfile()
+        }
         navigateOnce(this, 'reLaunch', {
-          url: '/pages/home/index',
+          url: this.data.deleteMode === 'all' ? '/pages/home/index' : '/pages/relationship-map/index',
           fail: () => this.setData({ isDeleting: false })
         })
       },

@@ -1,12 +1,12 @@
-const { getReport, getSession, shouldSyncAssessment, markClaimConfirmationSynced } = require('../../utils/assessment-v2/session-store')
-const { isCloudReady, confirmAssessmentClaimToCloud } = require('../../utils/cloud')
+const { getReport, getSession, shouldSyncAssessment, markClaimConfirmationSynced, resetAssessment } = require('../../utils/assessment-v2/session-store')
+const { isCloudReady, confirmAssessmentClaimToCloud, deleteCloudAssessment, cloudErrorMessage } = require('../../utils/cloud')
+const { clearAssessmentFromProfile, recordEvent } = require('../../utils/storage')
 const { CHAPTERS } = require('../../utils/assessment-v2/questionnaire-definitions')
 const { getStatusBarHeight } = require('../../utils/window')
 const { navigateOnce, resetNavigation } = require('../../utils/navigation')
-const { recordEvent } = require('../../utils/storage')
 
 Page({
-  data: { statusBarHeight: getStatusBarHeight(), report: null, sections: [], unknowns: [], shareFragments: [], chapters: CHAPTERS },
+  data: { statusBarHeight: getStatusBarHeight(), report: null, sections: [], unknowns: [], shareFragments: [], chapters: CHAPTERS, showDeleteDialog: false, isDeleting: false, deleteConfirmButton: { content: '删除', theme: 'danger', variant: 'base' } },
   onLoad() {
     this.loadReport()
   },
@@ -58,5 +58,30 @@ Page({
   openClaim(event) { navigateOnce(this, 'navigateTo', { url: `/pages/record-claim/index?id=${encodeURIComponent(event.currentTarget.dataset.id)}` }) },
   openShare() { navigateOnce(this, 'navigateTo', { url: '/pages/share-card/index' }) },
   openCompare() { navigateOnce(this, 'navigateTo', { url: '/pages/compare/index' }) },
+  requestDeleteReport() { this.setData({ showDeleteDialog: true }) },
+  cancelDeleteReport() { this.setData({ showDeleteDialog: false }) },
+  confirmDeleteReport() {
+    if (this.data.isDeleting) return
+    this.setData({ showDeleteDialog: false, isDeleting: true })
+    const finish = () => {
+      resetAssessment()
+      clearAssessmentFromProfile()
+      navigateOnce(this, 'reLaunch', {
+        url: '/pages/home/index',
+        fail: () => this.setData({ isDeleting: false })
+      })
+    }
+    if (!isCloudReady()) {
+      finish()
+      return
+    }
+    deleteCloudAssessment({
+      success: finish,
+      fail: error => {
+        this.setData({ isDeleting: false })
+        wx.showToast({ title: cloudErrorMessage(error), icon: 'none' })
+      }
+    })
+  },
   openMap() { navigateOnce(this, 'reLaunch', { url: '/pages/relationship-map/index' }) }
 })

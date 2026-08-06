@@ -123,6 +123,23 @@ async function run() {
   assert.equal(result.ok, true)
   assert.ok(Array.isArray(result.data.comparison.aligned))
 
+  rows('dating_profiles').set('v2-user', { _id: 'v2-user', _openid: 'v2-user', status: 'active', matching: { activeAssessmentReportId: reportId, reportVersion: 1 } })
+  result = await cloudFunction.main({ action: 'deleteProfileOnly' })
+  assert.equal(result.ok, true)
+  assert.equal(rows('dating_profiles').has('v2-user'), false)
+  assert.equal([...rows('assessment_sessions').values()].some(item => item._openid === 'v2-user'), true)
+  assert.equal([...rows('assessment_reports').values()].some(item => item._openid === 'v2-user'), true)
+  assert.equal(rows('assessment_invites').size, 0)
+
+  rows('dating_profiles').set('v2-user', { _id: 'v2-user', _openid: 'v2-user', status: 'active', matching: { activeAssessmentReportId: reportId, reportVersion: 1 } })
+  result = await cloudFunction.main({ action: 'assessmentDelete' })
+  assert.equal(result.ok, true)
+  assert.equal(rows('dating_profiles').get('v2-user').status, 'paused')
+  assert.equal(rows('dating_profiles').get('v2-user').matching.activeAssessmentReportId, '')
+  assert.equal([...rows('assessment_sessions').values()].some(item => item._openid === 'v2-user'), false)
+  assert.equal([...rows('assessment_reports').values()].some(item => item._openid === 'v2-user'), false)
+  assert.equal([...rows('assessment_reports').values()].some(item => item._openid === 'friend-user'), true)
+
   result = await cloudFunction.main({ action: 'delete' })
   assert.equal(result.ok, true)
   result = await cloudFunction.main({ action: 'assessmentGet', assessmentId: 'relationship_manual_v2.test' })

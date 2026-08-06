@@ -80,7 +80,10 @@
         <view class="dl-list-row__title">隐私说明</view>
         <text class="dl-chevron">›</text>
       </button>
-      <button class="dl-list-row dl-list-row--button profile-delete" disabled="{{isDeleting}}" aria-label="删除全部资料" bind:tap="requestDelete">
+      <button class="dl-list-row dl-list-row--button profile-delete" disabled="{{isDeleting}}" aria-label="退出匹配池并删除档案" bind:tap="requestDeleteProfile">
+        <view class="dl-list-row__title">退出匹配池并删除档案</view>
+      </button>
+      <button class="dl-list-row dl-list-row--button profile-delete" disabled="{{isDeleting}}" aria-label="删除全部资料" bind:tap="requestDeleteAll">
         <view class="dl-list-row__title">删除全部资料</view>
       </button>
     </view>
@@ -92,8 +95,8 @@
 
 <t-dialog
   visible="{{showDeleteDialog}}"
-  title="删除全部资料？"
-  content="云端资料、手机号和本机记录都会被清除，删除后无法恢复。"
+  title="{{deleteDialogTitle}}"
+  content="{{deleteDialogContent}}"
   confirm-btn="{{deleteConfirmButton}}"
   cancel-btn="取消"
   bind:confirm="confirmDelete"

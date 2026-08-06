@@ -114,6 +114,8 @@ function setCloudStatus(status, clientUpdatedAt, callbacks) {
 function deleteCloudProfile(callbacks) {
   return callProfile('delete', {}, callbacks)
 }
+function deleteCloudProfileOnly(callbacks) { return callProfile('deleteProfileOnly', {}, callbacks) }
+function deleteCloudAssessment(callbacks) { return callProfile('assessmentDelete', {}, callbacks) }
 
 function cloudErrorMessage(error) {
   if (error && error.code === 'CLOUD_NOT_READY') return error.message
@@ -150,5 +152,7 @@ module.exports = {
   getProfileFromCloud,
   setCloudStatus,
   deleteCloudProfile,
+  deleteCloudProfileOnly,
+  deleteCloudAssessment,
   cloudErrorMessage
 }

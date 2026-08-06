@@ -13,7 +13,9 @@
     <button class="dl-button report-share-button" bind:tap="openShare">生成我的相处名片{{shareableCount ? ' · ' + shareableCount + ' 条已核对' : ''}}</button>
     <button class="dl-button dl-button--outline report-compare-button" bind:tap="openCompare">邀请朋友做关系对照</button>
     <view class="report-revise-block"><view class="report-section__title">修改某一章的回答</view><view class="report-chapters"><button wx:for="{{chapters}}" wx:key="id" class="report-chapter" data-chapter="{{item.id}}" bind:tap="reviseChapter"><text>{{item.id}}</text><text>{{item.title}}</text></button></view></view>
+    <button class="report-delete" disabled="{{isDeleting}}" bind:tap="requestDeleteReport">删除这份关系说明书</button>
     <button class="dl-button dl-button--outline" bind:tap="openMap">把报告用于认真匹配</button>
+    <t-dialog visible="{{showDeleteDialog}}" title="删除关系说明书？" content="云端问卷、报告和朋友对照邀请都会删除。已建立的匹配档案会暂停，基础资料和手机号仍保留。" confirm-btn="{{deleteConfirmButton}}" cancel-btn="取消" bind:confirm="confirmDeleteReport" bind:cancel="cancelDeleteReport" bind:close="cancelDeleteReport" />
   </view>
 </view>
 <view wx:else class="page result-empty"><view class="page-kicker">关系说明书</view><view class="page-title">还没有完成这次探索</view><button class="dl-button result-empty__button" bind:tap="revise">继续回答</button></view>

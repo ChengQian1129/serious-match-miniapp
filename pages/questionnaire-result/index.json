@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "当前关系状态"
+  "navigationBarTitleText": "当前关系状态",
+  "usingComponents": {
+    "t-dialog": "tdesign-miniprogram/dialog/dialog"
+  }
 }

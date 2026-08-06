@@ -21,4 +21,5 @@
 .report-revise-block { margin-top: 44rpx; }
 .report-chapters { margin-top: 14rpx; border-top: 2rpx solid var(--dl-black); }
 .report-chapter { display: grid; width: 100%; grid-template-columns: 54rpx minmax(0, 1fr); gap: 16rpx; margin: 0; padding: 22rpx 0; border: 0; border-bottom: 2rpx solid var(--dl-grey-200); border-radius: 0; background: transparent; color: var(--dl-black); font-size: 25rpx; line-height: 38rpx; text-align: left; }
+.report-delete { width: 100%; margin: 28rpx 0 18rpx; padding: 18rpx; border: 0; background: transparent; color: #9b3529; font-size: 24rpx; }
 @media (max-width: 360px) { .report-title { font-size: 22px; } .report-claim__text { font-size: 16px; line-height: 25px; } }

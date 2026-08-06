@@ -36,8 +36,20 @@ function completeProfile(contact, consent) {
 }
 function setStatus(status) { const profile = getProfile(); profile.status = status; return saveProfile(profile) }
 
+function clearAssessmentFromProfile() {
+  if (!hasProfile()) return getProfile()
+  const profile = getProfile()
+  profile.status = 'paused'
+  profile.matching = Object.assign({}, profile.matching, { activeAssessmentReportId: '', reportVersion: 0 })
+  return saveProfile(profile)
+}
+
+function deleteMatchingProfile() {
+  [PROFILE_KEY, CLOUD_SYNC_KEY].forEach(key => wx.removeStorageSync(key))
+}
+
 function deleteProfile() {
-  [PROFILE_KEY, SOURCE_KEY, EVENTS_KEY, CLOUD_SYNC_KEY, 'serious_match_assessment_v2', 'serious_match_report_v2', 'serious_match_exploration_v1', 'serious_match_record_feedback_v1', 'serious_match_questionnaire_v1'].forEach(key => wx.removeStorageSync(key))
+  [PROFILE_KEY, SOURCE_KEY, EVENTS_KEY, CLOUD_SYNC_KEY, 'serious_match_assessment_v2', 'serious_match_report_v2', 'serious_match_assessment_storage_choice_v2', 'serious_match_exploration_v1', 'serious_match_record_feedback_v1', 'serious_match_questionnaire_v1'].forEach(key => wx.removeStorageSync(key))
 }
 
 function getCloudSync() { return wx.getStorageSync(CLOUD_SYNC_KEY) || {} }
@@ -49,4 +61,4 @@ function hasSeenWelcome() { return wx.getStorageSync(WELCOME_KEY) === WELCOME_VE
 function markWelcomeSeen() { wx.setStorageSync(WELCOME_KEY, WELCOME_VERSION) }
 function recordEvent(name, details) { const events = wx.getStorageSync(EVENTS_KEY) || []; const event = { name, source: getSource(), at: Date.now() }; if (details && typeof details === 'object') event.details = details; events.push(event); wx.setStorageSync(EVENTS_KEY, events.slice(-100)) }
 
-module.exports = { getProfile, hasProfile, replaceProfile, saveSection, saveDraft, completeProfile, setStatus, deleteProfile, markCloudSynced, needsCloudSync, saveSource, hasSeenWelcome, markWelcomeSeen, recordEvent }
+module.exports = { getProfile, hasProfile, replaceProfile, saveSection, saveDraft, completeProfile, setStatus, clearAssessmentFromProfile, deleteMatchingProfile, deleteProfile, markCloudSynced, needsCloudSync, saveSource, hasSeenWelcome, markWelcomeSeen, recordEvent }

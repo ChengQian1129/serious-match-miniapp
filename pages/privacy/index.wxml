@@ -25,7 +25,7 @@
       <view class="privacy-index">03</view>
       <view class="dl-list-row__body">
         <view class="dl-list-row__title">如何删除</view>
-        <view class="dl-list-row__desc">进入“我的资料”，在资料设置中选择“删除全部资料”，系统会同时删除云端和本机副本。</view>
+        <view class="dl-list-row__desc">可以只退出匹配池并删除匿名档案，也可以单独删除问卷和关系说明书；选择“删除全部资料”时，系统会同时删除云端和本机副本。</view>
       </view>
     </view>
   </view>

@@ -161,6 +161,6 @@ function markClaimConfirmationSynced(claimId, cloudConfirmations) {
   return next
 }
 function markSynced(syncedAt = Date.now()) { const session = getSession(); return saveSession(Object.assign({}, session, { status: session.completedAt ? 'report_generated' : 'synced', syncedAt })) }
-function resetAssessment() { wx.removeStorageSync(SESSION_KEY); wx.removeStorageSync(REPORT_KEY) }
+function resetAssessment() { wx.removeStorageSync(SESSION_KEY); wx.removeStorageSync(REPORT_KEY); wx.removeStorageSync(STORAGE_CHOICE_KEY) }
 
 module.exports = { SESSION_KEY, REPORT_KEY, STORAGE_CHOICE_KEY, emptySession, getSession, hasSession, setPosition, answerItem, completeChapter, completeAssessment, getReport, saveChapterInsightFeedback, getStorageChoice, setStorageChoice, shouldSyncAssessment, saveClaimConfirmation, markClaimConfirmationSynced, replaceSession, replaceReport, markSynced, resetAssessment }
