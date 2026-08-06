@@ -84,6 +84,17 @@
   border-top: 2rpx solid var(--dl-grey-200);
 }
 
+.map-group + .map-group {
+  margin-top: 40rpx;
+}
+
+.map-group__title {
+  margin: 0 0 18rpx;
+  color: var(--dl-grey-500);
+  font-size: 24rpx;
+  font-weight: 600;
+}
+
 .map-fact {
   display: grid;
   grid-template-columns: 180rpx minmax(0, 1fr);

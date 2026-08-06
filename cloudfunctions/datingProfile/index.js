@@ -568,6 +568,21 @@ exports.main = async event => {
       return { ok: true, data: { userConfirmations } }
     }
 
+    if (event.action === 'assessmentShareSettings') {
+      const reportId = text(event.reportId, 128)
+      const report = await findOwnReport(OPENID, reportId)
+      if (!report) reject('报告不存在或不属于当前用户', 'INVALID_ASSESSMENT')
+      const selectedClaimIds = Array.isArray(event.selectedClaimIds) ? [...new Set(event.selectedClaimIds.map(id => text(id, 80)))] : []
+      if (selectedClaimIds.length > 4) reject('最多选择四条分享线索', 'INVALID_ASSESSMENT')
+      const allowedIds = new Set((report.claims || []).filter(claim => claim.shareFragment && claim.section !== 'tension' && ['fits', 'partly_fits'].includes(report.userConfirmations && report.userConfirmations[claim.id] && report.userConfirmations[claim.id].value)).map(claim => claim.id))
+      if (selectedClaimIds.some(id => !allowedIds.has(id))) reject('分享线索必须来自本人已核对的内容', 'INVALID_ASSESSMENT')
+      const clientUpdatedAt = Number(event.clientUpdatedAt) || Date.now()
+      if (report.shareSettings && Number(report.shareSettings.updatedAt) > clientUpdatedAt) return { ok: true, data: { shareSettings: report.shareSettings, staleIgnored: true } }
+      const shareSettings = { selectedClaimIds, updatedAt: clientUpdatedAt }
+      await assessmentReports.doc(reportId).update({ data: { shareSettings } })
+      return { ok: true, data: { shareSettings } }
+    }
+
     if (event.action === 'compareInviteCreate') {
       const report = await findOwnReport(OPENID, text(event.reportId, 128))
       if (!report) reject('报告不存在或不属于当前用户', 'INVALID_ASSESSMENT')

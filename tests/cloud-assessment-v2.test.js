@@ -84,7 +84,7 @@ async function run() {
   assert.equal(result.data.duplicateIgnored, true)
   assert.equal(result.data.report.reportVersion, 1)
   const reportId = result.data.report._id
-  const claimId = result.data.report.claims[0].id
+  const claimId = result.data.report.claims.find(claim => claim.shareFragment).id
 
   result = await cloudFunction.main({ action: 'assessmentSaveDraft', session: session(300, answers) })
   assert.equal(result.ok, true)
@@ -102,6 +102,16 @@ async function run() {
   result = await cloudFunction.main({ action: 'assessmentConfirmClaim', reportId, claimId, value: 'partly_fits', note: '只在重要话题中如此' })
   assert.equal(result.ok, true)
   assert.equal(result.data.userConfirmations[claimId].value, 'partly_fits')
+
+  result = await cloudFunction.main({ action: 'assessmentShareSettings', reportId, selectedClaimIds: [claimId], clientUpdatedAt: 1000 })
+  assert.equal(result.ok, true)
+  assert.deepEqual(result.data.shareSettings.selectedClaimIds, [claimId])
+  result = await cloudFunction.main({ action: 'assessmentShareSettings', reportId, selectedClaimIds: [], clientUpdatedAt: 999 })
+  assert.equal(result.data.staleIgnored, true)
+  assert.deepEqual(result.data.shareSettings.selectedClaimIds, [claimId])
+  result = await cloudFunction.main({ action: 'assessmentShareSettings', reportId, selectedClaimIds: ['not-confirmed'] })
+  assert.equal(result.ok, false)
+  assert.equal(result.code, 'INVALID_ASSESSMENT')
 
   result = await cloudFunction.main({ action: 'assessmentGet', assessmentId: 'relationship_manual_v2.test' })
   assert.equal(result.ok, true)

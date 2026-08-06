@@ -1,4 +1,5 @@
-const { getReport } = require('../../utils/assessment-v2/session-store')
+const { getReport, replaceReport, shouldSyncAssessment } = require('../../utils/assessment-v2/session-store')
+const { isCloudReady, getAssessmentFromCloud, saveAssessmentShareSettings } = require('../../utils/cloud')
 const { navigateOnce, resetNavigation } = require('../../utils/navigation')
 
 function wrapText(context, text, maxWidth) {
@@ -28,16 +29,35 @@ Page({
     this.report = report
     const confirmations = report.userConfirmations || {}
     const available = report.claims.filter(claim => claim.shareFragment && claim.section !== 'tension' && confirmations[claim.id] && ['fits', 'partly_fits'].includes(confirmations[claim.id].value)).map(claim => Object.assign({}, claim, { category: categoryForClaim(claim) }))
-    const selectedIds = available.filter((claim, index, list) => list.findIndex(item => item.category.id === claim.category.id) === index).slice(0, 4).map(claim => claim.id)
-    available.forEach(claim => { claim.selected = selectedIds.includes(claim.id) })
-    this.setData({ available, selectedIds, canGenerate: selectedIds.length > 0 })
+    const hasSavedSettings = Boolean(report.shareSettings && Array.isArray(report.shareSettings.selectedClaimIds))
+    const savedIds = hasSavedSettings ? report.shareSettings.selectedClaimIds : []
+    const selectedIds = savedIds.filter(id => available.some(claim => claim.id === id)).slice(0, 4)
+    const fallbackIds = available.filter((claim, index, list) => list.findIndex(item => item.category.id === claim.category.id) === index).slice(0, 4).map(claim => claim.id)
+    const finalIds = hasSavedSettings ? selectedIds : fallbackIds
+    available.forEach(claim => { claim.selected = finalIds.includes(claim.id) })
+    this.setData({ available, selectedIds: finalIds, canGenerate: finalIds.length > 0 })
+    if (!this._cloudSettingsLoaded && shouldSyncAssessment() && isCloudReady() && report.assessmentId) {
+      this._cloudSettingsLoaded = true
+      getAssessmentFromCloud(report.assessmentId, { success: data => {
+        if (this._shareUpdateSequence || !data.report || Number(data.report.reportVersion) !== Number(report.reportVersion)) return
+        replaceReport(data.report)
+        this.loadOptions()
+      } })
+    }
   },
   toggleClaim(event) {
     const id = event.currentTarget.dataset.id
     const selected = this.data.selectedIds.includes(id)
     let selectedIds = selected ? this.data.selectedIds.filter(item => item !== id) : this.data.selectedIds.concat(id)
     if (selectedIds.length > 4) { wx.showToast({ title: '最多选择四条', icon: 'none' }); return }
+    this._shareUpdateSequence = Number(this._shareUpdateSequence || 0) + 1
+    const updateSequence = this._shareUpdateSequence
+    const updatedAt = Date.now() * 1000 + updateSequence
+    const report = Object.assign({}, this.report, { shareSettings: { selectedClaimIds, updatedAt } })
+    replaceReport(report)
+    this.report = report
     this.setData({ selectedIds, available: this.data.available.map(claim => Object.assign({}, claim, { selected: selectedIds.includes(claim.id) })), canGenerate: selectedIds.length > 0, cardPath: '' })
+    if (shouldSyncAssessment() && isCloudReady() && report._id) saveAssessmentShareSettings(report._id, selectedIds, updatedAt, { success: data => { if (updateSequence === this._shareUpdateSequence && data.shareSettings) { this.report = Object.assign({}, this.report, { shareSettings: data.shareSettings }); replaceReport(this.report) } } })
   },
   generateCard() {
     if (!this.data.canGenerate) return

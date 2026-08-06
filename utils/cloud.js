@@ -99,6 +99,9 @@ function getAssessmentFromCloud(assessmentId, callbacks) {
 function confirmAssessmentClaimToCloud(reportId, claimId, value, note, callbacks) {
   return callProfile('assessmentConfirmClaim', { reportId, claimId, value, note }, callbacks)
 }
+function saveAssessmentShareSettings(reportId, selectedClaimIds, clientUpdatedAt, callbacks) {
+  return callProfile('assessmentShareSettings', { reportId, selectedClaimIds, clientUpdatedAt }, callbacks)
+}
 function createCompareInvite(reportId, callbacks) { return callProfile('compareInviteCreate', { reportId }, callbacks) }
 function joinCompareInvite(code, reportId, callbacks) { return callProfile('compareInviteJoin', { code, reportId }, callbacks) }
 function getCompareInvite(code, callbacks) { return callProfile('compareGet', { code }, callbacks) }
@@ -146,6 +149,7 @@ module.exports = {
   completeAssessmentToCloud,
   getAssessmentFromCloud,
   confirmAssessmentClaimToCloud,
+  saveAssessmentShareSettings,
   createCompareInvite,
   joinCompareInvite,
   getCompareInvite,
