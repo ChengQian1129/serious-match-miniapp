@@ -1,0 +1,29 @@
+{
+  "pages": [
+    "pages/home/index",
+    "pages/exploration/index",
+    "pages/exploration-result/index",
+    "pages/questionnaire/index",
+    "pages/questionnaire-result/index",
+    "pages/relationship-map/index",
+    "pages/record-claim/index",
+    "pages/onboarding-basic/index",
+    "pages/onboarding-relationship/index",
+    "pages/onboarding-about/index",
+    "pages/profile-preview/index",
+    "pages/contact/index",
+    "pages/success/index",
+    "pages/profile/index",
+    "pages/privacy/index"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "认真匹配",
+    "backgroundColor": "#FFFFFF",
+    "backgroundTextStyle": "dark"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

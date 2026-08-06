@@ -1,0 +1,17 @@
+.exploration-content {
+  padding-top: 72rpx;
+}
+
+.exploration-option {
+  min-height: 112rpx;
+}
+
+@media (max-width: 360px) {
+  .exploration-content {
+    padding-top: 48rpx;
+  }
+
+  .exploration-options {
+    margin-top: 30rpx;
+  }
+}

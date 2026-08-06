@@ -1,0 +1,202 @@
+.contact-header {
+  padding-bottom: 48rpx;
+}
+
+.contact-form {
+  padding: 0 40rpx;
+}
+
+.phone-field {
+  min-height: 144rpx;
+  padding: 22rpx 26rpx 20rpx;
+  border: 2rpx solid transparent;
+  border-radius: 8rpx;
+  background: #efefef;
+}
+
+.phone-field--focused {
+  border-color: #0a0a0a;
+  background: #ffffff;
+}
+
+.phone-field--error {
+  border-color: #ff3b30;
+}
+
+.phone-field__label {
+  color: #666666;
+  font-size: 25rpx;
+  font-weight: 500;
+  line-height: 34rpx;
+}
+
+.phone-field__control {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  margin-top: 8rpx;
+}
+
+.phone-field__prefix {
+  flex: 0 0 auto;
+  padding-right: 22rpx;
+  border-right: 2rpx solid #dedede;
+  font-size: 30rpx;
+  font-weight: 600;
+  line-height: 50rpx;
+}
+
+.phone-field__input {
+  width: auto;
+  height: 52rpx;
+  min-width: 0;
+  flex: 1;
+  padding: 0 0 0 22rpx;
+  color: #0a0a0a;
+  font-size: 34rpx;
+  font-weight: 500;
+  line-height: 52rpx;
+}
+
+.phone-field__placeholder {
+  color: #9a9a9a;
+  font-weight: 400;
+}
+
+.phone-field__clear {
+  display: flex;
+  width: 52rpx;
+  height: 52rpx;
+  flex: 0 0 52rpx;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #777777;
+  font-size: 40rpx;
+  font-weight: 300;
+  line-height: 52rpx;
+}
+
+.phone-field__clear:active {
+  color: #0a0a0a;
+}
+
+.confirmation-list {
+  margin: 0 40rpx;
+}
+
+.confirmation-row {
+  display: flex;
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  align-self: stretch;
+  align-items: flex-start;
+  gap: 24rpx;
+  margin: 0;
+  padding: 32rpx 0;
+  border-radius: 0;
+  border-bottom: 2rpx solid #dedede;
+  background: transparent;
+  color: #0a0a0a;
+  text-align: left;
+}
+
+.confirmation-row:first-child {
+  border-top: 2rpx solid #dedede;
+}
+
+.confirmation-check {
+  display: flex;
+  width: 38rpx;
+  height: 38rpx;
+  flex: 0 0 38rpx;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rpx;
+  border: 2rpx solid #0a0a0a;
+  border-radius: 4rpx;
+  background: #ffffff;
+  color: #ffffff;
+  font-size: 22rpx;
+  line-height: 1;
+}
+
+.confirmation-row--checked .confirmation-check {
+  background: #0a0a0a;
+}
+
+.confirmation-text {
+  min-width: 0;
+  flex: 1;
+  font-size: 30rpx;
+  line-height: 48rpx;
+}
+
+.contact-error {
+  padding-right: 40rpx;
+  padding-left: 40rpx;
+}
+
+.privacy-link {
+  display: flex;
+  min-height: 112rpx;
+  align-items: center;
+  justify-content: space-between;
+  margin: 36rpx 40rpx 0;
+  width: calc(100% - 80rpx);
+  min-width: calc(100% - 80rpx);
+  max-width: calc(100% - 80rpx);
+  padding: 0;
+  border-radius: 0;
+  border-bottom: 2rpx solid #dedede;
+  background: transparent;
+  color: #0a0a0a;
+  font-size: 30rpx;
+  font-weight: 600;
+  text-align: left;
+}
+
+.contact-action-bar {
+  animation: contact-action-enter 160ms cubic-bezier(0.25, 1, 0.5, 1) both;
+}
+
+@keyframes contact-action-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-height: 700px) {
+  .contact-page {
+    min-height: 0;
+    padding-bottom: 24rpx;
+  }
+
+  .contact-action-bar {
+    position: relative;
+    padding-top: 28rpx;
+    border-top: 0;
+  }
+}
+
+@media (max-width: 360px) {
+  .confirmation-text,
+  .privacy-link {
+    font-size: 15px;
+    line-height: 24px;
+  }
+
+  .phone-field__input {
+    font-size: 17px;
+  }
+}

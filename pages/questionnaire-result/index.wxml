@@ -1,0 +1,33 @@
+<view wx:if="{{isReady}}" class="page questionnaire-result result-page--enter">
+  <view class="questionnaire-result__header">
+    <view class="page-kicker">{{moduleTitle}} · {{moduleItemCount}} 题</view>
+    <view class="questionnaire-result__title">{{moduleTitle}}</view>
+    <view class="questionnaire-result__meta">
+      <text>{{answeredCount}} 项有效回答{{skippedCount ? ' · ' + skippedCount + ' 项暂不判断' : ''}}</text>
+    </view>
+  </view>
+
+  <view class="questionnaire-result__body">
+    <view wx:for="{{sections}}" wx:key="id" class="questionnaire-result__section">
+      <view class="questionnaire-result__index">0{{index + 1}}</view>
+      <view class="questionnaire-result__section-body">
+        <view class="questionnaire-result__section-title">{{item.title}}</view>
+        <view class="questionnaire-result__section-text">{{item.text}}</view>
+        <view class="questionnaire-result__evidence">{{item.evidenceText}} · {{item.statusLabel}}</view>
+      </view>
+    </view>
+
+    <view class="questionnaire-result__boundary">
+      这不是总分、诊断或人格类型。每个维度只根据对应题目单独形成描述，回答不足或互相矛盾时会保留未知。
+    </view>
+
+    <button class="questionnaire-result__revise" bind:tap="revise">修改我的回答</button>
+    <button class="dl-button questionnaire-result__done" bind:tap="openMap">回到我的关系底图</button>
+  </view>
+</view>
+
+<view wx:else class="page result-empty">
+  <view class="page-kicker">当前关系状态</view>
+  <view class="page-title">这一部分还没有完成</view>
+  <button class="dl-button result-empty__button" bind:tap="revise">继续回答</button>
+</view>

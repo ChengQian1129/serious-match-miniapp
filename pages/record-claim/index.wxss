@@ -1,0 +1,101 @@
+.claim-enter {
+  animation: claim-enter 180ms cubic-bezier(0.25, 1, 0.5, 1) both;
+}
+
+@keyframes claim-enter {
+  from {
+    opacity: 0;
+    transform: translateX(16rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.claim-header {
+  padding: 76rpx 40rpx 58rpx;
+  border-bottom: 2rpx solid var(--dl-black);
+}
+
+.claim-title {
+  margin-top: 16rpx;
+  font-size: 48rpx;
+  font-weight: 700;
+  line-height: 1.26;
+}
+
+.claim-text {
+  margin-top: 30rpx;
+  font-size: 30rpx;
+  line-height: 50rpx;
+}
+
+.claim-section {
+  padding: 54rpx 40rpx 0;
+}
+
+.claim-section__title {
+  font-size: 33rpx;
+  font-weight: 700;
+  line-height: 44rpx;
+}
+
+.claim-section__desc {
+  margin-top: 10rpx;
+  color: var(--dl-grey-500);
+  font-size: 25rpx;
+  line-height: 40rpx;
+}
+
+.claim-evidence-list {
+  margin-top: 30rpx;
+  border-top: 2rpx solid var(--dl-grey-200);
+}
+
+.claim-evidence {
+  padding: 30rpx 0;
+  border-bottom: 2rpx solid var(--dl-grey-200);
+}
+
+.claim-evidence__question {
+  font-size: 27rpx;
+  line-height: 43rpx;
+}
+
+.claim-evidence__answer {
+  margin-top: 10rpx;
+  color: var(--dl-grey-500);
+  font-size: 25rpx;
+  line-height: 38rpx;
+}
+
+.claim-rule {
+  margin-top: 22rpx;
+  color: var(--dl-grey-500);
+  font-size: 21rpx;
+  line-height: 34rpx;
+}
+
+.claim-section--feedback {
+  padding-top: 68rpx;
+}
+
+.claim-feedback-list {
+  margin-top: 30rpx;
+}
+
+.claim-error {
+  padding-bottom: 20rpx;
+}
+
+@media (max-width: 360px) {
+  .claim-header {
+    padding-top: 54rpx;
+    padding-bottom: 42rpx;
+  }
+
+  .claim-title {
+    font-size: 27px;
+  }
+}

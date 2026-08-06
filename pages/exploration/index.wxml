@@ -1,0 +1,43 @@
+<view class="question-page exploration-page" style="padding-top: {{statusBarHeight}}px;">
+  <view class="question-top">
+    <view class="question-top__row">
+      <button class="question-back" aria-label="返回上一题" bind:tap="handlePrevious">
+        <text class="question-back__icon">‹</text>返回
+      </button>
+      <view class="question-top__title">关系底图</view>
+      <view class="question-top__spacer"></view>
+    </view>
+    <view class="question-progress-row">
+      <view class="question-progress">
+        <view class="question-progress__bar" style="transform: scaleX({{progress}});"></view>
+      </view>
+      <text class="question-top__count">{{questionNumber}} / {{questions.length}}</text>
+    </view>
+  </view>
+
+  <view class="question-content exploration-content {{motionClass}}">
+    <view class="question-eyebrow">{{question.eyebrow}}</view>
+    <view class="question-title">{{question.title}}</view>
+    <view class="question-desc">{{question.desc}}</view>
+
+    <view class="question-control choice-list exploration-options">
+      <button
+        wx:for="{{question.options}}"
+        wx:key="value"
+        class="choice-option exploration-option {{selectedValue === item.value ? 'choice-option--selected' : ''}}"
+        data-value="{{item.value}}"
+        aria-role="radio"
+        aria-checked="{{selectedValue === item.value}}"
+        aria-label="{{item.label}}"
+        bind:tap="chooseAnswer"
+      >
+        <text>{{item.label}}</text>
+        <text wx:if="{{selectedValue === item.value}}" class="choice-option__check">✓</text>
+      </button>
+    </view>
+  </view>
+</view>
+
+<view class="action-bar">
+  <button class="dl-button" disabled="{{!canContinue}}" bind:tap="handleContinue">{{continueLabel}}</button>
+</view>

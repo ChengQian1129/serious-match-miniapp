@@ -1,0 +1,112 @@
+.questionnaire-result {
+  padding-bottom: calc(72rpx + env(safe-area-inset-bottom));
+}
+
+.questionnaire-result__header {
+  padding: 78rpx 40rpx 52rpx;
+  border-bottom: 2rpx solid var(--dl-black);
+}
+
+.questionnaire-result__title {
+  max-width: 650rpx;
+  margin-top: 16rpx;
+  font-size: 50rpx;
+  font-weight: 700;
+  line-height: 1.24;
+}
+
+.questionnaire-result__meta {
+  margin-top: 28rpx;
+  color: var(--dl-grey-500);
+  font-size: 23rpx;
+  line-height: 36rpx;
+}
+
+.questionnaire-result__body {
+  padding: 0 40rpx;
+}
+
+.questionnaire-result__section {
+  display: grid;
+  grid-template-columns: 52rpx minmax(0, 1fr);
+  gap: 18rpx;
+  padding: 42rpx 0 44rpx;
+  border-bottom: 2rpx solid var(--dl-grey-200);
+}
+
+.questionnaire-result__index,
+.questionnaire-result__evidence {
+  color: var(--dl-grey-500);
+  font-size: 22rpx;
+  line-height: 34rpx;
+}
+
+.questionnaire-result__section-title {
+  font-size: 27rpx;
+  font-weight: 600;
+  line-height: 40rpx;
+}
+
+.questionnaire-result__section-text {
+  margin-top: 12rpx;
+  font-size: 31rpx;
+  line-height: 49rpx;
+}
+
+.questionnaire-result__evidence {
+  margin-top: 18rpx;
+}
+
+.questionnaire-result__boundary {
+  margin-top: 48rpx;
+  padding: 30rpx 0;
+  border-top: 2rpx solid var(--dl-black);
+  border-bottom: 2rpx solid var(--dl-black);
+  color: var(--dl-grey-500);
+  font-size: 25rpx;
+  line-height: 42rpx;
+}
+
+.questionnaire-result__revise {
+  display: flex;
+  width: 100%;
+  min-height: 88rpx;
+  align-items: center;
+  justify-content: center;
+  margin: 24rpx 0 0;
+  border: 0;
+  background: transparent;
+  color: var(--dl-black);
+  font-size: 25rpx;
+  text-decoration: underline;
+}
+
+.questionnaire-result__done {
+  margin-top: 12rpx;
+}
+
+@media (max-width: 360px) {
+  .questionnaire-result__header {
+    padding-top: 54rpx;
+  }
+
+  .questionnaire-result__title {
+    font-size: 22px;
+    line-height: 1.28;
+  }
+
+  .questionnaire-result__section-text {
+    font-size: 16px;
+    line-height: 25px;
+  }
+
+  .questionnaire-result__section {
+    display: block;
+    padding-top: 34rpx;
+    padding-bottom: 38rpx;
+  }
+
+  .questionnaire-result__section-body {
+    margin-top: 8rpx;
+  }
+}

@@ -1,0 +1,34 @@
+<view wx:if="{{claim}}" class="page page--with-action claim-page claim-enter">
+  <view class="claim-header">
+    <view class="page-kicker">{{claim.label}} · {{claim.statusLabel}}</view>
+    <view class="claim-title">{{claim.title}}</view>
+    <view class="claim-text">{{claim.text}}</view>
+  </view>
+
+  <view class="claim-section">
+    <view class="claim-section__title">这条描述从哪里来</view>
+    <view class="claim-evidence-list">
+      <view wx:for="{{claim.evidence}}" wx:key="questionId" class="claim-evidence">
+        <view class="claim-evidence__question">{{item.question}}</view>
+        <view class="claim-evidence__answer">你的选择：{{item.answer}}</view>
+      </view>
+    </view>
+    <view class="claim-rule">结论规则 {{claim.ruleVersion}} · 原始回答保持不变</view>
+  </view>
+
+  <view class="claim-section claim-section--feedback">
+    <view class="claim-section__title">这段描述接近你的真实感受吗？</view>
+    <view class="claim-section__desc">你的反馈会单独保存，不会修改当时的原始回答。</view>
+    <view class="choice-list claim-feedback-list">
+      <button wx:for="{{feedbackOptions}}" wx:key="value" class="choice-option {{selectedFeedback === item.value ? 'choice-option--selected' : ''}}" data-value="{{item.value}}" bind:tap="chooseFeedback">
+        <text>{{item.label}}</text>
+        <text wx:if="{{selectedFeedback === item.value}}" class="choice-option__check">✓</text>
+      </button>
+    </view>
+    <view wx:if="{{cloudError}}" class="field-error claim-error">{{cloudError}}</view>
+  </view>
+</view>
+
+<view wx:if="{{claim}}" class="action-bar">
+  <button class="dl-button" loading="{{isSaving}}" disabled="{{!canSave || isSaving}}" bind:tap="handleSave">{{isSaving ? '正在保存' : '保存我的反馈'}}</button>
+</view>

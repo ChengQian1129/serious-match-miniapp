@@ -1,0 +1,88 @@
+.home-hero {
+  display: flex;
+  min-height: 760rpx;
+  flex-direction: column;
+  padding: 42rpx 40rpx 52rpx;
+}
+
+.home-wordmark {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  font-size: 27rpx;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.home-mark {
+  position: relative;
+  width: 42rpx;
+  height: 36rpx;
+}
+
+.home-mark view {
+  position: absolute;
+  width: 16rpx;
+  height: 30rpx;
+  background: #0a0a0a;
+  transform: skewY(28deg);
+}
+
+.home-mark view:first-child {
+  top: 5rpx;
+  left: 5rpx;
+}
+
+.home-mark view:last-child {
+  right: 5rpx;
+  bottom: 5rpx;
+}
+
+.home-copy {
+  margin-top: auto;
+}
+
+.home-title {
+  max-width: 640rpx;
+  margin-top: 14rpx;
+  font-size: 64rpx;
+  font-weight: 700;
+  line-height: 1.16;
+}
+
+.home-desc {
+  max-width: 640rpx;
+  margin-top: 22rpx;
+  color: #666666;
+  font-size: 27rpx;
+  line-height: 44rpx;
+}
+
+.home-actions {
+  margin-top: 48rpx;
+}
+
+.home-process {
+  padding: 8rpx 0 56rpx;
+  border-top: 2rpx solid #dedede;
+}
+
+.home-section-title {
+  margin-top: 38rpx;
+}
+
+.home-list {
+  border-top-color: #0a0a0a;
+}
+
+.home-step {
+  width: 54rpx;
+  flex: 0 0 54rpx;
+  color: #666666;
+  font-size: 24rpx;
+  font-weight: 600;
+}
+
+.home-note {
+  margin-top: 10rpx;
+}

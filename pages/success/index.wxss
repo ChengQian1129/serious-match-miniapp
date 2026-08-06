@@ -1,0 +1,46 @@
+.success-page {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  padding: 64rpx 40rpx calc(64rpx + env(safe-area-inset-bottom));
+}
+
+.success-symbol {
+  display: flex;
+  width: 88rpx;
+  height: 88rpx;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #0a0a0a;
+  color: #ffffff;
+  font-size: 42rpx;
+  font-weight: 700;
+}
+
+.success-title {
+  margin-top: 40rpx;
+  font-size: 52rpx;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.success-desc {
+  margin-top: 18rpx;
+  color: #666666;
+  font-size: 26rpx;
+  line-height: 42rpx;
+}
+
+.success-actions {
+  margin-top: 60rpx;
+}
+
+.success-note {
+  margin-top: 34rpx;
+  color: #666666;
+  font-size: 24rpx;
+  line-height: 36rpx;
+  text-align: center;
+}

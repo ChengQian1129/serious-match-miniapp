@@ -1,0 +1,31 @@
+.privacy-index {
+  width: 48rpx;
+  flex: 0 0 48rpx;
+  color: #666666;
+  font-size: 24rpx;
+  font-weight: 600;
+}
+
+.privacy-callout {
+  margin: 0 40rpx;
+  padding: 28rpx;
+  border: 2rpx solid #0a0a0a;
+  border-radius: 8rpx;
+}
+
+@media (max-width: 360px) {
+  .privacy-row {
+    display: block;
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+
+  .privacy-row .privacy-index {
+    width: auto;
+    margin-bottom: 6px;
+  }
+
+  .privacy-row .dl-list-row__body {
+    width: 100%;
+  }
+}

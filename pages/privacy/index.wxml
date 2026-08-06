@@ -1,0 +1,38 @@
+<view class="page privacy-page">
+  <view class="page-header">
+    <view class="page-kicker">测试版 · 私密资源池</view>
+    <view class="page-title">隐私说明</view>
+    <view class="page-desc">填写中的草稿保存在当前设备，确认提交后，资料将同步到微信云开发环境中的私密资源池。</view>
+  </view>
+
+  <view class="section-title section-title--first">信息处理</view>
+  <view class="dl-list privacy-list">
+    <view class="dl-list-row privacy-row">
+      <view class="privacy-index">01</view>
+      <view class="dl-list-row__body">
+        <view class="dl-list-row__title">保存的信息</view>
+        <view class="dl-list-row__desc">包括性别、完整出生日期、所在区域、关系期待、称呼、职业信息和手机号。</view>
+      </view>
+    </view>
+    <view class="dl-list-row privacy-row">
+      <view class="privacy-index">02</view>
+      <view class="dl-list-row__body">
+        <view class="dl-list-row__title">如何使用</view>
+        <view class="dl-list-row__desc">用于建立和维护测试资源池，不公开展示，也不会直接提供给其他登记用户。</view>
+      </view>
+    </view>
+    <view class="dl-list-row privacy-row">
+      <view class="privacy-index">03</view>
+      <view class="dl-list-row__body">
+        <view class="dl-list-row__title">如何删除</view>
+        <view class="dl-list-row__desc">进入“我的资料”，在资料设置中选择“删除全部资料”，系统会同时删除云端和本机副本。</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section-title">上线前补充</view>
+  <view class="privacy-callout">
+    <view class="dl-list-row__title">补全运营信息</view>
+    <view class="dl-list-row__desc">公开测试前必须补充运营主体、联系方式、保存期限和用户权利等完整隐私政策，并重新征得同意。</view>
+  </view>
+</view>

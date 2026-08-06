@@ -1,0 +1,129 @@
+<view class="question-page" style="padding-top: {{statusBarHeight}}px;">
+  <view class="question-top">
+    <view class="question-top__row">
+      <button class="question-back" aria-label="返回上一题" bind:tap="handlePrevious">
+        <text class="question-back__icon">‹</text>返回
+      </button>
+      <view class="question-top__title">{{isEditing ? '编辑资料' : '创建资料'}}</view>
+      <view class="question-top__spacer"></view>
+    </view>
+    <view class="question-progress-row">
+      <view class="question-progress">
+        <view class="question-progress__bar" style="transform: scaleX({{progress}});"></view>
+      </view>
+      <text class="question-top__count">{{questionNumber}} / 13</text>
+    </view>
+  </view>
+
+  <view class="question-content {{motionClass}}">
+    <view class="question-eyebrow">个人资料</view>
+
+    <block wx:if="{{currentQuestion === 0}}">
+      <view class="question-title">怎么称呼你？</view>
+      <view class="question-desc">不要求真实姓名，也不会出现在匿名介绍中。</view>
+      <view class="question-control dl-input-wrap">
+        <view class="dl-input-label">称呼</view>
+        <input
+          class="dl-input"
+          value="{{form.displayName}}"
+          maxlength="12"
+          placeholder="例如：小程、Cheng"
+          confirm-type="next"
+          adjust-position="{{false}}"
+          always-embed="{{true}}"
+          cursor-spacing="32"
+          aria-label="称呼"
+          bind:input="inputDisplayName"
+          bind:focus="handleTextFocus"
+          bind:blur="handleTextBlur"
+          bind:confirm="handleTextConfirm"
+          bind:keyboardheightchange="handleTextKeyboardHeightChange"
+        />
+      </view>
+      <view wx:if="{{nameError}}" class="field-error">{{nameError}}</view>
+    </block>
+
+    <block wx:elif="{{currentQuestion === 1}}">
+      <view class="question-title">身高是多少？</view>
+      <view class="question-desc">选填，可以暂时跳过。</view>
+      <view class="question-control">
+        <button class="dl-field-select dl-field-select--button" aria-label="选择身高，当前 {{heightLabel || '未填写'}}" bind:tap="openHeightPicker">
+          <view>
+            <view class="dl-field-select__label">身高</view>
+            <view class="dl-field-select__value">{{heightLabel || '请选择'}}</view>
+          </view>
+          <text class="dl-chevron">›</text>
+        </button>
+      </view>
+    </block>
+
+    <block wx:elif="{{currentQuestion === 2}}">
+      <view class="question-title">目前的工作状态？</view>
+      <view class="question-desc">选填，用于形成更完整的基本介绍。</view>
+      <view class="question-control">
+        <button class="dl-field-select dl-field-select--button" aria-label="选择工作状态，当前 {{workStatusLabel || '未填写'}}" bind:tap="openWorkStatusPicker">
+          <view>
+            <view class="dl-field-select__label">工作状态</view>
+            <view class="dl-field-select__value">{{workStatusLabel || '请选择'}}</view>
+          </view>
+          <text class="dl-chevron">›</text>
+        </button>
+      </view>
+    </block>
+
+    <block wx:elif="{{currentQuestion === 3}}">
+      <view class="question-title">在哪个行业？</view>
+      <view class="question-desc">选填，可以暂时跳过。</view>
+      <view class="question-control">
+        <button class="dl-field-select dl-field-select--button" aria-label="选择行业，当前 {{industryLabel || '未填写'}}" bind:tap="openIndustryPicker">
+          <view>
+            <view class="dl-field-select__label">行业</view>
+            <view class="dl-field-select__value">{{industryLabel || '请选择'}}</view>
+          </view>
+          <text class="dl-chevron">›</text>
+        </button>
+      </view>
+    </block>
+
+    <block wx:else>
+      <view class="question-title">职业或岗位？</view>
+      <view class="question-desc">最后一题，选填。只填写职业或岗位，不要填写具体单位和联系方式。</view>
+      <view class="question-control dl-input-wrap">
+        <view class="dl-input-label">职业</view>
+        <input
+          class="dl-input"
+          value="{{form.occupation}}"
+          maxlength="30"
+          placeholder="例如：软件工程师、教师"
+          confirm-type="done"
+          adjust-position="{{false}}"
+          always-embed="{{true}}"
+          cursor-spacing="32"
+          aria-label="职业或岗位"
+          bind:input="inputOccupation"
+          bind:focus="handleTextFocus"
+          bind:blur="handleTextBlur"
+          bind:confirm="handleTextConfirm"
+          bind:keyboardheightchange="handleTextKeyboardHeightChange"
+        />
+      </view>
+      <view wx:if="{{occupationError}}" class="field-error">{{occupationError}}</view>
+    </block>
+  </view>
+</view>
+
+<view wx:if="{{!keyboardVisible}}" class="action-bar">
+  <button class="dl-button" bind:tap="handleContinue">{{continueLabel}}</button>
+</view>
+
+<t-picker wx:if="{{heightPickerMounted}}" visible="{{heightPickerVisible}}" value="{{heightPickerValue}}" title="选择身高" bind:confirm="changeHeight" bind:cancel="closeHeightPicker" bind:close="closeHeightPicker">
+  <t-picker-item options="{{heights}}" />
+</t-picker>
+
+<t-picker wx:if="{{workStatusPickerMounted}}" visible="{{workStatusPickerVisible}}" value="{{workStatusPickerValue}}" title="选择工作状态" bind:confirm="changeWorkStatus" bind:cancel="closeWorkStatusPicker" bind:close="closeWorkStatusPicker">
+  <t-picker-item options="{{workStatuses}}" />
+</t-picker>
+
+<t-picker wx:if="{{industryPickerMounted}}" visible="{{industryPickerVisible}}" value="{{industryPickerValue}}" title="选择行业" bind:confirm="changeIndustry" bind:cancel="closeIndustryPicker" bind:close="closeIndustryPicker">
+  <t-picker-item options="{{industries}}" />
+</t-picker>

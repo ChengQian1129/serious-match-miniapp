@@ -1,0 +1,79 @@
+<view class="question-page" style="padding-top: {{statusBarHeight}}px;">
+  <view class="question-top">
+    <view class="question-top__row">
+      <button class="question-back" aria-label="返回上一题" bind:tap="handlePrevious">
+        <text class="question-back__icon">‹</text>返回
+      </button>
+      <view class="question-top__title">{{isEditing ? '编辑资料' : '创建资料'}}</view>
+      <view class="question-top__spacer"></view>
+    </view>
+    <view class="question-progress-row">
+      <view class="question-progress">
+        <view class="question-progress__bar" style="transform: scaleX({{progress}});"></view>
+      </view>
+      <text class="question-top__count">{{questionNumber}} / 13</text>
+    </view>
+  </view>
+
+  <view class="question-content {{motionClass}}">
+    <view class="question-eyebrow">基本资料</view>
+
+    <block wx:if="{{currentQuestion === 0}}">
+      <view class="question-title">你的性别是？</view>
+      <view class="question-desc">用于匹配基础条件，不会出现在公开页面。</view>
+      <view class="question-control choice-list">
+        <button wx:for="{{genders}}" wx:key="value" class="choice-option {{form.gender === item.value ? 'choice-option--selected' : ''}}" data-value="{{item.value}}" aria-role="radio" aria-checked="{{form.gender === item.value}}" aria-label="{{item.label}}" bind:tap="chooseGender">
+          <text>{{item.label}}</text>
+          <text wx:if="{{form.gender === item.value}}" class="choice-option__check">✓</text>
+        </button>
+      </view>
+    </block>
+
+    <block wx:elif="{{currentQuestion === 1}}">
+      <view class="question-title">希望认识谁？</view>
+      <view class="question-desc">选择目前最适合你的答案。</view>
+      <view class="question-control choice-list">
+        <button wx:for="{{targetGenders}}" wx:key="value" class="choice-option {{form.targetGender === item.value ? 'choice-option--selected' : ''}}" data-value="{{item.value}}" aria-role="radio" aria-checked="{{form.targetGender === item.value}}" aria-label="{{item.label}}" bind:tap="chooseTargetGender">
+          <text>{{item.label}}</text>
+          <text wx:if="{{form.targetGender === item.value}}" class="choice-option__check">✓</text>
+        </button>
+      </view>
+    </block>
+
+    <block wx:elif="{{currentQuestion === 2}}">
+      <view class="question-title">出生日期是？</view>
+      <view class="question-desc">用于准确确认已满 18 周岁，匿名介绍中只显示出生年份。</view>
+      <view class="question-control">
+        <picker mode="date" value="{{form.birthDate || maxBirthDate}}" start="{{minBirthDate}}" end="{{maxBirthDate}}" aria-label="选择出生日期" bind:change="changeBirthDate">
+          <view class="dl-field-select">
+            <view>
+              <view class="dl-field-select__label">出生日期</view>
+              <view class="dl-field-select__value">{{birthDateLabel || (form.birthYear ? form.birthYear + ' 年 · 请补充日期' : '请选择')}}</view>
+            </view>
+            <text class="dl-chevron">›</text>
+          </view>
+        </picker>
+      </view>
+    </block>
+
+    <block wx:else>
+      <view class="question-title">主要在哪个区域生活或工作？</view>
+      <view class="question-desc">用于判断见面距离，不需要填写具体地址。</view>
+      <view class="question-control">
+        <picker mode="selector" range="{{districts}}" range-key="label" value="{{districtIndex}}" aria-label="选择所在区域" bind:change="changeDistrict">
+          <view class="dl-field-select">
+            <view>
+              <view class="dl-field-select__label">所在区域</view>
+              <view class="dl-field-select__value">{{districtLabel || '请选择'}}</view>
+            </view>
+            <text class="dl-chevron">›</text>
+          </view>
+        </picker>
+      </view>
+    </block>
+  </view>
+</view>
+
+<view class="action-bar">
+  <button class="dl-button" disabled="{{!canContinue}}" bind:tap="handleContinue">{{continueLabel}}</button>
+</view>

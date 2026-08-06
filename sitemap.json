@@ -1,0 +1,9 @@
+{
+  "desc": "体验版暂不开放搜索",
+  "rules": [
+    {
+      "action": "disallow",
+      "page": "*"
+    }
+  ]
+}

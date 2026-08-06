@@ -1,0 +1,91 @@
+<view class="question-page" style="padding-top: {{statusBarHeight}}px;">
+  <view class="question-top">
+    <view class="question-top__row">
+      <button class="question-back" aria-label="返回上一题" bind:tap="handlePrevious">
+        <text class="question-back__icon">‹</text>返回
+      </button>
+      <view class="question-top__title">{{isEditing ? '编辑资料' : '创建资料'}}</view>
+      <view class="question-top__spacer"></view>
+    </view>
+    <view class="question-progress-row">
+      <view class="question-progress">
+        <view class="question-progress__bar" style="transform: scaleX({{progress}});"></view>
+      </view>
+      <text class="question-top__count">{{questionNumber}} / 13</text>
+    </view>
+  </view>
+
+  <view class="question-content {{motionClass}}">
+    <view class="question-eyebrow">关系期待</view>
+
+    <block wx:if="{{currentQuestion === 0}}">
+      <view class="question-title">你现在更期待怎样的关系？</view>
+      <view class="question-desc">不需要给出完美答案，选择目前最接近的状态。</view>
+      <view class="question-control choice-list">
+        <button wx:for="{{goals}}" wx:key="value" class="choice-option {{form.goal === item.value ? 'choice-option--selected' : ''}}" data-value="{{item.value}}" aria-role="radio" aria-checked="{{form.goal === item.value}}" aria-label="{{item.label}}" bind:tap="chooseGoal">
+          <text>{{item.label}}</text>
+          <text wx:if="{{form.goal === item.value}}" class="choice-option__check">✓</text>
+        </button>
+      </view>
+    </block>
+
+    <block wx:elif="{{currentQuestion === 1}}">
+      <view class="question-title">未来几年倾向留在大连吗？</view>
+      <view class="question-desc">这不是承诺，只是你现在的大致打算。</view>
+      <view class="question-control choice-list">
+        <button wx:for="{{settlementPlans}}" wx:key="value" class="choice-option {{form.settlementPlan === item.value ? 'choice-option--selected' : ''}}" data-value="{{item.value}}" aria-role="radio" aria-checked="{{form.settlementPlan === item.value}}" aria-label="{{item.label}}" bind:tap="chooseSettlement">
+          <text>{{item.label}}</text>
+          <text wx:if="{{form.settlementPlan === item.value}}" class="choice-option__check">✓</text>
+        </button>
+      </view>
+    </block>
+
+    <block wx:elif="{{currentQuestion === 2}}">
+      <view class="question-title">希望对方大概多大？</view>
+      <view class="question-desc">之后可以随时修改。</view>
+      <view class="question-control">
+        <button class="dl-field-select dl-field-select--button" aria-label="选择最小年龄，当前 {{form.targetAgeMin}} 岁" bind:tap="openMinAgePicker">
+          <view>
+            <view class="dl-field-select__label">最小年龄</view>
+            <view class="dl-field-select__value">{{form.targetAgeMin}} 岁</view>
+          </view>
+          <text class="dl-chevron">›</text>
+        </button>
+        <button class="dl-field-select dl-field-select--button" aria-label="选择最大年龄，当前 {{form.targetAgeMax}} 岁" bind:tap="openMaxAgePicker">
+          <view>
+            <view class="dl-field-select__label">最大年龄</view>
+            <view class="dl-field-select__value">{{form.targetAgeMax}} 岁</view>
+          </view>
+          <text class="dl-chevron">›</text>
+        </button>
+      </view>
+      <view wx:if="{{ageError}}" class="field-error">{{ageError}}</view>
+    </block>
+
+    <block wx:else>
+      <view class="question-title">关于未来是否要孩子？</view>
+      <view class="question-desc">这是选填项，也可以直接跳过。</view>
+      <view class="question-control choice-list">
+        <button wx:for="{{childPlans}}" wx:if="{{item.value !== 'skip'}}" wx:key="value" class="choice-option {{form.childPlan === item.value ? 'choice-option--selected' : ''}}" data-value="{{item.value}}" aria-role="radio" aria-checked="{{form.childPlan === item.value}}" aria-label="{{item.label}}" bind:tap="chooseChildPlan">
+          <text>{{item.label}}</text>
+          <text wx:if="{{form.childPlan === item.value}}" class="choice-option__check">✓</text>
+        </button>
+        <button class="choice-skip {{form.childPlan === 'skip' ? 'choice-skip--selected' : ''}}" data-value="skip" aria-role="radio" aria-checked="{{form.childPlan === 'skip'}}" aria-label="暂不填写" bind:tap="chooseChildPlan">
+          <text>{{form.childPlan === 'skip' ? '已选择暂不填写' : '暂不填写'}}</text>
+        </button>
+      </view>
+    </block>
+  </view>
+</view>
+
+<view class="action-bar">
+  <button class="dl-button" disabled="{{!canContinue}}" bind:tap="handleContinue">{{continueLabel}}</button>
+</view>
+
+<t-picker wx:if="{{minAgePickerMounted}}" visible="{{minAgePickerVisible}}" value="{{minAgePickerValue}}" title="选择最小年龄" bind:confirm="changeMinAge" bind:cancel="closeMinAgePicker" bind:close="closeMinAgePicker">
+  <t-picker-item options="{{ageOptions}}" />
+</t-picker>
+
+<t-picker wx:if="{{maxAgePickerMounted}}" visible="{{maxAgePickerVisible}}" value="{{maxAgePickerValue}}" title="选择最大年龄" bind:confirm="changeMaxAge" bind:cancel="closeMaxAgePicker" bind:close="closeMaxAgePicker">
+  <t-picker-item options="{{ageOptions}}" />
+</t-picker>

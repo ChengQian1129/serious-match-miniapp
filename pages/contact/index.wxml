@@ -1,0 +1,56 @@
+<view class="page page--with-action contact-page">
+  <view class="page-header contact-header">
+    <view class="page-kicker">保存与联系</view>
+    <view class="page-title">留下联系方式</view>
+    <view class="page-desc">提交后保存到私密云端资源池，仅在确认资料或出现合适机会时使用。</view>
+  </view>
+
+  <view class="contact-form">
+    <view class="phone-field {{phoneFocused ? 'phone-field--focused' : ''}} {{phoneError ? 'phone-field--error' : ''}}">
+      <view class="phone-field__label">手机号码</view>
+      <view class="phone-field__control">
+        <text class="phone-field__prefix">+86</text>
+        <input
+          class="phone-field__input"
+          value="{{phone}}"
+          type="number"
+          maxlength="11"
+          placeholder="请输入手机号"
+          placeholder-class="phone-field__placeholder"
+          confirm-type="done"
+          adjust-position="{{false}}"
+          always-embed="{{true}}"
+          cursor-spacing="32"
+          aria-label="中国大陆手机号码"
+          bind:input="inputPhone"
+          bind:focus="handlePhoneFocus"
+          bind:blur="handlePhoneBlur"
+          bind:confirm="handlePhoneConfirm"
+          bind:keyboardheightchange="handleKeyboardHeightChange"
+        />
+        <button wx:if="{{phone}}" class="phone-field__clear" aria-label="清空手机号" catch:tap="clearPhone">×</button>
+      </view>
+    </view>
+    <view wx:if="{{phoneError}}" class="field-error">{{phoneError}}</view>
+    <view class="field-note">体验版不会验证号码归属，请确认填写无误。</view>
+  </view>
+
+  <view class="section-title">提交前确认</view>
+  <view class="confirmation-list">
+    <button wx:for="{{confirmationOptions}}" wx:key="value" class="confirmation-row {{(item.value === 'eligibility' && eligibilityChecked) || (item.value === 'privacy' && privacyChecked) ? 'confirmation-row--checked' : ''}}" data-value="{{item.value}}" aria-role="checkbox" aria-checked="{{(item.value === 'eligibility' && eligibilityChecked) || (item.value === 'privacy' && privacyChecked)}}" aria-label="{{item.label}}" bind:tap="toggleConfirmation">
+      <view class="confirmation-check">{{(item.value === 'eligibility' && eligibilityChecked) || (item.value === 'privacy' && privacyChecked) ? '✓' : ''}}</view>
+      <view class="confirmation-text">{{item.label}}</view>
+    </button>
+  </view>
+  <view wx:if="{{consentError}}" class="field-error contact-error">{{consentError}}</view>
+  <view wx:if="{{cloudError}}" class="field-error contact-error">{{cloudError}}</view>
+
+  <button class="privacy-link" aria-label="查看隐私说明" bind:tap="openPrivacy">
+    <text>查看隐私说明</text>
+    <text class="dl-chevron">›</text>
+  </button>
+</view>
+
+<view wx:if="{{!keyboardVisible}}" class="action-bar contact-action-bar">
+  <button class="dl-button" loading="{{isSaving}}" disabled="{{isSaving}}" bind:tap="handleSave">{{isEditing ? '保存联系方式' : '保存资料'}}</button>
+</view>

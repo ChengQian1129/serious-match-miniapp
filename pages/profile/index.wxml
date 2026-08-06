@@ -1,0 +1,102 @@
+<view class="page profile-page">
+  <view class="profile-header">
+    <view class="profile-heading">
+      <view class="page-kicker">认真匹配 · 大连</view>
+      <view class="profile-name">{{displayName}}</view>
+    </view>
+    <button class="profile-menu-button" aria-label="资料设置" bind:tap="toggleMenu">•••</button>
+  </view>
+
+  <view class="section-title section-title--first">当前状态</view>
+  <view class="dl-list">
+    <view class="dl-list-row">
+      <view class="dl-list-row__body">
+        <view class="dl-list-row__title">{{statusLabel}}</view>
+      </view>
+      <view class="dl-status {{isPaused ? '' : 'dl-status--active'}}">{{isPaused ? '已暂停' : '正常'}}</view>
+    </view>
+  </view>
+
+  <view class="section-title">匿名介绍</view>
+  <view class="info-block">
+    <view class="info-block__title">{{profileView.meta}}</view>
+    <view class="info-block__subtitle">{{profileView.district}}</view>
+    <view wx:for="{{profileView.lines}}" wx:key="*this" class="info-block__line">{{item}}</view>
+    <view class="info-block__target">
+      <view class="info-block__target-label">希望认识</view>
+      <view class="info-block__target-value">{{profileView.target}}</view>
+    </view>
+  </view>
+
+  <view class="section-title">资料管理</view>
+  <view class="dl-list">
+    <button class="dl-list-row dl-list-row--button" aria-label="查看关系底图" bind:tap="viewRelationshipMap">
+      <view class="dl-list-row__body">
+        <view class="dl-list-row__title">我的关系底图</view>
+        <view class="dl-list-row__desc">查看已明确、待核对和仍不了解的部分</view>
+      </view>
+      <text class="dl-chevron">›</text>
+    </button>
+    <button class="dl-list-row dl-list-row--button" aria-label="编辑基础资料" bind:tap="editBasic">
+      <view class="dl-list-row__body">
+        <view class="dl-list-row__title">基础资料</view>
+        <view class="dl-list-row__desc">性别、出生信息和所在区域</view>
+      </view>
+      <text class="dl-chevron">›</text>
+    </button>
+    <button class="dl-list-row dl-list-row--button" aria-label="编辑关系期待" bind:tap="editRelationship">
+      <view class="dl-list-row__body">
+        <view class="dl-list-row__title">关系期待</view>
+        <view class="dl-list-row__desc">关系目标、年龄范围和未来计划</view>
+      </view>
+      <text class="dl-chevron">›</text>
+    </button>
+    <button class="dl-list-row dl-list-row--button" aria-label="编辑个人资料" bind:tap="editAbout">
+      <view class="dl-list-row__body">
+        <view class="dl-list-row__title">个人资料</view>
+        <view class="dl-list-row__desc">称呼、身高、行业和职业</view>
+      </view>
+      <text class="dl-chevron">›</text>
+    </button>
+    <button class="dl-list-row dl-list-row--button" aria-label="编辑联系方式" bind:tap="editContact">
+      <view class="dl-list-row__body">
+        <view class="dl-list-row__title">联系方式</view>
+        <view class="dl-list-row__desc">{{maskedPhone}}</view>
+      </view>
+      <text class="dl-chevron">›</text>
+    </button>
+  </view>
+</view>
+
+<t-popup placement="bottom" visible="{{showMenu}}" bind:visible-change="handleMenuVisibleChange">
+  <view class="sheet-content">
+    <view class="sheet-title">资料设置</view>
+    <view class="dl-list">
+      <button class="dl-list-row dl-list-row--button" loading="{{isUpdatingStatus}}" disabled="{{isUpdatingStatus}}" aria-label="{{isPaused ? '恢复参与' : '暂停参与'}}" bind:tap="togglePause">
+        <view class="dl-list-row__title">{{isPaused ? '恢复参与' : '暂停参与'}}</view>
+        <text class="dl-chevron">›</text>
+      </button>
+      <button class="dl-list-row dl-list-row--button" aria-label="隐私说明" bind:tap="openPrivacy">
+        <view class="dl-list-row__title">隐私说明</view>
+        <text class="dl-chevron">›</text>
+      </button>
+      <button class="dl-list-row dl-list-row--button profile-delete" disabled="{{isDeleting}}" aria-label="删除全部资料" bind:tap="requestDelete">
+        <view class="dl-list-row__title">删除全部资料</view>
+      </button>
+    </view>
+    <view class="sheet-action">
+      <button class="dl-button dl-button--outline" bind:tap="closeMenu">取消</button>
+    </view>
+  </view>
+</t-popup>
+
+<t-dialog
+  visible="{{showDeleteDialog}}"
+  title="删除全部资料？"
+  content="云端资料、手机号和本机记录都会被清除，删除后无法恢复。"
+  confirm-btn="{{deleteConfirmButton}}"
+  cancel-btn="取消"
+  bind:confirm="confirmDelete"
+  bind:cancel="cancelDelete"
+  bind:close="cancelDelete"
+/>

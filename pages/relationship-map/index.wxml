@@ -1,0 +1,124 @@
+<view class="page relationship-map map-enter">
+  <view class="map-header">
+    <view class="page-kicker">认真匹配 · 持续更新</view>
+    <view class="map-title">我的关系底图</view>
+    <view class="map-summary">{{summary}}</view>
+    <view class="map-intro">这里区分你明确填写的内容、仍待核对的判断，以及目前还不了解的部分。</view>
+  </view>
+
+  <view class="map-section">
+    <view class="map-section__heading">
+      <view class="map-section__index">01</view>
+      <view>
+        <view class="map-section__title">目前已经明确的</view>
+        <view class="map-section__desc">来自你的个人档案，不做额外解释。</view>
+      </view>
+    </view>
+    <view wx:if="{{facts.length}}" class="map-list">
+      <view wx:for="{{facts}}" wx:key="id" class="map-fact">
+        <view class="map-fact__label">{{item.label}}</view>
+        <view class="map-fact__text">{{item.text}}</view>
+        <view class="map-fact__source">{{item.statusLabel}}</view>
+      </view>
+    </view>
+    <view wx:else class="map-empty">还没有个人档案内容。完成初步探索后，可以从最基本的信息开始补充。</view>
+  </view>
+
+  <view class="map-section map-section--claims">
+    <view class="map-section__heading">
+      <view class="map-section__index">02</view>
+      <view>
+        <view class="map-section__title">从回答中形成的</view>
+        <view class="map-section__desc">每条描述都有自己的依据与可信状态，并由你核对。</view>
+      </view>
+    </view>
+    <view wx:if="{{claims.length}}" class="map-list map-claim-list">
+      <button wx:for="{{claims}}" wx:key="id" class="map-claim" data-id="{{item.id}}" bind:tap="openClaim">
+        <view class="map-claim__topline">
+          <text class="map-claim__label">{{item.label}}</text>
+          <text class="map-claim__status">{{item.feedbackLabel || item.statusLabel}}</text>
+        </view>
+        <view class="map-claim__title">{{item.title}}</view>
+        <view class="map-claim__footer">
+          <text>{{item.sourceLabel}}</text>
+          <text class="dl-chevron">›</text>
+        </view>
+      </button>
+    </view>
+    <view wx:else class="map-empty">完成 5 个相处选择后，这里会出现第一条可以核对的描述。</view>
+  </view>
+
+  <view wx:if="{{openQuestions.length}}" class="map-section map-section--open">
+    <view class="map-section__heading">
+      <view class="map-section__index">03</view>
+      <view>
+        <view class="map-section__title">目前还不了解的</view>
+        <view class="map-section__desc">档案允许保留不知道，不会强行补出结论。</view>
+      </view>
+    </view>
+    <view wx:for="{{openQuestions}}" wx:key="id" class="map-open-question">
+      <view class="map-open-question__title">{{item.title}}</view>
+      <view class="map-open-question__text">{{item.text}}</view>
+    </view>
+  </view>
+
+  <view class="map-next">
+    <view class="map-next__kicker">{{recommendation.kicker}}</view>
+    <view class="map-next__title">{{recommendation.title}}</view>
+    <view class="map-next__desc">{{recommendation.desc}}</view>
+    <button class="map-next__button" bind:tap="openNext">{{recommendation.action}}</button>
+  </view>
+
+  <view class="map-section map-section--other">
+    <view class="section-title map-other-title">其他入口</view>
+    <view class="dl-list map-other-list">
+      <button class="dl-list-row dl-list-row--button dl-list-row--with-value" bind:tap="openExploration">
+        <view class="dl-list-row__body">
+          <view class="dl-list-row__title">初步探索</view>
+          <view class="dl-list-row__desc">查看 5 个相处选择和初步结果</view>
+        </view>
+        <view class="dl-list-row__value">{{explorationStatusText}}</view>
+        <text class="dl-chevron">›</text>
+      </button>
+      <button class="dl-list-row dl-list-row--button dl-list-row--with-value" data-module="current_relationship_readiness" bind:tap="openQuestionnaire">
+        <view class="dl-list-row__body">
+          <view class="dl-list-row__title">当前关系状态</view>
+          <view class="dl-list-row__desc">16 题，分别了解意愿、余力和现实动机</view>
+        </view>
+        <view class="dl-list-row__value">{{questionnaireStatusText}}</view>
+        <text class="dl-chevron">›</text>
+      </button>
+      <button class="dl-list-row dl-list-row--button dl-list-row--with-value" data-module="intimate_interaction_style" bind:tap="openQuestionnaire">
+        <view class="dl-list-row__body">
+          <view class="dl-list-row__title">亲密互动方式</view>
+          <view class="dl-list-row__desc">16 题，观察不确定、亲近和常见应对动作</view>
+        </view>
+        <view class="dl-list-row__value">{{interactionStatusText}}</view>
+        <text class="dl-chevron">›</text>
+      </button>
+      <button class="dl-list-row dl-list-row--button dl-list-row--with-value" data-module="needs_and_provision" bind:tap="openQuestionnaire">
+        <view class="dl-list-row__body">
+          <view class="dl-list-row__title">需要与能够提供</view>
+          <view class="dl-list-row__desc">24 题，分开记录六类需要与可提供行为</view>
+        </view>
+        <view class="dl-list-row__value">{{needsStatusText}}</view>
+        <text class="dl-chevron">›</text>
+      </button>
+      <button class="dl-list-row dl-list-row--button dl-list-row--with-value" bind:tap="openProfile">
+        <view class="dl-list-row__body">
+          <view class="dl-list-row__title">个人档案</view>
+          <view class="dl-list-row__desc">本人明确填写的事实和现实计划</view>
+        </view>
+        <view class="dl-list-row__value">{{profileStatusText}}</view>
+        <text class="dl-chevron">›</text>
+      </button>
+      <button wx:if="{{showProfileSettings}}" class="dl-list-row dl-list-row--button" bind:tap="openDataSettings">
+        <view class="dl-list-row__body">
+          <view class="dl-list-row__title">联系与数据设置</view>
+          <view class="dl-list-row__desc">修改联系方式、暂停或删除资料</view>
+        </view>
+        <text class="dl-chevron">›</text>
+      </button>
+    </view>
+  </view>
+</view>

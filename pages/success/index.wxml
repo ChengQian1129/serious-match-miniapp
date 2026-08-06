@@ -1,0 +1,10 @@
+<view class="success-page">
+  <view class="success-symbol">✓</view>
+  <view class="success-title">资料已经收好</view>
+  <view class="success-desc">之后可以随时修改、补充、暂停或删除。</view>
+  <view class="success-actions dl-stack">
+    <button class="dl-button" bind:tap="viewProfile">查看我的关系底图</button>
+    <button class="dl-button dl-button--outline" bind:tap="goHome">返回首页</button>
+  </view>
+  <view class="success-note">体验版不会发送消息，也不会主动联系你。</view>
+</view>

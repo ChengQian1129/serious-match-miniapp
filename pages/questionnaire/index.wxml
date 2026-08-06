@@ -1,0 +1,55 @@
+<view wx:if="{{item}}" class="question-page questionnaire-page" style="padding-top: {{statusBarHeight}}px;">
+  <view class="question-top">
+    <view class="question-top__row">
+      <button class="question-back" aria-label="返回上一题" bind:tap="handlePrevious">
+        <text class="question-back__icon">‹</text>返回
+      </button>
+      <view class="question-top__title">{{moduleTitle}}</view>
+      <view class="question-top__spacer"></view>
+    </view>
+    <view class="question-progress-row">
+      <view class="question-progress">
+        <view class="question-progress__bar" style="transform: scaleX({{progress}});"></view>
+      </view>
+      <text class="question-top__count">{{questionNumber}} / {{questionCount}}</text>
+    </view>
+  </view>
+
+  <view class="question-content questionnaire-content {{motionClass}}">
+    <view class="questionnaire-meta">
+      <text class="question-eyebrow">{{dimensionTitle}}</text>
+    </view>
+    <view class="question-title questionnaire-title">{{item.text}}</view>
+    <view class="question-desc">{{moduleInstruction}}</view>
+
+    <view class="question-control choice-list questionnaire-options">
+      <button
+        wx:for="{{responseOptions}}"
+        wx:key="value"
+        class="choice-option questionnaire-option {{selectedValue === item.value ? 'choice-option--selected' : ''}}"
+        data-value="{{item.value}}"
+        aria-role="radio"
+        aria-checked="{{selectedValue === item.value}}"
+        bind:tap="chooseAnswer"
+      >
+        <text class="questionnaire-option__number">{{item.value}}</text>
+        <text class="questionnaire-option__label">{{item.label}}</text>
+        <text wx:if="{{selectedValue === item.value}}" class="choice-option__check">✓</text>
+      </button>
+    </view>
+
+    <view wx:if="{{specialOptions.length}}" class="questionnaire-specials {{specialOptions.length > 1 ? 'questionnaire-specials--multiple' : ''}}">
+      <button
+        wx:for="{{specialOptions}}"
+        wx:key="value"
+        class="choice-skip {{selectedValue === item.value ? 'choice-skip--selected' : ''}}"
+        data-value="{{item.value}}"
+        bind:tap="chooseSpecial"
+      >{{selectedValue === item.value ? '✓ ' : ''}}{{item.label}}</button>
+    </view>
+  </view>
+</view>
+
+<view wx:if="{{item}}" class="action-bar">
+  <button class="dl-button" disabled="{{!canContinue}}" bind:tap="handleContinue">{{continueLabel}}</button>
+</view>

@@ -1,0 +1,19 @@
+{
+  "name": "swiftshader",
+  "version": "1.0.0",
+  "description": "原生微信小程序 Demo：本地保存填写草稿，确认提交后通过微信云开发维护私密资料资源池。",
+  "main": "app.js",
+  "scripts": {
+    "postinstall": "node scripts/patch-tdesign.js",
+    "patch:tdesign": "node scripts/patch-tdesign.js",
+    "test": "node .tmp/check-project.js && node .tmp/questionnaire-test.js && node .tmp/cloud-function-test.js && node .tmp/mock-flow.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "tdesign-miniprogram": "^1.15.3",
+    "tslib": "^2.8.1"
+  }
+}

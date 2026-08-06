@@ -1,0 +1,44 @@
+.profile-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24rpx;
+  padding: 68rpx 40rpx 46rpx;
+}
+
+.profile-heading {
+  min-width: 0;
+}
+
+.profile-name {
+  max-width: 560rpx;
+  margin-top: 12rpx;
+  overflow: hidden;
+  font-size: 56rpx;
+  font-weight: 700;
+  line-height: 68rpx;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-menu-button {
+  display: flex;
+  width: 92rpx;
+  height: 92rpx;
+  flex: 0 0 92rpx;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0 0 12rpx;
+  border: 2rpx solid #dedede;
+  border-radius: 8rpx;
+  background: #ffffff;
+  color: #0a0a0a;
+  font-size: 28rpx;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.profile-delete {
+  color: #ff3b30;
+}

@@ -1,0 +1,39 @@
+<view class="page page--with-action">
+  <view class="page-header">
+    <view class="page-kicker">匿名介绍 · 预览</view>
+    <view class="page-title">确认对外介绍</view>
+    <view class="page-desc">联系方式和能够直接识别身份的信息不会出现在介绍里。</view>
+  </view>
+
+  <view class="section-title section-title--first">资料内容</view>
+  <view class="info-block">
+    <view class="info-block__title">{{profileView.meta}}</view>
+    <view class="info-block__subtitle">{{profileView.district}}</view>
+    <view wx:for="{{profileView.lines}}" wx:key="*this" class="info-block__line">{{item}}</view>
+    <view class="info-block__target">
+      <view class="info-block__target-label">希望认识</view>
+      <view class="info-block__target-value">{{profileView.target}}</view>
+    </view>
+  </view>
+
+  <view class="section-title">隐私范围</view>
+  <view class="dl-list">
+    <view class="dl-list-row">
+      <view class="dl-list-row__body">
+        <view class="dl-list-row__title">保持匿名</view>
+        <view class="dl-list-row__desc">称呼、手机号、具体单位等可识别身份的信息不会展示。</view>
+      </view>
+    </view>
+    <view class="dl-list-row">
+      <view class="dl-list-row__body">
+        <view class="dl-list-row__title">再次确认</view>
+        <view class="dl-list-row__desc">需要照片或更详细信息时，会再次询问你的意愿。</view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="action-bar action-bar--stack">
+  <view><button class="dl-button" bind:tap="handleConfirm">{{isEditing ? '保存修改' : '确认这份介绍'}}</button></view>
+  <view><button class="dl-button dl-button--ghost" bind:tap="handleBack">返回修改</button></view>
+</view>

@@ -1,0 +1,16 @@
+# Dependencies and generated test artifacts
+node_modules/
+cloudfunctions/**/node_modules/
+miniprogram_npm/
+.tmp/
+tmp/
+
+# WeChat DevTools machine-local files
+project.private.config.json
+config/cloud.js
+*.dll
+
+# Logs and operating-system metadata
+*.log
+.DS_Store
+Thumbs.db

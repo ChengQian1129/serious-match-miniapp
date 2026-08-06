@@ -1,0 +1,75 @@
+<view class="page home-page" style="padding-top: {{statusBarHeight}}px;">
+  <view class="home-hero">
+    <view class="home-wordmark">
+      <view class="home-mark"><view></view><view></view></view>
+      <text>认真匹配 · 关系底图</text>
+    </view>
+
+    <view class="home-copy">
+      <view class="page-kicker">大连 · 测试版</view>
+      <view class="home-title">{{heroTitle}}</view>
+      <view class="home-desc">{{heroDesc}}</view>
+    </view>
+
+    <view class="home-actions dl-stack">
+      <button class="dl-button" loading="{{isRestoring}}" disabled="{{isRestoring}}" bind:tap="handleStart">{{isRestoring ? '正在读取资料' : actionText}}</button>
+      <button class="dl-button dl-button--outline" bind:tap="openGuide">这份登记如何使用</button>
+    </view>
+  </view>
+
+  <view class="home-process">
+    <view class="section-title home-section-title">从体验到个人档案</view>
+    <view class="dl-list home-list">
+      <view class="dl-list-row">
+        <view class="home-step">01</view>
+        <view class="dl-list-row__body">
+          <view class="dl-list-row__title">回答 5 个相处问题</view>
+          <view class="dl-list-row__desc">首次体验大约 1 分钟</view>
+        </view>
+      </view>
+      <view class="dl-list-row">
+        <view class="home-step">02</view>
+        <view class="dl-list-row__body">
+          <view class="dl-list-row__title">查看初步关系倾向</view>
+          <view class="dl-list-row__desc">只描述选择，不做人格诊断</view>
+        </view>
+      </view>
+      <view class="dl-list-row">
+        <view class="home-step">03</view>
+        <view class="dl-list-row__body">
+          <view class="dl-list-row__title">建立并维护个人档案</view>
+          <view class="dl-list-row__desc">由你决定是否保存和提交</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<t-popup placement="bottom" visible="{{showGuide}}" bind:visible-change="handleGuideVisibleChange">
+  <view class="sheet-content">
+    <view class="sheet-title">这份关系底图如何使用？</view>
+    <view class="dl-list">
+      <view class="dl-list-row">
+        <view class="dl-list-row__body">
+          <view class="dl-list-row__title">先获得一份初步描述</view>
+          <view class="dl-list-row__desc">5 个选择只反映当前偏好，不会给你贴类型标签。</view>
+        </view>
+      </view>
+      <view class="dl-list-row">
+        <view class="dl-list-row__body">
+          <view class="dl-list-row__title">再决定是否保存</view>
+          <view class="dl-list-row__desc">暂时离开也不会创建个人档案或上传回答。</view>
+        </view>
+      </view>
+      <view class="dl-list-row">
+        <view class="dl-list-row__body">
+          <view class="dl-list-row__title">提交后仍由你控制</view>
+          <view class="dl-list-row__desc">个人档案不会公开展示，可以随时修改、暂停或删除。</view>
+        </view>
+      </view>
+    </view>
+    <view class="sheet-action">
+      <button class="dl-button" bind:tap="closeGuide">知道了</button>
+    </view>
+  </view>
+</t-popup>
