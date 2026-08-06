@@ -1,4 +1,5 @@
 const cloud = require('wx-server-sdk')
+const crypto = require('crypto')
 
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV })
 
@@ -7,6 +8,7 @@ const dbCommand = db.command
 const profiles = db.collection('dating_profiles')
 const assessmentSessions = db.collection('assessment_sessions')
 const assessmentReports = db.collection('assessment_reports')
+const assessmentInvites = db.collection('assessment_invites')
 const { ASSESSMENT_ID, INSTRUMENT_VERSION, ITEMS } = require('./assessment-v2-questionnaire-definitions')
 const { validateAnswers, evaluateAssessment } = require('./assessment-v2-scoring-engine')
 const { buildReport } = require('./assessment-v2-report-engine')
@@ -114,6 +116,34 @@ async function findAssessmentSession(openid, assessmentId) {
     if (/does not exist|not exists?|not found/i.test(error.errMsg || error.message || '')) return null
     throw error
   }
+}
+
+async function findOwnReport(openid, reportId) {
+  if (!reportId) return null
+  try {
+    const result = await assessmentReports.doc(reportId).get()
+    return result.data && result.data._openid === openid ? result.data : null
+  } catch (error) {
+    if (/does not exist|not exists?|not found/i.test(error.errMsg || error.message || '')) return null
+    throw error
+  }
+}
+
+function compareReportSummaries(left, right) {
+  const confirmed = report => (report.claims || []).filter(claim => claim.shareFragment && report.userConfirmations && ['fits', 'partly_fits'].includes(report.userConfirmations[claim.id] && report.userConfirmations[claim.id].value)).map(claim => claim.shareFragment)
+  const leftShare = confirmed(left)
+  const rightShare = confirmed(right)
+  const leftDimensions = left.evaluation && left.evaluation.dimensions || {}
+  const rightDimensions = right.evaluation && right.evaluation.dimensions || {}
+  const aligned = []
+  const discuss = []
+  ;['response_predictability', 'emotional_support', 'autonomy_space', 'conflict_pause', 'repair_reengagement'].forEach(id => {
+    const a = leftDimensions[id] || {}
+    const b = rightDimensions[id] || {}
+    if (a.provideState === 'provide_stable' && b.provideState === 'provide_stable') aligned.push(id)
+    if (a.needState === 'need_clear' && b.provideState !== 'provide_stable' || b.needState === 'need_clear' && a.provideState !== 'provide_stable') discuss.push(id)
+  })
+  return { leftShare, rightShare, aligned, discuss, note: '这是双方当前自述的对照线索，不是匹配分数或成功率。' }
 }
 
 function questionnaireItemRules(ids, values) {
@@ -453,6 +483,17 @@ async function removeOwnDocuments(collection, openid) {
   }
 }
 
+async function removeOwnCompareInvites(openid) {
+  const groups = await Promise.all(['ownerOpenid', 'guestOpenid'].map(async field => {
+    try { return (await assessmentInvites.where({ [field]: openid }).limit(100).get()).data || [] } catch (error) {
+      if (/collection.*(does not exist|not exists?|not found)/i.test(error.errMsg || error.message || '')) return []
+      throw error
+    }
+  }))
+  const ids = [...new Set(groups.flat().map(invite => invite._id))]
+  await Promise.all(ids.map(id => assessmentInvites.doc(id).remove()))
+}
+
 exports.main = async event => {
   const { OPENID } = cloud.getWXContext()
   if (!OPENID) return { ok: false, code: 'NO_OPENID', message: '无法确认微信身份' }
@@ -525,6 +566,42 @@ exports.main = async event => {
       const userConfirmations = Object.assign({}, report.userConfirmations, { [claimId]: { value, note: text(event.note, 200), reviewedAt: Date.now() } })
       await assessmentReports.doc(reportId).update({ data: { userConfirmations } })
       return { ok: true, data: { userConfirmations } }
+    }
+
+    if (event.action === 'compareInviteCreate') {
+      const report = await findOwnReport(OPENID, text(event.reportId, 128))
+      if (!report) reject('报告不存在或不属于当前用户', 'INVALID_ASSESSMENT')
+      const code = crypto.randomBytes(5).toString('hex').toUpperCase()
+      const createdAt = Date.now()
+      const invite = { _id: code, _openid: OPENID, code, ownerOpenid: OPENID, ownerReportId: report._id, createdAt, expiresAt: createdAt + 7 * 24 * 60 * 60 * 1000, status: 'open' }
+      await assessmentInvites.doc(code).set({ data: invite })
+      return { ok: true, data: { code, expiresAt: invite.expiresAt } }
+    }
+
+    if (event.action === 'compareInviteJoin') {
+      const code = text(event.code, 20).toUpperCase()
+      const inviteResult = await assessmentInvites.doc(code).get()
+      const invite = inviteResult.data
+      if (!invite || invite.status !== 'open' || Number(invite.expiresAt) < Date.now()) reject('邀请已失效，请让对方重新生成', 'INVITE_EXPIRED')
+      if (invite.ownerOpenid === OPENID) reject('不能用自己的邀请加入对照', 'INVALID_INVITE')
+      const report = await findOwnReport(OPENID, text(event.reportId, 128))
+      if (!report) reject('请先完成自己的关系说明书', 'INVALID_ASSESSMENT')
+      const ownerReport = await findOwnReport(invite.ownerOpenid, invite.ownerReportId)
+      if (!ownerReport) reject('邀请方报告已不可用', 'INVALID_INVITE')
+      const joined = Object.assign({}, invite, { guestOpenid: OPENID, guestReportId: report._id, joinedAt: Date.now(), status: 'joined' })
+      await assessmentInvites.doc(code).set({ data: joined })
+      return { ok: true, data: { inviteId: code, comparison: compareReportSummaries(ownerReport, report) } }
+    }
+
+    if (event.action === 'compareGet') {
+      const code = text(event.code, 20).toUpperCase()
+      const inviteResult = await assessmentInvites.doc(code).get()
+      const invite = inviteResult.data
+      if (!invite || invite.status !== 'joined' || ![invite.ownerOpenid, invite.guestOpenid].includes(OPENID)) reject('对照邀请不存在或尚未完成', 'INVALID_INVITE')
+      const ownerReport = await findOwnReport(invite.ownerOpenid, invite.ownerReportId)
+      const guestReport = await findOwnReport(invite.guestOpenid, invite.guestReportId)
+      if (!ownerReport || !guestReport) reject('对照报告暂时不可用', 'INVALID_INVITE')
+      return { ok: true, data: { inviteId: code, comparison: compareReportSummaries(ownerReport, guestReport) } }
     }
 
     if (event.action === 'get') {
@@ -638,6 +715,7 @@ exports.main = async event => {
       if (existing) await profiles.doc(OPENID).remove()
       await removeOwnDocuments(assessmentReports, OPENID)
       await removeOwnDocuments(assessmentSessions, OPENID)
+      await removeOwnCompareInvites(OPENID)
       return { ok: true, data: { deleted: true } }
     }
 

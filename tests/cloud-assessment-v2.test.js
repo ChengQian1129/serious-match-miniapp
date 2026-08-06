@@ -16,8 +16,9 @@ function applyUpdate(target, data) {
   return next
 }
 
+let currentOpenid = 'v2-user'
 const cloudStub = {
-  DYNAMIC_CURRENT_ENV: 'test-env', init() {}, getWXContext() { return { OPENID: 'v2-user' } },
+  DYNAMIC_CURRENT_ENV: 'test-env', init() {}, getWXContext() { return { OPENID: currentOpenid } },
   database() {
     return {
       command: { remove() { return removeToken } },
@@ -106,10 +107,31 @@ async function run() {
   assert.equal(result.ok, true)
   assert.equal(result.data.report.userConfirmations[claimId].value, 'partly_fits')
 
+  result = await cloudFunction.main({ action: 'compareInviteCreate', reportId })
+  assert.equal(result.ok, true)
+  const inviteCode = result.data.code
+  currentOpenid = 'friend-user'
+  result = await cloudFunction.main({ action: 'assessmentComplete', session: Object.assign(session(500, answers), { assessmentId: 'relationship_manual_v2.friend' }) })
+  assert.equal(result.ok, true)
+  const friendReportId = result.data.report._id
+  result = await cloudFunction.main({ action: 'compareInviteJoin', code: inviteCode, reportId: friendReportId })
+  assert.equal(result.ok, true)
+  assert.equal(result.data.comparison.note.includes('匹配分数'), true)
+  assert.equal('answers' in result.data.comparison, false)
+  currentOpenid = 'v2-user'
+  result = await cloudFunction.main({ action: 'compareGet', code: inviteCode })
+  assert.equal(result.ok, true)
+  assert.ok(Array.isArray(result.data.comparison.aligned))
+
   result = await cloudFunction.main({ action: 'delete' })
   assert.equal(result.ok, true)
   result = await cloudFunction.main({ action: 'assessmentGet', assessmentId: 'relationship_manual_v2.test' })
   assert.equal(result.data.session, null)
+  assert.equal(rows('assessment_reports').size, 1)
+  assert.equal(rows('assessment_invites').size, 0)
+  currentOpenid = 'friend-user'
+  result = await cloudFunction.main({ action: 'delete' })
+  assert.equal(result.ok, true)
   assert.equal(rows('assessment_reports').size, 0)
   console.log('Assessment V2 cloud OK: stale protection, report snapshot, restore, confirmation')
 }

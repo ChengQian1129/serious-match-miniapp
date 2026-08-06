@@ -14,8 +14,8 @@
 
 1. 在微信开发者工具中开通云开发并创建环境。
 2. 复制 `config/cloud.example.js` 为 `config/cloud.js`，再填写云环境 ID 和实际运营主体名称。`config/cloud.js` 已被 Git 忽略，不会上传到公开仓库。
-4. 在云数据库中新建集合 `dating_profiles`。
-5. 将 `dating_profiles` 的数据库权限设为客户端不可读、不可写。所有操作只允许通过云函数完成。
+4. 在云数据库中新建集合 `dating_profiles`、`assessment_sessions`、`assessment_reports` 和 `assessment_invites`。
+5. 将这些集合的数据库权限设为客户端不可读、不可写。所有操作只允许通过云函数完成。
 6. 在开发者工具中右键 `cloudfunctions/datingProfile`，选择“上传并部署：云端安装依赖”。
 7. 编译后提交一份测试资料，在云数据库中确认生成了以当前用户 `OPENID` 为标识的记录。
 

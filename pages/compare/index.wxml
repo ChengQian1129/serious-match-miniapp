@@ -1,0 +1,21 @@
+<view class="page compare-page">
+  <view class="page-kicker">认真匹配 · 双人对照</view>
+  <view class="compare-title">两个人怎样靠近，不该只看一个分数。</view>
+  <view class="compare-desc">对照只使用双方主动核对过的分享线索和高层次关系状态，不展示原始答案、手机号或完整风险结论。</view>
+
+  <view wx:if="{{mode === 'create'}}" class="compare-panel"><view class="compare-panel__title">邀请一位朋友</view><view class="compare-panel__text">创建邀请会把你的关系说明书保存到私密云端。对方也完成说明书并主动加入后，双方都能看到对照。</view><button class="dl-button" loading="{{isLoading}}" disabled="{{isLoading}}" bind:tap="createInvite">创建对照邀请</button></view>
+
+  <view wx:if="{{mode === 'invite'}}" class="compare-panel"><view class="compare-code-label">对照邀请码</view><view class="compare-code">{{code}}</view><view class="compare-panel__text">{{expiresText}}。等待对方加入后可以回来查看。</view><button class="dl-button" open-type="share">发送邀请</button><button class="dl-button dl-button--outline compare-secondary" loading="{{isLoading}}" bind:tap="refreshComparison">查看是否已加入</button></view>
+
+  <view wx:if="{{mode === 'join'}}" class="compare-panel"><view class="compare-code-label">你收到的邀请码</view><view class="compare-code">{{code}}</view><view class="compare-panel__text">加入表示同意把你已核对的分享线索用于这一次双方对照。</view><button class="dl-button" loading="{{isLoading}}" disabled="{{isLoading}}" bind:tap="joinInvite">用我的报告加入</button></view>
+
+  <view wx:if="{{mode === 'result' && comparison}}" class="compare-result">
+    <view class="compare-section"><view class="compare-section__title">可能容易衔接的地方</view><block wx:if="{{aligned.length}}"><view wx:for="{{aligned}}" wx:key="*this" class="compare-row">{{item}}</view></block><view wx:else class="compare-empty">目前没有足够的共同线索，先保留未知。</view></view>
+    <view class="compare-section"><view class="compare-section__title">建议提前说清的地方</view><block wx:if="{{discuss.length}}"><view wx:for="{{discuss}}" wx:key="*this" class="compare-row">{{item}}</view></block><view wx:else class="compare-empty">当前没有明显需要单独提示的地方。</view></view>
+    <view class="compare-section"><view class="compare-section__title">双方主动确认的线索</view><view wx:for="{{comparison.leftShare}}" wx:key="*this" class="compare-quote">A · {{item}}</view><view wx:for="{{comparison.rightShare}}" wx:key="*this" class="compare-quote">B · {{item}}</view></view>
+    <view class="compare-boundary">{{comparison.note}}</view>
+  </view>
+
+  <view wx:if="{{error}}" class="field-error compare-error">{{error}}</view>
+  <button class="compare-back" bind:tap="backReport">返回关系说明书</button>
+</view>

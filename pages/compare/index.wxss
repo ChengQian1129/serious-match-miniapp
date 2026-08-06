@@ -1,0 +1,16 @@
+.compare-page { padding: 58rpx 40rpx calc(64rpx + env(safe-area-inset-bottom)); }
+.compare-title { max-width: 650rpx; margin-top: 18rpx; font-size: 48rpx; font-weight: 700; line-height: 1.25; }
+.compare-desc { margin-top: 22rpx; color: var(--dl-grey-500); font-size: 25rpx; line-height: 42rpx; }
+.compare-panel, .compare-result { margin-top: 52rpx; padding-top: 34rpx; border-top: 2rpx solid var(--dl-black); }
+.compare-panel__title, .compare-section__title { font-size: 30rpx; font-weight: 700; line-height: 42rpx; }
+.compare-panel__text { margin: 18rpx 0 32rpx; color: var(--dl-grey-500); font-size: 25rpx; line-height: 42rpx; }
+.compare-code-label { color: var(--dl-grey-500); font-size: 22rpx; }
+.compare-code { margin-top: 12rpx; font-size: 52rpx; font-weight: 700; letter-spacing: 0; }
+.compare-secondary { margin-top: 16rpx; }
+.compare-section { padding: 34rpx 0 16rpx; border-bottom: 2rpx solid var(--dl-grey-200); }
+.compare-row, .compare-quote { padding: 18rpx 0; font-size: 27rpx; line-height: 42rpx; }
+.compare-quote { color: var(--dl-grey-500); }
+.compare-empty { padding: 18rpx 0; color: var(--dl-grey-500); font-size: 24rpx; line-height: 38rpx; }
+.compare-boundary { margin-top: 34rpx; color: var(--dl-grey-500); font-size: 23rpx; line-height: 38rpx; }
+.compare-error { margin-top: 24rpx; }
+.compare-back { width: 100%; margin-top: 28rpx; padding: 18rpx; border: 0; background: transparent; color: var(--dl-grey-500); font-size: 24rpx; }

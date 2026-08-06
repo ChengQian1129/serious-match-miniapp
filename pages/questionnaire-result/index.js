@@ -57,5 +57,6 @@ Page({
   reviseChapter(event) { navigateOnce(this, 'redirectTo', { url: `/pages/questionnaire/index?chapter=${event.currentTarget.dataset.chapter}&question=0&revise=1` }) },
   openClaim(event) { navigateOnce(this, 'navigateTo', { url: `/pages/record-claim/index?id=${encodeURIComponent(event.currentTarget.dataset.id)}` }) },
   openShare() { navigateOnce(this, 'navigateTo', { url: '/pages/share-card/index' }) },
+  openCompare() { navigateOnce(this, 'navigateTo', { url: '/pages/compare/index' }) },
   openMap() { navigateOnce(this, 'reLaunch', { url: '/pages/relationship-map/index' }) }
 })

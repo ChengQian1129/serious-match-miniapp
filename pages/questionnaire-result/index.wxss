@@ -16,6 +16,7 @@
 .report-boundary { margin-top: 46rpx; padding: 28rpx 0; border-top: 2rpx solid var(--dl-black); border-bottom: 2rpx solid var(--dl-black); color: var(--dl-grey-500); font-size: 24rpx; line-height: 40rpx; }
 .report-share__item { margin-top: 14rpx; font-size: 28rpx; line-height: 42rpx; }
 .report-share-button { margin-top: 40rpx; }
+.report-compare-button { margin-top: 18rpx; }
 .report-revise { width: 100%; margin: 24rpx 0 12rpx; padding: 18rpx; border: 0; background: transparent; color: var(--dl-black); font-size: 25rpx; text-decoration: underline; }
 .report-revise-block { margin-top: 44rpx; }
 .report-chapters { margin-top: 14rpx; border-top: 2rpx solid var(--dl-black); }

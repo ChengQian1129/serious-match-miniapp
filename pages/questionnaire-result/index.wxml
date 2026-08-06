@@ -11,6 +11,7 @@
     <view class="report-boundary">这份报告来自你的当前自述。它能帮助你整理关系需要，但不能替代真实相处，也不能预测一段关系一定成功。</view>
     <view wx:if="{{shareFragments.length}}" class="report-share"><view class="report-section__title">可以分享的相处线索</view><view wx:for="{{shareFragments}}" wx:key="*this" class="report-share__item">{{item}}</view></view>
     <button class="dl-button report-share-button" bind:tap="openShare">生成我的相处名片{{shareableCount ? ' · ' + shareableCount + ' 条已核对' : ''}}</button>
+    <button class="dl-button dl-button--outline report-compare-button" bind:tap="openCompare">邀请朋友做关系对照</button>
     <view class="report-revise-block"><view class="report-section__title">修改某一章的回答</view><view class="report-chapters"><button wx:for="{{chapters}}" wx:key="id" class="report-chapter" data-chapter="{{item.id}}" bind:tap="reviseChapter"><text>{{item.id}}</text><text>{{item.title}}</text></button></view></view>
     <button class="dl-button dl-button--outline" bind:tap="openMap">把报告用于认真匹配</button>
   </view>
