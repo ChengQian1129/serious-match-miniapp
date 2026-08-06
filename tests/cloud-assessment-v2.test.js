@@ -117,6 +117,12 @@ async function run() {
   assert.equal(result.ok, true)
   assert.equal(result.data.report.userConfirmations[claimId].value, 'partly_fits')
 
+  result = await cloudFunction.main({ action: 'assessmentHistory' })
+  assert.equal(result.ok, true)
+  assert.equal(result.data.reports.length, 1)
+  assert.equal(result.data.reports[0]._id, reportId)
+  assert.equal('evaluation' in result.data.reports[0], false)
+
   result = await cloudFunction.main({ action: 'compareInviteCreate', reportId })
   assert.equal(result.ok, true)
   const inviteCode = result.data.code

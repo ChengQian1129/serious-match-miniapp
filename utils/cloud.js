@@ -95,6 +95,9 @@ function completeAssessmentToCloud(session, callbacks) {
 function getAssessmentFromCloud(assessmentId, callbacks) {
   return callProfile('assessmentGet', { assessmentId }, callbacks)
 }
+function getAssessmentHistoryFromCloud(callbacks) {
+  return callProfile('assessmentHistory', {}, callbacks)
+}
 
 function confirmAssessmentClaimToCloud(reportId, claimId, value, note, callbacks) {
   return callProfile('assessmentConfirmClaim', { reportId, claimId, value, note }, callbacks)
@@ -148,6 +151,7 @@ module.exports = {
   saveAssessmentDraftToCloud,
   completeAssessmentToCloud,
   getAssessmentFromCloud,
+  getAssessmentHistoryFromCloud,
   confirmAssessmentClaimToCloud,
   saveAssessmentShareSettings,
   createCompareInvite,

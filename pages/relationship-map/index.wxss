@@ -211,6 +211,25 @@
   line-height: 42rpx;
 }
 
+.map-history {
+  display: flex;
+  width: 100%;
+  min-height: 104rpx;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24rpx;
+  margin: 0;
+  padding: 24rpx 0;
+  border-bottom: 2rpx solid var(--dl-grey-200);
+  background: transparent;
+  color: var(--dl-black);
+  text-align: left;
+}
+
+.map-history__title { font-size: 27rpx; font-weight: 600; line-height: 40rpx; }
+.map-history__date { margin-top: 4rpx; color: var(--dl-grey-500); font-size: 23rpx; line-height: 34rpx; }
+.map-history-return { margin-top: 28rpx; }
+
 .map-next {
   margin-top: 72rpx;
   padding: 54rpx 40rpx calc(58rpx + env(safe-area-inset-bottom));

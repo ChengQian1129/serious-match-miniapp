@@ -555,6 +555,22 @@ exports.main = async event => {
       return { ok: true, data: { session, report } }
     }
 
+    if (event.action === 'assessmentHistory') {
+      const result = await assessmentReports.where({ _openid: OPENID }).limit(20).get()
+      const reports = (result.data || []).sort((left, right) => Number(right.generatedAt) - Number(left.generatedAt)).map(report => ({
+        _id: report._id,
+        assessmentId: report.assessmentId,
+        reportVersion: report.reportVersion,
+        generatedAt: report.generatedAt,
+        title: report.title,
+        subtitle: report.subtitle,
+        claims: report.claims || [],
+        unknowns: report.unknowns || [],
+        userConfirmations: report.userConfirmations || {}
+      }))
+      return { ok: true, data: { reports } }
+    }
+
     if (event.action === 'assessmentConfirmClaim') {
       const reportId = text(event.reportId, 128)
       const claimId = text(event.claimId, 80)
