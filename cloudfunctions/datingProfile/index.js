@@ -10,6 +10,7 @@ const assessmentReports = db.collection('assessment_reports')
 const { ASSESSMENT_ID, INSTRUMENT_VERSION, ITEMS } = require('./assessment-v2-questionnaire-definitions')
 const { validateAnswers, evaluateAssessment } = require('./assessment-v2-scoring-engine')
 const { buildReport } = require('./assessment-v2-report-engine')
+const { assessResponseQuality } = require('./assessment-v2-quality-engine')
 const PRIVACY_VERSION = 'cloud-1.0'
 
 const allowed = {
@@ -482,7 +483,8 @@ exports.main = async event => {
       }
       const reportVersion = previous && Number(previous.reportVersion) ? Number(previous.reportVersion) + 1 : 1
       const completedAt = Date.now()
-      const report = buildReport(session.answers, { generatedAt: completedAt, reportVersion })
+      const qualitySession = Object.assign({}, session, { completedAt })
+      const report = buildReport(session.answers, { generatedAt: completedAt, reportVersion, responseQuality: assessResponseQuality(qualitySession) })
       const reportId = `${session._id}_report_${reportVersion}`
       const reportDocument = Object.assign({ _id: reportId, _openid: OPENID, assessmentId: session.assessmentId, userConfirmations: {}, shareSettings: {} }, report)
       await assessmentReports.doc(reportId).set({ data: reportDocument })

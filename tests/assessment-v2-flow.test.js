@@ -37,6 +37,7 @@ assert.equal(beforeComplete.currentChapterId, 'C6')
 assert.equal(Object.keys(beforeComplete.answers).length, 48)
 const completed = store.completeAssessment()
 assert.equal(completed.report.reportVersion, 1)
+assert.ok(completed.report.responseQuality)
 assert.equal(completed.session.completedChapters.length, 6)
 
 const firstItem = ITEMS[0]

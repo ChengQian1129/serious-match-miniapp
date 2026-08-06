@@ -4,7 +4,7 @@
     <view wx:for="{{sections}}" wx:key="id" class="report-section">
       <view class="report-section__title">{{item.title}}</view>
       <view wx:for="{{item.claims}}" wx:key="id" class="report-claim" data-id="{{item.id}}" bind:tap="openClaim">
-        <view class="report-claim__title">{{item.title}}</view><view class="report-claim__text">{{item.text}}</view><view class="report-claim__meta">{{item.evidence.length}} 项依据 · {{item.confidenceState === 'multi_item_supported' ? '多题支持' : '初步判断'}} <text class="dl-chevron">›</text></view>
+        <view class="report-claim__title">{{item.title}}</view><view class="report-claim__text">{{item.text}}</view><view class="report-claim__meta">{{item.evidence.length}} 项依据 · {{item.confirmationLabel || (item.confidenceState === 'multi_item_supported' ? '多题支持' : '初步判断')}} <text class="dl-chevron">›</text></view>
       </view>
     </view>
     <view wx:if="{{unknowns.length}}" class="report-unknowns"><view class="report-section__title">目前还不知道什么</view><view wx:for="{{unknowns}}" wx:key="id" class="report-unknown"><view class="report-unknown__title">{{item.title}}</view><view>{{item.text}}</view></view></view>

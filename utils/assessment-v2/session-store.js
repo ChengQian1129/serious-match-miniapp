@@ -2,6 +2,7 @@ const { ASSESSMENT_ID, INSTRUMENT_VERSION, ITEMS, CHAPTERS, getChapter, getItem,
 const { SCORING_RULE_VERSION } = require('./scoring-engine')
 const { REPORT_RULE_VERSION } = require('./report-rules')
 const { buildReport } = require('./report-engine')
+const { assessResponseQuality } = require('./quality-engine')
 
 const SESSION_KEY = 'serious_match_assessment_v2'
 const REPORT_KEY = 'serious_match_report_v2'
@@ -98,7 +99,7 @@ function completeAssessment() {
   const previousReport = getReport()
   const reportVersion = previousReport && Number(previousReport.reportVersion) ? Number(previousReport.reportVersion) + 1 : 1
   const completed = saveSession(Object.assign({}, session, { status: 'report_generated', revisionPending: false, completedChapters: CHAPTERS.map(chapter => chapter.id), completedAt, updatedAt: completedAt }))
-  const report = buildReport(completed.answers, { generatedAt: completedAt, reportVersion })
+  const report = buildReport(completed.answers, { generatedAt: completedAt, reportVersion, responseQuality: assessResponseQuality(completed) })
   wx.setStorageSync(REPORT_KEY, report)
   return { session: completed, report }
 }

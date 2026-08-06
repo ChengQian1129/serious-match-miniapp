@@ -1,0 +1,18 @@
+const assert = require('node:assert/strict')
+const { ITEMS } = require('../utils/assessment-v2/questionnaire-definitions')
+const { assessResponseQuality } = require('../utils/assessment-v2/quality-engine')
+
+const answers = Object.fromEntries(ITEMS.map(item => [item.id, 5]))
+const events = ITEMS.map((item, index) => ({ itemId: item.id, answeredAt: 1000 + index * 400 }))
+events.push({ itemId: ITEMS[0].id, answeredAt: 30000 })
+const quality = assessResponseQuality({ answers, answerEvents: events, itemOrder: ITEMS.map(item => item.id), startedAt: 1000, completedAt: 30000 })
+assert.equal(quality.longestSameResponseRun, 48)
+assert.equal(quality.rapidResponseCount, 47)
+assert.equal(quality.revisionCount, 1)
+assert.ok(quality.flags.includes('long_string_pattern'))
+
+const sparseAnswers = Object.fromEntries(ITEMS.slice(0, 30).map(item => [item.id, 'SKIP']))
+const sparseQuality = assessResponseQuality({ answers: sparseAnswers, answerEvents: [], itemOrder: ITEMS.map(item => item.id), startedAt: 1, completedAt: 2 })
+assert.ok(sparseQuality.flags.includes('high_missingness'))
+
+console.log('Response quality OK: duration, speed, long strings, missingness, revisions')

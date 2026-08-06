@@ -97,7 +97,7 @@ function buildReport(rawAnswers, options = {}) {
     reportVersion: Number(options.reportVersion) || 1, generatedAt: Number(options.generatedAt) || Date.now(),
     title: shareFragments.length ? shareFragments.join(' · ') : '你的关系说明书正在形成',
     subtitle: '这是根据你当前自述形成的关系快照，不是固定人格或心理诊断。',
-    claims, unknowns, evaluation,
+    claims, unknowns, evaluation, responseQuality: options.responseQuality || null,
     shareCard: { title: '我的关系说明书', fragments: shareFragments }
   }
 }

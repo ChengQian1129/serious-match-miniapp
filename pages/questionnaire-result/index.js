@@ -22,8 +22,14 @@ Page({
       { id: 'observation', title: '认识新的人时值得观察什么' }
     ]
     const confirmations = report.userConfirmations || {}
+    const confirmationLabels = { fits: '本人确认符合', partly_fits: '本人确认部分符合', does_not_fit: '本人认为不符合', unsure: '本人暂不确定' }
+    const decoratedClaims = report.claims.map((claim, index) => {
+      const confirmation = confirmations[claim.id]
+      return Object.assign({}, claim, { originalIndex: index, confirmationLabel: confirmation ? confirmationLabels[confirmation.value] : '' })
+    })
+    const orderedClaims = decoratedClaims.sort((left, right) => Number(Boolean(right.confirmationLabel)) - Number(Boolean(left.confirmationLabel)) || Number(right.confidenceState === 'multi_item_supported') - Number(left.confidenceState === 'multi_item_supported') || left.originalIndex - right.originalIndex)
     const shareFragments = report.claims.filter(claim => claim.shareFragment && confirmations[claim.id] && ['fits', 'partly_fits'].includes(confirmations[claim.id].value)).map(claim => claim.shareFragment).slice(0, 2)
-    this.setData({ report, sections: groups.map(group => Object.assign({}, group, { claims: report.claims.filter(claim => claim.section === group.id) })).filter(group => group.claims.length), unknowns: report.unknowns, shareFragments, shareableCount: shareFragments.length })
+    this.setData({ report, sections: groups.map(group => Object.assign({}, group, { claims: orderedClaims.filter(claim => claim.section === group.id) })).filter(group => group.claims.length), unknowns: report.unknowns, shareFragments, shareableCount: shareFragments.length })
     recordEvent('assessment_v2_report_view')
   },
   onShow() { resetNavigation(this); this.loadReport(); this.syncPendingConfirmations() },
