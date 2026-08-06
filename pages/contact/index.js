@@ -1,6 +1,7 @@
 const { getProfile, completeProfile, markCloudSynced, recordEvent } = require('../../utils/storage')
+const { getSession, getReport, setStorageChoice, replaceSession, replaceReport } = require('../../utils/assessment-v2/session-store')
 const { navigateOnce, resetNavigation } = require('../../utils/navigation')
-const { config: cloudConfig, isCloudReady, saveProfileToCloud, cloudErrorMessage } = require('../../utils/cloud')
+const { config: cloudConfig, isCloudReady, saveProfileToCloud, completeAssessmentToCloud, cloudErrorMessage } = require('../../utils/cloud')
 
 Page({
   data: {
@@ -23,7 +24,7 @@ Page({
       },
       {
         value: 'privacy',
-        label: '我同意将资料提交到私密云端资源池，并已阅读隐私说明。'
+        label: '我同意将匿名档案和本人选择用于匹配的报告线索提交到私密人工匹配资源池，并已阅读隐私说明。'
       }
     ]
   },
@@ -156,6 +157,10 @@ Page({
     wx.showToast({ title: message, icon: 'none' })
   },
 
+  saveMatchingProfile(profile) {
+    saveProfileToCloud(profile, { success: () => this.finishSave(profile), fail: error => this.handleCloudSaveFail(error) })
+  },
+
   handleSave() {
     const phoneValid = /^1[3-9]\d{9}$/.test(this.data.phone)
     const consentValid = this.data.confirmations.includes('eligibility') && this.data.confirmations.includes('privacy')
@@ -170,13 +175,21 @@ Page({
       { type: 'phone', phone: this.data.phone, verified: false },
       {
         version: cloudConfig.privacyVersion,
-        scope: 'cloud_resource_pool',
+        scope: 'matching_pool_v2',
         operatorName: cloudConfig.operatorName,
         agreedAt: Date.now()
       }
     )
-    saveProfileToCloud(profile, {
-      success: () => this.finishSave(profile),
+    const report = getReport()
+    if (report && report._id) return this.saveMatchingProfile(profile)
+    completeAssessmentToCloud(getSession(), {
+      success: data => {
+        if (data.session) replaceSession(data.session)
+        if (data.report) replaceReport(data.report)
+        setStorageChoice('cloud')
+        const updatedProfile = completeProfile(profile.contact, profile.consent)
+        this.saveMatchingProfile(updatedProfile)
+      },
       fail: error => this.handleCloudSaveFail(error)
     })
   }

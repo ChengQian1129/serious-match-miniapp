@@ -31,6 +31,9 @@
   line-height: 50rpx;
 }
 
+.claim-boundary { margin-top: 28rpx; padding-top: 22rpx; border-top: 2rpx solid var(--dl-grey-200); color: var(--dl-grey-500); font-size: 24rpx; line-height: 40rpx; }
+.claim-boundary__label { margin-bottom: 6rpx; color: var(--dl-black); font-size: 22rpx; font-weight: 700; }
+
 .claim-section {
   padding: 54rpx 40rpx 0;
 }
@@ -84,6 +87,9 @@
 .claim-feedback-list {
   margin-top: 30rpx;
 }
+
+.claim-note-label { margin-top: 30rpx; color: var(--dl-grey-500); font-size: 23rpx; }
+.claim-note { box-sizing: border-box; width: 100%; min-height: 112rpx; margin-top: 12rpx; padding: 20rpx 0; border: 0; border-top: 2rpx solid var(--dl-grey-200); border-bottom: 2rpx solid var(--dl-grey-200); color: var(--dl-black); font-size: 26rpx; line-height: 42rpx; }
 
 .claim-error {
   padding-bottom: 20rpx;

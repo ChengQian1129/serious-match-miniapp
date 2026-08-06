@@ -1,0 +1,27 @@
+<view class="page chapter-insight-page" style="padding-top: {{statusBarHeight}}px;">
+  <view wx:if="{{chapter && insight}}" class="chapter-insight">
+    <view class="page-kicker">{{chapter.id}} · 阶段发现</view>
+    <view class="chapter-insight__chapter">{{chapter.title}}</view>
+    <view class="chapter-insight__theme">{{chapter.theme}}</view>
+    <view class="chapter-insight__rule"></view>
+    <view class="chapter-insight__label">刚刚的回答让我们先看到</view>
+    <view class="chapter-insight__title">{{insight.title}}</view>
+    <view class="chapter-insight__text">{{insight.text}}</view>
+    <view class="chapter-insight__boundary">{{insight.boundary}}</view>
+    <view wx:if="{{insight.claims.length}}" class="chapter-insight__evidence">
+      <button class="chapter-insight__evidence-toggle" bind:tap="toggleEvidence">{{evidenceExpanded ? '收起本章依据' : '查看本章依据'}}</button>
+      <view wx:if="{{evidenceExpanded}}" class="chapter-insight__evidence-list">
+        <view wx:for="{{insight.claims[0].evidence}}" wx:key="itemId" class="chapter-insight__evidence-item"><view>{{item.question}}</view><view class="chapter-insight__evidence-answer">你的选择：{{item.answer}}</view></view>
+      </view>
+    </view>
+    <view class="chapter-insight__feedback-label">这条阶段发现接近你吗？</view>
+    <view class="chapter-insight__feedback">
+      <button wx:for="{{feedbackOptions}}" wx:key="value" class="chapter-insight__feedback-option {{selectedFeedback === item.value ? 'chapter-insight__feedback-option--selected' : ''}}" data-value="{{item.value}}" bind:tap="chooseFeedback">{{item.label}}</button>
+    </view>
+    <view class="chapter-insight__note">后面的章节会继续核对。你可以在完整说明书中逐条查看依据并修正。</view>
+  </view>
+  <view class="chapter-insight__actions">
+    <button class="dl-button" bind:tap="continueNext">{{nextChapter ? '继续下一章' : '查看完整说明书'}}</button>
+    <button class="chapter-insight__later" bind:tap="backHome">稍后继续</button>
+  </view>
+</view>

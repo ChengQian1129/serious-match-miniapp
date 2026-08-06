@@ -8,7 +8,6 @@ function navigateOnce(page, method, options = {}) {
   const onSuccess = options.success
   navigate(Object.assign({}, options, {
     success(result) {
-      page._isRouting = false
       if (onSuccess) onSuccess(result)
     },
     fail(error) {

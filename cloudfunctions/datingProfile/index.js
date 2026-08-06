@@ -3,7 +3,13 @@ const cloud = require('wx-server-sdk')
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV })
 
 const db = cloud.database()
+const dbCommand = db.command
 const profiles = db.collection('dating_profiles')
+const assessmentSessions = db.collection('assessment_sessions')
+const assessmentReports = db.collection('assessment_reports')
+const { ASSESSMENT_ID, INSTRUMENT_VERSION, ITEMS } = require('./assessment-v2-questionnaire-definitions')
+const { validateAnswers, evaluateAssessment } = require('./assessment-v2-scoring-engine')
+const { buildReport } = require('./assessment-v2-report-engine')
 const PRIVACY_VERSION = 'cloud-1.0'
 
 const allowed = {
@@ -59,6 +65,55 @@ const recordFeedbackValues = new Set(['fits', 'unsure', 'not_fits'])
 const QUESTIONNAIRE_DATA_SCHEMA_VERSION = 'questionnaire-data-1.0'
 const numericValues = new Set([1, 2, 3, 4, 5, 'SKIP'])
 const experiencedValues = new Set([1, 2, 3, 4, 5, 'NA', 'SKIP'])
+
+function assessmentDocId(openid, assessmentId) {
+  return `${openid}_${String(assessmentId || '').replace(/[^a-zA-Z0-9_.-]/g, '')}`.slice(0, 128)
+}
+
+function sanitizeAssessmentSession(source, openid) {
+  if (!source || source.assessmentType !== ASSESSMENT_ID || source.instrumentVersion !== INSTRUMENT_VERSION) reject('关系探索版本无效', 'INVALID_ASSESSMENT')
+  const answers = validateAnswers(source.answers || {})
+  const assessmentId = text(source.assessmentId, 100)
+  if (!assessmentId) reject('关系探索编号无效', 'INVALID_ASSESSMENT')
+  const chapterFeedback = {}
+  Object.entries(source.chapterFeedback || {}).forEach(([chapterId, feedback]) => {
+    if (!/^C[1-6]$/.test(chapterId) || !feedback || !['fits', 'partly_fits', 'does_not_fit', 'unsure'].includes(feedback.value)) reject('阶段发现核对记录无效', 'INVALID_ASSESSMENT')
+    if (!Array.isArray(source.completedChapters) || !source.completedChapters.includes(chapterId)) reject('阶段发现对应章节尚未完成', 'INVALID_ASSESSMENT')
+    const reviewedAt = Number(feedback.reviewedAt)
+    if (!Number.isFinite(reviewedAt) || reviewedAt <= 0) reject('阶段发现核对时间无效', 'INVALID_ASSESSMENT')
+    chapterFeedback[chapterId] = { value: feedback.value, note: text(feedback.note, 200), reviewedAt }
+  })
+  const now = Date.now()
+  return {
+    _id: assessmentDocId(openid, assessmentId),
+    assessmentId,
+    _openid: openid,
+    assessmentType: ASSESSMENT_ID,
+    instrumentVersion: INSTRUMENT_VERSION,
+    scoringRuleVersion: source.scoringRuleVersion,
+    reportRuleVersion: source.reportRuleVersion,
+    status: ['draft_local', 'pending_cloud', 'synced', 'report_generated'].includes(source.status) ? source.status : 'pending_cloud',
+    currentChapterId: text(source.currentChapterId, 4),
+    currentItemIndex: Number(source.currentItemIndex) || 0,
+    answers,
+    answerEvents: Array.isArray(source.answerEvents) ? source.answerEvents.slice(-100) : [],
+    itemOrder: ITEMS.map(item => item.id),
+    completedChapters: Array.isArray(source.completedChapters) ? source.completedChapters.slice(0, 6) : [],
+    chapterFeedback,
+    revisionPending: Boolean(source.revisionPending),
+    startedAt: Number(source.startedAt) || now,
+    clientUpdatedAt: Number(source.updatedAt) || now,
+    updatedAt: now,
+    completedAt: source.completedAt ? Number(source.completedAt) : null
+  }
+}
+
+async function findAssessmentSession(openid, assessmentId) {
+  try { const result = await assessmentSessions.doc(assessmentDocId(openid, assessmentId)).get(); return result.data || null } catch (error) {
+    if (/does not exist|not exists?|not found/i.test(error.errMsg || error.message || '')) return null
+    throw error
+  }
+}
 
 function questionnaireItemRules(ids, values) {
   return Object.fromEntries(ids.map(id => [id, values]))
@@ -286,6 +341,7 @@ function sanitizeProfile(profile) {
   const about = profile.about || {}
   const contact = profile.contact || {}
   const consent = profile.consent || {}
+  const matching = profile.matching || {}
   const exploration = sanitizeExploration(profile.exploration)
   const birthDate = text(basic.birthDate, 10)
   const age = ageFromBirthDate(birthDate)
@@ -338,8 +394,13 @@ function sanitizeProfile(profile) {
     },
     consent: {
       version: PRIVACY_VERSION,
-      scope: 'cloud_resource_pool',
+      scope: 'matching_pool_v2',
       agreedAt: Number(consent.agreedAt)
+    },
+    matching: {
+      activeAssessmentReportId: text(matching.activeAssessmentReportId, 128),
+      reportVersion: Number(matching.reportVersion) || 0,
+      matchingPoolConsentAt: Number(matching.matchingPoolConsentAt) || Number(consent.agreedAt)
     },
     source: text(profile.source, 32),
     clientCreatedAt: Number(profile.createdAt) || Date.now(),
@@ -360,6 +421,7 @@ function toClientProfile(document) {
     about: document.about,
     contact: document.contact,
     consent: document.consent,
+    matching: document.matching || {},
     createdAt: document.clientCreatedAt,
     updatedAt: document.clientUpdatedAt
   }
@@ -375,11 +437,94 @@ async function findOwnProfile(openid) {
   }
 }
 
+async function removeOwnDocuments(collection, openid) {
+  try {
+    while (true) {
+      const result = await collection.where({ _openid: openid }).limit(100).get()
+      const documents = result.data || []
+      if (!documents.length) return
+      await Promise.all(documents.map(document => collection.doc(document._id).remove()))
+      if (documents.length < 100) return
+    }
+  } catch (error) {
+    if (/collection.*(does not exist|not exists?|not found)/i.test(error.errMsg || error.message || '')) return
+    throw error
+  }
+}
+
 exports.main = async event => {
   const { OPENID } = cloud.getWXContext()
   if (!OPENID) return { ok: false, code: 'NO_OPENID', message: '无法确认微信身份' }
 
   try {
+    if (event.action === 'assessmentSaveDraft') {
+      const session = sanitizeAssessmentSession(event.session, OPENID)
+      const existing = await findAssessmentSession(OPENID, session.assessmentId)
+      if (existing && (Number(existing.clientUpdatedAt) > Number(session.clientUpdatedAt) || (Number(existing.clientUpdatedAt) === Number(session.clientUpdatedAt) && existing.status === 'report_generated'))) {
+        return { ok: true, data: { session: existing, syncedAt: Date.now(), staleIgnored: true } }
+      }
+      if (existing && existing.activeReportId) session.activeReportId = existing.activeReportId
+      if (existing && Number(existing.reportVersion)) session.reportVersion = Number(existing.reportVersion)
+      session.status = 'synced'
+      await assessmentSessions.doc(session._id).set({ data: session })
+      return { ok: true, data: { session, syncedAt: Date.now() } }
+    }
+
+    if (event.action === 'assessmentComplete') {
+      const session = sanitizeAssessmentSession(event.session, OPENID)
+      if (ITEMS.some(item => !(item.id in session.answers))) reject('关系说明书还有未完成的题目', 'INVALID_ASSESSMENT')
+      evaluateAssessment(session.answers)
+      const previous = await findAssessmentSession(OPENID, session.assessmentId)
+      if (previous && Number(previous.clientUpdatedAt) > Number(session.clientUpdatedAt)) reject('云端存在更新的回答，请刷新后再生成报告', 'ASSESSMENT_CONFLICT')
+      if (previous && previous.status === 'report_generated' && previous.activeReportId && Number(previous.clientUpdatedAt) === Number(session.clientUpdatedAt)) {
+        const existingReport = (await assessmentReports.doc(previous.activeReportId).get()).data
+        return { ok: true, data: { session: previous, report: existingReport, syncedAt: Date.now(), duplicateIgnored: true } }
+      }
+      const reportVersion = previous && Number(previous.reportVersion) ? Number(previous.reportVersion) + 1 : 1
+      const completedAt = Date.now()
+      const report = buildReport(session.answers, { generatedAt: completedAt, reportVersion })
+      const reportId = `${session._id}_report_${reportVersion}`
+      const reportDocument = Object.assign({ _id: reportId, _openid: OPENID, assessmentId: session.assessmentId, userConfirmations: {}, shareSettings: {} }, report)
+      await assessmentReports.doc(reportId).set({ data: reportDocument })
+      const completedSession = Object.assign({}, session, { status: 'report_generated', completedAt, updatedAt: completedAt, reportVersion, activeReportId: reportId })
+      await assessmentSessions.doc(session._id).set({ data: completedSession })
+      const legacyProfile = await findOwnProfile(OPENID)
+      if (legacyProfile) {
+        await profiles.doc(OPENID).update({ data: { exploration: dbCommand.remove(), questionnaireModules: dbCommand.remove(), recordFeedback: dbCommand.remove() } })
+      }
+      return { ok: true, data: { session: completedSession, report: reportDocument, syncedAt: completedAt } }
+    }
+
+    if (event.action === 'assessmentGet') {
+      const assessmentId = text(event.assessmentId, 100)
+      let session = assessmentId ? await findAssessmentSession(OPENID, assessmentId) : null
+      if (!assessmentId && !session) {
+        const candidates = await assessmentSessions.where({ _openid: OPENID }).limit(20).get()
+        session = (candidates.data || []).sort((a, b) => Number(b.updatedAt) - Number(a.updatedAt))[0] || null
+      }
+      if (!session) return { ok: true, data: { session: null, report: null } }
+      let report = null
+      if (session.activeReportId) {
+        try { report = (await assessmentReports.doc(session.activeReportId).get()).data || null } catch (error) {
+          if (!/does not exist|not exists?|not found/i.test(error.errMsg || error.message || '')) throw error
+        }
+      }
+      return { ok: true, data: { session, report } }
+    }
+
+    if (event.action === 'assessmentConfirmClaim') {
+      const reportId = text(event.reportId, 128)
+      const claimId = text(event.claimId, 80)
+      const value = text(event.value, 24)
+      if (!['fits', 'partly_fits', 'does_not_fit', 'unsure'].includes(value)) reject('报告核对选项无效', 'INVALID_ASSESSMENT')
+      const result = await assessmentReports.doc(reportId).get()
+      const report = result.data
+      if (!report || report._openid !== OPENID || !(report.claims || []).some(claim => claim.id === claimId)) reject('报告结论不存在', 'INVALID_ASSESSMENT')
+      const userConfirmations = Object.assign({}, report.userConfirmations, { [claimId]: { value, note: text(event.note, 200), reviewedAt: Date.now() } })
+      await assessmentReports.doc(reportId).update({ data: { userConfirmations } })
+      return { ok: true, data: { userConfirmations } }
+    }
+
     if (event.action === 'get') {
       const document = await findOwnProfile(OPENID)
       return {
@@ -489,6 +634,8 @@ exports.main = async event => {
     if (event.action === 'delete') {
       const existing = await findOwnProfile(OPENID)
       if (existing) await profiles.doc(OPENID).remove()
+      await removeOwnDocuments(assessmentReports, OPENID)
+      await removeOwnDocuments(assessmentSessions, OPENID)
       return { ok: true, data: { deleted: true } }
     }
 

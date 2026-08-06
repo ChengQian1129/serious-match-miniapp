@@ -1,0 +1,11 @@
+<view class="page share-page">
+  <view class="page-kicker">只分享由你确认的内容</view><view class="share-title">我的相处名片</view><view class="share-desc">从“我比较看重、我通常能提供、认识我时”中选择最多四条。风险提示、原始答案、联系方式和未核对结论不会进入名片。</view>
+  <view wx:if="{{available.length}}" class="share-options">
+    <button wx:for="{{available}}" wx:key="id" class="share-option {{item.selected ? 'share-option--selected' : ''}}" data-id="{{item.id}}" bind:tap="toggleClaim"><text class="share-option__check">{{item.selected ? '✓' : ''}}</text><view><text class="share-option__category">{{item.category.label}}</text><text>{{item.shareFragment}}</text></view></button>
+  </view>
+  <view wx:else class="share-empty"><view class="share-empty__title">还没有可公开的内容</view><view>先回到报告，核对一条带有分享短语的结论。</view><button class="dl-button dl-button--outline" bind:tap="returnReport">返回报告核对</button></view>
+  <button wx:if="{{available.length}}" class="dl-button share-generate" disabled="{{!canGenerate}}" bind:tap="generateCard">生成名片</button>
+  <image wx:if="{{cardPath}}" class="share-preview" src="{{cardPath}}" mode="widthFix" />
+  <view wx:if="{{cardPath}}" class="dl-stack share-actions"><button class="dl-button" bind:tap="saveCard">保存到相册</button><button class="dl-button dl-button--outline" open-type="share">发送给朋友</button></view>
+  <canvas type="2d" id="shareCanvas" class="share-canvas"></canvas>
+</view>

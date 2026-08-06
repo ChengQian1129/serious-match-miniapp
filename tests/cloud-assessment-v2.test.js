@@ -1,0 +1,117 @@
+const assert = require('node:assert/strict')
+const Module = require('node:module')
+const path = require('node:path')
+const { ITEMS, INSTRUMENT_VERSION } = require('../utils/assessment-v2/questionnaire-definitions')
+const { SCORING_RULE_VERSION } = require('../utils/assessment-v2/scoring-engine')
+const { REPORT_RULE_VERSION } = require('../utils/assessment-v2/report-rules')
+
+const collections = new Map()
+const clone = value => JSON.parse(JSON.stringify(value))
+const rows = name => { if (!collections.has(name)) collections.set(name, new Map()); return collections.get(name) }
+const removeToken = { __remove: true }
+
+function applyUpdate(target, data) {
+  const next = Object.assign({}, target || {})
+  Object.entries(data).forEach(([key, value]) => { if (value && value.__remove) delete next[key]; else next[key] = clone(value) })
+  return next
+}
+
+const cloudStub = {
+  DYNAMIC_CURRENT_ENV: 'test-env', init() {}, getWXContext() { return { OPENID: 'v2-user' } },
+  database() {
+    return {
+      command: { remove() { return removeToken } },
+      serverDate() { return { $date: 'server' } },
+      collection(name) {
+        return {
+          doc(id) {
+            return {
+              async get() { if (!rows(name).has(id)) throw new Error('document does not exist'); return { data: clone(rows(name).get(id)) } },
+              async set({ data }) { rows(name).set(id, clone(data)) },
+              async update({ data }) { rows(name).set(id, applyUpdate(rows(name).get(id), data)) },
+              async remove() { rows(name).delete(id) }
+            }
+          },
+          where(query) {
+            const found = [...rows(name).values()].filter(row => Object.entries(query).every(([key, value]) => row[key] === value))
+            return { limit() { return { async get() { return { data: clone(found) } } } } }
+          }
+        }
+      }
+    }
+  }
+}
+
+const originalLoad = Module._load
+Module._load = function load(request, parent, isMain) { if (request === 'wx-server-sdk') return cloudStub; return originalLoad.call(this, request, parent, isMain) }
+const functionPath = path.resolve(__dirname, '../cloudfunctions/datingProfile/index.js')
+delete require.cache[require.resolve(functionPath)]
+const cloudFunction = require(functionPath)
+Module._load = originalLoad
+
+function session(updatedAt, answers) {
+  return { assessmentId: 'relationship_manual_v2.test', assessmentType: 'relationship_manual_v2', instrumentVersion: INSTRUMENT_VERSION, scoringRuleVersion: SCORING_RULE_VERSION, reportRuleVersion: REPORT_RULE_VERSION, status: 'pending_cloud', currentChapterId: 'C1', currentItemIndex: 0, answers, answerEvents: [], completedChapters: [], itemOrder: ITEMS.map(item => item.id), startedAt: 10, updatedAt, completedAt: null }
+}
+
+async function run() {
+  let result = await cloudFunction.main({ action: 'assessmentSaveDraft', session: session(100, { RIN01: 5 }) })
+  assert.equal(result.ok, true)
+  result = await cloudFunction.main({ action: 'assessmentSaveDraft', session: session(200, { RIN01: 5, RIN02: 5 }) })
+  assert.equal(result.data.session.answers.RIN02, 5)
+  result = await cloudFunction.main({ action: 'assessmentSaveDraft', session: session(150, { RIN01: 1 }) })
+  assert.equal(result.data.staleIgnored, true)
+  assert.equal(result.data.session.answers.RIN02, 5)
+
+  const chapterDraft = session(250, Object.fromEntries(ITEMS.slice(0, 8).map(item => [item.id, item.reverseScored ? 1 : 5])))
+  chapterDraft.completedChapters = ['C1']
+  chapterDraft.chapterFeedback = { C1: { value: 'partly_fits', note: '', reviewedAt: 240 } }
+  result = await cloudFunction.main({ action: 'assessmentSaveDraft', session: chapterDraft })
+  assert.equal(result.ok, true)
+  assert.equal(result.data.session.chapterFeedback.C1.value, 'partly_fits')
+
+  result = await cloudFunction.main({ action: 'assessmentGet', assessmentId: 'missing-id' })
+  assert.equal(result.data.session, null)
+
+  const answers = Object.fromEntries(ITEMS.map(item => [item.id, item.reverseScored ? 1 : 5]))
+  result = await cloudFunction.main({ action: 'assessmentComplete', session: session(300, answers) })
+  assert.equal(result.ok, true)
+  assert.equal(result.data.report.reportVersion, 1)
+  assert.ok(result.data.report.claims.length)
+
+  result = await cloudFunction.main({ action: 'assessmentComplete', session: session(300, answers) })
+  assert.equal(result.ok, true)
+  assert.equal(result.data.duplicateIgnored, true)
+  assert.equal(result.data.report.reportVersion, 1)
+  const reportId = result.data.report._id
+  const claimId = result.data.report.claims[0].id
+
+  result = await cloudFunction.main({ action: 'assessmentSaveDraft', session: session(300, answers) })
+  assert.equal(result.ok, true)
+  assert.equal(result.data.staleIgnored, true)
+  assert.equal(result.data.session.status, 'report_generated')
+  assert.ok(result.data.session.activeReportId)
+
+  const revision = session(400, Object.assign({}, answers, { RIN01: 4 }))
+  revision.revisionPending = true
+  result = await cloudFunction.main({ action: 'assessmentSaveDraft', session: revision })
+  assert.equal(result.ok, true)
+  assert.equal(result.data.session.revisionPending, true)
+  assert.ok(result.data.session.activeReportId)
+
+  result = await cloudFunction.main({ action: 'assessmentConfirmClaim', reportId, claimId, value: 'partly_fits', note: '只在重要话题中如此' })
+  assert.equal(result.ok, true)
+  assert.equal(result.data.userConfirmations[claimId].value, 'partly_fits')
+
+  result = await cloudFunction.main({ action: 'assessmentGet', assessmentId: 'relationship_manual_v2.test' })
+  assert.equal(result.ok, true)
+  assert.equal(result.data.report.userConfirmations[claimId].value, 'partly_fits')
+
+  result = await cloudFunction.main({ action: 'delete' })
+  assert.equal(result.ok, true)
+  result = await cloudFunction.main({ action: 'assessmentGet', assessmentId: 'relationship_manual_v2.test' })
+  assert.equal(result.data.session, null)
+  assert.equal(rows('assessment_reports').size, 0)
+  console.log('Assessment V2 cloud OK: stale protection, report snapshot, restore, confirmation')
+}
+
+run().catch(error => { console.error(error); process.exitCode = 1 })

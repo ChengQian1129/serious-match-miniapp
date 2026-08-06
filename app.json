@@ -1,10 +1,11 @@
 {
   "pages": [
+    "pages/welcome/index",
     "pages/home/index",
-    "pages/exploration/index",
-    "pages/exploration-result/index",
     "pages/questionnaire/index",
+    "pages/chapter-insight/index",
     "pages/questionnaire-result/index",
+    "pages/share-card/index",
     "pages/relationship-map/index",
     "pages/record-claim/index",
     "pages/onboarding-basic/index",

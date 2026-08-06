@@ -84,6 +84,22 @@ function saveQuestionnaireModuleToCloud(moduleRecord, callbacks) {
   return callProfile('saveQuestionnaireModule', { moduleRecord }, callbacks)
 }
 
+function saveAssessmentDraftToCloud(session, callbacks) {
+  return callProfile('assessmentSaveDraft', { session }, callbacks)
+}
+
+function completeAssessmentToCloud(session, callbacks) {
+  return callProfile('assessmentComplete', { session }, callbacks)
+}
+
+function getAssessmentFromCloud(assessmentId, callbacks) {
+  return callProfile('assessmentGet', { assessmentId }, callbacks)
+}
+
+function confirmAssessmentClaimToCloud(reportId, claimId, value, note, callbacks) {
+  return callProfile('assessmentConfirmClaim', { reportId, claimId, value, note }, callbacks)
+}
+
 function getProfileFromCloud(callbacks) {
   return callProfile('get', {}, callbacks)
 }
@@ -101,7 +117,10 @@ function cloudErrorMessage(error) {
   if (error && error.code === 'INVALID_PROFILE') return error.message
   if (error && error.code === 'INVALID_FEEDBACK') return error.message
   if (error && error.code === 'INVALID_QUESTIONNAIRE') return error.message
+  if (error && error.code === 'INVALID_ASSESSMENT') return error.message
+  if (error && error.code === 'ASSESSMENT_CONFLICT') return error.message
   const detail = String(error && (error.errMsg || error.message) || '')
+  if (/collection.*(not exist|does not exist|not found)|collection.*不存在/i.test(detail)) return '云数据库还没有建立所需集合，请先创建 assessment_sessions 和 assessment_reports'
   if (/env.*(invalid|not found)|environment.*(invalid|not found)/i.test(detail)) return '云开发环境配置不匹配'
   if (/permission|not authorized|unauthorized/i.test(detail)) return '当前小程序没有云环境访问权限'
   return '云端连接失败，请检查网络后重试'
@@ -116,6 +135,10 @@ module.exports = {
   saveExplorationToCloud,
   saveRecordFeedbackToCloud,
   saveQuestionnaireModuleToCloud,
+  saveAssessmentDraftToCloud,
+  completeAssessmentToCloud,
+  getAssessmentFromCloud,
+  confirmAssessmentClaimToCloud,
   getProfileFromCloud,
   setCloudStatus,
   deleteCloudProfile,

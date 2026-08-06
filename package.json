@@ -1,12 +1,12 @@
 {
-  "name": "swiftshader",
+  "name": "serious-match-miniapp",
   "version": "1.0.0",
   "description": "原生微信小程序 Demo：本地保存填写草稿，确认提交后通过微信云开发维护私密资料资源池。",
   "main": "app.js",
   "scripts": {
     "postinstall": "node scripts/patch-tdesign.js",
     "patch:tdesign": "node scripts/patch-tdesign.js",
-    "test": "node .tmp/check-project.js && node .tmp/questionnaire-test.js && node .tmp/cloud-function-test.js && node .tmp/mock-flow.js"
+    "test": "node .tmp/check-project.js && node tests/navigation.test.js && node tests/storage-profile.test.js && node tests/assessment-v2.test.js && node tests/assessment-v2-flow.test.js && node tests/questionnaire-page.test.js && node tests/chapter-insight-page.test.js && node tests/cloud-assessment-v2.test.js"
   },
   "keywords": [],
   "author": "",

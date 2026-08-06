@@ -3,6 +3,7 @@
     <view class="page-kicker">{{claim.label}} · {{claim.statusLabel}}</view>
     <view class="claim-title">{{claim.title}}</view>
     <view class="claim-text">{{claim.text}}</view>
+    <view class="claim-boundary"><view class="claim-boundary__label">判断边界</view><view>{{claim.boundary}}</view></view>
   </view>
 
   <view class="claim-section">
@@ -13,7 +14,7 @@
         <view class="claim-evidence__answer">你的选择：{{item.answer}}</view>
       </view>
     </view>
-    <view class="claim-rule">结论规则 {{claim.ruleVersion}} · 原始回答保持不变</view>
+    <view class="claim-rule">结论规则 {{claim.ruleVersion || 'V2 固定规则'}} · 原始回答保持不变</view>
   </view>
 
   <view class="claim-section claim-section--feedback">
@@ -25,6 +26,8 @@
         <text wx:if="{{selectedFeedback === item.value}}" class="choice-option__check">✓</text>
       </button>
     </view>
+    <view class="claim-note-label">补充说明（选填）</view>
+    <textarea class="claim-note" value="{{feedbackNote}}" maxlength="200" auto-height placeholder="例如：只在重要话题中如此" bind:input="inputNote" />
     <view wx:if="{{cloudError}}" class="field-error claim-error">{{cloudError}}</view>
   </view>
 </view>

@@ -9,6 +9,10 @@
       },
       {
         "type": "folder",
+        "value": "tmp"
+      },
+      {
+        "type": "folder",
         "value": ".git"
       },
       {
@@ -18,6 +22,10 @@
       {
         "type": "folder",
         "value": "scripts"
+      },
+      {
+        "type": "folder",
+        "value": "tests"
       },
       {
         "type": "folder",
@@ -34,6 +42,26 @@
       {
         "type": "file",
         "value": "libGLESv2.dll"
+      },
+      {
+        "type": "file",
+        "value": "assets/welcome/onboarding-self.png"
+      },
+      {
+        "type": "file",
+        "value": "assets/welcome/onboarding-path.png"
+      },
+      {
+        "type": "file",
+        "value": "assets/welcome/onboarding-map.png"
+      },
+      {
+        "type": "file",
+        "value": "miniprogram_npm/tdesign-miniprogram/.wechatide.ib.json"
+      },
+      {
+        "type": "file",
+        "value": "miniprogram_npm/tslib/index.js.map"
       }
     ],
     "include": []

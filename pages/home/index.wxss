@@ -86,3 +86,13 @@
 .home-note {
   margin-top: 10rpx;
 }
+
+.home-pool-note {
+  padding: 38rpx 40rpx calc(56rpx + env(safe-area-inset-bottom));
+  border-top: 2rpx solid var(--dl-grey-200);
+  color: var(--dl-grey-500);
+  font-size: 24rpx;
+  line-height: 40rpx;
+}
+
+.sheet-copy { margin-top: 24rpx; color: var(--dl-grey-500); font-size: 27rpx; line-height: 46rpx; }

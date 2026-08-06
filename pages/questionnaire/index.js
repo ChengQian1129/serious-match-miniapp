@@ -1,170 +1,90 @@
-const { RESPONSE_SCALES, getModule } = require('../../utils/questionnaire-definitions')
-const { latestAnswers } = require('../../utils/questionnaire-record')
-const {
-  getQuestionnaireData,
-  saveQuestionnaireAnswer,
-  completeQuestionnaireModule,
-  recordEvent
-} = require('../../utils/storage')
-const { saveQuestionnaireModuleToCloud } = require('../../utils/cloud')
+const { getSession, setPosition, answerItem, completeChapter, shouldSyncAssessment, markSynced } = require('../../utils/assessment-v2/session-store')
+const { getChapter, getItem, optionsFor } = require('../../utils/assessment-v2/questionnaire-definitions')
+const { saveAssessmentDraftToCloud } = require('../../utils/cloud')
 const { getStatusBarHeight } = require('../../utils/window')
-const { acceptNavigationTap, getQuestionIndex, getMotionClass, showQuestion } = require('../../utils/question-flow')
+const { acceptNavigationTap, getMotionClass, showQuestion } = require('../../utils/question-flow')
 const { navigateOnce, resetNavigation } = require('../../utils/navigation')
-
-const DEFAULT_MODULE_ID = 'current_relationship_readiness'
-
-function responseOptions(item) {
-  const scale = RESPONSE_SCALES[item.scaleId]
-  return scale.values.map((value, index) => ({ value, label: scale.labels[index] }))
-}
+const { recordEvent } = require('../../utils/storage')
 
 Page({
-  data: {
-    statusBarHeight: getStatusBarHeight(),
-    moduleTitle: '',
-    moduleInstruction: '',
-    currentQuestion: 0,
-    questionNumber: 1,
-    questionCount: 0,
-    progress: 0,
-    item: null,
-    dimensionTitle: '',
-    responseOptions: [],
-    specialOptions: [],
-    selectedValue: '',
-    canContinue: false,
-    continueLabel: '继续',
-    motionClass: ''
-  },
+  data: { statusBarHeight: getStatusBarHeight(), moduleTitle: '', moduleInstruction: '', currentQuestion: 0, questionNumber: 1, questionCount: 8, progress: 0, item: null, dimensionTitle: '', responseOptions: [], specialOptions: [], selectedValue: '', canContinue: false, continueLabel: '继续', motionClass: '' },
 
   onLoad(query) {
-    const moduleId = query.module || DEFAULT_MODULE_ID
-    const module = getModule(moduleId)
-    if (!module) {
-      navigateOnce(this, 'reLaunch', { url: '/pages/relationship-map/index' })
-      return
-    }
-    this.moduleId = moduleId
-    this.module = module
-    const moduleRecord = getQuestionnaireData().modules[moduleId]
-    if (moduleRecord && moduleRecord.status === 'complete' && query.revise !== '1') {
-      navigateOnce(this, 'redirectTo', { url: `/pages/questionnaire-result/index?module=${moduleId}` })
-      return
-    }
-    this.answers = moduleRecord ? latestAnswers(moduleRecord) : {}
-    const firstUnvisited = module.items.findIndex(item => !(item.id in this.answers))
-    const fallback = firstUnvisited >= 0 ? firstUnvisited : 0
-    const currentQuestion = getQuestionIndex(query, fallback, module.items.length)
-    this.setData(Object.assign({
-      moduleTitle: module.shortTitle || module.title,
-      moduleInstruction: module.instruction,
-      questionCount: module.items.length,
-      currentQuestion,
-      motionClass: getMotionClass(query.direction)
-    }, this.getQuestionState(currentQuestion)))
-    recordEvent('questionnaire_start', { moduleId, resumed: Boolean(moduleRecord) })
+    this.chapterId = query.chapter || getSession().currentChapterId || 'C1'
+    this.chapter = getChapter(this.chapterId)
+    if (!this.chapter) return navigateOnce(this, 'reLaunch', { url: '/pages/home/index' })
+    this.session = getSession()
+    const requested = Number(query.question)
+    const firstUnanswered = this.chapter.itemIds.findIndex(id => !(id in this.session.answers))
+    const index = Number.isInteger(requested) && requested >= 0 && requested < 8 ? requested : (firstUnanswered >= 0 ? firstUnanswered : 0)
+    this.setData(Object.assign({ moduleTitle: this.chapter.title, moduleInstruction: this.chapter.instruction, questionCount: 8, currentQuestion: index, motionClass: getMotionClass(query.direction) }, this.getQuestionState(index)))
+    recordEvent('assessment_v2_chapter_start', { chapterId: this.chapterId, resumed: Boolean(Object.keys(this.session.answers).length) })
   },
 
-  onShow() {
-    resetNavigation(this)
-  },
+  onShow() { resetNavigation(this) },
 
   getQuestionState(index) {
-    const item = this.module.items[index]
-    const options = responseOptions(item)
-    const selectedValue = item.id in this.answers ? this.answers[item.id] : ''
-    const dimension = this.module.dimensions.find(current => current.id === item.dimensionId)
-    return {
-      item,
-      dimensionTitle: dimension ? dimension.title : '',
-      questionNumber: index + 1,
-      progress: (index + 1) / this.module.items.length,
-      responseOptions: options.filter(option => typeof option.value === 'number'),
-      specialOptions: options.filter(option => typeof option.value !== 'number'),
-      selectedValue,
-      canContinue: selectedValue !== '',
-      continueLabel: index === this.module.items.length - 1 ? '查看这一部分' : '继续'
-    }
+    const item = getItem(this.chapter.itemIds[index])
+    const options = optionsFor(item)
+    const selectedValue = this.session.answers[item.id] === undefined ? '' : this.session.answers[item.id]
+    return { item, dimensionTitle: item.role === 'profile' ? '关系档案线索' : '当前正在了解的主题', questionNumber: index + 1, progress: (index + 1) / 8, responseOptions: options.filter(option => typeof option.value === 'number'), specialOptions: options.filter(option => typeof option.value !== 'number'), selectedValue, canContinue: selectedValue !== '', continueLabel: index === 7 ? '查看阶段发现' : '继续' }
   },
 
-  chooseAnswer(event) {
+  chooseAnswer(event) { this.commitAnswer(event.currentTarget.dataset.value) },
+  chooseSpecial(event) { this.commitAnswer(event.currentTarget.dataset.value) },
+  commitAnswer(rawValue) {
     if (this._isRouting) return
-    const value = event.currentTarget.dataset.value
-    this.commitAnswer(value)
-  },
-
-  chooseSpecial(event) {
-    if (this._isRouting) return
-    this.commitAnswer(event.currentTarget.dataset.value)
-  },
-
-  commitAnswer(value) {
-    const item = this.module.items[this.data.currentQuestion]
-    if (this.answers[item.id] === value) return
-    const result = saveQuestionnaireAnswer(this.moduleId, item.id, value)
-    this.answers = Object.assign({}, this.answers, { [item.id]: value })
+    const value = ['NA', 'SKIP'].includes(rawValue) ? rawValue : Number(rawValue)
+    if (this.data.selectedValue === value) return
+    const itemId = this.chapter.itemIds[this.data.currentQuestion]
+    this.session = answerItem(itemId, value, { chapterId: this.chapterId, itemIndex: this.data.currentQuestion })
     this.setData({ selectedValue: value, canContinue: true })
-    recordEvent('questionnaire_answered', { moduleId: this.moduleId, itemId: item.id, value })
-    this.queueCloudSync(result.data.modules[this.moduleId])
+    recordEvent('assessment_v2_answered', { chapterId: this.chapterId, itemId })
+    if (shouldSyncAssessment()) this.queueCloudSync(this.session)
   },
 
-  queueCloudSync(moduleRecord) {
-    this._pendingModuleRecord = moduleRecord
-    if (this._syncInFlight) return
-    this.flushCloudSync()
+  queueCloudSync(session) {
+    this._pendingSession = session
+    if (!this._syncInFlight) this.flushCloudSync()
   },
 
   flushCloudSync() {
-    const moduleRecord = this._pendingModuleRecord
-    if (!moduleRecord) return
-    this._pendingModuleRecord = null
+    const session = this._pendingSession
+    if (!session) return
+    this._pendingSession = null
     this._syncInFlight = true
-    saveQuestionnaireModuleToCloud(moduleRecord, {
+    saveAssessmentDraftToCloud(session, {
       success: () => {
         this._syncInFlight = false
-        if (this._pendingModuleRecord) {
-          this.flushCloudSync()
-          return
-        }
-        recordEvent('questionnaire_cloud_sync_succeeded', { moduleId: this.moduleId })
+        if (this._pendingSession) return this.flushCloudSync()
+        this.session = markSynced()
+        recordEvent('assessment_v2_draft_synced')
       },
       fail: () => {
         this._syncInFlight = false
-        recordEvent('questionnaire_cloud_sync_failed', { moduleId: this.moduleId })
-        if (this._pendingModuleRecord) this.flushCloudSync()
+        recordEvent('assessment_v2_draft_sync_failed')
+        if (this._pendingSession) return this.flushCloudSync()
       }
     })
   },
 
   transitionTo(index, direction) {
-    if (!showQuestion(this, index, this.module.items.length, direction)) return
-    this.setData(this.getQuestionState(index))
+    this.session = setPosition(this.chapterId, index)
+    showQuestion(this, index, 8, direction)
   },
-
   handlePrevious(event) {
     if (!acceptNavigationTap(this, event, 'back')) return
-    if (this.data.currentQuestion === 0) {
-      navigateOnce(this, 'navigateBack', {
-        fail: () => navigateOnce(this, 'reLaunch', { url: '/pages/relationship-map/index' })
-      })
-      return
-    }
+    if (this.data.currentQuestion === 0) return navigateOnce(this, 'navigateBack', { fail: () => navigateOnce(this, 'reLaunch', { url: '/pages/home/index' }) })
     this.transitionTo(this.data.currentQuestion - 1, 'back')
   },
-
   handleContinue(event) {
     if (!acceptNavigationTap(this, event, 'continue') || !this.data.canContinue) return
-    if (this.data.currentQuestion < this.module.items.length - 1) {
-      this.transitionTo(this.data.currentQuestion + 1, 'forward')
-      return
-    }
+    if (this.data.currentQuestion < 7) return this.transitionTo(this.data.currentQuestion + 1, 'forward')
     try {
-      const data = completeQuestionnaireModule(this.moduleId)
-      this.queueCloudSync(data.modules[this.moduleId])
-      recordEvent('questionnaire_complete', { moduleId: this.moduleId })
-      navigateOnce(this, 'redirectTo', { url: `/pages/questionnaire-result/index?module=${this.moduleId}` })
-    } catch (error) {
-      wx.showToast({ title: '还有题目未回答或跳过', icon: 'none' })
-    }
+      const completedChapter = completeChapter(this.chapterId)
+      this.session = completedChapter
+      if (shouldSyncAssessment()) this.queueCloudSync(completedChapter)
+      navigateOnce(this, 'redirectTo', { url: `/pages/chapter-insight/index?chapter=${this.chapterId}` })
+    } catch (error) { wx.showToast({ title: error.message || '请完成这一章', icon: 'none' }) }
   }
 })

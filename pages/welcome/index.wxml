@@ -1,0 +1,34 @@
+<view class="welcome-page welcome-page--{{currentSlide}}" style="padding-top: {{statusBarHeight}}px;">
+  <view class="welcome-head">
+    <view class="welcome-brand">
+      <view class="welcome-brand__symbol"><view></view><view></view></view>
+      <text>认真匹配</text>
+    </view>
+    <text class="welcome-count">0{{currentSlide + 1}} / 03</text>
+  </view>
+
+  <view class="welcome-visual">
+    <image wx:if="{{currentSlide === 0}}" class="welcome-image welcome-image--path" src="/assets/welcome/onboarding-path.jpg" mode="aspectFill" aria-hidden="true" />
+    <image wx:if="{{currentSlide === 1}}" class="welcome-image welcome-image--self" src="/assets/welcome/onboarding-self.jpg" mode="aspectFill" aria-hidden="true" />
+    <image wx:if="{{currentSlide === 2}}" class="welcome-image welcome-image--together" src="/assets/welcome/onboarding-together.jpg" mode="aspectFill" aria-hidden="true" />
+    <view class="welcome-visual__veil"></view>
+    <view class="welcome-stamp">关系<br />底图</view>
+  </view>
+
+  <view class="welcome-copy">
+    <view class="welcome-kicker">{{slides[currentSlide].kicker}}</view>
+    <view class="welcome-title">{{slides[currentSlide].title}}</view>
+    <view class="welcome-desc">{{slides[currentSlide].desc}}</view>
+    <view class="welcome-meta">{{slides[currentSlide].meta}}</view>
+  </view>
+
+  <view class="welcome-controls">
+    <view class="welcome-dots" aria-label="第 {{currentSlide + 1}} 页，共 3 页">
+      <view wx:for="{{slideDots}}" wx:key="*this" class="welcome-dot {{currentSlide === item ? 'welcome-dot--active' : ''}}"></view>
+    </view>
+    <view class="welcome-actions">
+      <button class="welcome-skip" bind:tap="skip">稍后再看</button>
+      <button class="welcome-next" bind:tap="next">{{isLastSlide ? '开始探索' : '继续'}}<text class="welcome-next__arrow">↗</text></button>
+    </view>
+  </view>
+</view>

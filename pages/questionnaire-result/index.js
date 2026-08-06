@@ -1,103 +1,55 @@
-const { getModule } = require('../../utils/questionnaire-definitions')
-const { latestAnswers } = require('../../utils/questionnaire-record')
-const { getQuestionnaireData, recordEvent } = require('../../utils/storage')
-const { saveQuestionnaireModuleToCloud } = require('../../utils/cloud')
+const { getReport, getSession, shouldSyncAssessment, markClaimConfirmationSynced } = require('../../utils/assessment-v2/session-store')
+const { isCloudReady, confirmAssessmentClaimToCloud } = require('../../utils/cloud')
+const { CHAPTERS } = require('../../utils/assessment-v2/questionnaire-definitions')
+const { getStatusBarHeight } = require('../../utils/window')
 const { navigateOnce, resetNavigation } = require('../../utils/navigation')
-
-const DEFAULT_MODULE_ID = 'current_relationship_readiness'
-
-const fallbackCopy = {
-  insufficient: '这一部分还没有足够的有效回答，暂时保留未知。',
-  unclear: '目前的回答没有形成一致方向，适合结合具体情境继续了解。'
-}
-
-function reportSections(module, moduleRecord) {
-  const evaluation = moduleRecord.evaluation || { observations: [], claims: [] }
-  const dimensionSections = module.dimensions.filter(dimension => dimension.scoringRole !== 'observation').map(dimension => {
-    const observation = evaluation.observations.find(item => item.constructId === dimension.id)
-    const claim = evaluation.claims.find(item => item.subjectArea === dimension.id)
-    const confidenceState = claim ? claim.confidenceState : 'insufficient_evidence'
-    const statusLabels = {
-      multi_item_supported: '多题支持',
-      initial: '初步判断',
-      direct_fact: '本人选择',
-      insufficient_evidence: '依据不足'
-    }
-    return {
-      id: dimension.id,
-      title: dimension.title,
-      text: claim ? claim.userFacingText : fallbackCopy[observation && observation.direction] || fallbackCopy.unclear,
-      evidenceText: observation && observation.validCount !== undefined
-        ? `${observation.validCount} / ${observation.requiredCount} 项有效依据`
-        : claim ? `${claim.evidenceCount} 项有效依据` : '暂无有效依据',
-      confidenceState,
-      statusLabel: statusLabels[confidenceState] || '初步判断'
-    }
-  })
-
-  const observationDimensionIds = new Set(module.dimensions
-    .filter(dimension => dimension.scoringRole === 'observation')
-    .map(dimension => dimension.id))
-  const behaviorSections = evaluation.claims
-    .filter(claim => observationDimensionIds.has(claim.subjectArea))
-    .map((claim, index) => ({
-      id: claim.claimId,
-      title: `常见应对动作 ${index + 1}`,
-      text: claim.userFacingText,
-      evidenceText: `${claim.evidenceCount} 项有效依据`,
-      confidenceState: claim.confidenceState,
-      statusLabel: '本人选择'
-    }))
-
-  return dimensionSections.concat(behaviorSections)
-}
+const { recordEvent } = require('../../utils/storage')
 
 Page({
-  data: {
-    isReady: false,
-    moduleTitle: '',
-    moduleItemCount: 0,
-    sections: [],
-    answeredCount: 0,
-    skippedCount: 0
+  data: { statusBarHeight: getStatusBarHeight(), report: null, sections: [], unknowns: [], shareFragments: [], chapters: CHAPTERS },
+  onLoad() {
+    this.loadReport()
   },
-
-  onLoad(query) {
-    this.moduleId = query.module || DEFAULT_MODULE_ID
-    const module = getModule(this.moduleId)
-    const moduleRecord = getQuestionnaireData().modules[this.moduleId]
-    if (!module || !moduleRecord || moduleRecord.status !== 'complete') return
-    const answers = latestAnswers(moduleRecord)
-    const values = Object.values(answers)
-    this.moduleRecord = moduleRecord
-    this.setData({
-      isReady: true,
-      moduleTitle: module.title,
-      moduleItemCount: module.items.length,
-      sections: reportSections(module, moduleRecord),
-      answeredCount: values.filter(value => value !== 'SKIP' && value !== 'NA').length,
-      skippedCount: values.filter(value => value === 'SKIP' || value === 'NA').length
-    })
-    this.syncModule()
+  loadReport() {
+    const report = getReport()
+    if (!report) return
+    const groups = [
+      { id: 'overall', title: '你现在处于什么阶段' },
+      { id: 'interaction', title: '你怎样靠近一个人' },
+      { id: 'resource', title: '什么让关系变得稳定' },
+      { id: 'provide', title: '你通常能提供什么' },
+      { id: 'tension', title: '你的回答里有哪些拉扯' },
+      { id: 'observation', title: '认识新的人时值得观察什么' }
+    ]
+    const confirmations = report.userConfirmations || {}
+    const shareFragments = report.claims.filter(claim => claim.shareFragment && confirmations[claim.id] && ['fits', 'partly_fits'].includes(confirmations[claim.id].value)).map(claim => claim.shareFragment).slice(0, 2)
+    this.setData({ report, sections: groups.map(group => Object.assign({}, group, { claims: report.claims.filter(claim => claim.section === group.id) })).filter(group => group.claims.length), unknowns: report.unknowns, shareFragments, shareableCount: shareFragments.length })
+    recordEvent('assessment_v2_report_view')
   },
-
-  onShow() {
-    resetNavigation(this)
-    if (this.data.isReady) recordEvent('questionnaire_result_view', { moduleId: this.moduleId })
+  onShow() { resetNavigation(this); this.loadReport(); this.syncPendingConfirmations() },
+  syncPendingConfirmations() {
+    if (this._confirmationSyncing) return
+    const report = getReport()
+    if (!report || !report._id || !shouldSyncAssessment() || !isCloudReady()) return
+    const queue = Object.entries(report.userConfirmations || {}).filter(([, confirmation]) => confirmation.pendingCloud)
+    if (!queue.length) return
+    this._confirmationSyncing = true
+    const syncNext = () => {
+      const next = queue.shift()
+      if (!next) { this._confirmationSyncing = false; return }
+      const [claimId, confirmation] = next
+      confirmAssessmentClaimToCloud(report._id, claimId, confirmation.value, confirmation.note || '', {
+        success: data => { markClaimConfirmationSynced(claimId, data.userConfirmations); syncNext() },
+        fail: syncNext
+      })
+    }
+    syncNext()
   },
-
-  syncModule() {
-    saveQuestionnaireModuleToCloud(this.moduleRecord, {
-      success: () => recordEvent('questionnaire_result_cloud_sync_succeeded', { moduleId: this.moduleId }),
-      fail: () => recordEvent('questionnaire_result_cloud_sync_failed', { moduleId: this.moduleId })
-    })
-  },
-
   revise() {
-    navigateOnce(this, 'redirectTo', { url: `/pages/questionnaire/index?module=${this.moduleId}&revise=1&question=0&direction=back` })
+    navigateOnce(this, 'redirectTo', { url: '/pages/questionnaire/index?chapter=C1&question=0' })
   },
-
-  openMap() {
-    navigateOnce(this, 'reLaunch', { url: '/pages/relationship-map/index' })
-  }
+  reviseChapter(event) { navigateOnce(this, 'redirectTo', { url: `/pages/questionnaire/index?chapter=${event.currentTarget.dataset.chapter}&question=0&revise=1` }) },
+  openClaim(event) { navigateOnce(this, 'navigateTo', { url: `/pages/record-claim/index?id=${encodeURIComponent(event.currentTarget.dataset.id)}` }) },
+  openShare() { navigateOnce(this, 'navigateTo', { url: '/pages/share-card/index' }) },
+  openMap() { navigateOnce(this, 'reLaunch', { url: '/pages/relationship-map/index' }) }
 })

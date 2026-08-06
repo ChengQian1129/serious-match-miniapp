@@ -52,5 +52,5 @@
 </view>
 
 <view wx:if="{{!keyboardVisible}}" class="action-bar contact-action-bar">
-  <button class="dl-button" loading="{{isSaving}}" disabled="{{isSaving}}" bind:tap="handleSave">{{isEditing ? '保存联系方式' : '保存资料'}}</button>
+  <button class="dl-button" loading="{{isSaving}}" disabled="{{!isValid || isSaving}}" bind:tap="handleSave">{{isEditing ? '保存联系方式' : '保存资料'}}</button>
 </view>

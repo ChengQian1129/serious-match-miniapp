@@ -42,6 +42,7 @@ Page({
   },
 
   syncProfileIfNeeded() {
+    if (this._profileSyncing) return
     const profile = getProfile()
     const hasCloudConsent = profile.consent && profile.consent.version === cloudConfig.privacyVersion
     if (!hasCloudConsent || !isCloudReady() || !needsCloudSync(profile)) return
