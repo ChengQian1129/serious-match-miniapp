@@ -1,6 +1,9 @@
 .followup-profile { padding-bottom: calc(300rpx + env(safe-area-inset-bottom)); }
 .followup-form { margin: 0 40rpx; }
 .followup-form .dl-input-wrap + .dl-input-wrap { margin-top: 16rpx; }
+.contact-channel-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12rpx; margin-top: 14rpx; }
+.contact-channel { min-height: 76rpx; margin: 0; padding: 16rpx 12rpx; border: 2rpx solid var(--dl-grey-200); border-radius: 4rpx; background: var(--dl-white); color: var(--dl-black); font-size: 25rpx; line-height: 40rpx; }
+.contact-channel--selected { border-color: var(--dl-black); background: var(--dl-black); color: var(--dl-white); }
 .type-list { display: flex; flex-direction: column; gap: 14rpx; }
 .type-list .choice-option { margin: 0; }
 .dl-textarea { min-height: 180rpx; height: auto; padding-top: 28rpx; }

@@ -46,10 +46,19 @@ settings.save()
 assert.equal(routedTo, '/pages/followup-profile/index')
 
 routedTo = ''
+const cloud = require('../utils/cloud')
+let participantCloudWrite = null
+cloud.isCloudReady = () => true
+cloud.saveParticipant = (participant, contact, write, callbacks) => {
+  participantCloudWrite = { participant, contact, write }
+  callbacks.success({ participant, contact })
+}
 const profile = loadPage('../pages/followup-profile/index.js')
+profile.chooseContactChannel({ currentTarget: { dataset: { value: 'wechat' } } })
+assert.equal(profile.data.contact.channel, 'wechat')
 profile.setData({
   form: { displayName: '测试参与者', cityArea: '大连', availability: '周末下午' },
-  contact: { channel: 'wechat', value: 'test-id' }
+  contact: Object.assign({}, profile.data.contact, { value: 'test-id' })
 })
 profile.save()
 const saved = store.get()
@@ -57,5 +66,8 @@ assert.equal(routedTo, '/pages/followup-settings/index')
 assert.equal(saved.participant.availability, '周末下午')
 assert.deepEqual(saved.participant.participationTypes, ['interview', 'research'])
 assert.equal(saved.contact.preferredTime, '周末下午')
+assert.equal(participantCloudWrite.contact.channel, 'wechat')
+assert.equal(participantCloudWrite.write.schemaVersion, 'participant-2.1.0')
+assert.equal(store.get().participantWrite.pendingCloud, false)
 
 console.log('Follow-up flow OK: consent first, research without contact, contact profile only when required')

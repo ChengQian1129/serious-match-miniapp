@@ -5,8 +5,13 @@
     <view class="dl-input-wrap"><view class="dl-input-label">城市或区域</view><input class="dl-input" maxlength="80" value="{{form.cityArea}}" data-field="cityArea" bindinput="input" /></view>
     <view class="dl-input-wrap"><view class="dl-input-label">方便参与和联系的时间</view><input class="dl-input" maxlength="80" value="{{form.availability}}" data-field="availability" bindinput="input" /></view>
     <view class="section-title">联系方式</view>
-    <view class="dl-input-wrap"><view class="dl-input-label">联系渠道（例如微信号、邮箱或电话）</view><input class="dl-input" maxlength="160" value="{{contact.value}}" data-field="value" bindinput="inputContact" /></view>
-    <view class="dl-input-wrap"><view class="dl-input-label">渠道类型</view><input class="dl-input" maxlength="32" value="{{contact.channel}}" data-field="channel" bindinput="inputContact" /></view>
+    <view class="dl-input-wrap">
+      <view class="dl-input-label">联系渠道</view>
+      <view class="contact-channel-list">
+        <button wx:for="{{contactChannels}}" wx:key="value" class="contact-channel {{contact.channel === item.value ? 'contact-channel--selected' : ''}}" data-value="{{item.value}}" bindtap="chooseContactChannel">{{item.label}}</button>
+      </view>
+    </view>
+    <view class="dl-input-wrap"><view class="dl-input-label">联系方式</view><input class="dl-input" maxlength="160" value="{{contact.value}}" data-field="value" bindinput="inputContact" /></view>
     <view class="dl-input-wrap"><view class="dl-input-label">补充说明（可选）</view><textarea class="dl-input dl-textarea" maxlength="500" value="{{form.note}}" data-field="note" bindinput="input" /></view>
     <view wx:if="{{error}}" class="field-error">{{error}}</view>
   </view>
