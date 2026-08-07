@@ -20,9 +20,9 @@
 | 10 | 内部可生成访谈准备卡 | 已完成 | 确定性假设、相对盲法和模型核对两阶段准备卡测试 |
 | 11 | 访谈结果可逐条验证 | 已完成 | claim、hypothesis 和题目理解事件，含版本与不可变冲突保护 |
 | 12 | 访谈与评估保存版本快照 | 已完成 | case/report/preparation/validation 快照字段与云函数测试 |
-| 13 | 参与者、报告、联系方式分层存储 | 待云端确认 | 代码使用独立集合；仍需确认真实环境七个剩余集合已创建 |
+| 13 | 参与者、报告、联系方式分层存储 | 已完成 | 真实试点环境已创建七个剩余集合；十个 v2.1 集合均为客户端不可读写，联系方式独立进入 `participant_contacts` |
 | 14 | 运营接口有角色权限和审计 | 已完成 | 三服务边界、角色矩阵、掩码/单独联系方式授权、成功与失败审计测试 |
-| 15 | 自动化测试和微信人工回归通过 | 部分完成 | 本地、干净检出、GitHub CI、微信预览编译已通过；真实云链路和真机回归待完成 |
+| 15 | 自动化测试和微信人工回归通过 | 部分完成 | 本地测试、干净检出、GitHub CI、微信预览编译已通过；四个云函数实时状态均为 `Active`，真实云链路和真机回归待完成 |
 | 16 | README、隐私说明、产品文案与功能一致 | 已完成 | README、隐私页、云集合说明和静态 DoD 检查 |
 
 ## 云端上线门槛
@@ -42,3 +42,13 @@
 - `participantService`：分用途授权、参与资料、撤回和删除。
 - `interviewOps`：角色受限的案例、准备卡、验证、审计和研究导出。
 - `datingProfile`：试点阶段兼容入口，新客户端不再以它作为主调用路径。
+
+## 云端集合落地证据（2026-08-07）
+
+环境：真实试点云环境（公开文档不记录环境标识）。
+
+已核验集合：`assessment_feedback_events`、`assessment_reports`、`assessment_sessions`、`consent_events`、`participant_registry`、`participant_contacts`、`interview_cases`、`interview_validation_events`、`operator_accounts`、`audit_events`，以及历史兼容集合 `dating_profiles`。
+
+新建七个集合时逐项选择并提交了“所有用户不可读写”；控制台权限页抽查显示该权限已生效。云函数仍通过服务端访问这些集合。
+
+同日重新执行 `npm test`，全套静态检查和行为测试通过；微信 CLI 预览编译成功，包体 555473 字节（约 542.5 KB）。通过微信 CLI 实时查询，`assessmentService`、`participantService`、`interviewOps` 和兼容入口 `datingProfile` 状态均为 `Active`。
