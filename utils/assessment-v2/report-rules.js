@@ -1,9 +1,9 @@
-const REPORT_RULE_VERSION = 'serious-match-report-rules-2.0.0'
+const REPORT_RULE_VERSION = 'serious-match-report-rules-2.1.0'
 
 const rules = [
   ['COMB_STATUS_01', 'overall', '你不是不想开始，而是现实余力还没有完全跟上', [['readiness_intent.state','in',['strong_present','lean_present']],['available_capacity.state','in',['lean_less','strong_less']]], '你的关系意愿已经比较清楚，但近期时间、情绪带宽或生活变化可能影响稳定投入。更合适的做法不是否定自己的意愿，而是把可见面频率、联系窗口和忙碌说明讲清楚。', '这是当前状态组合，不是长期能力判断。', '想认真开始，正在安排现实空间'],
-  ['COMB_STATUS_02', 'overall', '现实条件允许，但你本人未必急着进入关系', [['readiness_intent.state','in',['lean_less','strong_less']],['available_capacity.state','in',['lean_present','strong_present']]], '你似乎有时间和基本余力，但是否真正想进入承诺关系仍未完全确定。此时比扩大匹配数量更重要的是确认自己愿意为什么样的关系投入。', '有时间不等于必须开始。', '不急着开始，更看重是否值得'],
-  ['COMB_MOTIVATION_01', 'overall', '你有关系愿望，但外部推动也可能参与其中', [['readiness_intent.state','in',['strong_present','lean_present']],['autonomous_motivation.state','in',['lean_less','strong_less','mixed']]], '你并不是完全不想开始，只是家庭、年龄或周围节奏可能让这件事更紧迫。匹配时适合保留自己的决定速度。', '外部推动不必然是坏事，关键是最终选择是否仍属于你。', '有认真愿望，也坚持自己的节奏'],
+  ['COMB_STATUS_02', 'overall', '现实条件允许，但你本人未必急着进入关系', [['readiness_intent.state','in',['lean_less','strong_less']],['available_capacity.state','in',['lean_present','strong_present']]], '你似乎有时间和基本余力，但是否真正想进入承诺关系仍未完全确定。此时更重要的是确认自己愿意为什么样的关系投入。', '有时间不等于必须开始。', '不急着开始，更看重是否值得'],
+  ['COMB_MOTIVATION_01', 'overall', '你有关系愿望，但外部推动也可能参与其中', [['readiness_intent.state','in',['strong_present','lean_present']],['autonomous_motivation.state','in',['lean_less','strong_less','mixed']]], '你并不是完全不想开始，只是家庭、年龄或周围节奏可能让这件事更紧迫。更适合保留自己的决定速度。', '外部推动不必然是坏事，关键是最终选择是否仍属于你。', '有认真愿望，也坚持自己的节奏'],
   ['COMB_UNCERTAINTY_01', 'interaction', '你会较快注意到距离变化，但也愿意直接确认', [['uncertainty_sensitivity.state','in',['strong_present','lean_present']],['observations.REG03','eq','active']], '回应节奏变化可能让你更快不安，不过你并不只能靠猜测；直接表达自己的注意和需要，可能是你很重要的关系资源。', '能直接表达不代表每次都能在强烈情绪下做到。', '重视清晰，也愿意直接说'],
   ['COMB_UNCERTAINTY_02', 'tension', '不确定时，反复确认可能暂时缓解不安', [['uncertainty_sensitivity.state','in',['strong_present','lean_present']],['observations.REG01','eq','active']], '当关系状态不清楚时，你可能会增加消息、追问或连续确认。这样能快速获得信息，也可能和对方的退开形成循环。', '这只是常见风险，不代表每次追问都不合适。', ''],
   ['COMB_UNCERTAINTY_03', 'tension', '你可能很在意距离变化，却在压力下先把自己收回去', [['uncertainty_sensitivity.state','in',['strong_present','lean_present']],['observations.REG02','eq','active']], '你对关系变化并不迟钝，但真正感到受伤或不安时，可能减少回应或搁置话题。对方看到的也许是冷淡，而不是你内部的不确定。', '不同对象和冲突强度下反应可能不同。', ''],

@@ -1,0 +1,3 @@
+.followup-intro { padding: 40rpx 40rpx 72rpx; }
+.followup-list { margin-top: 40rpx; }
+.followup-actions { margin-top: 48rpx; }

@@ -38,7 +38,7 @@ assert.equal(report.claims.filter(claim => claim.section === 'provide').length, 
 assert.ok(report.claims.filter(claim => claim.section === 'provide').every(claim => claim.evidence.length === 2))
 assert.ok(report.claims.filter(claim => claim.section === 'provide').every(claim => claim.shareFragment))
 assert.ok(report.claims.find(claim => claim.id === 'OBS_REG03').shareFragment)
-assert.equal(report.instrumentVersion, '2.0.0-launch')
+assert.equal(report.instrumentVersion, '2.1.0-pilot')
 assert.equal(buildChapterInsight('C1', supportive).chapterId, 'C1')
 
 console.log('Assessment V2 OK: 48 items, 6 chapters, deterministic report')

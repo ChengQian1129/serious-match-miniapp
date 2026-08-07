@@ -1,6 +1,6 @@
 const { INSTRUMENT_VERSION, ITEMS, DIMENSIONS, getItem, optionsFor } = require('./questionnaire-definitions')
 
-const SCORING_RULE_VERSION = 'serious-match-scoring-2.0.0'
+const SCORING_RULE_VERSION = 'serious-match-scoring-2.1.0'
 const missing = value => value === undefined || value === null || value === '' || value === 'NA' || value === 'SKIP'
 const scored = (item, raw) => missing(raw) ? null : item.reverseScored ? 6 - Number(raw) : Number(raw)
 
