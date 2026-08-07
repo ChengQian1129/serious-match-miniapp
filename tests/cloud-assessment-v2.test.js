@@ -99,9 +99,25 @@ async function run() {
   assert.equal(result.data.session.revisionPending, true)
   assert.ok(result.data.session.activeReportId)
 
-  result = await cloudFunction.main({ action: 'assessmentConfirmClaim', reportId, claimId, value: 'partly_fits', note: '只在重要话题中如此' })
+  const firstFeedback = { eventId: 'feedback-1', reportId, claimId, value: 'partly_fits', note: '只在重要话题中如此', context: '', createdAt: 1000, supersedesFeedbackId: null }
+  result = await cloudFunction.main({ action: 'assessmentFeedbackAppend', reportId, feedbackEvent: firstFeedback })
   assert.equal(result.ok, true)
   assert.equal(result.data.userConfirmations[claimId].value, 'partly_fits')
+  const secondFeedback = { eventId: 'feedback-2', reportId, claimId, value: 'fits', note: '补充经历后更符合', context: '重要关系', createdAt: 1100, supersedesFeedbackId: 'feedback-1' }
+  result = await cloudFunction.main({ action: 'assessmentFeedbackAppend', reportId, feedbackEvent: secondFeedback })
+  assert.equal(result.ok, true)
+  assert.equal(rows('assessment_feedback_events').size, 2)
+  result = await cloudFunction.main({ action: 'assessmentFeedbackAppend', reportId, feedbackEvent: secondFeedback })
+  assert.equal(result.data.duplicateIgnored, true)
+  assert.equal(rows('assessment_feedback_events').size, 2)
+  result = await cloudFunction.main({ action: 'assessmentFeedbackAppend', reportId, feedbackEvent: Object.assign({}, secondFeedback, { value: 'does_not_fit' }) })
+  assert.equal(result.ok, false)
+  assert.equal(result.code, 'FEEDBACK_CONFLICT')
+  const delayedFeedback = { eventId: 'feedback-delayed', reportId, claimId, value: 'does_not_fit', note: '离线设备上的较早反馈', context: '', createdAt: 1050, supersedesFeedbackId: 'feedback-1' }
+  result = await cloudFunction.main({ action: 'assessmentFeedbackAppend', reportId, feedbackEvent: delayedFeedback })
+  assert.equal(result.ok, true)
+  assert.equal(result.data.userConfirmations[claimId].value, 'fits')
+  assert.equal(rows('assessment_feedback_events').size, 3)
 
   result = await cloudFunction.main({ action: 'assessmentShareSettings', reportId, selectedClaimIds: [claimId], clientUpdatedAt: 1000 })
   assert.equal(result.ok, true)
@@ -115,7 +131,8 @@ async function run() {
 
   result = await cloudFunction.main({ action: 'assessmentGet', assessmentId: 'relationship_manual_v2.test' })
   assert.equal(result.ok, true)
-  assert.equal(result.data.report.userConfirmations[claimId].value, 'partly_fits')
+  assert.equal(result.data.report.userConfirmations[claimId].value, 'fits')
+  assert.equal(result.data.report.feedbackEvents.length, 3)
 
   result = await cloudFunction.main({ action: 'assessmentHistory' })
   assert.equal(result.ok, true)
@@ -143,6 +160,7 @@ async function run() {
   assert.equal(rows('dating_profiles').get('v2-user').matching.activeAssessmentReportId, '')
   assert.equal([...rows('assessment_sessions').values()].some(item => item._openid === 'v2-user'), false)
   assert.equal([...rows('assessment_reports').values()].some(item => item._openid === 'v2-user'), false)
+  assert.equal([...rows('assessment_feedback_events').values()].some(item => item._openid === 'v2-user'), false)
 
   result = await cloudFunction.main({ action: 'delete' })
   assert.equal(result.ok, true)

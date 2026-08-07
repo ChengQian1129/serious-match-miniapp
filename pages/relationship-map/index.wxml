@@ -6,7 +6,7 @@
       <view class="map-group__title">{{group.title}}</view>
       <view class="map-list map-claim-list">
       <view wx:for="{{group.claims}}" wx:for-item="claim" wx:key="id" class="map-claim" hover-class="map-claim--active" aria-role="button" data-id="{{claim.id}}" bind:tap="openClaim">
-        <view class="map-claim__topline"><text class="map-claim__label">{{claim.section === 'resource' ? '关系资源' : claim.section === 'tension' ? '值得留意' : '当前发现'}}</text><text class="map-claim__status">{{claim.evidence.length}} 项依据</text></view>
+        <view class="map-claim__topline"><text class="map-claim__label">{{claim.section === 'resource' ? '关系资源' : claim.section === 'tension' ? '值得留意' : '当前发现'}}</text><text class="map-claim__status">{{claim.evidence.supporting.length}} 项支持依据</text></view>
         <view class="map-claim__title">{{claim.title}}</view><view class="map-claim__footer"><text>查看判断边界与依据</text><text class="dl-chevron">›</text></view>
       </view>
       </view>

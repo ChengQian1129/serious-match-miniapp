@@ -16,7 +16,7 @@
 
 1. 在微信开发者工具中开通云开发并创建环境。
 2. 复制 config/cloud.example.js 为 config/cloud.js，填写云环境 ID 和运营主体名称。该文件已被 Git 忽略。
-3. 建立 assessment_sessions 和 assessment_reports 集合。
+3. 建立 assessment_sessions、assessment_reports 和 assessment_feedback_events 集合。
 4. 集合权限设为客户端不可读、不可写，所有操作通过云函数完成。
 5. 上传并部署 cloudfunctions/datingProfile。
 6. 完成一份测试问卷，确认云端生成当前用户的 session 和 report。

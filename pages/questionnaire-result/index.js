@@ -1,5 +1,5 @@
-const { getReport, getSession, shouldSyncAssessment, markClaimConfirmationSynced, resetAssessment } = require('../../utils/assessment-v2/session-store')
-const { isCloudReady, confirmAssessmentClaimToCloud, deleteCloudAssessment, cloudErrorMessage } = require('../../utils/cloud')
+const { getReport, getSession, shouldSyncAssessment, markFeedbackEventSynced, resetAssessment } = require('../../utils/assessment-v2/session-store')
+const { isCloudReady, appendAssessmentFeedbackToCloud, deleteCloudAssessment, cloudErrorMessage } = require('../../utils/cloud')
 const { clearAssessmentFromProfile, recordEvent } = require('../../utils/storage')
 const { CHAPTERS } = require('../../utils/assessment-v2/questionnaire-definitions')
 const { getStatusBarHeight } = require('../../utils/window')
@@ -28,7 +28,7 @@ Page({
       const confirmation = confirmations[claim.id]
       return Object.assign({}, claim, { originalIndex: index, confirmationLabel: confirmation ? confirmationLabels[confirmation.value] : '' })
     })
-    const orderedClaims = decoratedClaims.sort((left, right) => Number(Boolean(right.confirmationLabel)) - Number(Boolean(left.confirmationLabel)) || Number(right.confidenceState === 'multi_item_supported') - Number(left.confidenceState === 'multi_item_supported') || left.originalIndex - right.originalIndex)
+    const orderedClaims = decoratedClaims.sort((left, right) => Number(Boolean(right.confirmationLabel)) - Number(Boolean(left.confirmationLabel)) || Number(right.confidence && right.confidence.level === 'strong') - Number(left.confidence && left.confidence.level === 'strong') || left.originalIndex - right.originalIndex)
     const shareFragments = report.claims.filter(claim => claim.shareFragment && confirmations[claim.id] && ['fits', 'partly_fits'].includes(confirmations[claim.id].value)).map(claim => claim.shareFragment).slice(0, 2)
     this.setData({ report, sections: groups.map(group => Object.assign({}, group, { claims: orderedClaims.filter(claim => claim.section === group.id) })).filter(group => group.claims.length), unknowns: report.unknowns, shareFragments, shareableCount: shareFragments.length })
     recordEvent('assessment_v2_report_view')
@@ -38,15 +38,14 @@ Page({
     if (this._confirmationSyncing) return
     const report = getReport()
     if (!report || !report._id || !shouldSyncAssessment() || !isCloudReady()) return
-    const queue = Object.entries(report.userConfirmations || {}).filter(([, confirmation]) => confirmation.pendingCloud)
+    const queue = (report.feedbackEvents || []).filter(event => event.pendingCloud)
     if (!queue.length) return
     this._confirmationSyncing = true
     const syncNext = () => {
       const next = queue.shift()
       if (!next) { this._confirmationSyncing = false; return }
-      const [claimId, confirmation] = next
-      confirmAssessmentClaimToCloud(report._id, claimId, confirmation.value, confirmation.note || '', {
-        success: data => { markClaimConfirmationSynced(claimId, data.userConfirmations); syncNext() },
+      appendAssessmentFeedbackToCloud(report._id, next, {
+        success: data => { markFeedbackEventSynced(next.eventId, data.feedbackEvent); syncNext() },
         fail: syncNext
       })
     }

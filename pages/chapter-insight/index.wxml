@@ -11,7 +11,7 @@
     <view wx:if="{{insight.claims.length}}" class="chapter-insight__evidence">
       <button class="chapter-insight__evidence-toggle" bind:tap="toggleEvidence">{{evidenceExpanded ? '收起本章依据' : '查看本章依据'}}</button>
       <view wx:if="{{evidenceExpanded}}" class="chapter-insight__evidence-list">
-        <view wx:for="{{insight.claims[0].evidence}}" wx:key="itemId" class="chapter-insight__evidence-item"><view>{{item.question}}</view><view class="chapter-insight__evidence-answer">你的选择：{{item.answer}}</view></view>
+        <view wx:for="{{insight.claims[0].evidence.supporting}}" wx:key="itemId" class="chapter-insight__evidence-item"><view>{{item.question}}</view><view class="chapter-insight__evidence-answer">你的选择：{{item.answer}}</view></view>
       </view>
     </view>
     <view class="chapter-insight__feedback-label">这条阶段发现接近你吗？</view>

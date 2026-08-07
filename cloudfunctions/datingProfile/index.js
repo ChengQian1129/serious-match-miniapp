@@ -7,6 +7,7 @@ const dbCommand = db.command
 const profiles = db.collection('dating_profiles')
 const assessmentSessions = db.collection('assessment_sessions')
 const assessmentReports = db.collection('assessment_reports')
+const assessmentFeedbackEvents = db.collection('assessment_feedback_events')
 const { ASSESSMENT_ID, INSTRUMENT_VERSION, ITEMS } = require('./assessment-v2-questionnaire-definitions')
 const { validateAnswers, evaluateAssessment } = require('./assessment-v2-scoring-engine')
 const { buildReport } = require('./assessment-v2-report-engine')
@@ -506,6 +507,52 @@ async function removeOwnDocuments(collection, openid) {
   }
 }
 
+function feedbackEventDocId(openid, eventId) {
+  return (openid + '_' + String(eventId || '').replace(/[^a-zA-Z0-9_.-]/g, '')).slice(0, 128)
+}
+
+function sanitizeFeedbackEvent(source, report, openid) {
+  if (!source || typeof source !== 'object') reject('缺少报告反馈事件', 'INVALID_FEEDBACK')
+  const claimId = text(source.claimId, 80)
+  if (!claimId || !(report.claims || []).some(claim => claim.id === claimId)) reject('报告结论不存在', 'INVALID_FEEDBACK')
+  const value = text(source.value, 24)
+  if (!['fits', 'partly_fits', 'does_not_fit', 'unsure'].includes(value)) reject('报告核对选项无效', 'INVALID_FEEDBACK')
+  const eventId = text(source.eventId, 128)
+  if (!eventId) reject('报告反馈编号无效', 'INVALID_FEEDBACK')
+  const createdAt = Number(source.createdAt)
+  if (!Number.isFinite(createdAt) || createdAt <= 0) reject('报告反馈时间无效', 'INVALID_FEEDBACK')
+  return {
+    _id: feedbackEventDocId(openid, eventId),
+    _openid: openid,
+    eventId,
+    reportId: report._id,
+    claimId,
+    value,
+    note: text(source.note, 200),
+    context: text(source.context, 200),
+    createdAt,
+    supersedesFeedbackId: text(source.supersedesFeedbackId, 128) || null,
+    instrumentVersion: report.instrumentVersion,
+    reportRuleVersion: report.reportRuleVersion
+  }
+}
+
+function confirmationProjection(report, event) {
+  const current = Object.assign({}, report.userConfirmations || {})[event.claimId]
+  if (current && (Number(current.reviewedAt) > Number(event.createdAt) || (Number(current.reviewedAt) === Number(event.createdAt) && String(current.feedbackId) > String(event.eventId)))) return report.userConfirmations || {}
+  return Object.assign({}, report.userConfirmations || {}, {
+    [event.claimId]: { value: event.value, note: event.note, context: event.context, reviewedAt: event.createdAt, feedbackId: event.eventId }
+  })
+}
+
+function confirmationProjectionFromEvents(events) {
+  return (events || []).slice().sort((left, right) => Number(left.createdAt) - Number(right.createdAt) || String(left.eventId).localeCompare(String(right.eventId))).reduce((projection, event) => confirmationProjection({ userConfirmations: projection }, event), {})
+}
+
+function sameFeedbackEvent(left, right) {
+  return ['_openid', 'eventId', 'reportId', 'claimId', 'value', 'note', 'context', 'createdAt', 'supersedesFeedbackId', 'instrumentVersion', 'reportRuleVersion'].every(key => left[key] === right[key])
+}
+
 exports.main = async event => {
   const { OPENID } = cloud.getWXContext()
   if (!OPENID) return { ok: false, code: 'NO_OPENID', message: '无法确认微信身份' }
@@ -519,6 +566,7 @@ exports.main = async event => {
     'saveExploration',
     'saveRecordFeedback',
     'saveQuestionnaireModule',
+    'assessmentConfirmClaim',
     'compareInviteCreate',
     'compareInviteJoin',
     'compareGet'
@@ -580,6 +628,15 @@ exports.main = async event => {
           if (!/does not exist|not exists?|not found/i.test(error.errMsg || error.message || '')) throw error
         }
       }
+      if (report) {
+        try {
+          const feedback = await assessmentFeedbackEvents.where({ _openid: OPENID, reportId: report._id }).limit(100).get()
+          report.feedbackEvents = (feedback.data || []).sort((left, right) => Number(left.createdAt) - Number(right.createdAt))
+          report.userConfirmations = confirmationProjectionFromEvents(report.feedbackEvents)
+        } catch (error) {
+          if (!/collection.*(does not exist|not exists?|not found)/i.test(error.errMsg || error.message || '')) throw error
+        }
+      }
       return { ok: true, data: { session, report } }
     }
 
@@ -599,17 +656,23 @@ exports.main = async event => {
       return { ok: true, data: { reports } }
     }
 
-    if (event.action === 'assessmentConfirmClaim') {
-      const reportId = text(event.reportId, 128)
-      const claimId = text(event.claimId, 80)
-      const value = text(event.value, 24)
-      if (!['fits', 'partly_fits', 'does_not_fit', 'unsure'].includes(value)) reject('报告核对选项无效', 'INVALID_ASSESSMENT')
-      const result = await assessmentReports.doc(reportId).get()
-      const report = result.data
-      if (!report || report._openid !== OPENID || !(report.claims || []).some(claim => claim.id === claimId)) reject('报告结论不存在', 'INVALID_ASSESSMENT')
-      const userConfirmations = Object.assign({}, report.userConfirmations, { [claimId]: { value, note: text(event.note, 200), reviewedAt: Date.now() } })
-      await assessmentReports.doc(reportId).update({ data: { userConfirmations } })
-      return { ok: true, data: { userConfirmations } }
+    if (event.action === 'assessmentFeedbackAppend') {
+      const report = await findOwnReport(OPENID, text(event.reportId, 128))
+      if (!report) reject('报告不存在或不属于当前用户', 'INVALID_FEEDBACK')
+      const feedbackEvent = sanitizeFeedbackEvent(event.feedbackEvent, report, OPENID)
+      let existing = null
+      try { existing = (await assessmentFeedbackEvents.doc(feedbackEvent._id).get()).data || null } catch (error) {
+        if (!/does not exist|not exists?|not found/i.test(error.errMsg || error.message || '')) throw error
+      }
+      if (existing) {
+        if (!sameFeedbackEvent(existing, feedbackEvent)) reject('报告反馈编号已用于其他内容', 'FEEDBACK_CONFLICT')
+        return { ok: true, data: { feedbackEvent: existing, duplicateIgnored: true, userConfirmations: report.userConfirmations || {} } }
+      }
+      await assessmentFeedbackEvents.doc(feedbackEvent._id).set({ data: feedbackEvent })
+      const feedback = await assessmentFeedbackEvents.where({ _openid: OPENID, reportId: report._id }).limit(100).get()
+      const userConfirmations = confirmationProjectionFromEvents(feedback.data || [])
+      await assessmentReports.doc(report._id).update({ data: { userConfirmations } })
+      return { ok: true, data: { feedbackEvent, userConfirmations } }
     }
 
     if (event.action === 'assessmentShareSettings') {
@@ -630,6 +693,7 @@ exports.main = async event => {
     if (event.action === 'assessmentDelete') {
       await removeOwnDocuments(assessmentReports, OPENID)
       await removeOwnDocuments(assessmentSessions, OPENID)
+      await removeOwnDocuments(assessmentFeedbackEvents, OPENID)
       const existing = await findOwnProfile(OPENID)
       if (existing) {
         await profiles.doc(OPENID).update({
@@ -760,6 +824,7 @@ exports.main = async event => {
       if (existing) await profiles.doc(OPENID).remove()
       await removeOwnDocuments(assessmentReports, OPENID)
       await removeOwnDocuments(assessmentSessions, OPENID)
+      await removeOwnDocuments(assessmentFeedbackEvents, OPENID)
       return { ok: true, data: { deleted: true } }
     }
 

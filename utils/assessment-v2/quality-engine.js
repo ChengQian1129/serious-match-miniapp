@@ -40,7 +40,9 @@ function assessResponseQuality(session) {
   if (longestRun > 12) flags.push('long_string_pattern')
   if (missingCount / ITEMS.length > 0.25) flags.push('high_missingness')
   if (inconsistentPairs >= 2) flags.push('inconsistent_pairs')
-  return { durationMs, rapidResponseCount, longestSameResponseRun: longestRun, missingCount, missingRatio: missingCount / ITEMS.length, revisionCount, inconsistentDimensionCount: inconsistentPairs, flags }
+  if (rapidResponseCount >= 10) flags.push('rapid_response_pattern')
+  const status = flags.includes('high_missingness') ? 'limited_evidence' : flags.length ? 'review_recommended' : 'normal'
+  return { status, durationMs, rapidResponseCount, longestSameResponseRun: longestRun, missingCount, missingRatio: missingCount / ITEMS.length, revisionCount, inconsistentDimensionCount: inconsistentPairs, flags }
 }
 
 module.exports = { assessResponseQuality, longestSameRun, inconsistentDimensionCount }

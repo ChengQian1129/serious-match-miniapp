@@ -10,9 +10,11 @@ assert.equal(quality.longestSameResponseRun, 48)
 assert.equal(quality.rapidResponseCount, 47)
 assert.equal(quality.revisionCount, 1)
 assert.ok(quality.flags.includes('long_string_pattern'))
+assert.equal(quality.status, 'review_recommended')
 
 const sparseAnswers = Object.fromEntries(ITEMS.slice(0, 30).map(item => [item.id, 'SKIP']))
 const sparseQuality = assessResponseQuality({ answers: sparseAnswers, answerEvents: [], itemOrder: ITEMS.map(item => item.id), startedAt: 1, completedAt: 2 })
 assert.ok(sparseQuality.flags.includes('high_missingness'))
+assert.equal(sparseQuality.status, 'limited_evidence')
 
 console.log('Response quality OK: duration, speed, long strings, missingness, revisions')

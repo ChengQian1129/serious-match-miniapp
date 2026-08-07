@@ -7,14 +7,18 @@
   </view>
 
   <view class="claim-section">
-    <view class="claim-section__title">这条描述从哪里来</view>
+    <view class="claim-section__title">支持这条描述的回答</view>
     <view class="claim-evidence-list">
-      <view wx:for="{{claim.evidence}}" wx:key="questionId" class="claim-evidence">
+      <view wx:for="{{claim.evidence.supporting}}" wx:key="itemId" class="claim-evidence">
         <view class="claim-evidence__question">{{item.question}}</view>
         <view class="claim-evidence__answer">你的选择：{{item.answer}}</view>
       </view>
     </view>
-    <view class="claim-rule">结论规则 {{claim.ruleVersion || 'V2 固定规则'}} · 原始回答保持不变</view>
+    <view wx:if="{{claim.evidence.contradicting.length}}" class="claim-evidence-list"><view class="claim-section__title">与它不完全一致的回答</view><view wx:for="{{claim.evidence.contradicting}}" wx:key="itemId" class="claim-evidence"><view class="claim-evidence__question">{{item.question}}</view><view class="claim-evidence__answer">你的选择：{{item.answer}}</view></view></view>
+    <view wx:if="{{claim.evidence.qualifying.length}}" class="claim-evidence-list"><view class="claim-section__title">需要结合情境理解的回答</view><view wx:for="{{claim.evidence.qualifying}}" wx:key="itemId" class="claim-evidence"><view class="claim-evidence__question">{{item.question}}</view><view class="claim-evidence__answer">你的选择：{{item.answer}}</view></view></view>
+    <view wx:if="{{claim.alternativeExplanations.length}}" class="claim-evidence-list"><view class="claim-section__title">其他可能解释</view><view wx:for="{{claim.alternativeExplanations}}" wx:key="*this" class="claim-evidence"><view class="claim-evidence__question">{{item}}</view></view></view>
+    <view wx:if="{{claim.verificationQuestions.length}}" class="claim-evidence-list"><view class="claim-section__title">可以继续核对的问题</view><view wx:for="{{claim.verificationQuestions}}" wx:key="*this" class="claim-evidence"><view class="claim-evidence__question">{{item}}</view></view></view>
+    <view class="claim-rule">规则 {{claim.reportRuleVersion || 'V2 固定规则'}} · 原始回答保持不变</view>
   </view>
 
   <view class="claim-section claim-section--feedback">
@@ -28,6 +32,8 @@
     </view>
     <view class="claim-note-label">补充说明（选填）</view>
     <textarea class="claim-note" value="{{feedbackNote}}" maxlength="200" auto-height placeholder="例如：只在重要话题中如此" bind:input="inputNote" />
+    <view class="claim-note-label">出现这种情况的情境（选填）</view>
+    <textarea class="claim-note" value="{{feedbackContext}}" maxlength="200" auto-height placeholder="例如：关系还没有明确的时候" bind:input="inputContext" />
     <view wx:if="{{cloudError}}" class="field-error claim-error">{{cloudError}}</view>
   </view>
 </view>

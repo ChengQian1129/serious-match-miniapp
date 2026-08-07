@@ -1,9 +1,9 @@
-const { getReport, shouldSyncAssessment, saveClaimConfirmation, markClaimConfirmationSynced } = require('../../utils/assessment-v2/session-store')
-const { isCloudReady, confirmAssessmentClaimToCloud } = require('../../utils/cloud')
+const { getReport, shouldSyncAssessment, saveClaimFeedback, markFeedbackEventSynced } = require('../../utils/assessment-v2/session-store')
+const { isCloudReady, appendAssessmentFeedbackToCloud } = require('../../utils/cloud')
 const { navigateOnce, resetNavigation } = require('../../utils/navigation')
 
 Page({
-  data: { claim: null, selectedFeedback: '', feedbackNote: '', feedbackOptions: [{ value: 'fits', label: '比较符合我' }, { value: 'partly_fits', label: '部分符合我' }, { value: 'does_not_fit', label: '不太符合我' }, { value: 'unsure', label: '我还不确定' }], canSave: false, isSaving: false, cloudError: '' },
+  data: { claim: null, selectedFeedback: '', feedbackNote: '', feedbackContext: '', feedbackOptions: [{ value: 'fits', label: '比较符合我' }, { value: 'partly_fits', label: '部分符合我' }, { value: 'does_not_fit', label: '不太符合我' }, { value: 'unsure', label: '我还不确定' }], canSave: false, isSaving: false, cloudError: '' },
   onLoad(query) { this.claimId = decodeURIComponent(query.id || '') },
   onShow() {
     resetNavigation(this)
@@ -11,14 +11,17 @@ Page({
     const claim = report && report.claims.find(item => item.id === this.claimId)
     if (!claim) return navigateOnce(this, 'reLaunch', { url: '/pages/questionnaire-result/index' })
     const confirmation = report.userConfirmations && report.userConfirmations[this.claimId]
-    this.setData({ claim, selectedFeedback: confirmation ? confirmation.value : '', feedbackNote: confirmation ? confirmation.note || '' : '', canSave: false, isSaving: false, cloudError: '' })
+    const confidenceLabels = { strong: '证据较充分', moderate: '多项支持', tentative: '初步判断', context_dependent: '依赖具体情境' }
+    const decoratedClaim = Object.assign({}, claim, { label: '判断依据', statusLabel: confidenceLabels[claim.confidence && claim.confidence.level] || '需要核对' })
+    this.setData({ claim: decoratedClaim, selectedFeedback: confirmation ? confirmation.value : '', feedbackNote: confirmation ? confirmation.note || '' : '', feedbackContext: confirmation ? confirmation.context || '' : '', canSave: false, isSaving: false, cloudError: '' })
   },
   chooseFeedback(event) { this.setData({ selectedFeedback: event.currentTarget.dataset.value, canSave: true }) },
   inputNote(event) { this.setData({ feedbackNote: String(event.detail.value || '').slice(0, 200), canSave: Boolean(this.data.selectedFeedback) }) },
+  inputContext(event) { this.setData({ feedbackContext: String(event.detail.value || '').slice(0, 200), canSave: Boolean(this.data.selectedFeedback) }) },
   handleSave() {
     if (!this.data.canSave || this.data.isSaving) return
     this.setData({ isSaving: true, cloudError: '' })
-    saveClaimConfirmation(this.claimId, this.data.selectedFeedback, this.data.feedbackNote)
+    const feedbackEvent = saveClaimFeedback(this.claimId, this.data.selectedFeedback, this.data.feedbackNote, this.data.feedbackContext)
     const report = getReport()
     const finish = () => {
       this.setData({ isSaving: false })
@@ -26,7 +29,7 @@ Page({
       navigateOnce(this, 'navigateBack', { fail: () => navigateOnce(this, 'reLaunch', { url: '/pages/questionnaire-result/index' }) })
     }
     if (shouldSyncAssessment() && isCloudReady() && report && report._id) {
-      return confirmAssessmentClaimToCloud(report._id, this.claimId, this.data.selectedFeedback, this.data.feedbackNote, { success: data => { markClaimConfirmationSynced(this.claimId, data.userConfirmations); finish() }, fail: () => this.setData({ isSaving: false, cloudError: '云端暂时没有记住这次核对，请保持网络后重试。' }) })
+      return appendAssessmentFeedbackToCloud(report._id, feedbackEvent, { success: data => { markFeedbackEventSynced(feedbackEvent.eventId, data.feedbackEvent); finish() }, fail: () => this.setData({ isSaving: false, cloudError: '云端暂时没有记住这次核对，请保持网络后重试。' }) })
     }
     finish()
   }

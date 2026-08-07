@@ -122,45 +122,77 @@ function setStorageChoice(choice) {
   return value
 }
 function shouldSyncAssessment() { const choice = getStorageChoice(); return Boolean(choice && choice.choice === 'cloud') }
-function saveClaimConfirmation(claimId, value, note = '') {
+
+function confirmationsFromEvents(events) {
+  return (events || []).reduce((result, event) => {
+    const current = result[event.claimId]
+    if (!current || Number(event.createdAt) >= Number(current.reviewedAt)) {
+      result[event.claimId] = {
+        value: event.value,
+        note: event.note || '',
+        context: event.context || '',
+        reviewedAt: event.createdAt,
+        feedbackId: event.eventId,
+        pendingCloud: Boolean(event.pendingCloud)
+      }
+    }
+    return result
+  }, {})
+}
+
+function saveClaimFeedback(claimId, value, note = '', context = '') {
   const report = getReport()
   if (!report || !report.claims.some(claim => claim.id === claimId)) throw new Error('报告结论不存在')
-  const confirmations = Object.assign({}, report.userConfirmations, {
-    [claimId]: { value, note: String(note || '').slice(0, 200), reviewedAt: Date.now(), pendingCloud: shouldSyncAssessment() }
-  })
-  const next = Object.assign({}, report, { userConfirmations: confirmations })
+  if (!['fits', 'partly_fits', 'does_not_fit', 'unsure'].includes(value)) throw new Error('报告核对选项无效')
+  const feedbackEvents = Array.isArray(report.feedbackEvents) ? report.feedbackEvents.slice() : []
+  const previous = [...feedbackEvents].reverse().find(event => event.claimId === claimId)
+  const createdAt = Date.now()
+  const event = {
+    eventId: 'feedback.' + claimId + '.' + createdAt + '.' + (feedbackEvents.length + 1),
+    reportId: report._id || '',
+    claimId,
+    value,
+    note: String(note || '').slice(0, 200),
+    context: String(context || '').slice(0, 200),
+    createdAt,
+    supersedesFeedbackId: previous ? previous.eventId : null,
+    pendingCloud: shouldSyncAssessment(),
+    instrumentVersion: report.instrumentVersion,
+    reportRuleVersion: report.reportRuleVersion
+  }
+  feedbackEvents.push(event)
+  const next = Object.assign({}, report, { feedbackEvents, userConfirmations: confirmationsFromEvents(feedbackEvents) })
   wx.setStorageSync(REPORT_KEY, next)
-  return next
+  return event
 }
+function saveClaimConfirmation(claimId, value, note = '') { saveClaimFeedback(claimId, value, note); return getReport() }
 function replaceSession(session) { if (!validSession(session)) throw new Error('云端作答记录无效'); return saveSession(session) }
 function replaceReport(report) {
   if (!report || report.instrumentVersion !== INSTRUMENT_VERSION) throw new Error('云端报告版本无效')
   const local = getReport()
-  const mergedConfirmations = Object.assign({}, report.userConfirmations)
-  if (local && Number(local.reportVersion) === Number(report.reportVersion)) {
-    Object.entries(local.userConfirmations || {}).forEach(([claimId, confirmation]) => {
-      const incoming = mergedConfirmations[claimId]
-      if (!incoming || Number(confirmation.reviewedAt) > Number(incoming.reviewedAt)) mergedConfirmations[claimId] = confirmation
-    })
-  }
-  const next = Object.assign({}, report, { userConfirmations: mergedConfirmations })
+  const events = []
+  ;[].concat(report.feedbackEvents || [], local && Number(local.reportVersion) === Number(report.reportVersion) ? local.feedbackEvents || [] : []).forEach(event => {
+    if (event && event.eventId && !events.some(current => current.eventId === event.eventId)) events.push(event)
+  })
+  const userConfirmations = events.length ? confirmationsFromEvents(events) : Object.assign({}, report.userConfirmations)
+  const next = Object.assign({}, report, { feedbackEvents: events, userConfirmations })
+  wx.setStorageSync(REPORT_KEY, next)
+  return next
+}
+function markFeedbackEventSynced(eventId, cloudEvent) {
+  const report = getReport()
+  if (!report) return null
+  const feedbackEvents = (report.feedbackEvents || []).map(event => event.eventId === eventId ? Object.assign({}, event, cloudEvent || {}, { pendingCloud: false }) : event)
+  const next = Object.assign({}, report, { feedbackEvents, userConfirmations: confirmationsFromEvents(feedbackEvents) })
   wx.setStorageSync(REPORT_KEY, next)
   return next
 }
 function markClaimConfirmationSynced(claimId, cloudConfirmations) {
   const report = getReport()
-  if (!report) return null
-  const local = report.userConfirmations && report.userConfirmations[claimId]
-  if (!local) return report
-  const cloud = cloudConfirmations && cloudConfirmations[claimId]
-  const confirmation = cloud && Number(cloud.reviewedAt) >= Number(local.reviewedAt)
-    ? cloud
-    : Object.assign({}, local, { pendingCloud: false })
-  const next = Object.assign({}, report, { userConfirmations: Object.assign({}, report.userConfirmations, { [claimId]: confirmation }) })
-  wx.setStorageSync(REPORT_KEY, next)
-  return next
+  const current = report && report.userConfirmations && report.userConfirmations[claimId]
+  return current ? markFeedbackEventSynced(current.feedbackId, null) : report
 }
 function markSynced(syncedAt = Date.now()) { const session = getSession(); return saveSession(Object.assign({}, session, { status: session.completedAt ? 'report_generated' : 'synced', syncedAt })) }
 function resetAssessment() { wx.removeStorageSync(SESSION_KEY); wx.removeStorageSync(REPORT_KEY); wx.removeStorageSync(STORAGE_CHOICE_KEY) }
 
-module.exports = { SESSION_KEY, REPORT_KEY, STORAGE_CHOICE_KEY, emptySession, getSession, hasSession, setPosition, answerItem, completeChapter, completeAssessment, getReport, saveChapterInsightFeedback, getStorageChoice, setStorageChoice, shouldSyncAssessment, saveClaimConfirmation, markClaimConfirmationSynced, replaceSession, replaceReport, markSynced, resetAssessment }
+module.exports = { SESSION_KEY, REPORT_KEY, STORAGE_CHOICE_KEY, emptySession, getSession, hasSession, setPosition, answerItem, completeChapter, completeAssessment, getReport, saveChapterInsightFeedback, getStorageChoice, setStorageChoice, shouldSyncAssessment, confirmationsFromEvents, saveClaimFeedback, saveClaimConfirmation, markFeedbackEventSynced, markClaimConfirmationSynced, replaceSession, replaceReport, markSynced, resetAssessment }

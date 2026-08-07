@@ -48,7 +48,8 @@ Promise.all([
   'setStatus',
   'saveExploration',
   'saveRecordFeedback',
-  'saveQuestionnaireModule'
+  'saveQuestionnaireModule',
+  'assessmentConfirmClaim'
 ].map(action => cloudFunction.main({ action }))).then(results => {
   results.forEach(result => assert.equal(result.code, 'UNKNOWN_ACTION'))
   console.log('Public boundary OK: obsolete routes, copy, and cloud actions are closed')

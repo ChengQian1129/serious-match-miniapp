@@ -19,11 +19,16 @@ const scoringTargets = [
   [path.join(root, 'cloudfunctions/datingProfile/assessment-v2-scoring-rules.generated.js'), scoringSource.replace("require('./schema')", "require('./assessment-v2-questionnaire-definitions')")]
 ]
 const reportRules = fs.readFileSync(path.join(root, 'shared/assessment/report-rules.js'), 'utf8')
+const reportEngine = fs.readFileSync(path.join(root, 'shared/assessment/report-engine.js'), 'utf8')
 const ruleTargets = [
   [path.join(root, 'utils/assessment-v2/generated/report-rules.js'), reportRules],
   [path.join(root, 'cloudfunctions/datingProfile/assessment-v2-report-rules.generated.js'), reportRules]
 ]
-scoringTargets.concat(ruleTargets).forEach(([target, content]) => {
+const engineTargets = [
+  [path.join(root, 'utils/assessment-v2/generated/report-engine.js'), reportEngine.replaceAll("require('./schema')", "require('./questionnaire-definitions')")],
+  [path.join(root, 'cloudfunctions/datingProfile/assessment-v2-report-engine.generated.js'), reportEngine.replaceAll("require('./schema')", "require('./assessment-v2-questionnaire-definitions')").replaceAll("require('./scoring-rules')", "require('./assessment-v2-scoring-engine')").replaceAll("require('./report-rules')", "require('./assessment-v2-report-rules')")]
+]
+scoringTargets.concat(ruleTargets, engineTargets).forEach(([target, content]) => {
   fs.mkdirSync(path.dirname(target), { recursive: true })
   fs.writeFileSync(target, content)
 })

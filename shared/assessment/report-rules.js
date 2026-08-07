@@ -1,5 +1,44 @@
 const REPORT_RULE_VERSION = 'serious-match-report-rules-2.1.0'
 
+function selectorFor(condition, inverse) {
+  const [path, , expected] = condition
+  if (path.startsWith('observations.')) {
+    return { itemIds: [path.split('.')[1]], raw: inverse ? 'low' : 'high' }
+  }
+  const [dimension, field] = path.split('.')
+  const values = Array.isArray(expected) ? expected : [expected]
+  let scored = 'high'
+  let side
+  if (field === 'state') {
+    const includesLow = values.some(value => ['lean_less', 'strong_less'].includes(value))
+    if (includesLow) scored = 'low'
+    if (values.includes('mixed') && !includesLow) scored = values.length > 1 ? 'non_high' : 'polarized'
+  }
+  if (field === 'needState') {
+    side = 'need'
+    if (values.includes('need_lower')) scored = 'low'
+    if (values.some(value => ['need_flexible', 'need_mixed'].includes(value))) scored = 'non_high'
+  }
+  if (field === 'provideState') {
+    side = 'provide'
+    if (values.includes('provide_constrained')) scored = 'low'
+    if (values.includes('provide_variable')) scored = 'non_high'
+  }
+  if (inverse) scored = scored === 'high' ? 'low' : scored === 'low' ? 'high' : 'high'
+  return Object.assign({ dimension, scored }, side ? { side } : {})
+}
+
+function selectorsFor(conditions) {
+  return {
+    supportSelectors: conditions.map(condition => selectorFor(condition, false)),
+    contradictionSelectors: conditions.map(condition => selectorFor(condition, true)),
+    qualificationSelectors: conditions.filter(condition => !condition[0].startsWith('observations.')).map(condition => {
+      const selector = selectorFor(condition, false)
+      return Object.assign({}, selector, { scored: 'mid' })
+    })
+  }
+}
+
 const rules = [
   ['COMB_STATUS_01', 'overall', '你不是不想开始，而是现实余力还没有完全跟上', [['readiness_intent.state','in',['strong_present','lean_present']],['available_capacity.state','in',['lean_less','strong_less']]], '你的关系意愿已经比较清楚，但近期时间、情绪带宽或生活变化可能影响稳定投入。更合适的做法不是否定自己的意愿，而是把可见面频率、联系窗口和忙碌说明讲清楚。', '这是当前状态组合，不是长期能力判断。', '想认真开始，正在安排现实空间'],
   ['COMB_STATUS_02', 'overall', '现实条件允许，但你本人未必急着进入关系', [['readiness_intent.state','in',['lean_less','strong_less']],['available_capacity.state','in',['lean_present','strong_present']]], '你似乎有时间和基本余力，但是否真正想进入承诺关系仍未完全确定。此时更重要的是确认自己愿意为什么样的关系投入。', '有时间不等于必须开始。', '不急着开始，更看重是否值得'],
@@ -20,6 +59,17 @@ const rules = [
   ['COMB_REGULATION_01', 'tension', '你在不同压力情境下可能既会追近，也会退开', [['observations.REG01','eq','active'],['observations.REG02','eq','active']], '有些时候你会通过追问获得确定，有些时候又会减少回应保护自己。报告会保留这种情境差异。', '需要通过具体事件核对哪些情境更容易触发哪种动作。', ''],
   ['COMB_RESOURCE_01', 'resource', '你拥有一套比较清楚的沟通与修复资源', [['observations.REG03','eq','active'],['observations.REG04','eq','active'],['repair_reengagement.provideState','eq','provide_stable']], '你能够直接表达不安，需要暂停时也会说明，冷静后还能重新回到问题。', '自评资源仍需在真实互动中验证。', '愿意说清，也愿意回来修复'],
   ['COMB_CAPACITY_01', 'tension', '当前状态可能影响你提供稳定回应', [['available_capacity.state','in',['lean_less','strong_less']],['response_predictability.provideState','in',['provide_variable','provide_constrained']]], '当时间或情绪余力不足时，即使你认同清楚沟通，也可能难以持续做到。', '待生活状态变化后应重新评估。', '']
-].map(([id, section, title, conditions, text, boundary, shareFragment]) => ({ id, section, title, conditions, text, boundary, shareFragment }))
+].map(([id, section, title, conditions, text, boundary, shareFragment]) => Object.assign({
+  id,
+  section,
+  title,
+  conditions,
+  text,
+  boundary,
+  shareFragment,
+  applicableContexts: [],
+  alternativeExplanations: ['这项表现可能只在特定关系阶段、对象或压力情境中出现。'],
+  verificationQuestions: ['最近一次出现类似情况时，你实际做了什么？']
+}, selectorsFor(conditions)))
 
 module.exports = { REPORT_RULE_VERSION, rules }

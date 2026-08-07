@@ -60,7 +60,7 @@ const merged = store.replaceReport(cloudCopy)
 assert.equal(merged.userConfirmations[claim.id].value, 'partly_fits')
 assert.equal(merged.userConfirmations[claim.id].pendingCloud, true)
 const synced = store.markClaimConfirmationSynced(claim.id, { [claim.id]: { value: 'partly_fits', note: '', reviewedAt: Date.now() + 1 } })
-assert.equal(synced.userConfirmations[claim.id].pendingCloud, undefined)
+assert.equal(synced.userConfirmations[claim.id].pendingCloud, false)
 
 const nextVersion = store.replaceReport(Object.assign({}, cloudCopy, { reportVersion: 3, userConfirmations: {} }))
 assert.deepEqual(nextVersion.userConfirmations, {})
