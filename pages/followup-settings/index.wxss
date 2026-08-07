@@ -1,0 +1,11 @@
+.followup-settings { padding-bottom: calc(72rpx + env(safe-area-inset-bottom)); }
+.consent-row { min-height: 164rpx; padding: 24rpx 0; }
+.consent-toggle { display: flex; width: 86rpx; height: 50rpx; flex: 0 0 86rpx; align-items: center; padding: 5rpx; border-radius: 25rpx; background: var(--dl-grey-200); transition: background 160ms ease-out; }
+.consent-toggle__dot { width: 40rpx; height: 40rpx; border-radius: 50%; background: white; box-shadow: 0 2rpx 8rpx rgba(0,0,0,.12); transition: transform 160ms ease-out; }
+.consent-toggle--on { background: var(--dl-black); }
+.consent-toggle--on .consent-toggle__dot { transform: translateX(36rpx); }
+.followup-settings__actions { margin: 48rpx 40rpx 0; }
+.followup-settings__actions .dl-button + .dl-button { margin-top: 14rpx; }
+.followup-settings__error { margin: 0 40rpx; }
+.danger-zone { margin: 0 40rpx; padding: 28rpx; border: 2rpx solid var(--dl-grey-200); border-radius: 8rpx; }
+.danger-zone .dl-button { margin-top: 28rpx; }

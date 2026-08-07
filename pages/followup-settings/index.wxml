@@ -1,0 +1,13 @@
+<view class="page followup-settings">
+  <view class="page-header"><view class="page-kicker">后续参与 · 独立授权</view><view class="page-title">每一种用途，都由你单独决定</view><view class="page-desc">默认全部关闭。关闭或撤回任何一项，都不会影响已经生成的关系说明书。</view></view>
+  <view class="dl-list consent-list">
+    <button wx:for="{{scopes}}" wx:key="scope" class="dl-list-row dl-list-row--button consent-row" data-scope="{{item.scope}}" bindtap="toggle">
+      <view class="dl-list-row__body"><view class="dl-list-row__title">{{item.title}}</view><view class="dl-list-row__desc">{{item.desc}}</view></view>
+      <view class="consent-toggle {{item.checked ? 'consent-toggle--on' : ''}}"><view class="consent-toggle__dot"></view></view>
+    </button>
+  </view>
+  <view class="followup-settings__actions"><button class="dl-button" loading="{{isSaving}}" bindtap="save">保存授权选择</button><button class="dl-button dl-button--outline" bindtap="editProfile">{{hasProfile ? '修改参与资料' : '填写参与资料'}}</button></view>
+  <view wx:if="{{error}}" class="field-error followup-settings__error">{{error}}</view>
+  <view class="section-title">删除</view>
+  <view class="danger-zone"><view class="dl-list-row__title">删除参与者登记</view><view class="dl-list-row__desc">删除授权、联系方式和参与资料；你的问卷和报告会保留。</view><button class="dl-button dl-button--danger" loading="{{isDeleting}}" bindtap="deleteRegistration">删除参与登记</button></view>
+</view>

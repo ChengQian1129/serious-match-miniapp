@@ -146,6 +146,35 @@ async function run() {
     assert.equal(result.code, 'UNKNOWN_ACTION')
   }
 
+  const participant = { displayName: '测试参与者', cityArea: '大连', availability: '工作日晚间', participationTypes: ['interview', 'research'] }
+  const contact = { channel: 'wechat', value: 'test-contact', preferredTime: '周三晚' }
+  rows('dating_profiles').set('v2-user', { _id: 'v2-user', _openid: 'v2-user', consent: { scope: 'matching_pool_v2', agreedAt: 1000 } })
+  result = await cloudFunction.main({ action: 'consentList' })
+  assert.deepEqual(result.data.consents, {})
+  const consent = { eventId: 'consent-interview-1', scope: 'interview_contact', createdAt: 2000 }
+  result = await cloudFunction.main({ action: 'consentGrant', consentEvent: consent })
+  assert.equal(result.ok, true)
+  result = await cloudFunction.main({ action: 'consentGrant', consentEvent: Object.assign({}, consent, { value: 'revoked' }) })
+  assert.equal(result.data.duplicateIgnored, true)
+  result = await cloudFunction.main({ action: 'participantUpsert', participant, contact })
+  assert.equal(result.ok, true)
+  result = await cloudFunction.main({ action: 'participantGet' })
+  assert.equal(result.data.participant.displayName, '测试参与者')
+  assert.equal(result.data.contact.value, 'test-contact')
+  result = await cloudFunction.main({ action: 'consentGrant', consentEvent: { eventId: 'consent-research-1', scope: 'research_use', createdAt: 2010 } })
+  assert.equal(result.ok, true)
+  result = await cloudFunction.main({ action: 'consentRevoke', consentEvent: { eventId: 'consent-research-2', scope: 'research_use', createdAt: 2020 } })
+  assert.equal(result.data.consents.research_use.value, 'revoked')
+  result = await cloudFunction.main({ action: 'consentRevoke', consentEvent: { eventId: 'consent-interview-2', scope: 'interview_contact', createdAt: 2030 } })
+  assert.equal(result.ok, true)
+  result = await cloudFunction.main({ action: 'participantGet' })
+  assert.equal(result.data.participant.status, 'withdrawn')
+  result = await cloudFunction.main({ action: 'participantDelete' })
+  assert.equal(result.ok, true)
+  assert.equal([...rows('participant_registry').values()].some(item => item._openid === 'v2-user'), false)
+  assert.equal([...rows('participant_contacts').values()].some(item => item._openid === 'v2-user'), false)
+  assert.equal([...rows('consent_events').values()].some(item => item._openid === 'v2-user'), false)
+
   rows('dating_profiles').set('v2-user', { _id: 'v2-user', _openid: 'v2-user', status: 'active', matching: { activeAssessmentReportId: reportId, reportVersion: 1 } })
   result = await cloudFunction.main({ action: 'deleteProfileOnly' })
   assert.equal(result.ok, true)

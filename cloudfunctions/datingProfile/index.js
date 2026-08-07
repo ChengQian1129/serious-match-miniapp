@@ -8,11 +8,16 @@ const profiles = db.collection('dating_profiles')
 const assessmentSessions = db.collection('assessment_sessions')
 const assessmentReports = db.collection('assessment_reports')
 const assessmentFeedbackEvents = db.collection('assessment_feedback_events')
+const consentEvents = db.collection('consent_events')
+const participantRegistry = db.collection('participant_registry')
+const participantContacts = db.collection('participant_contacts')
 const { ASSESSMENT_ID, INSTRUMENT_VERSION, ITEMS } = require('./assessment-v2-questionnaire-definitions')
 const { validateAnswers, evaluateAssessment } = require('./assessment-v2-scoring-engine')
 const { buildReport } = require('./assessment-v2-report-engine')
 const { assessResponseQuality } = require('./assessment-v2-quality-engine')
 const PRIVACY_VERSION = 'cloud-1.0'
+const CONSENT_VERSION = 'followup-consent-2.1.0'
+const CONSENT_SCOPES = new Set(['interview_contact', 'research_use', 'offline_invitation'])
 
 const allowed = {
   gender: new Set(['male', 'female', 'undisclosed']),
@@ -553,6 +558,57 @@ function sameFeedbackEvent(left, right) {
   return ['_openid', 'eventId', 'reportId', 'claimId', 'value', 'note', 'context', 'createdAt', 'supersedesFeedbackId', 'instrumentVersion', 'reportRuleVersion'].every(key => left[key] === right[key])
 }
 
+function consentDocId(openid, eventId) {
+  return (openid + '_' + String(eventId || '').replace(/[^a-zA-Z0-9_.-]/g, '')).slice(0, 128)
+}
+
+function sanitizeConsentEvent(source, openid, value) {
+  if (!source || typeof source !== 'object') reject('Missing consent event', 'INVALID_CONSENT')
+  const scope = text(source.scope, 48)
+  if (!CONSENT_SCOPES.has(scope)) reject('Invalid consent scope', 'INVALID_CONSENT')
+  const eventId = text(source.eventId, 128)
+  const createdAt = Number(source.createdAt)
+  if (!eventId || !Number.isFinite(createdAt) || createdAt <= 0) reject('Invalid consent event', 'INVALID_CONSENT')
+  return { _id: consentDocId(openid, eventId), _openid: openid, eventId, scope, value, version: CONSENT_VERSION, createdAt }
+}
+
+async function ownConsentEvents(openid) {
+  try {
+    const result = await consentEvents.where({ _openid: openid }).limit(100).get()
+    return (result.data || []).sort((left, right) => Number(left.createdAt) - Number(right.createdAt) || String(left.eventId).localeCompare(String(right.eventId)))
+  } catch (error) {
+    if (/collection.*(does not exist|not exists?|not found)/i.test(error.errMsg || error.message || '')) return []
+    throw error
+  }
+}
+
+function consentProjection(events) {
+  return (events || []).reduce((result, event) => {
+    const current = result[event.scope]
+    if (!current || Number(current.createdAt) < Number(event.createdAt) || (Number(current.createdAt) === Number(event.createdAt) && String(current.eventId) < String(event.eventId))) result[event.scope] = event
+    return result
+  }, {})
+}
+
+function sanitizeParticipant(source) {
+  if (!source || typeof source !== 'object') reject('Missing participant profile', 'INVALID_PARTICIPANT')
+  const participationTypes = [...new Set((Array.isArray(source.participationTypes) ? source.participationTypes : []).map(value => text(value, 48)).filter(Boolean))].slice(0, 8)
+  const availability = text(source.availability, 80)
+  const cityArea = text(source.cityArea, 80)
+  const displayName = text(source.displayName, 40)
+  if (!displayName || !cityArea || !availability || !participationTypes.length) reject('Required participant fields are missing', 'INVALID_PARTICIPANT')
+  return { displayName, cityArea, availability, participationTypes, ageRange: text(source.ageRange, 40), relationshipStatus: text(source.relationshipStatus, 40), relationshipHistory: text(source.relationshipHistory, 40), interviewPreference: text(source.interviewPreference, 40), note: text(source.note, 500) }
+}
+
+function sanitizeContact(source) {
+  if (!source || typeof source !== 'object') reject('Missing contact details', 'INVALID_PARTICIPANT')
+  const channel = text(source.channel, 32)
+  const value = text(source.value, 160)
+  const preferredTime = text(source.preferredTime, 80)
+  if (!channel || !value || !preferredTime) reject('Required contact fields are missing', 'INVALID_PARTICIPANT')
+  return { channel, value, preferredTime }
+}
+
 exports.main = async event => {
   const { OPENID } = cloud.getWXContext()
   if (!OPENID) return { ok: false, code: 'NO_OPENID', message: '无法确认微信身份' }
@@ -575,6 +631,59 @@ exports.main = async event => {
   }
 
   try {
+    if (event.action === 'consentGrant' || event.action === 'consentRevoke') {
+      const value = event.action === 'consentGrant' ? 'granted' : 'revoked'
+      const consentEvent = sanitizeConsentEvent(event.consentEvent, OPENID, value)
+      let existing = null
+      try { existing = (await consentEvents.doc(consentEvent._id).get()).data || null } catch (error) {
+        if (!/does not exist|not exists?|not found/i.test(error.errMsg || error.message || '')) throw error
+      }
+      if (existing) {
+        const same = ['_openid', 'eventId', 'scope', 'value', 'version', 'createdAt'].every(key => existing[key] === consentEvent[key])
+        if (!same) reject('Consent event id already used', 'CONSENT_CONFLICT')
+        const projection = consentProjection(await ownConsentEvents(OPENID))
+        return { ok: true, data: { consentEvent: existing, consents: projection, duplicateIgnored: true } }
+      }
+      await consentEvents.doc(consentEvent._id).set({ data: consentEvent })
+      const projection = consentProjection(await ownConsentEvents(OPENID))
+      if (value === 'revoked' && projection.interview_contact && projection.interview_contact.value === 'revoked') {
+        const existingParticipant = await participantRegistry.doc(OPENID).get().then(result => result.data || null).catch(error => /does not exist|not exists?|not found/i.test(error.errMsg || error.message || '') ? null : Promise.reject(error))
+        if (existingParticipant) await participantRegistry.doc(OPENID).update({ data: { status: 'withdrawn', updatedAt: Date.now() } })
+      }
+      return { ok: true, data: { consentEvent, consents: projection } }
+    }
+
+    if (event.action === 'consentList') {
+      const events = await ownConsentEvents(OPENID)
+      return { ok: true, data: { consents: consentProjection(events), events } }
+    }
+
+    if (event.action === 'participantUpsert') {
+      const participant = sanitizeParticipant(event.participant)
+      const contact = sanitizeContact(event.contact)
+      const projection = consentProjection(await ownConsentEvents(OPENID))
+      if (!projection.interview_contact || projection.interview_contact.value !== 'granted') reject('Interview contact consent is required', 'CONSENT_REQUIRED')
+      const now = Date.now()
+      const existing = await participantRegistry.doc(OPENID).get().then(result => result.data || null).catch(error => /does not exist|not exists?|not found/i.test(error.errMsg || error.message || '') ? null : Promise.reject(error))
+      const registry = Object.assign({}, participant, { _id: OPENID, _openid: OPENID, contactRef: OPENID, status: 'active', consentVersion: CONSENT_VERSION, createdAt: existing && existing.createdAt || now, updatedAt: now })
+      await participantRegistry.doc(OPENID).set({ data: registry })
+      await participantContacts.doc(OPENID).set({ data: Object.assign({}, contact, { _id: OPENID, _openid: OPENID, updatedAt: now }) })
+      return { ok: true, data: { participant: registry, consents: projection, savedAt: now } }
+    }
+
+    if (event.action === 'participantGet') {
+      const participant = await participantRegistry.doc(OPENID).get().then(result => result.data || null).catch(error => /does not exist|not exists?|not found/i.test(error.errMsg || error.message || '') ? null : Promise.reject(error))
+      const contact = await participantContacts.doc(OPENID).get().then(result => result.data || null).catch(error => /does not exist|not exists?|not found/i.test(error.errMsg || error.message || '') ? null : Promise.reject(error))
+      return { ok: true, data: { participant, contact, consents: consentProjection(await ownConsentEvents(OPENID)) } }
+    }
+
+    if (event.action === 'participantDelete') {
+      await removeOwnDocuments(consentEvents, OPENID)
+      await removeOwnDocuments(participantRegistry, OPENID)
+      await removeOwnDocuments(participantContacts, OPENID)
+      return { ok: true, data: { deleted: true } }
+    }
+
     if (event.action === 'assessmentSaveDraft') {
       const session = sanitizeAssessmentSession(event.session, OPENID)
       const existing = await findAssessmentSession(OPENID, session.assessmentId)

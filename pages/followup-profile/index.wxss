@@ -1,0 +1,7 @@
+.followup-profile { padding-bottom: calc(300rpx + env(safe-area-inset-bottom)); }
+.followup-form { margin: 0 40rpx; }
+.followup-form .dl-input-wrap + .dl-input-wrap { margin-top: 16rpx; }
+.type-list { display: flex; flex-direction: column; gap: 14rpx; }
+.type-list .choice-option { margin: 0; }
+.dl-textarea { min-height: 180rpx; height: auto; padding-top: 28rpx; }
+.action-bar .dl-button + .dl-button { margin-top: 10rpx; }

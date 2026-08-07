@@ -9,6 +9,8 @@
     "pages/relationship-map/index",
     "pages/record-claim/index",
     "pages/followup-intro/index",
+    "pages/followup-profile/index",
+    "pages/followup-settings/index",
     "pages/privacy/index"
   ],
   "window": {

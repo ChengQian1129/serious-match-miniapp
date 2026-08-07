@@ -83,8 +83,8 @@ function getAssessmentHistoryFromCloud(callbacks) {
   return callProfile('assessmentHistory', {}, callbacks)
 }
 
-function confirmAssessmentClaimToCloud(reportId, claimId, value, note, callbacks) {
-  return callProfile('assessmentConfirmClaim', { reportId, claimId, value, note }, callbacks)
+function appendAssessmentFeedbackToCloud(reportId, feedbackEvent, callbacks) {
+  return callProfile('assessmentFeedbackAppend', { reportId, feedbackEvent }, callbacks)
 }
 function saveAssessmentShareSettings(reportId, selectedClaimIds, clientUpdatedAt, callbacks) {
   return callProfile('assessmentShareSettings', { reportId, selectedClaimIds, clientUpdatedAt }, callbacks)
@@ -95,6 +95,12 @@ function deleteCloudProfile(callbacks) {
 }
 function deleteCloudProfileOnly(callbacks) { return callProfile('deleteProfileOnly', {}, callbacks) }
 function deleteCloudAssessment(callbacks) { return callProfile('assessmentDelete', {}, callbacks) }
+function grantFollowupConsent(consentEvent, callbacks) { return callProfile('consentGrant', { consentEvent }, callbacks) }
+function revokeFollowupConsent(consentEvent, callbacks) { return callProfile('consentRevoke', { consentEvent }, callbacks) }
+function getFollowupConsents(callbacks) { return callProfile('consentList', {}, callbacks) }
+function saveParticipant(participant, contact, callbacks) { return callProfile('participantUpsert', { participant, contact }, callbacks) }
+function getParticipant(callbacks) { return callProfile('participantGet', {}, callbacks) }
+function deleteParticipant(callbacks) { return callProfile('participantDelete', {}, callbacks) }
 
 function cloudErrorMessage(error) {
   if (error && error.code === 'CLOUD_NOT_READY') return error.message
@@ -102,11 +108,12 @@ function cloudErrorMessage(error) {
   if (error && error.code === 'INVALID_FEEDBACK') return error.message
   if (error && error.code === 'INVALID_QUESTIONNAIRE') return error.message
   if (error && error.code === 'INVALID_ASSESSMENT') return error.message
+  if (error && ['INVALID_CONSENT', 'CONSENT_CONFLICT', 'CONSENT_REQUIRED', 'INVALID_PARTICIPANT'].includes(error.code)) return error.message
   if (error && error.code === 'ASSESSMENT_CONFLICT') return error.message
   if (error && error.code === 'INVITE_EXPIRED') return error.message
   if (error && error.code === 'INVALID_INVITE') return error.message
   const detail = String(error && (error.errMsg || error.message) || '')
-  if (/collection.*(not exist|does not exist|not found)|collection.*不存在/i.test(detail)) return '云数据库集合尚未建立，请检查 dating_profiles、assessment_sessions、assessment_reports 和 assessment_invites'
+  if (/collection.*(not exist|does not exist|not found)|collection.*不存在/i.test(detail)) return '云数据库集合尚未建立，请检查评估、反馈、授权和参与者相关集合'
   if (/env.*(invalid|not found)|environment.*(invalid|not found)/i.test(detail)) return '云开发环境配置不匹配'
   if (/permission|not authorized|unauthorized/i.test(detail)) return '当前小程序没有云环境访问权限'
   return '云端连接失败，请检查网络后重试'
@@ -121,10 +128,16 @@ module.exports = {
   completeAssessmentToCloud,
   getAssessmentFromCloud,
   getAssessmentHistoryFromCloud,
-  confirmAssessmentClaimToCloud,
+  appendAssessmentFeedbackToCloud,
   saveAssessmentShareSettings,
   deleteCloudProfile,
   deleteCloudProfileOnly,
   deleteCloudAssessment,
+  grantFollowupConsent,
+  revokeFollowupConsent,
+  getFollowupConsents,
+  saveParticipant,
+  getParticipant,
+  deleteParticipant,
   cloudErrorMessage
 }

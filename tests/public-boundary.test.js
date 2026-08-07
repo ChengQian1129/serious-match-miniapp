@@ -10,6 +10,8 @@ assert.equal(app.pages.includes('pages/profile-preview/index'), false)
 assert.equal(app.pages.includes('pages/contact/index'), false)
 assert.equal(app.pages.includes('pages/profile/index'), false)
 assert.equal(app.pages.includes('pages/followup-intro/index'), true)
+assert.equal(app.pages.includes('pages/followup-profile/index'), true)
+assert.equal(app.pages.includes('pages/followup-settings/index'), true)
 const cloudClient = fs.readFileSync(path.join(root, 'utils/cloud.js'), 'utf8')
 ;['createCompareInvite', 'joinCompareInvite', 'getCompareInvite'].forEach(name => assert.equal(cloudClient.includes(name), false))
 

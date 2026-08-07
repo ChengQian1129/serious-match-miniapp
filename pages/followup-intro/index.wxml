@@ -9,5 +9,5 @@
     <view class="dl-list-row"><view class="dl-list-row__body"><view class="dl-list-row__title">你需要知道</view><view class="dl-list-row__desc">不自动参加任何项目，不自动认识其他用户，不会向其他用户公开资料；具体项目开始前会再次说明并征得同意。</view></view></view>
     <view class="dl-list-row"><view class="dl-list-row__body"><view class="dl-list-row__title">可以随时改变决定</view><view class="dl-list-row__desc">你可以暂不参与，也可以在登记后撤回授权并删除参与资料。</view></view></view>
   </view>
-  <view class="dl-stack followup-actions"><button class="dl-button" bind:tap="continue">我愿意了解参与方式</button><button class="dl-button dl-button--outline" bind:tap="defer">暂不参与</button></view>
+  <view class="dl-stack followup-actions"><button class="dl-button" bind:tap="continue">{{hasRegistration ? '管理参与资料与授权' : '我愿意了解参与方式'}}</button><button class="dl-button dl-button--outline" bind:tap="defer">暂不参与</button></view>
 </view>
