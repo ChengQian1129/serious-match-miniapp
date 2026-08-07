@@ -6,7 +6,7 @@
   "scripts": {
     "postinstall": "node scripts/patch-tdesign.js",
     "patch:tdesign": "node scripts/patch-tdesign.js",
-    "test": "node .tmp/check-project.js && node tests/navigation.test.js && node tests/storage-profile.test.js && node tests/assessment-v2.test.js && node tests/quality-engine.test.js && node tests/assessment-v2-flow.test.js && node tests/questionnaire-page.test.js && node tests/chapter-insight-page.test.js && node tests/matching-engine.test.js && node tests/cloud-assessment-v2.test.js"
+    "test": "node scripts/check-project.js && node tests/navigation.test.js && node tests/storage-profile.test.js && node tests/assessment-v2.test.js && node tests/quality-engine.test.js && node tests/assessment-v2-flow.test.js && node tests/questionnaire-page.test.js && node tests/chapter-insight-page.test.js && node tests/matching-engine.test.js && node tests/cloud-assessment-v2.test.js"
   },
   "keywords": [],
   "author": "",
