@@ -1,5 +1,5 @@
-const { getReport, getSession, shouldSyncAssessment, markFeedbackEventSynced, resetAssessment } = require('../../utils/assessment-v2/session-store')
-const { isCloudReady, appendAssessmentFeedbackToCloud, deleteCloudAssessment, cloudErrorMessage } = require('../../utils/cloud')
+const { getReport, getSession, shouldSyncAssessment, markFeedbackEventSynced, replaceSession, replaceReport, resetAssessment } = require('../../utils/assessment-v2/session-store')
+const { isCloudReady, completeAssessmentToCloud, appendAssessmentFeedbackToCloud, deleteCloudAssessment, cloudErrorMessage } = require('../../utils/cloud')
 const { clearAssessmentFromProfile, recordEvent } = require('../../utils/storage')
 const { CHAPTERS } = require('../../utils/assessment-v2/questionnaire-definitions')
 const { getStatusBarHeight } = require('../../utils/window')
@@ -33,7 +33,26 @@ Page({
     this.setData({ report, sections: groups.map(group => Object.assign({}, group, { claims: orderedClaims.filter(claim => claim.section === group.id) })).filter(group => group.claims.length), unknowns: report.unknowns, shareFragments, shareableCount: shareFragments.length })
     recordEvent('assessment_v2_report_view')
   },
-  onShow() { resetNavigation(this); this.loadReport(); this.syncPendingConfirmations() },
+  onShow() { resetNavigation(this); this.loadReport(); this.syncReportIfNeeded(); this.syncPendingConfirmations() },
+  syncReportIfNeeded() {
+    if (this._reportSyncing || !shouldSyncAssessment() || !isCloudReady()) return
+    const report = getReport()
+    if (!report || report._id) return
+    this._reportSyncing = true
+    completeAssessmentToCloud(getSession(), {
+      success: data => {
+        if (data.session) replaceSession(data.session)
+        if (data.report) replaceReport(data.report)
+        this._reportSyncing = false
+        this.loadReport()
+        this.syncPendingConfirmations()
+      },
+      fail: () => {
+        this._reportSyncing = false
+        recordEvent('assessment_v2_report_sync_failed')
+      }
+    })
+  },
   syncPendingConfirmations() {
     if (this._confirmationSyncing) return
     const report = getReport()

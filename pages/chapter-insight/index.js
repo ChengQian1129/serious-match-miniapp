@@ -1,6 +1,6 @@
 const { CHAPTERS, ITEMS, getChapter } = require('../../utils/assessment-v2/questionnaire-definitions')
-const { getSession, saveChapterInsightFeedback, shouldSyncAssessment, completeAssessment, replaceSession, replaceReport } = require('../../utils/assessment-v2/session-store')
-const { saveAssessmentDraftToCloud, completeAssessmentToCloud } = require('../../utils/cloud')
+const { getSession, saveChapterInsightFeedback, shouldSyncAssessment, completeAssessment } = require('../../utils/assessment-v2/session-store')
+const { saveAssessmentDraftToCloud } = require('../../utils/cloud')
 const { buildChapterInsight } = require('../../utils/assessment-v2/chapter-insight-engine')
 const { getStatusBarHeight } = require('../../utils/window')
 const { navigateOnce, resetNavigation } = require('../../utils/navigation')
@@ -34,8 +34,7 @@ Page({
       const allAnswered = ITEMS.every(item => item.id in session.answers)
       if (this.data.nextChapter && !(session.revisionPending && allAnswered)) return navigateOnce(this, 'redirectTo', { url: `/pages/questionnaire/index?chapter=${this.data.nextChapter.id}&question=0` })
       if (!allAnswered) throw new Error('关系说明书还有未完成的题目')
-      const completed = completeAssessment()
-      if (shouldSyncAssessment()) completeAssessmentToCloud(completed.session, { success: data => { if (data.session) replaceSession(data.session); if (data.report) replaceReport(data.report) }, fail: () => recordEvent('assessment_v2_report_sync_failed') })
+      completeAssessment()
       navigateOnce(this, 'redirectTo', { url: '/pages/questionnaire-result/index' })
     } catch (error) { wx.showToast({ title: error.message || '请完成全部章节', icon: 'none' }) }
   },
