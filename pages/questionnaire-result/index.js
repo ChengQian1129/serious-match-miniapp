@@ -4,9 +4,10 @@ const { clearAssessmentFromProfile, recordEvent } = require('../../utils/storage
 const { CHAPTERS } = require('../../utils/assessment-v2/questionnaire-definitions')
 const { getStatusBarHeight } = require('../../utils/window')
 const { navigateOnce, resetNavigation } = require('../../utils/navigation')
+const { FEATURES } = require('../../utils/features')
 
 Page({
-  data: { statusBarHeight: getStatusBarHeight(), report: null, sections: [], unknowns: [], shareFragments: [], chapters: CHAPTERS, showDeleteDialog: false, isDeleting: false, deleteConfirmButton: { content: '删除', theme: 'danger', variant: 'base' } },
+  data: { statusBarHeight: getStatusBarHeight(), report: null, sections: [], unknowns: [], shareFragments: [], chapters: CHAPTERS, showFollowup: FEATURES.followupParticipation, showDeleteDialog: false, isDeleting: false, deleteConfirmButton: { content: '删除', theme: 'danger', variant: 'base' } },
   onLoad() {
     this.loadReport()
   },
@@ -57,7 +58,6 @@ Page({
   reviseChapter(event) { navigateOnce(this, 'redirectTo', { url: `/pages/questionnaire/index?chapter=${event.currentTarget.dataset.chapter}&question=0&revise=1` }) },
   openClaim(event) { navigateOnce(this, 'navigateTo', { url: `/pages/record-claim/index?id=${encodeURIComponent(event.currentTarget.dataset.id)}` }) },
   openShare() { navigateOnce(this, 'navigateTo', { url: '/pages/share-card/index' }) },
-  openCompare() { navigateOnce(this, 'navigateTo', { url: '/pages/compare/index' }) },
   requestDeleteReport() { this.setData({ showDeleteDialog: true }) },
   cancelDeleteReport() { this.setData({ showDeleteDialog: false }) },
   confirmDeleteReport() {
@@ -83,5 +83,6 @@ Page({
       }
     })
   },
-  openMap() { navigateOnce(this, 'reLaunch', { url: '/pages/relationship-map/index' }) }
+  openMap() { navigateOnce(this, 'reLaunch', { url: '/pages/relationship-map/index' }) },
+  openFollowup() { navigateOnce(this, 'navigateTo', { url: '/pages/followup-intro/index' }) }
 })

@@ -71,7 +71,7 @@ Page({
       canvas.width = 640 * ratio; canvas.height = 900 * ratio; context.scale(ratio, ratio)
       context.fillStyle = '#F7F2EA'; context.fillRect(0, 0, 640, 900)
       context.fillStyle = '#17151B'; context.fillRect(0, 0, 640, 12)
-      context.font = '600 22px sans-serif'; context.fillStyle = '#6A625B'; context.fillText('认真匹配 · 关系说明书', 48, 72)
+      context.font = '600 22px sans-serif'; context.fillStyle = '#6A625B'; context.fillText('关系说明书', 48, 72)
       context.font = '700 48px sans-serif'; context.fillStyle = '#17151B'; context.fillText('我的相处名片', 48, 148)
       let y = 220
       ;['value', 'provide', 'observe'].forEach(categoryId => {

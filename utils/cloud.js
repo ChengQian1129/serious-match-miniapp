@@ -68,22 +68,6 @@ function callProfile(action, payload, callbacks = {}) {
   return true
 }
 
-function saveProfileToCloud(profile, callbacks) {
-  return callProfile('save', { profile }, callbacks)
-}
-
-function saveExplorationToCloud(exploration, callbacks) {
-  return callProfile('saveExploration', { exploration }, callbacks)
-}
-
-function saveRecordFeedbackToCloud(feedback, callbacks) {
-  return callProfile('saveRecordFeedback', { feedback }, callbacks)
-}
-
-function saveQuestionnaireModuleToCloud(moduleRecord, callbacks) {
-  return callProfile('saveQuestionnaireModule', { moduleRecord }, callbacks)
-}
-
 function saveAssessmentDraftToCloud(session, callbacks) {
   return callProfile('assessmentSaveDraft', { session }, callbacks)
 }
@@ -104,17 +88,6 @@ function confirmAssessmentClaimToCloud(reportId, claimId, value, note, callbacks
 }
 function saveAssessmentShareSettings(reportId, selectedClaimIds, clientUpdatedAt, callbacks) {
   return callProfile('assessmentShareSettings', { reportId, selectedClaimIds, clientUpdatedAt }, callbacks)
-}
-function createCompareInvite(reportId, callbacks) { return callProfile('compareInviteCreate', { reportId }, callbacks) }
-function joinCompareInvite(code, reportId, callbacks) { return callProfile('compareInviteJoin', { code, reportId }, callbacks) }
-function getCompareInvite(code, callbacks) { return callProfile('compareGet', { code }, callbacks) }
-
-function getProfileFromCloud(callbacks) {
-  return callProfile('get', {}, callbacks)
-}
-
-function setCloudStatus(status, clientUpdatedAt, callbacks) {
-  return callProfile('setStatus', { status, clientUpdatedAt }, callbacks)
 }
 
 function deleteCloudProfile(callbacks) {
@@ -144,21 +117,12 @@ module.exports = {
   initCloud,
   isCloudReady,
   getSetupIssue,
-  saveProfileToCloud,
-  saveExplorationToCloud,
-  saveRecordFeedbackToCloud,
-  saveQuestionnaireModuleToCloud,
   saveAssessmentDraftToCloud,
   completeAssessmentToCloud,
   getAssessmentFromCloud,
   getAssessmentHistoryFromCloud,
   confirmAssessmentClaimToCloud,
   saveAssessmentShareSettings,
-  createCompareInvite,
-  joinCompareInvite,
-  getCompareInvite,
-  getProfileFromCloud,
-  setCloudStatus,
   deleteCloudProfile,
   deleteCloudProfileOnly,
   deleteCloudAssessment,

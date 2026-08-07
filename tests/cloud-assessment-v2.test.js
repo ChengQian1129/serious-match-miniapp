@@ -123,21 +123,11 @@ async function run() {
   assert.equal(result.data.reports[0]._id, reportId)
   assert.equal('evaluation' in result.data.reports[0], false)
 
-  result = await cloudFunction.main({ action: 'compareInviteCreate', reportId })
-  assert.equal(result.ok, true)
-  const inviteCode = result.data.code
-  currentOpenid = 'friend-user'
-  result = await cloudFunction.main({ action: 'assessmentComplete', session: Object.assign(session(500, answers), { assessmentId: 'relationship_manual_v2.friend' }) })
-  assert.equal(result.ok, true)
-  const friendReportId = result.data.report._id
-  result = await cloudFunction.main({ action: 'compareInviteJoin', code: inviteCode, reportId: friendReportId })
-  assert.equal(result.ok, true)
-  assert.equal(result.data.comparison.note.includes('匹配分数'), true)
-  assert.equal('answers' in result.data.comparison, false)
-  currentOpenid = 'v2-user'
-  result = await cloudFunction.main({ action: 'compareGet', code: inviteCode })
-  assert.equal(result.ok, true)
-  assert.ok(Array.isArray(result.data.comparison.aligned))
+  for (const action of ['compareInviteCreate', 'compareInviteJoin', 'compareGet']) {
+    result = await cloudFunction.main({ action, reportId })
+    assert.equal(result.ok, false)
+    assert.equal(result.code, 'UNKNOWN_ACTION')
+  }
 
   rows('dating_profiles').set('v2-user', { _id: 'v2-user', _openid: 'v2-user', status: 'active', matching: { activeAssessmentReportId: reportId, reportVersion: 1 } })
   result = await cloudFunction.main({ action: 'deleteProfileOnly' })
@@ -145,7 +135,6 @@ async function run() {
   assert.equal(rows('dating_profiles').has('v2-user'), false)
   assert.equal([...rows('assessment_sessions').values()].some(item => item._openid === 'v2-user'), true)
   assert.equal([...rows('assessment_reports').values()].some(item => item._openid === 'v2-user'), true)
-  assert.equal(rows('assessment_invites').size, 0)
 
   rows('dating_profiles').set('v2-user', { _id: 'v2-user', _openid: 'v2-user', status: 'active', matching: { activeAssessmentReportId: reportId, reportVersion: 1 } })
   result = await cloudFunction.main({ action: 'assessmentDelete' })
@@ -154,17 +143,11 @@ async function run() {
   assert.equal(rows('dating_profiles').get('v2-user').matching.activeAssessmentReportId, '')
   assert.equal([...rows('assessment_sessions').values()].some(item => item._openid === 'v2-user'), false)
   assert.equal([...rows('assessment_reports').values()].some(item => item._openid === 'v2-user'), false)
-  assert.equal([...rows('assessment_reports').values()].some(item => item._openid === 'friend-user'), true)
 
   result = await cloudFunction.main({ action: 'delete' })
   assert.equal(result.ok, true)
   result = await cloudFunction.main({ action: 'assessmentGet', assessmentId: 'relationship_manual_v2.test' })
   assert.equal(result.data.session, null)
-  assert.equal(rows('assessment_reports').size, 1)
-  assert.equal(rows('assessment_invites').size, 0)
-  currentOpenid = 'friend-user'
-  result = await cloudFunction.main({ action: 'delete' })
-  assert.equal(result.ok, true)
   assert.equal(rows('assessment_reports').size, 0)
   console.log('Assessment V2 cloud OK: stale protection, report snapshot, restore, confirmation')
 }

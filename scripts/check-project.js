@@ -107,6 +107,7 @@ wxmlFiles.forEach(file => {
 
 const appConfig = JSON.parse(fs.readFileSync(path.join(projectRoot, 'app.json'), 'utf8'))
 const registeredPages = new Set(appConfig.pages)
+const registeredPageJs = [...registeredPages].map(pagePath => path.join(projectRoot, `${pagePath}.js`))
 let bindingCount = 0
 
 global.Page = definition => {
@@ -141,7 +142,7 @@ delete global.Page
 delete global.__checkedPageDefinition
 
 let routeCount = 0
-businessJs.forEach(file => {
+registeredPageJs.concat([path.join(projectRoot, 'app.js')]).forEach(file => {
   const source = fs.readFileSync(file, 'utf8')
   for (const match of source.matchAll(/\/(pages\/[a-z0-9-]+\/index)/gi)) {
     routeCount += 1

@@ -47,27 +47,17 @@ function profile() {
 
 async function run() {
   let result = await cloudFunction.main({ action: 'save', profile: profile() })
-  assert.equal(result.ok, true)
-  assert.deepEqual(result.data.profile.reality.meetingTimes, ['weekday_evening', 'weekend_daytime'])
-  result = await cloudFunction.main({ action: 'get' })
-  assert.equal(result.data.profile.basic.targetGenderPriority, 'must')
-  assert.equal(result.data.profile.reality.financeStyle, 'shared_budget')
-
-  result = await cloudFunction.main({ action: 'setStatus', status: 'paused', clientUpdatedAt: 20 })
-  assert.equal(result.ok, true)
-  result = await cloudFunction.main({ action: 'get' })
-  assert.equal(result.data.profile.status, 'paused')
-
-  const invalid = profile()
-  invalid.reality.schedulePattern = 'invented'
-  result = await cloudFunction.main({ action: 'save', profile: invalid })
   assert.equal(result.ok, false)
-  assert.equal(result.code, 'INVALID_PROFILE')
+  assert.equal(result.code, 'UNKNOWN_ACTION')
+  result = await cloudFunction.main({ action: 'setStatus', status: 'paused', clientUpdatedAt: 20 })
+  assert.equal(result.ok, false)
+  assert.equal(result.code, 'UNKNOWN_ACTION')
 
+  rows('dating_profiles').set('profile-user', Object.assign({ _id: 'profile-user', _openid: 'profile-user' }, profile()))
   result = await cloudFunction.main({ action: 'deleteProfileOnly' })
   assert.equal(result.ok, true)
   assert.equal(rows('dating_profiles').has('profile-user'), false)
-  console.log('Cloud profile V2 OK: reality round-trip, status, validation, and profile-only deletion')
+  console.log('Legacy profile boundary OK: new writes are closed, deletion remains available')
 }
 
 run().catch(error => { console.error(error); process.exitCode = 1 })

@@ -2,7 +2,7 @@
   <view class="welcome-head">
     <view class="welcome-brand">
       <view class="welcome-brand__symbol"><view></view><view></view></view>
-      <text>认真匹配</text>
+      <text>关系说明书</text>
     </view>
     <text class="welcome-count">0{{currentSlide + 1}} / 03</text>
   </view>

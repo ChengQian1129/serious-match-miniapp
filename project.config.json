@@ -33,6 +33,46 @@
       },
       {
         "type": "folder",
+        "value": "pages/compare"
+      },
+      {
+        "type": "folder",
+        "value": "pages/profile-preview"
+      },
+      {
+        "type": "folder",
+        "value": "pages/contact"
+      },
+      {
+        "type": "folder",
+        "value": "pages/profile"
+      },
+      {
+        "type": "folder",
+        "value": "pages/success"
+      },
+      {
+        "type": "folder",
+        "value": "pages/onboarding-basic"
+      },
+      {
+        "type": "folder",
+        "value": "pages/onboarding-relationship"
+      },
+      {
+        "type": "folder",
+        "value": "pages/onboarding-reality"
+      },
+      {
+        "type": "folder",
+        "value": "pages/onboarding-about"
+      },
+      {
+        "type": "folder",
+        "value": "research"
+      },
+      {
+        "type": "folder",
         "value": "node_modules"
       },
       {
