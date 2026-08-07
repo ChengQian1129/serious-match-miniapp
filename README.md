@@ -45,6 +45,7 @@ dating_profiles 仅作为旧版测试数据保留，不再接受新资料写入�
 ## Review 入口
 
 - 产品与科学边界：design/QUESTIONNAIRE_SPEC.md
+- v2.1 逐项验收证据：design/V2_1_COMPLETION_AUDIT.md
 - 问卷定义与计分：utils/assessment-v2/
 - 云端数据契约：cloudfunctions/datingProfile/index.js
 - 页面与导航回归：npm test
