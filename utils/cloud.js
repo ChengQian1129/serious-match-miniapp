@@ -7,6 +7,14 @@ try {
 }
 
 let initialized = false
+const ASSESSMENT_ACTIONS = new Set(['assessmentSaveDraft', 'assessmentComplete', 'assessmentGet', 'assessmentHistory', 'assessmentDelete', 'assessmentFeedbackAppend', 'assessmentShareSettings'])
+const PARTICIPANT_ACTIONS = new Set(['consentGrant', 'consentRevoke', 'consentList', 'participantUpsert', 'participantGet', 'participantDelete'])
+
+function functionFor(action) {
+  if (ASSESSMENT_ACTIONS.has(action)) return config.assessmentFunction || 'assessmentService'
+  if (PARTICIPANT_ACTIONS.has(action)) return config.participantFunction || 'participantService'
+  return config.profileFunction || 'datingProfile'
+}
 
 function getSetupIssue() {
   if (!config.envId) return '请先配置微信云开发环境 ID'
@@ -53,7 +61,7 @@ function callProfile(action, payload, callbacks = {}) {
 
   initCloud()
   wx.cloud.callFunction({
-    name: config.profileFunction,
+    name: functionFor(action),
     data: Object.assign({ action }, payload || {}),
     success(response) {
       const result = response && response.result

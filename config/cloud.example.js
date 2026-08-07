@@ -4,5 +4,7 @@ module.exports = {
   envId: '',
   operatorName: '',
   profileFunction: 'datingProfile',
+  assessmentFunction: 'assessmentService',
+  participantFunction: 'participantService',
   privacyVersion: 'cloud-1.0'
 }

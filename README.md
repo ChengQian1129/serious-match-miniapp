@@ -18,7 +18,7 @@
 2. 复制 config/cloud.example.js 为 config/cloud.js，填写云环境 ID 和运营主体名称。该文件已被 Git 忽略。
 3. 建立 assessment_sessions、assessment_reports、assessment_feedback_events、consent_events、participant_registry、participant_contacts、interview_cases、interview_validation_events、operator_accounts 和 audit_events 集合。
 4. 集合权限设为客户端不可读、不可写，所有操作通过云函数完成。
-5. 上传并部署 cloudfunctions/datingProfile。
+5. 上传并部署 `assessmentService`、`participantService` 和 `interviewOps`。`datingProfile` 仅作为测试阶段的兼容入口保留。
 6. 完成一份测试问卷，确认云端生成当前用户的 session 和 report。
 
 dating_profiles 仅作为旧版测试数据保留，不再接受新资料写入。
