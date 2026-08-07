@@ -1,13 +1,13 @@
 {
   "name": "serious-match-miniapp",
-  "version": "1.0.0",
-  "description": "原生微信小程序 Demo：本地保存填写草稿，确认提交后通过微信云开发维护私密资料资源池。",
+  "version": "2.1.0-pilot-interview",
+  "description": "原生微信小程序：个人关系评估、可核对的关系说明书，以及自愿参加的后续访谈与研究入口。",
   "main": "app.js",
   "scripts": {
     "postinstall": "node scripts/patch-tdesign.js",
     "patch:tdesign": "node scripts/patch-tdesign.js",
     "sync:assessment": "node scripts/sync-assessment-schema.js",
-    "test": "node scripts/check-project.js && node scripts/check-public-boundary.js && node scripts/check-assessment-schema.js && node tests/navigation.test.js && node tests/storage-profile.test.js && node tests/consent-events.test.js && node tests/assessment-v2.test.js && node tests/assessment-schema-sync.test.js && node tests/report-evidence.test.js && node tests/report-confidence.test.js && node tests/feedback-events.test.js && node tests/quality-engine.test.js && node tests/assessment-v2-flow.test.js && node tests/questionnaire-page.test.js && node tests/reality-page.test.js && node tests/chapter-insight-page.test.js && node tests/cloud-profile-v2.test.js && node tests/cloud-assessment-v2.test.js && node tests/public-boundary.test.js"
+    "test": "node scripts/check-project.js && node scripts/check-public-boundary.js && node scripts/check-assessment-schema.js && node scripts/check-v21-dod.js && node tests/navigation.test.js && node tests/storage-profile.test.js && node tests/consent-events.test.js && node tests/assessment-v2.test.js && node tests/assessment-schema-sync.test.js && node tests/report-evidence.test.js && node tests/report-confidence.test.js && node tests/feedback-events.test.js && node tests/quality-engine.test.js && node tests/assessment-v2-flow.test.js && node tests/questionnaire-page.test.js && node tests/reality-page.test.js && node tests/chapter-insight-page.test.js && node tests/cloud-profile-v2.test.js && node tests/cloud-assessment-v2.test.js && node tests/public-boundary.test.js"
   },
   "keywords": [],
   "author": "",

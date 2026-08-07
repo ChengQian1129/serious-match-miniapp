@@ -173,11 +173,15 @@ async function run() {
   assert.equal(result.ok, true)
   const caseId = result.data.case._id
   const validationClaimId = result.data.case.reportSnapshot.claims[0].id
+  result = await cloudFunction.main({ action: 'participantDetail', participantId: 'v2-user' })
+  assert.equal(result.data.contact.value, 'test-contact')
   result = await cloudFunction.main({ action: 'caseGet', caseId })
   assert.equal(result.data.case._id, caseId)
   result = await cloudFunction.main({ action: 'preparationGenerate', caseId })
   assert.ok(result.data.preparation.cards.length)
   result = await cloudFunction.main({ action: 'validationAppend', caseId, validationEvent: { eventId: 'validation-1', claimId: validationClaimId, verdict: 'confirmed', note: '具体事件中得到确认', context: '访谈', observedAt: 3000 } })
+  assert.equal(result.ok, true)
+  result = await cloudFunction.main({ action: 'questionUnderstandingAppend', caseId, validationEvent: { eventId: 'understanding-1', itemId: ITEMS[0].id, verdict: 'misunderstood', note: '把时间范围理解成最近一次', context: '访谈复述', observedAt: 3010 } })
   assert.equal(result.ok, true)
   result = await cloudFunction.main({ action: 'validationAppend', caseId, validationEvent: { eventId: 'validation-1', claimId: validationClaimId, verdict: 'rejected', note: '', context: '', observedAt: 3000 } })
   assert.equal(result.code, 'VALIDATION_CONFLICT')
@@ -187,6 +191,9 @@ async function run() {
   result = await cloudFunction.main({ action: 'deidentifiedExport' })
   assert.equal(result.ok, true)
   assert.equal('displayName' in result.data.records[0], false)
+  result = await cloudFunction.main({ action: 'pilotMetrics' })
+  assert.equal(result.data.metrics.questionUnderstandingByVerdict.misunderstood, 1)
+  assert.equal(result.data.metrics.validationByVerdict.confirmed, 1)
   currentOpenid = 'v2-user'
   result = await cloudFunction.main({ action: 'consentGrant', consentEvent: { eventId: 'consent-research-1', scope: 'research_use', createdAt: 2010 } })
   assert.equal(result.ok, true)

@@ -721,8 +721,9 @@ exports.main = async event => {
         const cases = await interviewCases.where({ participantId, assignedOperatorOpenid: OPENID }).limit(1).get()
         if (!(cases.data || []).length) reject('Participant is not assigned to this operator', 'UNAUTHORIZED_OPERATOR')
       }
+      const contact = await participantContacts.doc(participant.contactRef || participantId).get().then(result => result.data || null).catch(error => /does not exist|not exists?|not found/i.test(error.errMsg || error.message || '') ? null : Promise.reject(error))
       await appendAudit(OPENID, 'participantDetail', participantId, 'success', { role: account.role })
-      return { ok: true, data: { participant: { _id: participant._id, displayName: participant.displayName, cityArea: participant.cityArea, availability: participant.availability, participationTypes: participant.participationTypes || [], status: participant.status } } }
+      return { ok: true, data: { participant: { _id: participant._id, displayName: participant.displayName, cityArea: participant.cityArea, availability: participant.availability, participationTypes: participant.participationTypes || [], status: participant.status }, contact: contact ? { channel: contact.channel, value: contact.value, preferredTime: contact.preferredTime } : null } }
     }
 
     if (event.action === 'caseGet') {
@@ -750,19 +751,24 @@ exports.main = async event => {
       return { ok: true, data: { preparation } }
     }
 
-    if (event.action === 'validationAppend') {
+    if (event.action === 'validationAppend' || event.action === 'questionUnderstandingAppend') {
       const { account, caseDocument } = await requireCaseAccess(OPENID, event.caseId, ['interviewer', 'admin'])
       const source = event.validationEvent || {}
       const eventId = text(source.eventId, 128)
       const claimId = text(source.claimId, 80)
+      const itemId = text(source.itemId, 80)
+      const eventType = event.action === 'questionUnderstandingAppend' ? 'question_understanding' : (text(source.eventType, 40) || 'claim_validation')
       const verdict = text(source.verdict, 40)
       const observedAt = Number(source.observedAt)
-      if (!eventId || !(caseDocument.reportSnapshot.claims || []).some(claim => claim.id === claimId) || !['confirmed', 'partly_confirmed', 'rejected', 'context_dependent', 'insufficient_evidence'].includes(verdict) || !Number.isFinite(observedAt)) reject('Invalid validation event', 'INVALID_VALIDATION')
-      const validation = { _id: operatorDocId(caseDocument._id, eventId), eventId, caseId: caseDocument._id, participantId: caseDocument.participantId, claimId, verdict, note: text(source.note, 500), context: text(source.context, 300), observedAt, recordedAt: Date.now(), operatorOpenid: OPENID, instrumentVersion: caseDocument.reportSnapshot.instrumentVersion, scoringRuleVersion: caseDocument.reportSnapshot.scoringRuleVersion, reportRuleVersion: caseDocument.reportSnapshot.reportRuleVersion }
+      const validClaim = (caseDocument.reportSnapshot.claims || []).some(claim => claim.id === claimId)
+      const validItem = ITEMS.some(item => item.id === itemId)
+      const validVerdict = eventType === 'question_understanding' ? ['understood', 'misunderstood', 'needs_prompt'].includes(verdict) : ['confirmed', 'partly_confirmed', 'rejected', 'context_dependent', 'insufficient_evidence'].includes(verdict)
+      if (!eventId || (eventType === 'question_understanding' ? !validItem : !validClaim) || !validVerdict || !Number.isFinite(observedAt)) reject('Invalid validation event', 'INVALID_VALIDATION')
+      const validation = { _id: operatorDocId(caseDocument._id, eventId), eventId, eventType, caseId: caseDocument._id, participantId: caseDocument.participantId, claimId: claimId || null, itemId: itemId || null, verdict, note: text(source.note, 500), context: text(source.context, 300), observedAt, recordedAt: Date.now(), operatorOpenid: OPENID, instrumentVersion: caseDocument.reportSnapshot.instrumentVersion, scoringRuleVersion: caseDocument.reportSnapshot.scoringRuleVersion, reportRuleVersion: caseDocument.reportSnapshot.reportRuleVersion }
       let existing = null
       try { existing = (await interviewValidationEvents.doc(validation._id).get()).data || null } catch (error) { if (!/does not exist|not exists?|not found/i.test(error.errMsg || error.message || '')) throw error }
       if (existing) {
-        const same = ['eventId', 'caseId', 'claimId', 'verdict', 'note', 'context', 'observedAt'].every(key => existing[key] === validation[key])
+        const same = ['eventId', 'eventType', 'caseId', 'claimId', 'itemId', 'verdict', 'note', 'context', 'observedAt'].every(key => existing[key] === validation[key])
         if (!same) reject('Validation event id already used', 'VALIDATION_CONFLICT')
         return { ok: true, data: { validationEvent: existing, duplicateIgnored: true } }
       }
@@ -785,6 +791,31 @@ exports.main = async event => {
       const records = (cases.data || []).map(item => ({ caseId: item._id, participantKey: operatorDocId('participant', item.participantId), reportSnapshot: item.reportSnapshot, participantSnapshot: item.participantSnapshot, status: item.status, createdAt: item.createdAt }))
       await appendAudit(OPENID, 'deidentifiedExport', 'completed-cases', 'success', { role: account.role, count: records.length })
       return { ok: true, data: { records, exportedAt: Date.now() } }
+    }
+
+    if (event.action === 'pilotMetrics') {
+      const account = await requireOperator(OPENID, ['analyst', 'admin'])
+      const [reportsResult, feedbackResult, casesResult, validationResult] = await Promise.all([
+        assessmentReports.where({}).limit(100).get(),
+        assessmentFeedbackEvents.where({}).limit(100).get(),
+        interviewCases.where({}).limit(100).get(),
+        interviewValidationEvents.where({}).limit(100).get()
+      ])
+      const countBy = (items, key) => (items || []).reduce((result, item) => { const value = item[key] || 'unknown'; result[value] = Number(result[value] || 0) + 1; return result }, {})
+      const validations = validationResult.data || []
+      const metrics = {
+        reportCount: (reportsResult.data || []).length,
+        feedbackCount: (feedbackResult.data || []).length,
+        feedbackByValue: countBy(feedbackResult.data, 'value'),
+        caseCount: (casesResult.data || []).length,
+        caseByStatus: countBy(casesResult.data, 'status'),
+        preparationGeneratedCount: (casesResult.data || []).filter(item => item.preparation && item.preparation.generatedAt).length,
+        validationByVerdict: countBy(validations.filter(item => item.eventType !== 'question_understanding'), 'verdict'),
+        questionUnderstandingByVerdict: countBy(validations.filter(item => item.eventType === 'question_understanding'), 'verdict'),
+        generatedAt: Date.now()
+      }
+      await appendAudit(OPENID, 'pilotMetrics', 'pilot', 'success', { role: account.role, count: metrics.caseCount })
+      return { ok: true, data: { metrics } }
     }
 
     if (event.action === 'consentGrant' || event.action === 'consentRevoke') {

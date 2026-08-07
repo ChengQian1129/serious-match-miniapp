@@ -30,6 +30,13 @@
     </view>
   </view>
 
+  <view class="section-title">后续参与与授权</view>
+  <view class="dl-list privacy-list">
+    <view class="dl-list-row privacy-row"><view class="privacy-index">04</view><view class="dl-list-row__body"><view class="dl-list-row__title">与报告相互独立</view><view class="dl-list-row__desc">不提供联系方式也能获得完整报告。后续访谈联系、去标识化研究使用和线下活动邀请分别授权，默认均不勾选。</view></view></view>
+    <view class="dl-list-row privacy-row"><view class="privacy-index">05</view><view class="dl-list-row__body"><view class="dl-list-row__title">联系方式隔离保存</view><view class="dl-list-row__desc">参与资料、评估报告和联系方式分开保存。分析人员不能读取原始联系方式，访谈人员只能查看被分配案例所需的信息。</view></view></view>
+    <view class="dl-list-row privacy-row"><view class="privacy-index">06</view><view class="dl-list-row__body"><view class="dl-list-row__title">随时撤回或删除</view><view class="dl-list-row__desc">撤回后不再进入新的联系名单；删除参与登记会删除授权、参与资料和联系方式，但不会删除问卷和关系说明书。</view></view></view>
+  </view>
+
   <view class="section-title">上线前补充</view>
   <view class="privacy-callout">
     <view class="dl-list-row__title">补全运营信息</view>
