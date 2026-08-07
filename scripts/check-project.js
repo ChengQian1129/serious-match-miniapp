@@ -64,9 +64,10 @@ cloudJs.forEach(file => execFileSync(process.execPath, ['--check', file], { stdi
 const projectJson = [
   'app.json',
   'project.config.json',
-  'project.private.config.json',
   'sitemap.json'
-].map(file => path.join(projectRoot, file)).concat(walk(path.join(projectRoot, 'pages'), '.json'))
+].map(file => path.join(projectRoot, file))
+  .concat(['project.private.config.json'].map(file => path.join(projectRoot, file)).filter(fs.existsSync))
+  .concat(walk(path.join(projectRoot, 'pages'), '.json'))
 
 projectJson.forEach(file => JSON.parse(fs.readFileSync(file, 'utf8')))
 
