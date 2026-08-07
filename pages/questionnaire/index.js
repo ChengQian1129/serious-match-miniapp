@@ -21,7 +21,11 @@ Page({
     recordEvent('assessment_v2_chapter_start', { chapterId: this.chapterId, resumed: Boolean(Object.keys(this.session.answers).length) })
   },
 
-  onShow() { resetNavigation(this) },
+  onShow() {
+    resetNavigation(this)
+    const session = getSession()
+    if (shouldSyncAssessment() && session.status === 'pending_cloud') this.queueCloudSync(session)
+  },
 
   getQuestionState(index) {
     const item = getItem(this.chapter.itemIds[index])
