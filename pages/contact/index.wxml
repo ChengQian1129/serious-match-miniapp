@@ -36,6 +36,11 @@
   </view>
 
   <view class="section-title">提交前确认</view>
+  <view wx:if="{{!matchingEligible}}" class="contact-eligibility">
+    <view class="contact-eligibility__title">当前不会提交到匹配池</view>
+    <view class="contact-eligibility__text">你刚才选择了暂时不适合进入关系，或没有明确当前状态。确认准备好后再提交资料。</view>
+    <button class="privacy-link" bind:tap="editAvailability"><text>修改当前关系状态</text><text class="dl-chevron">›</text></button>
+  </view>
   <view class="confirmation-list">
     <button wx:for="{{confirmationOptions}}" wx:key="value" class="confirmation-row {{(item.value === 'eligibility' && eligibilityChecked) || (item.value === 'privacy' && privacyChecked) ? 'confirmation-row--checked' : ''}}" data-value="{{item.value}}" aria-role="checkbox" aria-checked="{{(item.value === 'eligibility' && eligibilityChecked) || (item.value === 'privacy' && privacyChecked)}}" aria-label="{{item.label}}" bind:tap="toggleConfirmation">
       <view class="confirmation-check">{{(item.value === 'eligibility' && eligibilityChecked) || (item.value === 'privacy' && privacyChecked) ? '✓' : ''}}</view>

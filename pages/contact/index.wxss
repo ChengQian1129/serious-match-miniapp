@@ -142,6 +142,10 @@
   padding-left: 40rpx;
 }
 
+.contact-eligibility { margin: 20rpx 40rpx 28rpx; padding: 28rpx 0; border-top: 2rpx solid var(--dl-black); border-bottom: 2rpx solid var(--dl-black); }
+.contact-eligibility__title { font-size: 29rpx; font-weight: 700; line-height: 42rpx; }
+.contact-eligibility__text { margin-top: 10rpx; color: var(--dl-grey-500); font-size: 25rpx; line-height: 40rpx; }
+
 .privacy-link {
   display: flex;
   min-height: 112rpx;

@@ -63,6 +63,7 @@ Page({
 
   onLoad(query) {
     const isEditing = query.edit === '1'
+    const returnToContact = query.return === 'contact'
     const ageOptions = []
     for (let age = 18; age <= 70; age += 1) {
       ageOptions.push({ value: age, label: `${age} 岁` })
@@ -93,7 +94,8 @@ Page({
       maxAgePickerValue: [Number(form.targetAgeMax)],
       currentQuestion,
       motionClass: getMotionClass(query.direction),
-      isEditing
+      isEditing,
+      returnToContact
     }, this.getQuestionState(currentQuestion, form, isEditing)))
   },
 
@@ -236,6 +238,10 @@ Page({
     if (this.data.isEditing) {
       saveSection('relationship', this.data.form)
       recordEvent('relationship_updated')
+      if (this.data.returnToContact) {
+        wx.navigateBack({ fail: () => { this._isRouting = false } })
+        return
+      }
       wx.reLaunch({ url: '/pages/profile/index', fail: () => { this._isRouting = false } })
       return
     }

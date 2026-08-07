@@ -14,6 +14,7 @@ Page({
     cloudError: '',
     isValid: false,
     isSaving: false,
+    matchingEligible: true,
     isEditing: false,
     phoneFocused: false,
     keyboardVisible: false,
@@ -34,6 +35,7 @@ Page({
     const phone = profile.contact && profile.contact.phone ? profile.contact.phone : ''
     const hasSavedProfile = profile.status === 'active' || profile.status === 'paused'
     const hasCloudConsent = profile.consent && profile.consent.version === cloudConfig.privacyVersion
+    const matchingEligible = profile.relationship && profile.relationship.availability === 'single_ready'
     const confirmations = hasSavedProfile
       ? ['eligibility'].concat(hasCloudConsent ? ['privacy'] : [])
       : []
@@ -42,15 +44,19 @@ Page({
       confirmations,
       eligibilityChecked: confirmations.includes('eligibility'),
       privacyChecked: confirmations.includes('privacy'),
+      matchingEligible,
       isEditing: query.edit === '1',
       cloudReady: isCloudReady(),
-      isValid: this.validate(phone, confirmations)
+      isValid: this.validate(phone, confirmations, matchingEligible)
     })
     recordEvent('contact_page_view')
   },
 
   onShow() {
     resetNavigation(this)
+    const profile = getProfile()
+    const matchingEligible = profile.relationship && profile.relationship.availability === 'single_ready'
+    this.setData({ matchingEligible, isValid: this.validate(this.data.phone, this.data.confirmations, matchingEligible) })
   },
 
   inputPhone(event) {
@@ -59,7 +65,7 @@ Page({
     this.setData({
       phone,
       phoneError: phone.length === 11 && !phoneValid ? '请填写正确的 11 位手机号' : '',
-      isValid: this.validate(phone, this.data.confirmations)
+      isValid: this.validate(phone, this.data.confirmations, this.data.matchingEligible)
     })
   },
 
@@ -116,7 +122,7 @@ Page({
       privacyChecked: confirmations.includes('privacy'),
       consentError: '',
       cloudError: '',
-      isValid: this.validate(this.data.phone, confirmations)
+      isValid: this.validate(this.data.phone, confirmations, this.data.matchingEligible)
     })
   },
 
@@ -128,8 +134,12 @@ Page({
     this.changeConfirmations({ detail: { value: confirmations } })
   },
 
-  validate(phone, confirmations) {
-    return /^1[3-9]\d{9}$/.test(phone) && confirmations.includes('eligibility') && confirmations.includes('privacy')
+  validate(phone, confirmations, matchingEligible = this.data.matchingEligible) {
+    return matchingEligible && /^1[3-9]\d{9}$/.test(phone) && confirmations.includes('eligibility') && confirmations.includes('privacy')
+  },
+
+  editAvailability() {
+    navigateOnce(this, 'navigateTo', { url: '/pages/onboarding-relationship/index?edit=1&question=4&return=contact' })
   },
 
   openPrivacy() {
@@ -168,6 +178,10 @@ Page({
       phoneError: phoneValid ? '' : '请填写正确的 11 位手机号',
       consentError: consentValid ? '' : '请确认以上两项内容'
     })
+    if (!this.data.matchingEligible) {
+      wx.showToast({ title: '请先确认当前可以进入关系', icon: 'none' })
+      return
+    }
     if (!phoneValid || !consentValid || this.data.isSaving) return
 
     this.setData({ isSaving: true, cloudError: '' })
