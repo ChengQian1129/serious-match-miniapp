@@ -23,6 +23,11 @@ store.mergeCloudConsents({ interview_contact: Object.assign({}, interview, { pen
 assert.equal(store.get().consents.research_use.eventId, pendingResearch.eventId)
 store.saveParticipant({ displayName: 'A' }, { channel: 'wechat', value: 'id' })
 assert.equal(store.get().participant.displayName, 'A')
+assert.equal(store.get().participantWrite.pendingCloud, true)
+const writeId = store.get().participantWrite.idempotencyKey
+store.markParticipantSynced({ displayName: 'A' }, { channel: 'wechat', value: 'id' })
+assert.equal(store.get().participantWrite.idempotencyKey, writeId)
+assert.equal(store.get().participantWrite.pendingCloud, false)
 store.clear()
-assert.deepEqual(store.get(), { participant: {}, contact: {}, consents: {}, consentEvents: [] })
+assert.deepEqual(store.get(), { participant: {}, contact: {}, consents: {}, consentEvents: [], participantWrite: null })
 console.log('Consent events OK: independent scopes, immutable local history, and deletion')

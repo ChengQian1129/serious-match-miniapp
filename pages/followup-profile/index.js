@@ -8,7 +8,7 @@ Page({
   load() {
     const local = store.get()
     this.setParticipantData(local.participant || {}, local.contact || {})
-    if (isCloudReady()) getParticipant({ success: data => { if (data.participant && !store.get().participant.displayName) { store.saveParticipant(data.participant, data.contact || {}); this.setParticipantData(data.participant, data.contact || {}) } }, fail: () => {} })
+    if (isCloudReady()) getParticipant({ success: data => { if (data.participant && !store.get().participant.displayName) { store.markParticipantSynced(data.participant, data.contact || {}); this.setParticipantData(data.participant, data.contact || {}) } }, fail: () => {} })
   },
   setParticipantData(participant, contact) {
     const selectedTypes = participant.participationTypes || []

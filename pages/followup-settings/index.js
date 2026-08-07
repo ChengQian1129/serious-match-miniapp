@@ -43,8 +43,8 @@ Page({
   saveProfileIfAllowed() {
     const state = store.get()
     const contactGranted = state.consents.interview_contact && state.consents.interview_contact.value === 'granted'
-    const finish = () => { this.setData({ isSaving: false }); wx.showToast({ title: '已保存', icon: 'success' }); this.load() }
-    if (contactGranted && state.participant && state.participant.displayName && isCloudReady()) return saveParticipant(state.participant, state.contact, { success: finish, fail: error => this.setData({ isSaving: false, error: cloudErrorMessage(error) }) })
+    const finish = data => { if (data && data.participant) store.markParticipantSynced(data.participant, data.contact); this.setData({ isSaving: false }); wx.showToast({ title: '已保存', icon: 'success' }); this.load() }
+    if (contactGranted && state.participant && state.participant.displayName && state.participantWrite && state.participantWrite.pendingCloud && isCloudReady()) return saveParticipant(state.participant, state.contact, state.participantWrite, { success: finish, fail: error => this.setData({ isSaving: false, error: cloudErrorMessage(error) }) })
     finish()
   },
   editProfile() { navigateOnce(this, 'redirectTo', { url: '/pages/followup-profile/index' }) },

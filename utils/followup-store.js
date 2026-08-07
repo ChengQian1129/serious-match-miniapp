@@ -1,7 +1,7 @@
 const KEY = 'serious_match_followup_v21'
 const CONSENT_VERSION = 'followup-consent-2.1.0'
 
-function empty() { return { participant: {}, contact: {}, consents: {}, consentEvents: [] } }
+function empty() { return { participant: {}, contact: {}, consents: {}, consentEvents: [], participantWrite: null } }
 function get() {
   const value = wx.getStorageSync(KEY)
   return value && typeof value === 'object' ? Object.assign(empty(), value) : empty()
@@ -18,7 +18,15 @@ function appendConsent(scope, value) {
   save(next)
   return consentEvent
 }
-function saveParticipant(participant, contact) { return save(Object.assign({}, get(), { participant, contact })) }
+function saveParticipant(participant, contact) {
+  const now = Date.now()
+  const participantWrite = { clientUpdatedAt: now, idempotencyKey: `participant.${now}.${Math.random().toString(36).slice(2, 8)}`, schemaVersion: 'participant-2.1.0', pendingCloud: true }
+  return save(Object.assign({}, get(), { participant, contact, participantWrite }))
+}
+function markParticipantSynced(participant, contact) {
+  const state = get()
+  return save(Object.assign({}, state, { participant: participant || state.participant, contact: contact || state.contact, participantWrite: state.participantWrite ? Object.assign({}, state.participantWrite, { pendingCloud: false }) : null }))
+}
 function markConsentSynced(eventId, cloudEvent) {
   const state = get()
   const consentEvents = (state.consentEvents || []).map(item => item.eventId === eventId ? Object.assign({}, item, cloudEvent || {}, { pendingCloud: false }) : item)
@@ -37,4 +45,4 @@ function mergeCloudConsents(cloudConsents) {
 }
 function clear() { wx.removeStorageSync(KEY); return empty() }
 
-module.exports = { CONSENT_VERSION, get, save, appendConsent, saveParticipant, markConsentSynced, mergeCloudConsents, clear }
+module.exports = { CONSENT_VERSION, get, save, appendConsent, saveParticipant, markParticipantSynced, markConsentSynced, mergeCloudConsents, clear }

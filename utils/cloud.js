@@ -112,7 +112,7 @@ function deleteCloudAssessment(callbacks) { return callProfile('assessmentDelete
 function grantFollowupConsent(consentEvent, callbacks) { return callProfile('consentGrant', { consentEvent }, callbacks) }
 function revokeFollowupConsent(consentEvent, callbacks) { return callProfile('consentRevoke', { consentEvent }, callbacks) }
 function getFollowupConsents(callbacks) { return callProfile('consentList', {}, callbacks) }
-function saveParticipant(participant, contact, callbacks) { return callProfile('participantUpsert', { participant, contact }, callbacks) }
+function saveParticipant(participant, contact, write, callbacks) { return callProfile('participantUpsert', Object.assign({ participant, contact }, write || {}), callbacks) }
 function getParticipant(callbacks) { return callProfile('participantGet', {}, callbacks) }
 function deleteParticipant(callbacks) { return callProfile('participantDelete', {}, callbacks) }
 
@@ -122,7 +122,7 @@ function cloudErrorMessage(error) {
   if (error && error.code === 'INVALID_FEEDBACK') return error.message
   if (error && error.code === 'INVALID_QUESTIONNAIRE') return error.message
   if (error && error.code === 'INVALID_ASSESSMENT') return error.message
-  if (error && ['INVALID_CONSENT', 'CONSENT_CONFLICT', 'CONSENT_REQUIRED', 'INVALID_PARTICIPANT'].includes(error.code)) return error.message
+  if (error && ['INVALID_CONSENT', 'CONSENT_CONFLICT', 'CONSENT_REQUIRED', 'INVALID_PARTICIPANT', 'INVALID_SCHEMA', 'STALE_WRITE'].includes(error.code)) return error.message
   if (error && ['UNAUTHORIZED_OPERATOR', 'PARTICIPANT_NOT_FOUND', 'CASE_NOT_FOUND', 'INVALID_CASE', 'INVALID_VALIDATION', 'VALIDATION_CONFLICT', 'CONSENT_REVOKED'].includes(error.code)) return error.message
   if (error && error.code === 'ASSESSMENT_CONFLICT') return error.message
   if (error && error.code === 'INVITE_EXPIRED') return error.message

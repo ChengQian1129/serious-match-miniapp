@@ -655,8 +655,9 @@ function maskedContact(value) {
 
 async function appendAudit(openid, action, targetId, result, metadata) {
   const now = Date.now()
-  await auditEvents.doc(operatorDocId(openid, action + '.' + targetId + '.' + now)).set({ data: {
-    _id: operatorDocId(openid, action + '.' + targetId + '.' + now), _openid: openid, actorOpenid: openid, action, targetId: text(targetId, 128), result: text(result, 40), metadata: metadata && typeof metadata === 'object' ? { role: text(metadata.role, 32), count: Number(metadata.count) || 0, errorCode: text(metadata.errorCode, 48) } : {}, createdAt: now
+  const auditId = operatorDocId(openid, action + '.' + targetId + '.' + now + '.' + crypto.randomBytes(6).toString('hex'))
+  await auditEvents.doc(auditId).set({ data: {
+    _id: auditId, _openid: openid, actorOpenid: openid, action, targetId: text(targetId, 128), result: text(result, 40), metadata: metadata && typeof metadata === 'object' ? { role: text(metadata.role, 32), count: Number(metadata.count) || 0, errorCode: text(metadata.errorCode, 48) } : {}, createdAt: now
   } })
 }
 
@@ -732,7 +733,13 @@ exports.main = async event => {
       const assignedOperatorOpenid = text(event.assignedOperatorOpenid, 128) || OPENID
       const assignedOperator = await findOperator(assignedOperatorOpenid)
       if (!assignedOperator || assignedOperator.status === 'disabled' || !['interviewer', 'admin'].includes(assignedOperator.role)) reject('Assigned interviewer is invalid', 'INVALID_CASE')
-      const caseId = text(event.caseId, 128) || `case.${now}.${crypto.randomBytes(6).toString('hex')}`
+      const idempotencyKey = text(event.idempotencyKey, 128)
+      const caseId = text(event.caseId, 128) || (idempotencyKey ? deidentifiedKey('case', idempotencyKey) : `case.${now}.${crypto.randomBytes(6).toString('hex')}`)
+      const existingCase = await findCase(caseId)
+      if (existingCase) {
+        if (existingCase.participantId === participantId && existingCase.assignedOperatorOpenid === assignedOperatorOpenid) return { ok: true, data: { case: existingCase, duplicateIgnored: true } }
+        reject('Case idempotency key is already used', 'INVALID_CASE')
+      }
       const reportSnapshot = { reportId: report._id, assessmentId: report.assessmentId, reportVersion: report.reportVersion, instrumentVersion: report.instrumentVersion, scoringRuleVersion: report.scoringRuleVersion, reportRuleVersion: report.reportRuleVersion, generatedAt: report.generatedAt, claims: report.claims || [], allClaimCandidates: report.allClaimCandidates || report.claims || [], visibleClaimIds: report.visibleClaimIds || (report.claims || []).map(claim => claim.id), unknowns: report.unknowns || [], userConfirmations: report.userConfirmations || {}, responseQuality: report.responseQuality || null }
       const caseDocument = { _id: caseId, participantId, assignedOperatorOpenid, status: 'created', reportSnapshot, participantSnapshot: { cityArea: participant.cityArea, availability: participant.availability, participationTypes: participant.participationTypes || [] }, createdAt: now, updatedAt: now }
       await interviewCases.doc(caseId).set({ data: caseDocument })
@@ -931,9 +938,18 @@ exports.main = async event => {
       if (!projection.interview_contact || projection.interview_contact.value !== 'granted') reject('Interview contact consent is required', 'CONSENT_REQUIRED')
       const now = Date.now()
       const existing = await participantRegistry.doc(OPENID).get().then(result => result.data || null).catch(error => /does not exist|not exists?|not found/i.test(error.errMsg || error.message || '') ? null : Promise.reject(error))
-      const registry = Object.assign({}, participant, { _id: OPENID, _openid: OPENID, contactRef: OPENID, status: 'active', consentVersion: CONSENT_VERSION, createdAt: existing && existing.createdAt || now, updatedAt: now })
+      const idempotencyKey = text(event.idempotencyKey, 128)
+      const clientUpdatedAt = Number(event.clientUpdatedAt)
+      const schemaVersion = text(event.schemaVersion, 48)
+      if (!idempotencyKey || !Number.isFinite(clientUpdatedAt) || clientUpdatedAt <= 0 || schemaVersion !== 'participant-2.1.0') reject('Invalid participant write metadata', 'INVALID_SCHEMA')
+      if (existing && existing.lastIdempotencyKey === idempotencyKey) {
+        const existingContact = await participantContacts.doc(existing.contactRef || OPENID).get().then(result => result.data || null).catch(error => /does not exist|not exists?|not found/i.test(error.errMsg || error.message || '') ? null : Promise.reject(error))
+        return { ok: true, data: { participant: existing, contact: existingContact, consents: projection, savedAt: existing.updatedAt, duplicateIgnored: true } }
+      }
+      if (existing && Number(existing.clientUpdatedAt) > clientUpdatedAt) reject('Newer participant data already exists', 'STALE_WRITE')
+      const registry = Object.assign({}, participant, { _id: OPENID, _openid: OPENID, contactRef: OPENID, status: 'active', consentVersion: CONSENT_VERSION, schemaVersion, clientUpdatedAt, lastIdempotencyKey: idempotencyKey, createdAt: existing && existing.createdAt || now, updatedAt: now })
       await participantRegistry.doc(OPENID).set({ data: registry })
-      await participantContacts.doc(OPENID).set({ data: Object.assign({}, contact, { _id: OPENID, _openid: OPENID, updatedAt: now }) })
+      await participantContacts.doc(OPENID).set({ data: Object.assign({}, contact, { _id: OPENID, _openid: OPENID, schemaVersion, clientUpdatedAt, lastIdempotencyKey: idempotencyKey, updatedAt: now }) })
       return { ok: true, data: { participant: registry, consents: projection, savedAt: now } }
     }
 
