@@ -161,6 +161,33 @@ async function run() {
   result = await cloudFunction.main({ action: 'participantGet' })
   assert.equal(result.data.participant.displayName, '测试参与者')
   assert.equal(result.data.contact.value, 'test-contact')
+  result = await cloudFunction.main({ action: 'participantSearch' })
+  assert.equal(result.ok, false)
+  assert.equal(result.code, 'UNAUTHORIZED_OPERATOR')
+  rows('operator_accounts').set('operator-1', { _id: 'operator-1', _openid: 'operator-1', role: 'interviewer', status: 'active' })
+  rows('operator_accounts').set('analyst-1', { _id: 'analyst-1', _openid: 'analyst-1', role: 'analyst', status: 'active' })
+  currentOpenid = 'operator-1'
+  result = await cloudFunction.main({ action: 'participantSearch', filters: { cityArea: '大连' } })
+  assert.equal(result.data.participants.length, 1)
+  result = await cloudFunction.main({ action: 'caseCreate', participantId: 'v2-user' })
+  assert.equal(result.ok, true)
+  const caseId = result.data.case._id
+  const validationClaimId = result.data.case.reportSnapshot.claims[0].id
+  result = await cloudFunction.main({ action: 'caseGet', caseId })
+  assert.equal(result.data.case._id, caseId)
+  result = await cloudFunction.main({ action: 'preparationGenerate', caseId })
+  assert.ok(result.data.preparation.cards.length)
+  result = await cloudFunction.main({ action: 'validationAppend', caseId, validationEvent: { eventId: 'validation-1', claimId: validationClaimId, verdict: 'confirmed', note: '具体事件中得到确认', context: '访谈', observedAt: 3000 } })
+  assert.equal(result.ok, true)
+  result = await cloudFunction.main({ action: 'validationAppend', caseId, validationEvent: { eventId: 'validation-1', claimId: validationClaimId, verdict: 'rejected', note: '', context: '', observedAt: 3000 } })
+  assert.equal(result.code, 'VALIDATION_CONFLICT')
+  result = await cloudFunction.main({ action: 'caseUpdateStatus', caseId, status: 'completed' })
+  assert.equal(result.data.case.status, 'completed')
+  currentOpenid = 'analyst-1'
+  result = await cloudFunction.main({ action: 'deidentifiedExport' })
+  assert.equal(result.ok, true)
+  assert.equal('displayName' in result.data.records[0], false)
+  currentOpenid = 'v2-user'
   result = await cloudFunction.main({ action: 'consentGrant', consentEvent: { eventId: 'consent-research-1', scope: 'research_use', createdAt: 2010 } })
   assert.equal(result.ok, true)
   result = await cloudFunction.main({ action: 'consentRevoke', consentEvent: { eventId: 'consent-research-2', scope: 'research_use', createdAt: 2020 } })

@@ -109,6 +109,7 @@ function cloudErrorMessage(error) {
   if (error && error.code === 'INVALID_QUESTIONNAIRE') return error.message
   if (error && error.code === 'INVALID_ASSESSMENT') return error.message
   if (error && ['INVALID_CONSENT', 'CONSENT_CONFLICT', 'CONSENT_REQUIRED', 'INVALID_PARTICIPANT'].includes(error.code)) return error.message
+  if (error && ['UNAUTHORIZED_OPERATOR', 'PARTICIPANT_NOT_FOUND', 'CASE_NOT_FOUND', 'INVALID_CASE', 'INVALID_VALIDATION', 'VALIDATION_CONFLICT', 'CONSENT_REVOKED'].includes(error.code)) return error.message
   if (error && error.code === 'ASSESSMENT_CONFLICT') return error.message
   if (error && error.code === 'INVITE_EXPIRED') return error.message
   if (error && error.code === 'INVALID_INVITE') return error.message

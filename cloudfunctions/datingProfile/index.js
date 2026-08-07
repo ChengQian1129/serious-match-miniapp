@@ -11,6 +11,10 @@ const assessmentFeedbackEvents = db.collection('assessment_feedback_events')
 const consentEvents = db.collection('consent_events')
 const participantRegistry = db.collection('participant_registry')
 const participantContacts = db.collection('participant_contacts')
+const interviewCases = db.collection('interview_cases')
+const interviewValidationEvents = db.collection('interview_validation_events')
+const operatorAccounts = db.collection('operator_accounts')
+const auditEvents = db.collection('audit_events')
 const { ASSESSMENT_ID, INSTRUMENT_VERSION, ITEMS } = require('./assessment-v2-questionnaire-definitions')
 const { validateAnswers, evaluateAssessment } = require('./assessment-v2-scoring-engine')
 const { buildReport } = require('./assessment-v2-report-engine')
@@ -609,6 +613,54 @@ function sanitizeContact(source) {
   return { channel, value, preferredTime }
 }
 
+async function findOperator(openid) {
+  try { return (await operatorAccounts.doc(openid).get()).data || null } catch (error) {
+    if (/does not exist|not exists?|not found/i.test(error.errMsg || error.message || '')) return null
+    throw error
+  }
+}
+
+async function requireOperator(openid, roles) {
+  const account = await findOperator(openid)
+  if (!account || account.status === 'disabled' || !roles.includes(account.role)) reject('Operator access is required', 'UNAUTHORIZED_OPERATOR')
+  return account
+}
+
+function operatorDocId(openid, value) { return (openid + '_' + String(value || '').replace(/[^a-zA-Z0-9_.-]/g, '')).slice(0, 128) }
+
+async function appendAudit(openid, action, targetId, result, metadata) {
+  const now = Date.now()
+  await auditEvents.doc(operatorDocId(openid, action + '.' + targetId + '.' + now)).set({ data: {
+    _id: operatorDocId(openid, action + '.' + targetId + '.' + now), _openid: openid, actorOpenid: openid, action, targetId: text(targetId, 128), result: text(result, 40), metadata: metadata && typeof metadata === 'object' ? { role: text(metadata.role, 32), count: Number(metadata.count) || 0 } : {}, createdAt: now
+  } })
+}
+
+async function findParticipantRecord(participantId) {
+  try { return (await participantRegistry.doc(participantId).get()).data || null } catch (error) {
+    if (/does not exist|not exists?|not found/i.test(error.errMsg || error.message || '')) return null
+    throw error
+  }
+}
+
+async function findCase(caseId) {
+  try { return (await interviewCases.doc(caseId).get()).data || null } catch (error) {
+    if (/does not exist|not exists?|not found/i.test(error.errMsg || error.message || '')) return null
+    throw error
+  }
+}
+
+function caseAccess(account, caseDocument, openid) {
+  return account.role === 'admin' || account.role === 'analyst' || caseDocument.assignedOperatorOpenid === openid
+}
+
+async function requireCaseAccess(openid, caseId, roles) {
+  const account = await requireOperator(openid, roles)
+  const caseDocument = await findCase(text(caseId, 128))
+  if (!caseDocument) reject('Interview case not found', 'CASE_NOT_FOUND')
+  if (!caseAccess(account, caseDocument, openid)) reject('Case is not assigned to this operator', 'UNAUTHORIZED_OPERATOR')
+  return { account, caseDocument }
+}
+
 exports.main = async event => {
   const { OPENID } = cloud.getWXContext()
   if (!OPENID) return { ok: false, code: 'NO_OPENID', message: '无法确认微信身份' }
@@ -631,6 +683,110 @@ exports.main = async event => {
   }
 
   try {
+    if (event.action === 'participantSearch') {
+      const account = await requireOperator(OPENID, ['interviewer', 'admin'])
+      const result = await participantRegistry.where({ status: 'active' }).limit(100).get()
+      const cityArea = text(event.filters && event.filters.cityArea, 80)
+      const participationType = text(event.filters && event.filters.participationType, 48)
+      const participants = (result.data || []).filter(item => (!cityArea || item.cityArea === cityArea) && (!participationType || (item.participationTypes || []).includes(participationType))).slice(0, 50).map(item => ({ _id: item._id, displayName: item.displayName, cityArea: item.cityArea, availability: item.availability, participationTypes: item.participationTypes || [], status: item.status, updatedAt: item.updatedAt }))
+      await appendAudit(OPENID, 'participantSearch', 'participants', 'success', { role: account.role, count: participants.length })
+      return { ok: true, data: { participants } }
+    }
+
+    if (event.action === 'caseCreate') {
+      const account = await requireOperator(OPENID, ['interviewer', 'admin'])
+      const participantId = text(event.participantId, 128)
+      const participant = await findParticipantRecord(participantId)
+      if (!participant || participant.status !== 'active') reject('Active participant not found', 'PARTICIPANT_NOT_FOUND')
+      const consents = consentProjection(await ownConsentEvents(participantId))
+      if (!consents.interview_contact || consents.interview_contact.value !== 'granted') reject('Participant contact consent is not active', 'CONSENT_REVOKED')
+      const reports = await assessmentReports.where({ _openid: participantId }).limit(20).get()
+      const report = (reports.data || []).sort((left, right) => Number(right.generatedAt) - Number(left.generatedAt))[0] || null
+      if (!report) reject('Participant assessment report not found', 'INVALID_ASSESSMENT')
+      const now = Date.now()
+      const caseId = text(event.caseId, 128) || operatorDocId(participantId, 'case.' + now)
+      const reportSnapshot = { reportId: report._id, assessmentId: report.assessmentId, reportVersion: report.reportVersion, instrumentVersion: report.instrumentVersion, scoringRuleVersion: report.scoringRuleVersion, reportRuleVersion: report.reportRuleVersion, generatedAt: report.generatedAt, claims: report.claims || [], unknowns: report.unknowns || [], userConfirmations: report.userConfirmations || {}, responseQuality: report.responseQuality || null }
+      const caseDocument = { _id: caseId, participantId, assignedOperatorOpenid: text(event.assignedOperatorOpenid, 128) || OPENID, status: 'new', reportSnapshot, participantSnapshot: { cityArea: participant.cityArea, availability: participant.availability, participationTypes: participant.participationTypes || [] }, createdAt: now, updatedAt: now }
+      await interviewCases.doc(caseId).set({ data: caseDocument })
+      await appendAudit(OPENID, 'caseCreate', caseId, 'success', { role: account.role })
+      return { ok: true, data: { case: caseDocument } }
+    }
+
+    if (event.action === 'participantDetail') {
+      const account = await requireOperator(OPENID, ['interviewer', 'admin'])
+      const participantId = text(event.participantId, 128)
+      const participant = await findParticipantRecord(participantId)
+      if (!participant) reject('Participant not found', 'PARTICIPANT_NOT_FOUND')
+      if (account.role !== 'admin') {
+        const cases = await interviewCases.where({ participantId, assignedOperatorOpenid: OPENID }).limit(1).get()
+        if (!(cases.data || []).length) reject('Participant is not assigned to this operator', 'UNAUTHORIZED_OPERATOR')
+      }
+      await appendAudit(OPENID, 'participantDetail', participantId, 'success', { role: account.role })
+      return { ok: true, data: { participant: { _id: participant._id, displayName: participant.displayName, cityArea: participant.cityArea, availability: participant.availability, participationTypes: participant.participationTypes || [], status: participant.status } } }
+    }
+
+    if (event.action === 'caseGet') {
+      const { account, caseDocument } = await requireCaseAccess(OPENID, event.caseId, ['interviewer', 'analyst', 'admin'])
+      await appendAudit(OPENID, 'caseGet', caseDocument._id, 'success', { role: account.role })
+      return { ok: true, data: { case: caseDocument } }
+    }
+
+    if (event.action === 'caseUpdateStatus') {
+      const { account, caseDocument } = await requireCaseAccess(OPENID, event.caseId, ['interviewer', 'admin'])
+      const status = text(event.status, 32)
+      if (!['new', 'scheduled', 'in_progress', 'completed', 'closed', 'withdrawn'].includes(status)) reject('Invalid case status', 'INVALID_CASE')
+      const updatedAt = Date.now()
+      await interviewCases.doc(caseDocument._id).update({ data: { status, updatedAt } })
+      await appendAudit(OPENID, 'caseUpdateStatus', caseDocument._id, 'success', { role: account.role })
+      return { ok: true, data: { case: Object.assign({}, caseDocument, { status, updatedAt }) } }
+    }
+
+    if (event.action === 'preparationGenerate') {
+      const { account, caseDocument } = await requireCaseAccess(OPENID, event.caseId, ['interviewer', 'admin'])
+      const cards = (caseDocument.reportSnapshot.claims || []).map(claim => ({ claimId: claim.id, title: claim.title, statement: claim.statement || claim.text, confidence: claim.confidence, supportingItemIds: claim.supportingItemIds || [], contradictingItemIds: claim.contradictingItemIds || [], qualifyingItemIds: claim.qualifyingItemIds || [], alternativeExplanations: claim.alternativeExplanations || [], verificationQuestions: claim.verificationQuestions || [] }))
+      const preparation = { generatedAt: Date.now(), instrumentVersion: caseDocument.reportSnapshot.instrumentVersion, scoringRuleVersion: caseDocument.reportSnapshot.scoringRuleVersion, reportRuleVersion: caseDocument.reportSnapshot.reportRuleVersion, cards }
+      await interviewCases.doc(caseDocument._id).update({ data: { preparation, updatedAt: preparation.generatedAt } })
+      await appendAudit(OPENID, 'preparationGenerate', caseDocument._id, 'success', { role: account.role, count: cards.length })
+      return { ok: true, data: { preparation } }
+    }
+
+    if (event.action === 'validationAppend') {
+      const { account, caseDocument } = await requireCaseAccess(OPENID, event.caseId, ['interviewer', 'admin'])
+      const source = event.validationEvent || {}
+      const eventId = text(source.eventId, 128)
+      const claimId = text(source.claimId, 80)
+      const verdict = text(source.verdict, 40)
+      const observedAt = Number(source.observedAt)
+      if (!eventId || !(caseDocument.reportSnapshot.claims || []).some(claim => claim.id === claimId) || !['confirmed', 'partly_confirmed', 'rejected', 'context_dependent', 'insufficient_evidence'].includes(verdict) || !Number.isFinite(observedAt)) reject('Invalid validation event', 'INVALID_VALIDATION')
+      const validation = { _id: operatorDocId(caseDocument._id, eventId), eventId, caseId: caseDocument._id, participantId: caseDocument.participantId, claimId, verdict, note: text(source.note, 500), context: text(source.context, 300), observedAt, recordedAt: Date.now(), operatorOpenid: OPENID, instrumentVersion: caseDocument.reportSnapshot.instrumentVersion, scoringRuleVersion: caseDocument.reportSnapshot.scoringRuleVersion, reportRuleVersion: caseDocument.reportSnapshot.reportRuleVersion }
+      let existing = null
+      try { existing = (await interviewValidationEvents.doc(validation._id).get()).data || null } catch (error) { if (!/does not exist|not exists?|not found/i.test(error.errMsg || error.message || '')) throw error }
+      if (existing) {
+        const same = ['eventId', 'caseId', 'claimId', 'verdict', 'note', 'context', 'observedAt'].every(key => existing[key] === validation[key])
+        if (!same) reject('Validation event id already used', 'VALIDATION_CONFLICT')
+        return { ok: true, data: { validationEvent: existing, duplicateIgnored: true } }
+      }
+      await interviewValidationEvents.doc(validation._id).set({ data: validation })
+      await appendAudit(OPENID, 'validationAppend', caseDocument._id, 'success', { role: account.role })
+      return { ok: true, data: { validationEvent: validation } }
+    }
+
+    if (event.action === 'validationList') {
+      const { account, caseDocument } = await requireCaseAccess(OPENID, event.caseId, ['interviewer', 'analyst', 'admin'])
+      const result = await interviewValidationEvents.where({ caseId: caseDocument._id }).limit(100).get()
+      const events = (result.data || []).sort((left, right) => Number(left.observedAt) - Number(right.observedAt))
+      await appendAudit(OPENID, 'validationList', caseDocument._id, 'success', { role: account.role, count: events.length })
+      return { ok: true, data: { events } }
+    }
+
+    if (event.action === 'deidentifiedExport') {
+      const account = await requireOperator(OPENID, ['analyst', 'admin'])
+      const cases = await interviewCases.where({ status: 'completed' }).limit(100).get()
+      const records = (cases.data || []).map(item => ({ caseId: item._id, participantKey: operatorDocId('participant', item.participantId), reportSnapshot: item.reportSnapshot, participantSnapshot: item.participantSnapshot, status: item.status, createdAt: item.createdAt }))
+      await appendAudit(OPENID, 'deidentifiedExport', 'completed-cases', 'success', { role: account.role, count: records.length })
+      return { ok: true, data: { records, exportedAt: Date.now() } }
+    }
+
     if (event.action === 'consentGrant' || event.action === 'consentRevoke') {
       const value = event.action === 'consentGrant' ? 'granted' : 'revoked'
       const consentEvent = sanitizeConsentEvent(event.consentEvent, OPENID, value)

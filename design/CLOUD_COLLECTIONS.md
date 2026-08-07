@@ -17,6 +17,10 @@
 | `consent_events` | 按用途记录授权和撤回，不用一个 consent 覆盖多个目的 | `_openid`, `eventId`, `scope`, `value`, `version`, `createdAt` |
 | `participant_registry` | 参与者筛选所需的非联系方式资料 | `_openid`, `contactRef`, `participationTypes`, `cityArea`, `availability`, `status`, `updatedAt` |
 | `participant_contacts` | 与评估数据隔离的联系方式 | `_openid`, `channel`, `value`, `preferredTime`, `updatedAt` |
+| `interview_cases` | 私有访谈案例与报告快照 | `participantId`, `assignedOperatorOpenid`, `status`, `reportSnapshot`, `preparation` |
+| `interview_validation_events` | 逐条访谈验证事件 | `caseId`, `participantId`, `claimId`, `verdict`, `observedAt`, `operatorOpenid` |
+| `operator_accounts` | 运营、访谈和分析角色 | `_openid`, `role`, `status` |
+| `audit_events` | 敏感运营操作审计 | `actorOpenid`, `action`, `targetId`, `result`, `createdAt` |
 
 ## 授权范围
 
@@ -30,7 +34,7 @@
 
 ## 创建后检查
 
-1. 在云开发控制台确认六个集合均存在，权限不是“所有用户可读写”。
+1. 在云开发控制台确认十个集合均存在，权限不是“所有用户可读写”。
 2. 使用开发者工具预览完成一次问卷，确认 `assessment_sessions` 和 `assessment_reports` 有记录。
 3. 在报告页进入“后续参与”，分别打开和关闭三个授权，确认 `consent_events` 每次产生新事件。
 4. 保存参与资料后确认联系方式只出现在 `participant_contacts`，不出现在报告文档。
