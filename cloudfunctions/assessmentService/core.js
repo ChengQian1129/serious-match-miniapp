@@ -214,6 +214,12 @@ function text(value, maxLength) {
   return String(value || '').trim().slice(0, maxLength)
 }
 
+function documentData(value) {
+  const data = Object.assign({}, value)
+  delete data._id
+  return data
+}
+
 function requireAllowed(group, value, label) {
   if (!allowed[group].has(value)) reject(`${label}不在允许范围内`)
   return value
@@ -671,9 +677,9 @@ function maskedContact(value) {
 async function appendAudit(openid, action, targetId, result, metadata) {
   const now = Date.now()
   const auditId = operatorDocId(openid, action + '.' + targetId + '.' + now + '.' + crypto.randomBytes(6).toString('hex'))
-  await auditEvents.doc(auditId).set({ data: {
+  await auditEvents.doc(auditId).set({ data: documentData({
     _id: auditId, _openid: openid, actorOpenid: openid, action, targetId: text(targetId, 128), result: text(result, 40), metadata: metadata && typeof metadata === 'object' ? { role: text(metadata.role, 32), count: Number(metadata.count) || 0, errorCode: text(metadata.errorCode, 48) } : {}, createdAt: now
-  } })
+  }) })
 }
 
 async function findParticipantRecord(participantId) {
@@ -771,7 +777,7 @@ exports.main = async event => {
       }
       const reportSnapshot = { reportId: report._id, assessmentId: report.assessmentId, reportVersion: report.reportVersion, instrumentVersion: report.instrumentVersion, scoringRuleVersion: report.scoringRuleVersion, reportRuleVersion: report.reportRuleVersion, generatedAt: report.generatedAt, claims: report.claims || [], allClaimCandidates: report.allClaimCandidates || report.claims || [], visibleClaimIds: report.visibleClaimIds || (report.claims || []).map(claim => claim.id), unknowns: report.unknowns || [], userConfirmations: report.userConfirmations || {}, responseQuality: report.responseQuality || null }
       const caseDocument = { _id: caseId, participantId, assignedOperatorOpenid, status: 'created', blindState: 'blind', reportSnapshot, participantSnapshot: { cityArea: participant.cityArea, availability: participant.availability, participationTypes: participant.participationTypes || [] }, createdAt: now, updatedAt: now }
-      await interviewCases.doc(caseId).set({ data: caseDocument })
+      await interviewCases.doc(caseId).set({ data: documentData(caseDocument) })
       await appendAudit(OPENID, 'caseCreate', caseId, 'success', { role: account.role })
       return { ok: true, data: { case: caseView(caseDocument, OPENID) } }
     }
@@ -851,7 +857,7 @@ exports.main = async event => {
         if (!same) reject('独立访谈判断编号已用于其他内容', 'VALIDATION_CONFLICT')
         return { ok: true, data: { observation: existing, duplicateIgnored: true } }
       }
-      await interviewValidationEvents.doc(independent._id).set({ data: independent })
+      await interviewValidationEvents.doc(independent._id).set({ data: documentData(independent) })
       await appendAudit(OPENID, 'independentObservationAppend', caseDocument._id, 'success', { role: account.role })
       return { ok: true, data: { observation: independent } }
     }
@@ -896,7 +902,7 @@ exports.main = async event => {
         if (!same) reject('Validation event id already used', 'VALIDATION_CONFLICT')
         return { ok: true, data: { validationEvent: existing, duplicateIgnored: true } }
       }
-      await interviewValidationEvents.doc(validation._id).set({ data: validation })
+      await interviewValidationEvents.doc(validation._id).set({ data: documentData(validation) })
       await appendAudit(OPENID, 'validationAppend', caseDocument._id, 'success', { role: account.role })
       return { ok: true, data: { validationEvent: validation } }
     }
@@ -988,7 +994,7 @@ exports.main = async event => {
         const projection = consentProjection(await ownConsentEvents(OPENID))
         return { ok: true, data: { consentEvent: existing, consents: projection, duplicateIgnored: true } }
       }
-      await consentEvents.doc(consentEvent._id).set({ data: consentEvent })
+      await consentEvents.doc(consentEvent._id).set({ data: documentData(consentEvent) })
       const projection = consentProjection(await ownConsentEvents(OPENID))
       const contactPurposeActive = ['interview_contact', 'offline_invitation'].some(scope => projection[scope] && projection[scope].value === 'granted')
       if (['interview_contact', 'offline_invitation'].includes(consentEvent.scope)) {
@@ -1021,8 +1027,8 @@ exports.main = async event => {
       }
       if (existing && Number(existing.clientUpdatedAt) > clientUpdatedAt) reject('Newer participant data already exists', 'STALE_WRITE')
       const registry = Object.assign({}, participant, { _id: OPENID, _openid: OPENID, contactRef: OPENID, status: 'active', consentVersion: CONSENT_VERSION, schemaVersion, clientUpdatedAt, lastIdempotencyKey: idempotencyKey, createdAt: existing && existing.createdAt || now, updatedAt: now })
-      await participantRegistry.doc(OPENID).set({ data: registry })
-      await participantContacts.doc(OPENID).set({ data: Object.assign({}, contact, { _id: OPENID, _openid: OPENID, schemaVersion, clientUpdatedAt, lastIdempotencyKey: idempotencyKey, updatedAt: now }) })
+      await participantRegistry.doc(OPENID).set({ data: documentData(registry) })
+      await participantContacts.doc(OPENID).set({ data: documentData(Object.assign({}, contact, { _id: OPENID, _openid: OPENID, schemaVersion, clientUpdatedAt, lastIdempotencyKey: idempotencyKey, updatedAt: now })) })
       return { ok: true, data: { participant: registry, consents: projection, savedAt: now } }
     }
 
@@ -1050,7 +1056,7 @@ exports.main = async event => {
       if (existing && existing.activeReportId) session.activeReportId = existing.activeReportId
       if (existing && Number(existing.reportVersion)) session.reportVersion = Number(existing.reportVersion)
       session.status = 'synced'
-      await assessmentSessions.doc(session._id).set({ data: session })
+      await assessmentSessions.doc(session._id).set({ data: documentData(session) })
       return { ok: true, data: { session, syncedAt: Date.now() } }
     }
 
@@ -1070,9 +1076,9 @@ exports.main = async event => {
       const report = buildReport(session.answers, { generatedAt: completedAt, reportVersion, responseQuality: assessResponseQuality(qualitySession) })
       const reportId = `${session._id}_report_${reportVersion}`
       const reportDocument = Object.assign({ _id: reportId, _openid: OPENID, assessmentId: session.assessmentId, userConfirmations: {}, shareSettings: {} }, report)
-      await assessmentReports.doc(reportId).set({ data: reportDocument })
+      await assessmentReports.doc(reportId).set({ data: documentData(reportDocument) })
       const completedSession = Object.assign({}, session, { status: 'report_generated', completedAt, updatedAt: completedAt, reportVersion, activeReportId: reportId })
-      await assessmentSessions.doc(session._id).set({ data: completedSession })
+      await assessmentSessions.doc(session._id).set({ data: documentData(completedSession) })
       const legacyProfile = await findOwnProfile(OPENID)
       if (legacyProfile) {
         await profiles.doc(OPENID).update({ data: { exploration: dbCommand.remove(), questionnaireModules: dbCommand.remove(), recordFeedback: dbCommand.remove() } })
@@ -1134,7 +1140,7 @@ exports.main = async event => {
         if (!sameFeedbackEvent(existing, feedbackEvent)) reject('报告反馈编号已用于其他内容', 'FEEDBACK_CONFLICT')
         return { ok: true, data: { feedbackEvent: existing, duplicateIgnored: true, userConfirmations: report.userConfirmations || {} } }
       }
-      await assessmentFeedbackEvents.doc(feedbackEvent._id).set({ data: feedbackEvent })
+      await assessmentFeedbackEvents.doc(feedbackEvent._id).set({ data: documentData(feedbackEvent) })
       const feedback = await assessmentFeedbackEvents.where({ _openid: OPENID, reportId: report._id }).limit(100).get()
       const userConfirmations = confirmationProjectionFromEvents(feedback.data || [])
       await assessmentReports.doc(report._id).update({ data: { userConfirmations } })

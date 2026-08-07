@@ -28,8 +28,14 @@ const cloudStub = {
           doc(id) {
             return {
               async get() { if (!rows(name).has(id)) throw new Error('document does not exist'); return { data: clone(rows(name).get(id)) } },
-              async set({ data }) { rows(name).set(id, clone(data)) },
-              async update({ data }) { rows(name).set(id, applyUpdate(rows(name).get(id), data)) },
+              async set({ data }) {
+                assert.equal(Object.prototype.hasOwnProperty.call(data, '_id'), false, 'CloudBase set data must not contain _id')
+                rows(name).set(id, Object.assign(clone(data), { _id: id }))
+              },
+              async update({ data }) {
+                assert.equal(Object.prototype.hasOwnProperty.call(data, '_id'), false, 'CloudBase update data must not contain _id')
+                rows(name).set(id, applyUpdate(rows(name).get(id), data))
+              },
               async remove() { rows(name).delete(id) }
             }
           },
