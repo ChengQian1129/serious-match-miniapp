@@ -675,7 +675,7 @@ async function findCase(caseId) {
 }
 
 function caseAccess(account, caseDocument, openid) {
-  return account.role === 'admin' || account.role === 'analyst' || caseDocument.assignedOperatorOpenid === openid
+  return account.role === 'admin' || caseDocument.assignedOperatorOpenid === openid
 }
 
 async function requireCaseAccess(openid, caseId, roles) {
@@ -770,7 +770,7 @@ exports.main = async event => {
     }
 
     if (event.action === 'caseGet') {
-      const { account, caseDocument } = await requireCaseAccess(OPENID, event.caseId, ['interviewer', 'analyst', 'admin'])
+      const { account, caseDocument } = await requireCaseAccess(OPENID, event.caseId, ['interviewer', 'admin'])
       await appendAudit(OPENID, 'caseGet', caseDocument._id, 'success', { role: account.role })
       return { ok: true, data: { case: caseDocument } }
     }
@@ -826,7 +826,7 @@ exports.main = async event => {
     }
 
     if (event.action === 'validationList') {
-      const { account, caseDocument } = await requireCaseAccess(OPENID, event.caseId, ['interviewer', 'analyst', 'admin'])
+      const { account, caseDocument } = await requireCaseAccess(OPENID, event.caseId, ['interviewer', 'admin'])
       const result = await interviewValidationEvents.where({ caseId: caseDocument._id }).limit(100).get()
       const events = (result.data || []).sort((left, right) => Number(left.observedAt) - Number(right.observedAt))
       await appendAudit(OPENID, 'validationList', caseDocument._id, 'success', { role: account.role, count: events.length })
@@ -837,8 +837,11 @@ exports.main = async event => {
       const account = await requireOperator(OPENID, ['analyst', 'admin'])
       const cases = await interviewCases.where({ status: 'completed' }).limit(100).get()
       const consentChecks = await Promise.all((cases.data || []).map(async item => ({ item, allowed: await hasActiveConsent(item.participantId, 'research_use') })))
-      const records = consentChecks.filter(entry => entry.allowed).map(({ item }) => {
+      const records = await Promise.all(consentChecks.filter(entry => entry.allowed).map(async ({ item }) => {
         const report = item.reportSnapshot || {}
+        const validationResult = await interviewValidationEvents.where({ caseId: item._id }).limit(100).get()
+        const validations = (validationResult.data || []).map(validation => ({ hypothesisId: validation.hypothesisId || null, claimId: validation.claimId || null, itemId: validation.itemId || null, eventType: validation.eventType, result: validation.result || validation.verdict, interviewerConfidence: validation.interviewerConfidence || null, observedAt: validation.observedAt, instrumentVersion: validation.instrumentVersion, reportRuleVersion: validation.reportRuleVersion, hypothesisRuleVersion: validation.hypothesisRuleVersion }))
+        const userConfirmations = Object.fromEntries(Object.entries(report.userConfirmations || {}).map(([claimId, feedback]) => [claimId, { value: feedback.value, reviewedAt: feedback.reviewedAt }]))
         return {
           caseKey: deidentifiedKey('case', item._id),
           participantKey: deidentifiedKey('participant', item.participantId),
@@ -850,14 +853,15 @@ exports.main = async event => {
             generatedAt: report.generatedAt,
             claims: report.claims || [],
             unknowns: report.unknowns || [],
-            userConfirmations: report.userConfirmations || {},
+            userConfirmations,
             responseQuality: report.responseQuality || null
           },
           participantSnapshot: item.participantSnapshot,
+          validations,
           status: item.status,
           createdAt: item.createdAt
         }
-      })
+      }))
       await appendAudit(OPENID, 'deidentifiedExport', 'completed-cases', 'success', { role: account.role, count: records.length })
       return { ok: true, data: { records, exportedAt: Date.now() } }
     }
