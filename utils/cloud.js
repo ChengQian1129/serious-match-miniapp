@@ -1,4 +1,10 @@
-const config = require('../config/cloud')
+let config
+try {
+  config = require('../config/cloud')
+} catch (error) {
+  if (!/Cannot find module/.test(String(error && error.message || ''))) throw error
+  config = require('../config/cloud.example')
+}
 
 let initialized = false
 
