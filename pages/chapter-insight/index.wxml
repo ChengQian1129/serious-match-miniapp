@@ -1,4 +1,4 @@
-<view class="page chapter-insight-page" style="padding-top: {{statusBarHeight}}px;">
+<view class="page page--with-action chapter-insight-page" style="padding-top: {{statusBarHeight}}px;">
   <view wx:if="{{chapter && insight}}" class="chapter-insight">
     <view class="page-kicker">{{chapter.id}} · 阶段发现</view>
     <view class="chapter-insight__chapter">{{chapter.title}}</view>
@@ -30,7 +30,7 @@
     </view>
     <view class="chapter-insight__note">后面的章节会继续核对。你可以在完整说明书中逐条查看依据并修正。</view>
   </view>
-  <view class="chapter-insight__actions">
+  <view class="action-bar chapter-insight__actions">
     <button class="dl-button" bind:tap="continueNext">{{nextChapter ? '继续下一章' : '查看完整说明书'}}</button>
     <button class="chapter-insight__later" bind:tap="backHome">稍后继续</button>
   </view>
