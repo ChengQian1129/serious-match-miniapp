@@ -38,6 +38,11 @@ function smokingDirection(acceptance, status) {
   if (acceptance === 'occasionally' && ['occasionally', 'quitting'].includes(status)) return 'aligned'
   return 'confirm'
 }
+function preferenceStatus(matches, priority) {
+  if (!priority) return 'missing'
+  if (matches) return 'pass'
+  return priority === 'must' ? 'blocked' : 'review'
+}
 
 function hardConditions(left, right) {
   const leftAge = ageOf(left)
@@ -49,10 +54,10 @@ function hardConditions(left, right) {
   return [
     { id: 'left_profile_active', label: 'A 已进入匹配池', status: activeProfile(left) ? 'pass' : 'missing' },
     { id: 'right_profile_active', label: 'B 已进入匹配池', status: activeProfile(right) ? 'pass' : 'missing' },
-    { id: 'left_gender_preference', label: 'A 的性别期待', status: leftBasic.gender && rightBasic.gender ? (acceptsGender(leftBasic.targetGender, rightBasic.gender) ? 'pass' : 'blocked') : 'missing' },
-    { id: 'right_gender_preference', label: 'B 的性别期待', status: leftBasic.gender && rightBasic.gender ? (acceptsGender(rightBasic.targetGender, leftBasic.gender) ? 'pass' : 'blocked') : 'missing' },
-    { id: 'left_age_preference', label: 'A 的年龄范围', status: ageRangeStatus(rightAge, leftRelationship) },
-    { id: 'right_age_preference', label: 'B 的年龄范围', status: ageRangeStatus(leftAge, rightRelationship) },
+    { id: 'left_gender_preference', label: 'A 的性别期待', status: leftBasic.gender && rightBasic.gender ? preferenceStatus(acceptsGender(leftBasic.targetGender, rightBasic.gender), leftBasic.targetGenderPriority) : 'missing' },
+    { id: 'right_gender_preference', label: 'B 的性别期待', status: leftBasic.gender && rightBasic.gender ? preferenceStatus(acceptsGender(rightBasic.targetGender, leftBasic.gender), rightBasic.targetGenderPriority) : 'missing' },
+    { id: 'left_age_preference', label: 'A 的年龄范围', status: ageRangeStatus(rightAge, leftRelationship) === 'missing' ? 'missing' : preferenceStatus(ageRangeStatus(rightAge, leftRelationship) === 'pass', leftRelationship.agePriority) },
+    { id: 'right_age_preference', label: 'B 的年龄范围', status: ageRangeStatus(leftAge, rightRelationship) === 'missing' ? 'missing' : preferenceStatus(ageRangeStatus(leftAge, rightRelationship) === 'pass', rightRelationship.agePriority) },
     { id: 'relationship_availability', label: '双方单身且当前可进入关系', status: availabilityStatus(left, right) }
   ]
 }
@@ -65,15 +70,15 @@ function realityChecks(left, right) {
   else rows.push({ id: 'relationship_goal', label: '关系目标', status: 'missing' })
   if (a.settlementPlan && b.settlementPlan) rows.push({ id: 'settlement_plan', label: '长期生活计划', status: a.settlementPlan === b.settlementPlan ? 'aligned' : 'confirm' })
   else rows.push({ id: 'settlement_plan', label: '长期生活计划', status: 'missing' })
-  if (a.childPlan && b.childPlan) rows.push({ id: 'child_plan', label: '孩子计划', status: a.childPlan === b.childPlan ? 'aligned' : 'confirm' })
+  if (a.childPlan && b.childPlan) rows.push({ id: 'child_plan', label: '孩子计划', status: a.childPlan === b.childPlan ? 'aligned' : 'confirm', priorities: [a.childPlanPriority || '', b.childPlanPriority || ''] })
   else rows.push({ id: 'child_plan', label: '孩子计划', status: 'missing' })
   if (a.maritalHistory && b.maritalHistory && a.childrenStatus && b.childrenStatus) rows.push({ id: 'family_history', label: '婚姻史与子女情况', status: 'confirm' })
   else rows.push({ id: 'family_history', label: '婚姻史与子女情况', status: 'missing' })
-  if (a.distanceAcceptance && b.distanceAcceptance) rows.push({ id: 'distance_acceptance', label: '异地接受度', status: a.distanceAcceptance === b.distanceAcceptance ? 'aligned' : 'confirm' })
+  if (a.distanceAcceptance && b.distanceAcceptance) rows.push({ id: 'distance_acceptance', label: '异地接受度', status: a.distanceAcceptance === b.distanceAcceptance ? 'aligned' : 'confirm', priorities: [a.distancePriority || '', b.distancePriority || ''] })
   else rows.push({ id: 'distance_acceptance', label: '异地接受度', status: 'missing' })
   const leftSmoking = smokingDirection(a.smokingAcceptance, b.smokingStatus)
   const rightSmoking = smokingDirection(b.smokingAcceptance, a.smokingStatus)
-  rows.push({ id: 'smoking_boundary', label: '吸烟边界', status: leftSmoking === 'missing' || rightSmoking === 'missing' ? 'missing' : leftSmoking === 'aligned' && rightSmoking === 'aligned' ? 'aligned' : 'confirm' })
+  rows.push({ id: 'smoking_boundary', label: '吸烟边界', status: leftSmoking === 'missing' || rightSmoking === 'missing' ? 'missing' : leftSmoking === 'aligned' && rightSmoking === 'aligned' ? 'aligned' : 'confirm', priorities: [a.smokingPriority || '', b.smokingPriority || ''] })
   return rows
 }
 

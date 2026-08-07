@@ -11,7 +11,7 @@
       <view class="question-progress">
         <view class="question-progress__bar" style="transform: scaleX({{progress}});"></view>
       </view>
-      <text class="question-top__count">{{questionNumber}} / 13</text>
+      <text class="question-top__count">{{questionNumber}} / 19</text>
     </view>
   </view>
 
@@ -38,6 +38,7 @@
           <text wx:if="{{form.targetGender === item.value}}" class="choice-option__check">✓</text>
         </button>
       </view>
+      <view class="priority-block"><view class="priority-block__label">这项期待对你有多重要？</view><view class="priority-grid"><button wx:for="{{preferencePriorities}}" wx:key="value" class="priority-option {{form.targetGenderPriority === item.value ? 'priority-option--selected' : ''}}" data-value="{{item.value}}" bind:tap="chooseTargetGenderPriority">{{item.label}}</button></view></view>
     </block>
 
     <block wx:elif="{{currentQuestion === 2}}">

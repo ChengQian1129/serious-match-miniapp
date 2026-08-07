@@ -28,6 +28,7 @@ const allowed = {
   distanceAcceptance: new Set(['dalian_only', 'nearby', 'temporary_long_distance', 'open', '']),
   smokingStatus: new Set(['never', 'occasionally', 'regularly', 'quitting', 'undisclosed', '']),
   smokingAcceptance: new Set(['never', 'occasionally', 'any', 'open', '']),
+  preferencePriority: new Set(['must', 'important', 'discuss', 'not_important', '']),
   workStatus: new Set(['full_time', 'freelance', 'business', 'student', 'not_working', 'other', '']),
   industry: new Set(['internet', 'telecom', 'education', 'healthcare', 'finance', 'manufacturing', 'creative', 'business_service', 'public_service', 'other', ''])
 }
@@ -406,6 +407,7 @@ function sanitizeProfile(profile) {
     basic: {
       gender: requireAllowed('gender', basic.gender, '性别'),
       targetGender: requireAllowed('targetGender', basic.targetGender, '期待性别'),
+      targetGenderPriority: requireAllowed('preferencePriority', basic.targetGenderPriority || '', '性别期待优先级'),
       birthDate,
       birthYear: Number(birthDate.slice(0, 4)),
       district: requireAllowed('district', basic.district, '所在区域')
@@ -415,13 +417,17 @@ function sanitizeProfile(profile) {
       settlementPlan: requireAllowed('settlementPlan', relationship.settlementPlan, '定居计划'),
       targetAgeMin,
       targetAgeMax,
+      agePriority: requireAllowed('preferencePriority', relationship.agePriority || '', '年龄范围优先级'),
       childPlan: requireAllowed('childPlan', relationship.childPlan || '', '孩子计划'),
+      childPlanPriority: requireAllowed('preferencePriority', relationship.childPlanPriority || '', '孩子计划优先级'),
       availability: requireAllowed('availability', relationship.availability || '', '关系状态'),
       maritalHistory: requireAllowed('maritalHistory', relationship.maritalHistory || '', '婚姻情况'),
       childrenStatus: requireAllowed('childrenStatus', relationship.childrenStatus || '', '子女情况'),
       distanceAcceptance: requireAllowed('distanceAcceptance', relationship.distanceAcceptance || '', '异地接受度'),
+      distancePriority: requireAllowed('preferencePriority', relationship.distancePriority || '', '异地优先级'),
       smokingStatus: requireAllowed('smokingStatus', relationship.smokingStatus || '', '吸烟情况'),
-      smokingAcceptance: requireAllowed('smokingAcceptance', relationship.smokingAcceptance || '', '吸烟接受度')
+      smokingAcceptance: requireAllowed('smokingAcceptance', relationship.smokingAcceptance || '', '吸烟接受度'),
+      smokingPriority: requireAllowed('preferencePriority', relationship.smokingPriority || '', '吸烟边界优先级')
     },
     about: {
       displayName,

@@ -1,10 +1,10 @@
-const { GENDERS, TARGET_GENDERS, DISTRICTS } = require('../../utils/constants')
+const { GENDERS, TARGET_GENDERS, DISTRICTS, PREFERENCE_PRIORITIES } = require('../../utils/constants')
 const { getProfile, saveSection, saveDraft, recordEvent } = require('../../utils/storage')
 const { labelOf } = require('../../utils/formatters')
 const { getStatusBarHeight } = require('../../utils/window')
 const { acceptNavigationTap, getQuestionIndex, getMotionClass, showQuestion } = require('../../utils/question-flow')
 
-const TOTAL_QUESTIONS = 13
+const TOTAL_QUESTIONS = 19
 const QUESTION_COUNT = 4
 const STEP = 1
 
@@ -32,6 +32,7 @@ Page({
     statusBarHeight: getStatusBarHeight(),
     genders: GENDERS,
     targetGenders: TARGET_GENDERS,
+    preferencePriorities: PREFERENCE_PRIORITIES,
     districts: DISTRICTS,
     minBirthDate: '',
     maxBirthDate: '',
@@ -47,6 +48,7 @@ Page({
     form: {
       gender: '',
       targetGender: '',
+      targetGenderPriority: '',
       birthDate: '',
       birthYear: '',
       district: ''
@@ -62,7 +64,7 @@ Page({
 
     const profile = getProfile()
     const form = Object.assign({}, this.data.form, profile.basic || {})
-    const required = [form.gender, form.targetGender, form.birthDate, form.district]
+    const required = [form.gender, form.targetGender && form.targetGenderPriority, form.birthDate, form.district]
     const firstMissing = required.findIndex(value => !value)
     const savedQuestion = profile.currentStep === STEP && Number.isInteger(profile.currentQuestion)
       ? profile.currentQuestion
@@ -100,6 +102,8 @@ Page({
     this.updateForm('targetGender', value)
   },
 
+  chooseTargetGenderPriority(event) { this.updateForm('targetGenderPriority', event.currentTarget.dataset.value) },
+
   changeDistrict(event) {
     const index = Number(event.detail.value)
     const district = this.data.districts[index]
@@ -128,7 +132,7 @@ Page({
   },
 
   getQuestionState(index, form, isEditing = this.data.isEditing) {
-    const values = [form.gender, form.targetGender, form.birthDate, form.district]
+    const values = [form.gender, form.targetGender && form.targetGenderPriority, form.birthDate, form.district]
     return {
       questionNumber: index + 1,
       progress: (index + 1) / TOTAL_QUESTIONS,

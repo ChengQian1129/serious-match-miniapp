@@ -1,4 +1,4 @@
-const { GOALS, SETTLEMENT_PLANS, CHILD_PLANS, RELATIONSHIP_AVAILABILITY, MARITAL_HISTORY, CHILDREN_STATUS, DISTANCE_ACCEPTANCE, SMOKING_STATUS, SMOKING_ACCEPTANCE } = require('../../utils/constants')
+const { GOALS, SETTLEMENT_PLANS, CHILD_PLANS, RELATIONSHIP_AVAILABILITY, MARITAL_HISTORY, CHILDREN_STATUS, DISTANCE_ACCEPTANCE, SMOKING_STATUS, SMOKING_ACCEPTANCE, PREFERENCE_PRIORITIES } = require('../../utils/constants')
 const { getProfile, saveSection, saveDraft, recordEvent } = require('../../utils/storage')
 const { getStatusBarHeight } = require('../../utils/window')
 const { acceptNavigationTap, getQuestionIndex, getMotionClass, showQuestion } = require('../../utils/question-flow')
@@ -29,6 +29,7 @@ Page({
     distanceAcceptanceOptions: DISTANCE_ACCEPTANCE,
     smokingStatusOptions: SMOKING_STATUS,
     smokingAcceptanceOptions: SMOKING_ACCEPTANCE,
+    preferencePriorities: PREFERENCE_PRIORITIES,
     ageOptions: [],
     minAgeIndex: 0,
     maxAgeIndex: 0,
@@ -50,13 +51,17 @@ Page({
       settlementPlan: '',
       targetAgeMin: '',
       targetAgeMax: '',
+      agePriority: '',
       childPlan: '',
+      childPlanPriority: '',
       availability: '',
       maritalHistory: '',
       childrenStatus: '',
       distanceAcceptance: '',
+      distancePriority: '',
       smokingStatus: '',
-      smokingAcceptance: ''
+      smokingAcceptance: '',
+      smokingPriority: ''
     },
     isEditing: false
   },
@@ -78,7 +83,7 @@ Page({
       targetAgeMax: Math.min(70, ownAge + 5)
     }
     const form = Object.assign({}, this.data.form, defaults, profile.relationship || {})
-    const required = [form.goal, form.settlementPlan, form.targetAgeMin && form.targetAgeMax, true, form.availability, form.maritalHistory, form.childrenStatus, form.distanceAcceptance, form.smokingStatus, form.smokingAcceptance]
+    const required = [form.goal, form.settlementPlan, form.targetAgeMin && form.targetAgeMax && form.agePriority, !form.childPlan || form.childPlan === 'skip' || form.childPlanPriority, form.availability, form.maritalHistory, form.childrenStatus, form.distanceAcceptance && form.distancePriority, form.smokingStatus, form.smokingAcceptance && form.smokingPriority]
     const firstMissing = required.findIndex(value => !value)
     const savedQuestion = profile.currentStep === STEP && Number.isInteger(profile.currentQuestion)
       ? profile.currentQuestion
@@ -121,12 +126,16 @@ Page({
     const value = event.currentTarget && event.currentTarget.dataset ? event.currentTarget.dataset.value : event.detail.value
     this.updateForm('childPlan', value)
   },
+  chooseAgePriority(event) { this.updateForm('agePriority', event.currentTarget.dataset.value) },
+  chooseChildPlanPriority(event) { this.updateForm('childPlanPriority', event.currentTarget.dataset.value) },
   chooseAvailability(event) { this.updateForm('availability', event.currentTarget.dataset.value) },
   chooseMaritalHistory(event) { this.updateForm('maritalHistory', event.currentTarget.dataset.value) },
   chooseChildrenStatus(event) { this.updateForm('childrenStatus', event.currentTarget.dataset.value) },
   chooseDistanceAcceptance(event) { this.updateForm('distanceAcceptance', event.currentTarget.dataset.value) },
+  chooseDistancePriority(event) { this.updateForm('distancePriority', event.currentTarget.dataset.value) },
   chooseSmokingStatus(event) { this.updateForm('smokingStatus', event.currentTarget.dataset.value) },
   chooseSmokingAcceptance(event) { this.updateForm('smokingAcceptance', event.currentTarget.dataset.value) },
+  chooseSmokingPriority(event) { this.updateForm('smokingPriority', event.currentTarget.dataset.value) },
 
   changeMinAge(event) {
     const value = Number(event.detail.value[0])
@@ -182,7 +191,7 @@ Page({
 
   getQuestionState(index, form, isEditing = this.data.isEditing) {
     const ageValid = Boolean(form.targetAgeMin && form.targetAgeMax && Number(form.targetAgeMin) <= Number(form.targetAgeMax))
-    const valid = [Boolean(form.goal), Boolean(form.settlementPlan), ageValid, true, Boolean(form.availability), Boolean(form.maritalHistory), Boolean(form.childrenStatus), Boolean(form.distanceAcceptance), Boolean(form.smokingStatus), Boolean(form.smokingAcceptance)]
+    const valid = [Boolean(form.goal), Boolean(form.settlementPlan), ageValid && Boolean(form.agePriority), !form.childPlan || form.childPlan === 'skip' || Boolean(form.childPlanPriority), Boolean(form.availability), Boolean(form.maritalHistory), Boolean(form.childrenStatus), Boolean(form.distanceAcceptance && form.distancePriority), Boolean(form.smokingStatus), Boolean(form.smokingAcceptance && form.smokingPriority)]
     return {
       questionNumber: QUESTION_OFFSET + index + 1,
       progress: (QUESTION_OFFSET + index + 1) / TOTAL_QUESTIONS,

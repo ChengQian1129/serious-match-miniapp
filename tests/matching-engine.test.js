@@ -2,7 +2,7 @@ const assert = require('node:assert/strict')
 const { buildCandidateComparison } = require('../cloudfunctions/datingProfile/matching-engine')
 
 function profile(gender, targetGender, birthDate, ageMin, ageMax) {
-  return { status: 'active', matching: { matchingPoolConsentAt: 1 }, basic: { gender, targetGender, birthDate }, relationship: { targetAgeMin: ageMin, targetAgeMax: ageMax, goal: 'marriage', settlementPlan: 'stay_dalian', childPlan: 'want', availability: 'single_ready', maritalHistory: 'never_married', childrenStatus: 'none', distanceAcceptance: 'dalian_only', smokingStatus: 'never', smokingAcceptance: 'never' } }
+  return { status: 'active', matching: { matchingPoolConsentAt: 1 }, basic: { gender, targetGender, targetGenderPriority: 'must', birthDate }, relationship: { targetAgeMin: ageMin, targetAgeMax: ageMax, agePriority: 'must', goal: 'marriage', settlementPlan: 'stay_dalian', childPlan: 'want', childPlanPriority: 'important', availability: 'single_ready', maritalHistory: 'never_married', childrenStatus: 'none', distanceAcceptance: 'dalian_only', distancePriority: 'important', smokingStatus: 'never', smokingAcceptance: 'never', smokingPriority: 'must' } }
 }
 function evaluation(options = {}) {
   const dimensions = {}
@@ -25,6 +25,11 @@ assert.equal('score' in result, false)
 const blocked = buildCandidateComparison(left, evaluation(), profile('male', 'male', '1995-01-01', 25, 38), evaluation())
 assert.equal(blocked.hardConditions.some(item => item.status === 'blocked'), true)
 assert.equal(blocked.hardConditions.find(item => item.id === 'relationship_availability').status, 'pass')
+
+const negotiableGender = profile('male', 'female', '1995-01-01', 25, 38)
+negotiableGender.basic.targetGenderPriority = 'discuss'
+const negotiable = buildCandidateComparison(left, evaluation(), negotiableGender, evaluation())
+assert.equal(negotiable.hardConditions.find(item => item.id === 'right_gender_preference').status, 'review')
 
 const unavailableProfile = profile('female', 'male', '1995-01-01', 25, 38)
 unavailableProfile.relationship.availability = 'single_not_ready'

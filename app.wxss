@@ -405,6 +405,12 @@ button::after {
   color: var(--dl-white);
 }
 
+.priority-block { margin-top: 34rpx; }
+.priority-block__label { margin-bottom: 16rpx; color: var(--dl-grey-500); font-size: 24rpx; line-height: 36rpx; }
+.priority-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12rpx; }
+.priority-option { display: flex; min-height: 76rpx; align-items: center; justify-content: center; margin: 0; padding: 14rpx 12rpx; border: 2rpx solid var(--dl-grey-200); border-radius: 6rpx; background: transparent; color: var(--dl-black); font-size: 25rpx; line-height: 34rpx; }
+.priority-option--selected { border-color: var(--dl-black); background: var(--dl-black); color: var(--dl-white); }
+
 .choice-option__check {
   display: flex;
   width: 32rpx;

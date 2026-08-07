@@ -11,6 +11,13 @@ const TARGET_GENDERS = [
   { label: '暂不说明', value: 'undisclosed' }
 ]
 
+const PREFERENCE_PRIORITIES = [
+  { label: '必须满足', value: 'must' },
+  { label: '很重要', value: 'important' },
+  { label: '可以商量', value: 'discuss' },
+  { label: '不在意', value: 'not_important' }
+]
+
 const DISTRICTS = [
   { label: '高新区', value: 'high_tech_zone' },
   { label: '甘井子区', value: 'ganjingzi' },
@@ -113,6 +120,7 @@ const INDUSTRIES = [
 module.exports = {
   GENDERS,
   TARGET_GENDERS,
+  PREFERENCE_PRIORITIES,
   DISTRICTS,
   GOALS,
   SETTLEMENT_PLANS,
