@@ -83,6 +83,11 @@ Page({
     navigateOnce(this, 'navigateTo', { url: '/pages/onboarding-relationship/index?edit=1' })
   },
 
+  editReality() {
+    this.closeMenu()
+    navigateOnce(this, 'navigateTo', { url: '/pages/onboarding-reality/index?edit=1' })
+  },
+
   editAbout() {
     this.closeMenu()
     navigateOnce(this, 'navigateTo', { url: '/pages/onboarding-about/index?edit=1' })

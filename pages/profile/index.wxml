@@ -51,6 +51,13 @@
       </view>
       <text class="dl-chevron">›</text>
     </button>
+    <button class="dl-list-row dl-list-row--button" aria-label="编辑现实安排" bind:tap="editReality">
+      <view class="dl-list-row__body">
+        <view class="dl-list-row__title">现实安排</view>
+        <view class="dl-list-row__desc">见面时间、作息、家庭和生活边界</view>
+      </view>
+      <text class="dl-chevron">›</text>
+    </button>
     <button class="dl-list-row dl-list-row--button" aria-label="编辑个人资料" bind:tap="editAbout">
       <view class="dl-list-row__body">
         <view class="dl-list-row__title">个人资料</view>

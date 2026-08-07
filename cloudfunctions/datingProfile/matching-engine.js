@@ -65,6 +65,8 @@ function hardConditions(left, right) {
 function realityChecks(left, right) {
   const a = left && left.relationship || {}
   const b = right && right.relationship || {}
+  const leftReality = left && left.reality || {}
+  const rightReality = right && right.reality || {}
   const rows = []
   if (a.goal && b.goal) rows.push({ id: 'relationship_goal', label: '关系目标', status: a.goal === b.goal ? 'aligned' : 'confirm' })
   else rows.push({ id: 'relationship_goal', label: '关系目标', status: 'missing' })
@@ -79,6 +81,13 @@ function realityChecks(left, right) {
   const leftSmoking = smokingDirection(a.smokingAcceptance, b.smokingStatus)
   const rightSmoking = smokingDirection(b.smokingAcceptance, a.smokingStatus)
   rows.push({ id: 'smoking_boundary', label: '吸烟边界', status: leftSmoking === 'missing' || rightSmoking === 'missing' ? 'missing' : leftSmoking === 'aligned' && rightSmoking === 'aligned' ? 'aligned' : 'confirm', priorities: [a.smokingPriority || '', b.smokingPriority || ''] })
+  const leftTimes = Array.isArray(leftReality.meetingTimes) ? leftReality.meetingTimes : []
+  const rightTimes = Array.isArray(rightReality.meetingTimes) ? rightReality.meetingTimes : []
+  const meetingOverlap = leftTimes.includes('flexible') || rightTimes.includes('flexible') || leftTimes.some(value => rightTimes.includes(value))
+  rows.push({ id: 'meeting_time', label: '见面时间', status: !leftTimes.length || !rightTimes.length ? 'missing' : meetingOverlap ? 'aligned' : 'confirm' })
+  ;[['commuteTolerance', '通勤范围'], ['schedulePattern', '作息与工作时间'], ['marriageTimeline', '婚姻时间期待'], ['parentCohabitation', '与父母同住边界'], ['financeStyle', '财务安排'], ['houseworkStyle', '家务分工'], ['petAcceptance', '宠物边界'], ['alcoholAcceptance', '饮酒边界'], ['socialRhythm', '社交节奏']].forEach(([field, label]) => {
+    rows.push({ id: field, label, status: !leftReality[field] || !rightReality[field] ? 'missing' : leftReality[field] === rightReality[field] || ['flexible', 'discuss', 'depends'].includes(leftReality[field]) || ['flexible', 'discuss', 'depends'].includes(rightReality[field]) ? 'aligned' : 'confirm' })
+  })
   return rows
 }
 

@@ -2,7 +2,7 @@ const assert = require('node:assert/strict')
 const { buildCandidateComparison } = require('../cloudfunctions/datingProfile/matching-engine')
 
 function profile(gender, targetGender, birthDate, ageMin, ageMax) {
-  return { status: 'active', matching: { matchingPoolConsentAt: 1 }, basic: { gender, targetGender, targetGenderPriority: 'must', birthDate }, relationship: { targetAgeMin: ageMin, targetAgeMax: ageMax, agePriority: 'must', goal: 'marriage', settlementPlan: 'stay_dalian', childPlan: 'want', childPlanPriority: 'important', availability: 'single_ready', maritalHistory: 'never_married', childrenStatus: 'none', distanceAcceptance: 'dalian_only', distancePriority: 'important', smokingStatus: 'never', smokingAcceptance: 'never', smokingPriority: 'must' } }
+  return { status: 'active', matching: { matchingPoolConsentAt: 1 }, basic: { gender, targetGender, targetGenderPriority: 'must', birthDate }, relationship: { targetAgeMin: ageMin, targetAgeMax: ageMax, agePriority: 'must', goal: 'marriage', settlementPlan: 'stay_dalian', childPlan: 'want', childPlanPriority: 'important', availability: 'single_ready', maritalHistory: 'never_married', childrenStatus: 'none', distanceAcceptance: 'dalian_only', distancePriority: 'important', smokingStatus: 'never', smokingAcceptance: 'never', smokingPriority: 'must' }, reality: { meetingTimes: ['weekend_daytime'], commuteTolerance: 'within_60m', schedulePattern: 'regular', marriageTimeline: 'one_two_years', parentCohabitation: 'separate', financeStyle: 'shared_budget', houseworkStyle: 'by_strength', petAcceptance: 'accept', alcoholAcceptance: 'social', socialRhythm: 'balanced' } }
 }
 function evaluation(options = {}) {
   const dimensions = {}
@@ -40,6 +40,13 @@ const smokingProfile = profile('female', 'male', '1995-01-01', 25, 38)
 smokingProfile.relationship.smokingStatus = 'regularly'
 const smoking = buildCandidateComparison(left, evaluation(), smokingProfile, evaluation())
 assert.equal(smoking.reality.find(item => item.id === 'smoking_boundary').status, 'confirm')
+
+const scheduleDifference = profile('female', 'male', '1995-01-01', 25, 38)
+scheduleDifference.reality.meetingTimes = ['weekday_evening']
+scheduleDifference.reality.schedulePattern = 'shift'
+const reality = buildCandidateComparison(left, evaluation(), scheduleDifference, evaluation())
+assert.equal(reality.reality.find(item => item.id === 'meeting_time').status, 'confirm')
+assert.equal(reality.reality.find(item => item.id === 'schedulePattern').status, 'confirm')
 
 const incomplete = buildCandidateComparison({ status: 'active', matching: { matchingPoolConsentAt: 1 }, basic: { gender: 'male', targetGender: 'female' }, relationship: {} }, null, right, evaluation())
 assert.equal(incomplete.hardConditions.find(item => item.id === 'right_age_preference').status, 'missing')

@@ -3,7 +3,7 @@ const { getProfile, saveSection, saveDraft, recordEvent } = require('../../utils
 const { getStatusBarHeight } = require('../../utils/window')
 const { acceptNavigationTap, getQuestionIndex, getMotionClass, showQuestion } = require('../../utils/question-flow')
 
-const TOTAL_QUESTIONS = 19
+const TOTAL_QUESTIONS = 29
 const QUESTION_OFFSET = 4
 const QUESTION_COUNT = 10
 const STEP = 2
@@ -260,7 +260,7 @@ Page({
     recordEvent('relationship_step_complete')
     const suffix = this.data.isEditing ? '&edit=1' : ''
     wx.redirectTo({
-      url: `/pages/onboarding-about/index?question=0${suffix}&direction=forward`,
+      url: `/pages/onboarding-reality/index?question=0${suffix}&direction=forward`,
       fail: () => { this._isRouting = false }
     })
   }

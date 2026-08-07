@@ -29,6 +29,16 @@ const allowed = {
   smokingStatus: new Set(['never', 'occasionally', 'regularly', 'quitting', 'undisclosed', '']),
   smokingAcceptance: new Set(['never', 'occasionally', 'any', 'open', '']),
   preferencePriority: new Set(['must', 'important', 'discuss', 'not_important', '']),
+  commuteTolerance: new Set(['same_district', 'within_30m', 'within_60m', 'flexible', '']),
+  schedulePattern: new Set(['regular', 'flexible', 'shift', 'frequent_travel', 'irregular', '']),
+  marriageTimeline: new Set(['one_two_years', 'no_fixed_timeline', 'not_soon', 'unsure', '']),
+  parentCohabitation: new Set(['separate', 'temporary', 'possible', 'expected', 'discuss', '']),
+  financeStyle: new Set(['mostly_separate', 'shared_budget', 'mostly_shared', 'discuss', '']),
+  houseworkStyle: new Set(['equal', 'by_strength', 'by_time', 'discuss', '']),
+  petAcceptance: new Set(['have_or_want', 'accept', 'depends', 'not_accept', '']),
+  alcoholAcceptance: new Set(['none', 'social', 'moderate', 'discuss', '']),
+  socialRhythm: new Set(['home_focused', 'balanced', 'social_active', 'flexible', '']),
+  meetingTime: new Set(['weekday_daytime', 'weekday_evening', 'weekend_daytime', 'weekend_evening', 'flexible']),
   workStatus: new Set(['full_time', 'freelance', 'business', 'student', 'not_working', 'other', '']),
   industry: new Set(['internet', 'telecom', 'education', 'healthcare', 'finance', 'manufacturing', 'creative', 'business_service', 'public_service', 'other', ''])
 }
@@ -380,6 +390,7 @@ function sanitizeProfile(profile) {
   const contact = profile.contact || {}
   const consent = profile.consent || {}
   const matching = profile.matching || {}
+  const reality = profile.reality || {}
   const exploration = sanitizeExploration(profile.exploration)
   const birthDate = text(basic.birthDate, 10)
   const age = ageFromBirthDate(birthDate)
@@ -451,6 +462,18 @@ function sanitizeProfile(profile) {
       reportVersion: Number(matching.reportVersion) || 0,
       matchingPoolConsentAt: Number(matching.matchingPoolConsentAt) || Number(consent.agreedAt)
     },
+    reality: {
+      meetingTimes: Array.isArray(reality.meetingTimes) ? [...new Set(reality.meetingTimes)].filter(value => allowed.meetingTime.has(value)).slice(0, 5) : [],
+      commuteTolerance: requireAllowed('commuteTolerance', reality.commuteTolerance || '', '通勤范围'),
+      schedulePattern: requireAllowed('schedulePattern', reality.schedulePattern || '', '作息情况'),
+      marriageTimeline: requireAllowed('marriageTimeline', reality.marriageTimeline || '', '婚育时间期待'),
+      parentCohabitation: requireAllowed('parentCohabitation', reality.parentCohabitation || '', '父母同住边界'),
+      financeStyle: requireAllowed('financeStyle', reality.financeStyle || '', '财务安排'),
+      houseworkStyle: requireAllowed('houseworkStyle', reality.houseworkStyle || '', '家务安排'),
+      petAcceptance: requireAllowed('petAcceptance', reality.petAcceptance || '', '宠物边界'),
+      alcoholAcceptance: requireAllowed('alcoholAcceptance', reality.alcoholAcceptance || '', '饮酒边界'),
+      socialRhythm: requireAllowed('socialRhythm', reality.socialRhythm || '', '社交节奏')
+    },
     source: text(profile.source, 32),
     clientCreatedAt: Number(profile.createdAt) || Date.now(),
     clientUpdatedAt: Number(profile.updatedAt) || Date.now()
@@ -467,6 +490,7 @@ function toClientProfile(document) {
     currentQuestion: 0,
     basic: document.basic,
     relationship: document.relationship,
+    reality: document.reality || {},
     about: document.about,
     contact: document.contact,
     consent: document.consent,
