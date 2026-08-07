@@ -2,7 +2,7 @@ const assert = require('node:assert/strict')
 const { buildInterviewPreparation, HYPOTHESIS_RULE_VERSION } = require('../shared/assessment/interview-rules')
 
 const report = {
-  instrumentVersion: '2.1.0-pilot',
+  instrumentVersion: '2.1.1-pilot',
   scoringRuleVersion: 'serious-match-scoring-2.1.0',
   reportRuleVersion: 'serious-match-report-rules-2.1.0',
   claims: [],

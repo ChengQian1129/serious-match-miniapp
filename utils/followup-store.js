@@ -2,6 +2,7 @@ const KEY = 'serious_match_followup_v21'
 const CONSENT_VERSION = 'followup-consent-2.1.0'
 
 function empty() { return { participant: {}, contact: {}, consents: {}, consentEvents: [], participantWrite: null } }
+const PARTICIPATION_BY_SCOPE = Object.freeze({ interview_contact: 'interview', research_use: 'research', offline_invitation: 'offline' })
 function get() {
   const value = wx.getStorageSync(KEY)
   return value && typeof value === 'object' ? Object.assign(empty(), value) : empty()
@@ -43,6 +44,11 @@ function mergeCloudConsents(cloudConsents) {
   pending.forEach(item => { consents[item.scope] = item })
   return save(Object.assign({}, state, { consents }))
 }
+function granted(consents, scope) { return Boolean(consents && consents[scope] && consents[scope].value === 'granted') }
+function participationTypesFromConsents(consents) {
+  return Object.entries(PARTICIPATION_BY_SCOPE).filter(([scope]) => granted(consents, scope)).map(([, type]) => type)
+}
+function requiresContact(consents) { return granted(consents, 'interview_contact') || granted(consents, 'offline_invitation') }
 function clear() { wx.removeStorageSync(KEY); return empty() }
 
-module.exports = { CONSENT_VERSION, get, save, appendConsent, saveParticipant, markParticipantSynced, markConsentSynced, mergeCloudConsents, clear }
+module.exports = { CONSENT_VERSION, get, save, appendConsent, saveParticipant, markParticipantSynced, markConsentSynced, mergeCloudConsents, participationTypesFromConsents, requiresContact, clear }

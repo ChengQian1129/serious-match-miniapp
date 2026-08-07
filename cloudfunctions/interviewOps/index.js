@@ -8,6 +8,8 @@ const ACTIONS = new Set([
   "caseGet",
   "caseUpdateStatus",
   "preparationGenerate",
+  "independentObservationAppend",
+  "caseReveal",
   "validationAppend",
   "questionUnderstandingAppend",
   "validationList",

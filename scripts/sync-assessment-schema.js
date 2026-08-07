@@ -37,6 +37,6 @@ scoringTargets.concat(ruleTargets, engineTargets, interviewTargets).forEach(([ta
   fs.writeFileSync(target, content)
 })
 const digest = crypto.createHash('sha256').update(text).digest('hex')
-const metadata = JSON.stringify({ source: 'shared/assessment/schema.js', sha256: digest, instrumentVersion: '2.1.0-pilot' }, null, 2) + '\n'
+const metadata = JSON.stringify({ source: 'shared/assessment/schema.js', sha256: digest, instrumentVersion: '2.1.1-pilot' }, null, 2) + '\n'
 fs.writeFileSync(path.join(root, 'shared/assessment/schema.manifest.json'), metadata)
 console.log('Assessment schema synced:', digest)

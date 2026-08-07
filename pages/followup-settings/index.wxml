@@ -6,8 +6,8 @@
       <view class="consent-toggle {{item.checked ? 'consent-toggle--on' : ''}}"><view class="consent-toggle__dot"></view></view>
     </button>
   </view>
-  <view class="followup-settings__actions"><button class="dl-button" loading="{{isSaving}}" bindtap="save">保存授权选择</button><button class="dl-button dl-button--outline" bindtap="editProfile">{{hasProfile ? '修改参与资料' : '填写参与资料'}}</button></view>
+  <view class="followup-settings__actions"><button class="dl-button" loading="{{isSaving}}" bindtap="save">保存授权选择</button><button wx:if="{{hasProfile || requiresContact}}" class="dl-button dl-button--outline" bindtap="editProfile">{{hasProfile ? '修改参与资料' : '填写联系资料'}}</button></view>
   <view wx:if="{{error}}" class="field-error followup-settings__error">{{error}}</view>
   <view class="section-title">删除</view>
-  <view class="danger-zone"><view class="dl-list-row__title">删除参与者登记</view><view class="dl-list-row__desc">删除授权、联系方式和参与资料；你的问卷和报告会保留。</view><button class="dl-button dl-button--danger" loading="{{isDeleting}}" bindtap="deleteRegistration">删除参与登记</button></view>
+  <view class="danger-zone"><view class="dl-list-row__title">删除参与者登记</view><view class="dl-list-row__desc">删除授权、联系方式、参与资料以及关联的访谈记录；你的问卷和报告会保留。</view><button class="dl-button dl-button--danger" loading="{{isDeleting}}" bindtap="deleteRegistration">删除参与登记</button></view>
 </view>

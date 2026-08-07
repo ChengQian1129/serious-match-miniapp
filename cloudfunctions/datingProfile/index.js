@@ -33,7 +33,7 @@ const CASE_TRANSITIONS = Object.freeze({
   reviewed: new Set(['closed']),
   closed: new Set()
 })
-const OPERATOR_ACTIONS = new Set(['participantSearch', 'participantDetail', 'participantContactReveal', 'caseCreate', 'caseGet', 'caseUpdateStatus', 'preparationGenerate', 'validationAppend', 'questionUnderstandingAppend', 'validationList', 'deidentifiedExport', 'pilotMetrics'])
+const OPERATOR_ACTIONS = new Set(['participantSearch', 'participantDetail', 'participantContactReveal', 'caseCreate', 'caseGet', 'caseUpdateStatus', 'preparationGenerate', 'independentObservationAppend', 'caseReveal', 'validationAppend', 'questionUnderstandingAppend', 'validationList', 'deidentifiedExport', 'pilotMetrics'])
 
 const allowed = {
   gender: new Set(['male', 'female', 'undisclosed']),
@@ -528,6 +528,21 @@ async function removeOwnDocuments(collection, openid) {
   }
 }
 
+async function removeDocumentsWhere(collection, filter) {
+  try {
+    while (true) {
+      const result = await collection.where(filter).limit(100).get()
+      const documents = result.data || []
+      if (!documents.length) return
+      await Promise.all(documents.map(document => collection.doc(document._id).remove()))
+      if (documents.length < 100) return
+    }
+  } catch (error) {
+    if (/collection.*(does not exist|not exists?|not found)/i.test(error.errMsg || error.message || '')) return
+    throw error
+  }
+}
+
 function feedbackEventDocId(openid, eventId) {
   return (openid + '_' + String(eventId || '').replace(/[^a-zA-Z0-9_.-]/g, '')).slice(0, 128)
 }
@@ -687,6 +702,20 @@ async function requireCaseAccess(openid, caseId, roles) {
   return { account, caseDocument }
 }
 
+function assignedInterviewer(caseDocument, openid) { return caseDocument.assignedOperatorOpenid === openid }
+function modelIsHidden(caseDocument, openid) { return assignedInterviewer(caseDocument, openid) && caseDocument.blindState !== 'revealed' }
+function preparationView(preparation, hidden) {
+  if (!preparation) return null
+  if (!hidden) return preparation
+  return { generatedAt: preparation.generatedAt, hypothesisRuleVersion: preparation.hypothesisRuleVersion, phaseOne: preparation.phaseOne }
+}
+function caseView(caseDocument, openid) {
+  if (!modelIsHidden(caseDocument, openid)) return caseDocument
+  const view = Object.assign({}, caseDocument, { modelAvailable: false, preparation: preparationView(caseDocument.preparation, true) })
+  delete view.reportSnapshot
+  return view
+}
+
 exports.main = async event => {
   const { OPENID } = cloud.getWXContext()
   if (!OPENID) return { ok: false, code: 'NO_OPENID', message: '无法确认微信身份' }
@@ -737,14 +766,14 @@ exports.main = async event => {
       const caseId = text(event.caseId, 128) || (idempotencyKey ? deidentifiedKey('case', idempotencyKey) : `case.${now}.${crypto.randomBytes(6).toString('hex')}`)
       const existingCase = await findCase(caseId)
       if (existingCase) {
-        if (existingCase.participantId === participantId && existingCase.assignedOperatorOpenid === assignedOperatorOpenid) return { ok: true, data: { case: existingCase, duplicateIgnored: true } }
+        if (existingCase.participantId === participantId && existingCase.assignedOperatorOpenid === assignedOperatorOpenid) return { ok: true, data: { case: caseView(existingCase, OPENID), duplicateIgnored: true } }
         reject('Case idempotency key is already used', 'INVALID_CASE')
       }
       const reportSnapshot = { reportId: report._id, assessmentId: report.assessmentId, reportVersion: report.reportVersion, instrumentVersion: report.instrumentVersion, scoringRuleVersion: report.scoringRuleVersion, reportRuleVersion: report.reportRuleVersion, generatedAt: report.generatedAt, claims: report.claims || [], allClaimCandidates: report.allClaimCandidates || report.claims || [], visibleClaimIds: report.visibleClaimIds || (report.claims || []).map(claim => claim.id), unknowns: report.unknowns || [], userConfirmations: report.userConfirmations || {}, responseQuality: report.responseQuality || null }
-      const caseDocument = { _id: caseId, participantId, assignedOperatorOpenid, status: 'created', reportSnapshot, participantSnapshot: { cityArea: participant.cityArea, availability: participant.availability, participationTypes: participant.participationTypes || [] }, createdAt: now, updatedAt: now }
+      const caseDocument = { _id: caseId, participantId, assignedOperatorOpenid, status: 'created', blindState: 'blind', reportSnapshot, participantSnapshot: { cityArea: participant.cityArea, availability: participant.availability, participationTypes: participant.participationTypes || [] }, createdAt: now, updatedAt: now }
       await interviewCases.doc(caseId).set({ data: caseDocument })
       await appendAudit(OPENID, 'caseCreate', caseId, 'success', { role: account.role })
-      return { ok: true, data: { case: caseDocument } }
+      return { ok: true, data: { case: caseView(caseDocument, OPENID) } }
     }
 
     if (event.action === 'participantDetail') {
@@ -779,7 +808,7 @@ exports.main = async event => {
     if (event.action === 'caseGet') {
       const { account, caseDocument } = await requireCaseAccess(OPENID, event.caseId, ['interviewer', 'admin'])
       await appendAudit(OPENID, 'caseGet', caseDocument._id, 'success', { role: account.role })
-      return { ok: true, data: { case: caseDocument } }
+      return { ok: true, data: { case: caseView(caseDocument, OPENID) } }
     }
 
     if (event.action === 'caseUpdateStatus') {
@@ -790,21 +819,61 @@ exports.main = async event => {
       const updatedAt = Date.now()
       await interviewCases.doc(caseDocument._id).update({ data: { status, updatedAt } })
       await appendAudit(OPENID, 'caseUpdateStatus', caseDocument._id, 'success', { role: account.role })
-      return { ok: true, data: { case: Object.assign({}, caseDocument, { status, updatedAt }) } }
+      return { ok: true, data: { case: caseView(Object.assign({}, caseDocument, { status, updatedAt }), OPENID) } }
     }
 
     if (event.action === 'preparationGenerate') {
       const { account, caseDocument } = await requireCaseAccess(OPENID, event.caseId, ['interviewer', 'admin'])
       const preparation = buildInterviewPreparation(caseDocument.reportSnapshot, caseDocument.participantSnapshot, Date.now())
       const status = caseDocument.status === 'created' ? 'preparation_ready' : caseDocument.status
+      const updated = Object.assign({}, caseDocument, { preparation, status, updatedAt: preparation.generatedAt })
       await interviewCases.doc(caseDocument._id).update({ data: { preparation, status, updatedAt: preparation.generatedAt } })
       await appendAudit(OPENID, 'preparationGenerate', caseDocument._id, 'success', { role: account.role, count: preparation.hypotheses.length })
-      return { ok: true, data: { preparation } }
+      return { ok: true, data: { preparation: preparationView(preparation, modelIsHidden(updated, OPENID)) } }
+    }
+
+    if (event.action === 'independentObservationAppend') {
+      const { account, caseDocument } = await requireCaseAccess(OPENID, event.caseId, ['interviewer', 'admin'])
+      if (!assignedInterviewer(caseDocument, OPENID) || caseDocument.blindState === 'revealed') reject('独立访谈判断必须在揭盲前由受分配访谈者记录', 'BLIND_PHASE_CLOSED')
+      if (!['in_progress'].includes(caseDocument.status)) reject('访谈尚未进入记录阶段', 'INVALID_CASE')
+      const source = event.observation || {}
+      const eventId = text(source.eventId, 128)
+      const topic = text(source.topic, 96)
+      const observation = text(source.observation || source.evidenceSummary, 800)
+      const observedAt = Number(source.observedAt)
+      const interviewerConfidence = text(source.interviewerConfidence, 16) || 'medium'
+      if (!eventId || !topic || !observation || !Number.isFinite(observedAt) || !['high', 'medium', 'low'].includes(interviewerConfidence)) reject('独立访谈判断信息不完整', 'INVALID_VALIDATION')
+      const independent = { _id: operatorDocId(caseDocument._id, eventId), eventId, eventType: 'independent_observation', caseId: caseDocument._id, participantId: caseDocument.participantId, topic, observation, alternativeExplanation: text(source.alternativeExplanation, 500), interviewerConfidence, context: text(source.context, 300), observedAt, recordedAt: Date.now(), operatorOpenid: OPENID, instrumentVersion: caseDocument.reportSnapshot.instrumentVersion, hypothesisRuleVersion: HYPOTHESIS_RULE_VERSION }
+      let existing = null
+      try { existing = (await interviewValidationEvents.doc(independent._id).get()).data || null } catch (error) { if (!/does not exist|not exists?|not found/i.test(error.errMsg || error.message || '')) throw error }
+      if (existing) {
+        const same = ['eventId', 'eventType', 'caseId', 'participantId', 'topic', 'observation', 'alternativeExplanation', 'interviewerConfidence', 'context', 'observedAt'].every(key => existing[key] === independent[key])
+        if (!same) reject('独立访谈判断编号已用于其他内容', 'VALIDATION_CONFLICT')
+        return { ok: true, data: { observation: existing, duplicateIgnored: true } }
+      }
+      await interviewValidationEvents.doc(independent._id).set({ data: independent })
+      await appendAudit(OPENID, 'independentObservationAppend', caseDocument._id, 'success', { role: account.role })
+      return { ok: true, data: { observation: independent } }
+    }
+
+    if (event.action === 'caseReveal') {
+      const { account, caseDocument } = await requireCaseAccess(OPENID, event.caseId, ['interviewer', 'admin'])
+      if (!assignedInterviewer(caseDocument, OPENID)) reject('只有受分配访谈者可以执行揭盲', 'UNAUTHORIZED_OPERATOR')
+      if (caseDocument.blindState === 'revealed') return { ok: true, data: { case: caseDocument, duplicateIgnored: true } }
+      if (caseDocument.status !== 'in_progress') reject('访谈尚未进入记录阶段', 'INVALID_CASE')
+      const observations = await interviewValidationEvents.where({ caseId: caseDocument._id, eventType: 'independent_observation' }).limit(100).get()
+      if (!(observations.data || []).length) reject('至少记录一条独立访谈判断后才能揭盲', 'BLIND_REVEAL_REQUIRED')
+      const revealedAt = Date.now()
+      const updated = Object.assign({}, caseDocument, { blindState: 'revealed', revealedAt, revealedBy: OPENID, updatedAt: revealedAt })
+      await interviewCases.doc(caseDocument._id).update({ data: { blindState: 'revealed', revealedAt, revealedBy: OPENID, updatedAt: revealedAt } })
+      await appendAudit(OPENID, 'caseReveal', caseDocument._id, 'success', { role: account.role, count: observations.data.length })
+      return { ok: true, data: { case: updated } }
     }
 
     if (event.action === 'validationAppend' || event.action === 'questionUnderstandingAppend') {
       const { account, caseDocument } = await requireCaseAccess(OPENID, event.caseId, ['interviewer', 'admin'])
       const source = event.validationEvent || {}
+      if (event.action === 'validationAppend' && caseDocument.blindState !== 'revealed') reject('揭盲前不能验证模型结论', 'BLIND_REVEAL_REQUIRED')
       const eventId = text(source.eventId, 128)
       const claimId = text(source.claimId, 80)
       const hypothesisId = text(source.hypothesisId, 96) || (claimId ? `HYP_${claimId}` : '')
@@ -835,7 +904,8 @@ exports.main = async event => {
     if (event.action === 'validationList') {
       const { account, caseDocument } = await requireCaseAccess(OPENID, event.caseId, ['interviewer', 'admin'])
       const result = await interviewValidationEvents.where({ caseId: caseDocument._id }).limit(100).get()
-      const events = (result.data || []).sort((left, right) => Number(left.observedAt) - Number(right.observedAt))
+      const visible = modelIsHidden(caseDocument, OPENID) ? (result.data || []).filter(item => item.eventType === 'independent_observation' || item.eventType === 'question_understanding') : (result.data || [])
+      const events = visible.sort((left, right) => Number(left.observedAt) - Number(right.observedAt))
       await appendAudit(OPENID, 'validationList', caseDocument._id, 'success', { role: account.role, count: events.length })
       return { ok: true, data: { events } }
     }
@@ -896,7 +966,8 @@ exports.main = async event => {
         caseCount: cases.length,
         caseByStatus: countBy(cases, 'status'),
         preparationGeneratedCount: cases.filter(item => item.preparation && item.preparation.generatedAt).length,
-        validationByVerdict: countBy(validations.filter(item => item.eventType !== 'question_understanding'), 'verdict'),
+        independentObservationCount: validations.filter(item => item.eventType === 'independent_observation').length,
+        validationByVerdict: countBy(validations.filter(item => item.eventType === 'claim_validation'), 'verdict'),
         questionUnderstandingByVerdict: countBy(validations.filter(item => item.eventType === 'question_understanding'), 'verdict'),
         generatedAt: Date.now()
       }
@@ -919,9 +990,10 @@ exports.main = async event => {
       }
       await consentEvents.doc(consentEvent._id).set({ data: consentEvent })
       const projection = consentProjection(await ownConsentEvents(OPENID))
-      if (value === 'revoked' && projection.interview_contact && projection.interview_contact.value === 'revoked') {
+      const contactPurposeActive = ['interview_contact', 'offline_invitation'].some(scope => projection[scope] && projection[scope].value === 'granted')
+      if (['interview_contact', 'offline_invitation'].includes(consentEvent.scope)) {
         const existingParticipant = await participantRegistry.doc(OPENID).get().then(result => result.data || null).catch(error => /does not exist|not exists?|not found/i.test(error.errMsg || error.message || '') ? null : Promise.reject(error))
-        if (existingParticipant) await participantRegistry.doc(OPENID).update({ data: { status: 'withdrawn', updatedAt: Date.now() } })
+        if (existingParticipant) await participantRegistry.doc(OPENID).update({ data: { status: contactPurposeActive ? 'active' : 'withdrawn', updatedAt: Date.now() } })
       }
       return { ok: true, data: { consentEvent, consents: projection } }
     }
@@ -935,7 +1007,8 @@ exports.main = async event => {
       const participant = sanitizeParticipant(event.participant)
       const contact = sanitizeContact(event.contact)
       const projection = consentProjection(await ownConsentEvents(OPENID))
-      if (!projection.interview_contact || projection.interview_contact.value !== 'granted') reject('Interview contact consent is required', 'CONSENT_REQUIRED')
+      const contactPurposeActive = ['interview_contact', 'offline_invitation'].some(scope => projection[scope] && projection[scope].value === 'granted')
+      if (!contactPurposeActive) reject('访谈联系或线下邀请授权至少需要开启一项', 'CONSENT_REQUIRED')
       const now = Date.now()
       const existing = await participantRegistry.doc(OPENID).get().then(result => result.data || null).catch(error => /does not exist|not exists?|not found/i.test(error.errMsg || error.message || '') ? null : Promise.reject(error))
       const idempotencyKey = text(event.idempotencyKey, 128)
@@ -960,10 +1033,12 @@ exports.main = async event => {
     }
 
     if (event.action === 'participantDelete') {
+      await removeDocumentsWhere(interviewValidationEvents, { participantId: OPENID })
+      await removeDocumentsWhere(interviewCases, { participantId: OPENID })
       await removeOwnDocuments(consentEvents, OPENID)
       await removeOwnDocuments(participantRegistry, OPENID)
       await removeOwnDocuments(participantContacts, OPENID)
-      return { ok: true, data: { deleted: true } }
+      return { ok: true, data: { deleted: true, interviewRecordsDeleted: true } }
     }
 
     if (event.action === 'assessmentSaveDraft') {
@@ -1082,6 +1157,8 @@ exports.main = async event => {
     }
 
     if (event.action === 'assessmentDelete') {
+      await removeDocumentsWhere(interviewValidationEvents, { participantId: OPENID })
+      await removeDocumentsWhere(interviewCases, { participantId: OPENID })
       await removeOwnDocuments(assessmentReports, OPENID)
       await removeOwnDocuments(assessmentSessions, OPENID)
       await removeOwnDocuments(assessmentFeedbackEvents, OPENID)
@@ -1095,7 +1172,7 @@ exports.main = async event => {
           }
         })
       }
-      return { ok: true, data: { deleted: true, profilePaused: Boolean(existing) } }
+      return { ok: true, data: { deleted: true, profilePaused: Boolean(existing), interviewRecordsDeleted: true } }
     }
 
     if (event.action === 'deleteProfileOnly') {
@@ -1107,13 +1184,15 @@ exports.main = async event => {
     if (event.action === 'delete') {
       const existing = await findOwnProfile(OPENID)
       if (existing) await profiles.doc(OPENID).remove()
+      await removeDocumentsWhere(interviewValidationEvents, { participantId: OPENID })
+      await removeDocumentsWhere(interviewCases, { participantId: OPENID })
       await removeOwnDocuments(assessmentReports, OPENID)
       await removeOwnDocuments(assessmentSessions, OPENID)
       await removeOwnDocuments(assessmentFeedbackEvents, OPENID)
       await removeOwnDocuments(consentEvents, OPENID)
       await removeOwnDocuments(participantRegistry, OPENID)
       await removeOwnDocuments(participantContacts, OPENID)
-      return { ok: true, data: { deleted: true } }
+      return { ok: true, data: { deleted: true, interviewRecordsDeleted: true } }
     }
 
     return { ok: false, code: 'UNKNOWN_ACTION', message: '不支持的操作' }

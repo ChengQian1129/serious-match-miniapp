@@ -30,7 +30,9 @@
 - `research_use`: 允许去标识化结果用于问卷与报告研究
 - `offline_invitation`: 允许发送线下活动信息；具体活动仍需另行确认
 
-撤回 `interview_contact` 会把参与者状态改为 `withdrawn`，但不会删除或改写已经生成的问卷和报告。用户选择“删除参与登记”时，云函数会删除以上三个参与集合中的本人记录；删除关系评估时，反馈事件也会一并删除。
+撤回全部联系类授权（`interview_contact` 与 `offline_invitation`）会把参与者状态改为 `withdrawn`，但不会删除或改写已经生成的问卷和报告。用户选择“删除参与登记”时，云函数会删除授权、参与资料、联系方式，以及按 `participantId` 关联的访谈案例和验证事件；问卷和报告继续保留。删除关系评估或全部资料时，依赖该评估形成的访谈案例、验证事件和反馈事件也会一并删除。
+
+访谈案例使用服务端盲法门禁：受分配访谈者在 `blindState` 为 `blind` 时无法通过 `caseGet` 或 `preparationGenerate` 取得 `reportSnapshot`、模型假设或第二阶段准备内容。访谈进入 `in_progress` 后，必须先通过 `independentObservationAppend` 保存至少一条不绑定模型 claim 的独立判断，才能调用 `caseReveal` 揭盲；揭盲后才允许 `validationAppend`。
 
 运营接口默认只返回掩码联系方式。只有被分配的访谈人员或管理员可调用单独的完整联系方式接口；该接口会再次检查 `interview_contact` 是否仍有效，并写入 `audit_events`。分析人员只能使用拥有有效 `research_use` 授权的去标识化导出。
 

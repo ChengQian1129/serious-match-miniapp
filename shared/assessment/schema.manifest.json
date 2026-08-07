@@ -1,5 +1,5 @@
 {
   "source": "shared/assessment/schema.js",
-  "sha256": "7e06c790dbe2fb2f6cdf3291ee33853a6884ac2f72cba79e0613cfe7915ce40b",
-  "instrumentVersion": "2.1.0-pilot"
+  "sha256": "ebaf4995ef85da75b1cf169b9281f1d4e0727e900901cd70d661b4af6f704a7f",
+  "instrumentVersion": "2.1.1-pilot"
 }

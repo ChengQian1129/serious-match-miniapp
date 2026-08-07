@@ -29,6 +29,8 @@ const services = Object.freeze({
     'caseGet',
     'caseUpdateStatus',
     'preparationGenerate',
+    'independentObservationAppend',
+    'caseReveal',
     'validationAppend',
     'questionUnderstandingAppend',
     'validationList',

@@ -1,6 +1,6 @@
 # 关系说明书问卷与评价规格 v2.1
 
-版本：2.1.0-pilot  
+版本：2.1.1-pilot
 状态：受控试点开发规格  
 唯一题目来源：shared/assessment/schema.js
 
@@ -31,7 +31,7 @@
 
 - 当前题目数：48
 - 当前章节数：6，每章 8 题
-- instrumentVersion：2.1.0-pilot
+- instrumentVersion：2.1.1-pilot
 - scoringRuleVersion：serious-match-scoring-2.1.0
 - reportRuleVersion：serious-match-report-rules-2.1.0
 - hypothesisRuleVersion：serious-match-interview-rules-1.0.0
@@ -67,4 +67,4 @@
 
 后续访谈应先查看事实和用户明确提供的背景，再查看系统假设；访谈结果以不可变 validation event 保存。第一版使用确定性规则和固定文案，不使用不可复现的生成式 AI 直接输出最终结论。
 
-详细理论依据和早期题目草案保存在 QUESTIONNAIRE_SPEC_LEGACY.md，仅用于研究追溯，不作为当前实现输入。
+2.1.1 对 `ASN02` 和 `CPN02` 的题干做了语义校准，使 N5 量尺继续表示“关系中的需要”，不再把接受程度误写成需要程度。详细理论依据和早期题目草案保存在 QUESTIONNAIRE_SPEC_LEGACY.md，仅用于研究追溯，不作为当前实现输入。

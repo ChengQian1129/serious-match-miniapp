@@ -1,4 +1,4 @@
-const INSTRUMENT_VERSION = '2.1.0-pilot'
+const INSTRUMENT_VERSION = '2.1.1-pilot'
 const ASSESSMENT_ID = 'relationship_manual_v2'
 
 const SCALES = {
@@ -47,7 +47,7 @@ const ITEMS = [
   item('AVD05', '亲近的人想了解我的内心时，我有时会本能地拉开距离。', 'E5', 'closeness_discomfort'),
   item('AVD06', '持续而稳定的亲密通常不会让我觉得被束缚。', 'E5', 'closeness_discomfort', { reverseScored: true }),
   item('ASN01', '再亲密的关系里，我也需要固定的独处时间。', 'N5', 'autonomy_space', { role: 'profile', side: 'need' }),
-  item('ASN02', '对方不参与我的每项兴趣和社交，我仍能感到关系稳定。', 'N5', 'autonomy_space', { role: 'profile', side: 'need' }),
+  item('ASN02', '即使关系稳定，我也需要双方各自保留一些不共同参与的兴趣和社交。', 'N5', 'autonomy_space', { role: 'profile', side: 'need' }),
 
   item('ESN01', '我情绪低落时，希望对方先听我说，而不是马上分析对错。', 'N5', 'emotional_support', { role: 'profile', side: 'need' }),
   item('ESN02', '在我明确需要安慰时，对方表达陪伴和在意对我很重要。', 'N5', 'emotional_support', { role: 'profile', side: 'need' }),
@@ -59,7 +59,7 @@ const ITEMS = [
   item('REG04', '我需要暂停时，通常会说明原因，以及大概什么时候再聊。', 'E5', 'REG04', { role: 'observation' }),
 
   item('CPN01', '争执升温时，我更希望先暂停一段时间，再继续讨论。', 'N5', 'conflict_pause', { role: 'profile', side: 'need' }),
-  item('CPN02', '暂停时，如果对方说明何时再谈，我可以接受当天不把问题解决。', 'N5', 'conflict_pause', { role: 'profile', side: 'need' }),
+  item('CPN02', '争执暂停后，我需要有不必当天解决问题的余地，只要双方约好何时继续。', 'N5', 'conflict_pause', { role: 'profile', side: 'need' }),
   item('CPP01', '情绪上来时，我能明确提出暂停，并说明大概何时回来继续。', 'P5', 'conflict_pause', { role: 'profile', side: 'provide' }),
   item('CPP02', '暂停期间，我通常不会故意失联来惩罚对方。', 'P5', 'conflict_pause', { role: 'profile', side: 'provide' }),
   item('RRN01', '分歧后，即使问题还没完全解决，我也需要双方确认这段关系仍值得继续。', 'N5', 'repair_reengagement', { role: 'profile', side: 'need' }),

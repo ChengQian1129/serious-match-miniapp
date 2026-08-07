@@ -3,7 +3,7 @@ const { isCloudReady, getParticipant } = require('../../utils/cloud')
 const store = require('../../utils/followup-store')
 
 Page({
-  data: { form: {}, contact: {}, participationTypes: [{ value: 'interview', label: '深度访谈' }, { value: 'research', label: '问卷理解研究' }, { value: 'offline', label: '线下交流活动' }], selectedTypes: [], isSaving: false, error: '' },
+  data: { form: {}, contact: {}, isSaving: false, error: '' },
   onShow() { resetNavigation(this); this.load() },
   load() {
     const local = store.get()
@@ -11,21 +11,21 @@ Page({
     if (isCloudReady()) getParticipant({ success: data => { if (data.participant && !store.get().participant.displayName) { store.markParticipantSynced(data.participant, data.contact || {}); this.setParticipantData(data.participant, data.contact || {}) } }, fail: () => {} })
   },
   setParticipantData(participant, contact) {
-    const selectedTypes = participant.participationTypes || []
-    this.setData({ form: participant, contact, selectedTypes, participationTypes: this.data.participationTypes.map(item => Object.assign({}, item, { selected: selectedTypes.includes(item.value) })) })
+    const form = Object.assign({}, participant)
+    if (!form.availability && contact.preferredTime) form.availability = contact.preferredTime
+    this.setData({ form, contact })
   },
   input(event) { const field = event.currentTarget.dataset.field; this.setData({ [`form.${field}`]: String(event.detail.value || '') }) },
   inputContact(event) { const field = event.currentTarget.dataset.field; this.setData({ [`contact.${field}`]: String(event.detail.value || '') }) },
-  toggleType(event) {
-    const value = event.currentTarget.dataset.value
-    const selected = this.data.selectedTypes.includes(value) ? this.data.selectedTypes.filter(item => item !== value) : this.data.selectedTypes.concat(value)
-    this.setData({ selectedTypes: selected, participationTypes: this.data.participationTypes.map(item => Object.assign({}, item, { selected: selected.includes(item.value) })) })
-  },
   save() {
     if (this.data.isSaving) return
-    const participant = Object.assign({}, this.data.form, { participationTypes: this.data.selectedTypes })
-    if (!participant.displayName || !participant.cityArea || !this.data.contact.value || !this.data.contact.channel || !this.data.contact.preferredTime || !this.data.selectedTypes.length) return this.setData({ error: '请先填写必填信息，并至少选择一种参与方式' })
-    store.saveParticipant(participant, this.data.contact)
+    const state = store.get()
+    const participationTypes = store.participationTypesFromConsents(state.consents)
+    const participant = Object.assign({}, this.data.form, { participationTypes })
+    const contact = Object.assign({}, this.data.contact, { preferredTime: participant.availability })
+    if (!store.requiresContact(state.consents)) return this.setData({ error: '请先在授权页面选择需要联系的参与方式' })
+    if (!participant.displayName || !participant.cityArea || !participant.availability || !contact.value || !contact.channel) return this.setData({ error: '请先填写称呼、区域、方便参与的时间和联系方式' })
+    store.saveParticipant(participant, contact)
     navigateOnce(this, 'redirectTo', { url: '/pages/followup-settings/index' })
   },
   back() { navigateOnce(this, 'navigateBack', {}) }

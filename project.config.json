@@ -1,5 +1,5 @@
 {
-  "description": "认真匹配小程序体验版",
+  "description": "关系说明书试点版",
   "cloudfunctionRoot": "cloudfunctions/",
   "packOptions": {
     "ignore": [

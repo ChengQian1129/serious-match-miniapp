@@ -9,7 +9,7 @@ const DEFINITIONS = [
 ]
 
 Page({
-  data: { scopes: DEFINITIONS, isSaving: false, isDeleting: false, error: '', hasProfile: false },
+  data: { scopes: DEFINITIONS, isSaving: false, isDeleting: false, error: '', hasProfile: false, requiresContact: false },
   onShow() { resetNavigation(this); this.load() },
   load() {
     const local = store.get()
@@ -17,11 +17,13 @@ Page({
     if (isCloudReady()) getParticipant({ success: data => { let state = store.mergeCloudConsents(data.consents || {}); if (!state.participant.displayName && data.participant) { state.participant = data.participant; state.contact = data.contact || {}; state = store.save(state) } this.apply(state.consents || {}, state.participant) }, fail: () => {} })
   },
   apply(consents, participant) {
-    this.setData({ scopes: DEFINITIONS.map(item => Object.assign({}, item, { checked: Boolean(consents[item.scope] && consents[item.scope].value === 'granted'), grantedAt: consents[item.scope] && consents[item.scope].value === 'granted' ? consents[item.scope].createdAt : null })), hasProfile: Boolean(participant && participant.displayName) })
+    const scopes = DEFINITIONS.map(item => Object.assign({}, item, { checked: Boolean(consents[item.scope] && consents[item.scope].value === 'granted'), grantedAt: consents[item.scope] && consents[item.scope].value === 'granted' ? consents[item.scope].createdAt : null }))
+    this.setData({ scopes, hasProfile: Boolean(participant && participant.displayName), requiresContact: scopes.some(item => item.checked && ['interview_contact', 'offline_invitation'].includes(item.scope)) })
   },
   toggle(event) {
     const scope = event.currentTarget.dataset.scope
-    this.setData({ scopes: this.data.scopes.map(item => item.scope === scope ? Object.assign({}, item, { checked: !item.checked }) : item) })
+    const scopes = this.data.scopes.map(item => item.scope === scope ? Object.assign({}, item, { checked: !item.checked }) : item)
+    this.setData({ scopes, requiresContact: scopes.some(item => item.checked && ['interview_contact', 'offline_invitation'].includes(item.scope)) })
   },
   save() {
     if (this.data.isSaving) return
@@ -42,15 +44,19 @@ Page({
   },
   saveProfileIfAllowed() {
     const state = store.get()
-    const contactGranted = state.consents.interview_contact && state.consents.interview_contact.value === 'granted'
+    const contactGranted = store.requiresContact(state.consents)
     const finish = data => { if (data && data.participant) store.markParticipantSynced(data.participant, data.contact); this.setData({ isSaving: false }); wx.showToast({ title: '已保存', icon: 'success' }); this.load() }
+    if (contactGranted && !(state.participant && state.participant.displayName)) {
+      this.setData({ isSaving: false })
+      return navigateOnce(this, 'redirectTo', { url: '/pages/followup-profile/index' })
+    }
     if (contactGranted && state.participant && state.participant.displayName && state.participantWrite && state.participantWrite.pendingCloud && isCloudReady()) return saveParticipant(state.participant, state.contact, state.participantWrite, { success: finish, fail: error => this.setData({ isSaving: false, error: cloudErrorMessage(error) }) })
     finish()
   },
   editProfile() { navigateOnce(this, 'redirectTo', { url: '/pages/followup-profile/index' }) },
   deleteRegistration() {
     if (this.data.isDeleting) return
-    wx.showModal({ title: '删除参与登记？', content: '将删除联系方式、参与资料和授权记录，不影响关系说明书。', confirmText: '删除', confirmColor: '#ff3b30', success: result => {
+    wx.showModal({ title: '删除参与登记？', content: '将删除联系方式、参与资料、授权和关联访谈记录，不影响关系说明书。', confirmText: '删除', confirmColor: '#ff3b30', success: result => {
       if (!result.confirm) return
       this.setData({ isDeleting: true, error: '' })
       const finish = () => { store.clear(); this.setData({ isDeleting: false }); navigateOnce(this, 'reLaunch', { url: '/pages/questionnaire-result/index' }) }
