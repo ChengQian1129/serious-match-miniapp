@@ -22,4 +22,6 @@ assert.equal(fs.readFileSync(path.join(root, 'cloudfunctions/datingProfile/asses
 const reportEngine = fs.readFileSync(path.join(root, 'shared/assessment/report-engine.js'), 'utf8')
 assert.equal(fs.readFileSync(path.join(root, 'utils/assessment-v2/generated/report-engine.js'), 'utf8'), reportEngine.replaceAll("require('./schema')", "require('./questionnaire-definitions')"))
 assert.equal(fs.readFileSync(path.join(root, 'cloudfunctions/datingProfile/assessment-v2-report-engine.generated.js'), 'utf8'), reportEngine.replaceAll("require('./schema')", "require('./assessment-v2-questionnaire-definitions')").replaceAll("require('./scoring-rules')", "require('./assessment-v2-scoring-engine')").replaceAll("require('./report-rules')", "require('./assessment-v2-report-rules')"))
+const interviewRules = fs.readFileSync(path.join(root, 'shared/assessment/interview-rules.js'), 'utf8')
+assert.equal(fs.readFileSync(path.join(root, 'cloudfunctions/datingProfile/assessment-v2-interview-rules.generated.js'), 'utf8'), interviewRules.replace("const { HYPOTHESIS_RULE_VERSION } = require('./version')", "const HYPOTHESIS_RULE_VERSION = 'serious-match-interview-rules-1.0.0'"))
 console.log('Assessment schema check OK:', digest)

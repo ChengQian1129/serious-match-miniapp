@@ -8,7 +8,7 @@ function get() {
 }
 function save(value) { wx.setStorageSync(KEY, value); return value }
 function event(scope, value) {
-  return { eventId: `consent.${scope}.${Date.now()}.${Math.random().toString(36).slice(2, 8)}`, scope, value, createdAt: Date.now(), version: CONSENT_VERSION }
+  return { eventId: `consent.${scope}.${Date.now()}.${Math.random().toString(36).slice(2, 8)}`, scope, value, createdAt: Date.now(), version: CONSENT_VERSION, pendingCloud: true }
 }
 function appendConsent(scope, value) {
   const state = get()
@@ -19,6 +19,22 @@ function appendConsent(scope, value) {
   return consentEvent
 }
 function saveParticipant(participant, contact) { return save(Object.assign({}, get(), { participant, contact })) }
+function markConsentSynced(eventId, cloudEvent) {
+  const state = get()
+  const consentEvents = (state.consentEvents || []).map(item => item.eventId === eventId ? Object.assign({}, item, cloudEvent || {}, { pendingCloud: false }) : item)
+  const consents = Object.assign({}, state.consents)
+  Object.keys(consents).forEach(scope => {
+    if (consents[scope] && consents[scope].eventId === eventId) consents[scope] = Object.assign({}, consents[scope], cloudEvent || {}, { pendingCloud: false })
+  })
+  return save(Object.assign({}, state, { consentEvents, consents }))
+}
+function mergeCloudConsents(cloudConsents) {
+  const state = get()
+  const pending = Object.values(state.consents || {}).filter(item => item && item.pendingCloud)
+  const consents = Object.assign({}, cloudConsents || {})
+  pending.forEach(item => { consents[item.scope] = item })
+  return save(Object.assign({}, state, { consents }))
+}
 function clear() { wx.removeStorageSync(KEY); return empty() }
 
-module.exports = { CONSENT_VERSION, get, save, appendConsent, saveParticipant, clear }
+module.exports = { CONSENT_VERSION, get, save, appendConsent, saveParticipant, markConsentSynced, mergeCloudConsents, clear }

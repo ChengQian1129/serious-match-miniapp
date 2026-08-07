@@ -1,4 +1,5 @@
 const cloud = require('wx-server-sdk')
+const crypto = require('node:crypto')
 
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV })
 
@@ -19,9 +20,20 @@ const { ASSESSMENT_ID, INSTRUMENT_VERSION, ITEMS } = require('./assessment-v2-qu
 const { validateAnswers, evaluateAssessment } = require('./assessment-v2-scoring-engine')
 const { buildReport } = require('./assessment-v2-report-engine')
 const { assessResponseQuality } = require('./assessment-v2-quality-engine')
+const { HYPOTHESIS_RULE_VERSION, buildInterviewPreparation } = require('./assessment-v2-interview-rules.generated')
 const PRIVACY_VERSION = 'cloud-1.0'
 const CONSENT_VERSION = 'followup-consent-2.1.0'
 const CONSENT_SCOPES = new Set(['interview_contact', 'research_use', 'offline_invitation'])
+const CASE_TRANSITIONS = Object.freeze({
+  created: new Set(['preparation_ready', 'closed']),
+  preparation_ready: new Set(['scheduled', 'closed']),
+  scheduled: new Set(['in_progress', 'closed']),
+  in_progress: new Set(['completed', 'closed']),
+  completed: new Set(['reviewed', 'closed']),
+  reviewed: new Set(['closed']),
+  closed: new Set()
+})
+const OPERATOR_ACTIONS = new Set(['participantSearch', 'participantDetail', 'participantContactReveal', 'caseCreate', 'caseGet', 'caseUpdateStatus', 'preparationGenerate', 'validationAppend', 'questionUnderstandingAppend', 'validationList', 'deidentifiedExport', 'pilotMetrics'])
 
 const allowed = {
   gender: new Set(['male', 'female', 'undisclosed']),
@@ -594,6 +606,11 @@ function consentProjection(events) {
   }, {})
 }
 
+async function hasActiveConsent(openid, scope) {
+  const projection = consentProjection(await ownConsentEvents(openid))
+  return Boolean(projection[scope] && projection[scope].value === 'granted')
+}
+
 function sanitizeParticipant(source) {
   if (!source || typeof source !== 'object') reject('Missing participant profile', 'INVALID_PARTICIPANT')
   const participationTypes = [...new Set((Array.isArray(source.participationTypes) ? source.participationTypes : []).map(value => text(value, 48)).filter(Boolean))].slice(0, 8)
@@ -627,11 +644,19 @@ async function requireOperator(openid, roles) {
 }
 
 function operatorDocId(openid, value) { return (openid + '_' + String(value || '').replace(/[^a-zA-Z0-9_.-]/g, '')).slice(0, 128) }
+function deidentifiedKey(namespace, value) { return namespace + '_' + crypto.createHash('sha256').update(namespace + ':' + String(value || '')).digest('hex').slice(0, 32) }
+function maskedContact(value) {
+  const source = String(value || '')
+  if (!source) return ''
+  if (/^1\d{10}$/.test(source)) return source.slice(0, 3) + '****' + source.slice(-4)
+  if (source.length <= 2) return '*'.repeat(source.length)
+  return source.slice(0, 1) + '***' + source.slice(-1)
+}
 
 async function appendAudit(openid, action, targetId, result, metadata) {
   const now = Date.now()
   await auditEvents.doc(operatorDocId(openid, action + '.' + targetId + '.' + now)).set({ data: {
-    _id: operatorDocId(openid, action + '.' + targetId + '.' + now), _openid: openid, actorOpenid: openid, action, targetId: text(targetId, 128), result: text(result, 40), metadata: metadata && typeof metadata === 'object' ? { role: text(metadata.role, 32), count: Number(metadata.count) || 0 } : {}, createdAt: now
+    _id: operatorDocId(openid, action + '.' + targetId + '.' + now), _openid: openid, actorOpenid: openid, action, targetId: text(targetId, 128), result: text(result, 40), metadata: metadata && typeof metadata === 'object' ? { role: text(metadata.role, 32), count: Number(metadata.count) || 0, errorCode: text(metadata.errorCode, 48) } : {}, createdAt: now
   } })
 }
 
@@ -684,7 +709,7 @@ exports.main = async event => {
 
   try {
     if (event.action === 'participantSearch') {
-      const account = await requireOperator(OPENID, ['interviewer', 'admin'])
+      const account = await requireOperator(OPENID, ['admin'])
       const result = await participantRegistry.where({ status: 'active' }).limit(100).get()
       const cityArea = text(event.filters && event.filters.cityArea, 80)
       const participationType = text(event.filters && event.filters.participationType, 48)
@@ -694,7 +719,7 @@ exports.main = async event => {
     }
 
     if (event.action === 'caseCreate') {
-      const account = await requireOperator(OPENID, ['interviewer', 'admin'])
+      const account = await requireOperator(OPENID, ['admin'])
       const participantId = text(event.participantId, 128)
       const participant = await findParticipantRecord(participantId)
       if (!participant || participant.status !== 'active') reject('Active participant not found', 'PARTICIPANT_NOT_FOUND')
@@ -704,9 +729,12 @@ exports.main = async event => {
       const report = (reports.data || []).sort((left, right) => Number(right.generatedAt) - Number(left.generatedAt))[0] || null
       if (!report) reject('Participant assessment report not found', 'INVALID_ASSESSMENT')
       const now = Date.now()
-      const caseId = text(event.caseId, 128) || operatorDocId(participantId, 'case.' + now)
-      const reportSnapshot = { reportId: report._id, assessmentId: report.assessmentId, reportVersion: report.reportVersion, instrumentVersion: report.instrumentVersion, scoringRuleVersion: report.scoringRuleVersion, reportRuleVersion: report.reportRuleVersion, generatedAt: report.generatedAt, claims: report.claims || [], unknowns: report.unknowns || [], userConfirmations: report.userConfirmations || {}, responseQuality: report.responseQuality || null }
-      const caseDocument = { _id: caseId, participantId, assignedOperatorOpenid: text(event.assignedOperatorOpenid, 128) || OPENID, status: 'new', reportSnapshot, participantSnapshot: { cityArea: participant.cityArea, availability: participant.availability, participationTypes: participant.participationTypes || [] }, createdAt: now, updatedAt: now }
+      const assignedOperatorOpenid = text(event.assignedOperatorOpenid, 128) || OPENID
+      const assignedOperator = await findOperator(assignedOperatorOpenid)
+      if (!assignedOperator || assignedOperator.status === 'disabled' || !['interviewer', 'admin'].includes(assignedOperator.role)) reject('Assigned interviewer is invalid', 'INVALID_CASE')
+      const caseId = text(event.caseId, 128) || `case.${now}.${crypto.randomBytes(6).toString('hex')}`
+      const reportSnapshot = { reportId: report._id, assessmentId: report.assessmentId, reportVersion: report.reportVersion, instrumentVersion: report.instrumentVersion, scoringRuleVersion: report.scoringRuleVersion, reportRuleVersion: report.reportRuleVersion, generatedAt: report.generatedAt, claims: report.claims || [], allClaimCandidates: report.allClaimCandidates || report.claims || [], visibleClaimIds: report.visibleClaimIds || (report.claims || []).map(claim => claim.id), unknowns: report.unknowns || [], userConfirmations: report.userConfirmations || {}, responseQuality: report.responseQuality || null }
+      const caseDocument = { _id: caseId, participantId, assignedOperatorOpenid, status: 'created', reportSnapshot, participantSnapshot: { cityArea: participant.cityArea, availability: participant.availability, participationTypes: participant.participationTypes || [] }, createdAt: now, updatedAt: now }
       await interviewCases.doc(caseId).set({ data: caseDocument })
       await appendAudit(OPENID, 'caseCreate', caseId, 'success', { role: account.role })
       return { ok: true, data: { case: caseDocument } }
@@ -723,7 +751,22 @@ exports.main = async event => {
       }
       const contact = await participantContacts.doc(participant.contactRef || participantId).get().then(result => result.data || null).catch(error => /does not exist|not exists?|not found/i.test(error.errMsg || error.message || '') ? null : Promise.reject(error))
       await appendAudit(OPENID, 'participantDetail', participantId, 'success', { role: account.role })
-      return { ok: true, data: { participant: { _id: participant._id, displayName: participant.displayName, cityArea: participant.cityArea, availability: participant.availability, participationTypes: participant.participationTypes || [], status: participant.status }, contact: contact ? { channel: contact.channel, value: contact.value, preferredTime: contact.preferredTime } : null } }
+      return { ok: true, data: { participant: { _id: participant._id, displayName: participant.displayName, cityArea: participant.cityArea, availability: participant.availability, participationTypes: participant.participationTypes || [], status: participant.status }, contact: contact ? { channel: contact.channel, maskedValue: maskedContact(contact.value), preferredTime: contact.preferredTime } : null } }
+    }
+
+    if (event.action === 'participantContactReveal') {
+      const account = await requireOperator(OPENID, ['interviewer', 'admin'])
+      const participantId = text(event.participantId, 128)
+      const participant = await findParticipantRecord(participantId)
+      if (!participant) reject('Participant not found', 'PARTICIPANT_NOT_FOUND')
+      if (participant.status === 'withdrawn' || !(await hasActiveConsent(participantId, 'interview_contact'))) reject('Participant contact consent is not active', 'CONSENT_REVOKED')
+      if (account.role !== 'admin') {
+        const cases = await interviewCases.where({ participantId, assignedOperatorOpenid: OPENID }).limit(1).get()
+        if (!(cases.data || []).length) reject('Participant is not assigned to this operator', 'UNAUTHORIZED_OPERATOR')
+      }
+      const contact = await participantContacts.doc(participant.contactRef || participantId).get().then(result => result.data || null).catch(error => /does not exist|not exists?|not found/i.test(error.errMsg || error.message || '') ? null : Promise.reject(error))
+      await appendAudit(OPENID, 'participantContactReveal', participantId, 'success', { role: account.role })
+      return { ok: true, data: { contact: contact ? { channel: contact.channel, value: contact.value, preferredTime: contact.preferredTime } : null } }
     }
 
     if (event.action === 'caseGet') {
@@ -735,7 +778,8 @@ exports.main = async event => {
     if (event.action === 'caseUpdateStatus') {
       const { account, caseDocument } = await requireCaseAccess(OPENID, event.caseId, ['interviewer', 'admin'])
       const status = text(event.status, 32)
-      if (!['new', 'scheduled', 'in_progress', 'completed', 'closed', 'withdrawn'].includes(status)) reject('Invalid case status', 'INVALID_CASE')
+      const allowedTransitions = CASE_TRANSITIONS[caseDocument.status]
+      if (!allowedTransitions || (status !== caseDocument.status && !allowedTransitions.has(status))) reject('Invalid case status transition', 'INVALID_CASE')
       const updatedAt = Date.now()
       await interviewCases.doc(caseDocument._id).update({ data: { status, updatedAt } })
       await appendAudit(OPENID, 'caseUpdateStatus', caseDocument._id, 'success', { role: account.role })
@@ -744,10 +788,10 @@ exports.main = async event => {
 
     if (event.action === 'preparationGenerate') {
       const { account, caseDocument } = await requireCaseAccess(OPENID, event.caseId, ['interviewer', 'admin'])
-      const cards = (caseDocument.reportSnapshot.claims || []).map(claim => ({ claimId: claim.id, title: claim.title, statement: claim.statement || claim.text, confidence: claim.confidence, supportingItemIds: claim.supportingItemIds || [], contradictingItemIds: claim.contradictingItemIds || [], qualifyingItemIds: claim.qualifyingItemIds || [], alternativeExplanations: claim.alternativeExplanations || [], verificationQuestions: claim.verificationQuestions || [] }))
-      const preparation = { generatedAt: Date.now(), instrumentVersion: caseDocument.reportSnapshot.instrumentVersion, scoringRuleVersion: caseDocument.reportSnapshot.scoringRuleVersion, reportRuleVersion: caseDocument.reportSnapshot.reportRuleVersion, cards }
-      await interviewCases.doc(caseDocument._id).update({ data: { preparation, updatedAt: preparation.generatedAt } })
-      await appendAudit(OPENID, 'preparationGenerate', caseDocument._id, 'success', { role: account.role, count: cards.length })
+      const preparation = buildInterviewPreparation(caseDocument.reportSnapshot, caseDocument.participantSnapshot, Date.now())
+      const status = caseDocument.status === 'created' ? 'preparation_ready' : caseDocument.status
+      await interviewCases.doc(caseDocument._id).update({ data: { preparation, status, updatedAt: preparation.generatedAt } })
+      await appendAudit(OPENID, 'preparationGenerate', caseDocument._id, 'success', { role: account.role, count: preparation.hypotheses.length })
       return { ok: true, data: { preparation } }
     }
 
@@ -756,19 +800,23 @@ exports.main = async event => {
       const source = event.validationEvent || {}
       const eventId = text(source.eventId, 128)
       const claimId = text(source.claimId, 80)
+      const hypothesisId = text(source.hypothesisId, 96) || (claimId ? `HYP_${claimId}` : '')
       const itemId = text(source.itemId, 80)
       const eventType = event.action === 'questionUnderstandingAppend' ? 'question_understanding' : (text(source.eventType, 40) || 'claim_validation')
       const verdict = text(source.verdict, 40)
       const observedAt = Number(source.observedAt)
-      const validClaim = (caseDocument.reportSnapshot.claims || []).some(claim => claim.id === claimId)
+      const validClaim = (caseDocument.reportSnapshot.allClaimCandidates || caseDocument.reportSnapshot.claims || []).some(claim => claim.id === claimId)
+      const validHypothesis = caseDocument.preparation && (caseDocument.preparation.hypotheses || []).some(hypothesis => hypothesis.hypothesisId === hypothesisId && hypothesis.sourceClaimIds.includes(claimId))
       const validItem = ITEMS.some(item => item.id === itemId)
       const validVerdict = eventType === 'question_understanding' ? ['understood', 'misunderstood', 'needs_prompt'].includes(verdict) : ['confirmed', 'partly_confirmed', 'rejected', 'context_dependent', 'insufficient_evidence'].includes(verdict)
-      if (!eventId || (eventType === 'question_understanding' ? !validItem : !validClaim) || !validVerdict || !Number.isFinite(observedAt)) reject('Invalid validation event', 'INVALID_VALIDATION')
-      const validation = { _id: operatorDocId(caseDocument._id, eventId), eventId, eventType, caseId: caseDocument._id, participantId: caseDocument.participantId, claimId: claimId || null, itemId: itemId || null, verdict, note: text(source.note, 500), context: text(source.context, 300), observedAt, recordedAt: Date.now(), operatorOpenid: OPENID, instrumentVersion: caseDocument.reportSnapshot.instrumentVersion, scoringRuleVersion: caseDocument.reportSnapshot.scoringRuleVersion, reportRuleVersion: caseDocument.reportSnapshot.reportRuleVersion }
+      const interviewerConfidence = text(source.interviewerConfidence, 16) || 'medium'
+      if (!['high', 'medium', 'low'].includes(interviewerConfidence)) reject('Invalid interviewer confidence', 'INVALID_VALIDATION')
+      if (!eventId || (eventType === 'question_understanding' ? !validItem : (!validClaim || !validHypothesis)) || !validVerdict || !Number.isFinite(observedAt)) reject('Invalid validation event', 'INVALID_VALIDATION')
+      const validation = { _id: operatorDocId(caseDocument._id, eventId), eventId, eventType, caseId: caseDocument._id, participantId: caseDocument.participantId, hypothesisId: eventType === 'question_understanding' ? null : hypothesisId, claimId: claimId || null, itemId: itemId || null, result: verdict, verdict, evidenceSummary: text(source.evidenceSummary || source.note, 500), alternativeExplanation: text(source.alternativeExplanation, 500), revisedDescription: text(source.revisedDescription, 500), interviewerConfidence, note: text(source.note, 500), context: text(source.context, 300), observedAt, recordedAt: Date.now(), operatorOpenid: OPENID, supersedesValidationId: text(source.supersedesValidationId, 128) || null, instrumentVersion: caseDocument.reportSnapshot.instrumentVersion, scoringRuleVersion: caseDocument.reportSnapshot.scoringRuleVersion, reportRuleVersion: caseDocument.reportSnapshot.reportRuleVersion, hypothesisRuleVersion: HYPOTHESIS_RULE_VERSION }
       let existing = null
       try { existing = (await interviewValidationEvents.doc(validation._id).get()).data || null } catch (error) { if (!/does not exist|not exists?|not found/i.test(error.errMsg || error.message || '')) throw error }
       if (existing) {
-        const same = ['eventId', 'eventType', 'caseId', 'claimId', 'itemId', 'verdict', 'note', 'context', 'observedAt'].every(key => existing[key] === validation[key])
+        const same = ['eventId', 'eventType', 'caseId', 'hypothesisId', 'claimId', 'itemId', 'result', 'verdict', 'evidenceSummary', 'alternativeExplanation', 'revisedDescription', 'interviewerConfidence', 'note', 'context', 'observedAt', 'supersedesValidationId'].every(key => existing[key] === validation[key])
         if (!same) reject('Validation event id already used', 'VALIDATION_CONFLICT')
         return { ok: true, data: { validationEvent: existing, duplicateIgnored: true } }
       }
@@ -788,7 +836,28 @@ exports.main = async event => {
     if (event.action === 'deidentifiedExport') {
       const account = await requireOperator(OPENID, ['analyst', 'admin'])
       const cases = await interviewCases.where({ status: 'completed' }).limit(100).get()
-      const records = (cases.data || []).map(item => ({ caseId: item._id, participantKey: operatorDocId('participant', item.participantId), reportSnapshot: item.reportSnapshot, participantSnapshot: item.participantSnapshot, status: item.status, createdAt: item.createdAt }))
+      const consentChecks = await Promise.all((cases.data || []).map(async item => ({ item, allowed: await hasActiveConsent(item.participantId, 'research_use') })))
+      const records = consentChecks.filter(entry => entry.allowed).map(({ item }) => {
+        const report = item.reportSnapshot || {}
+        return {
+          caseKey: deidentifiedKey('case', item._id),
+          participantKey: deidentifiedKey('participant', item.participantId),
+          reportSnapshot: {
+            reportVersion: report.reportVersion,
+            instrumentVersion: report.instrumentVersion,
+            scoringRuleVersion: report.scoringRuleVersion,
+            reportRuleVersion: report.reportRuleVersion,
+            generatedAt: report.generatedAt,
+            claims: report.claims || [],
+            unknowns: report.unknowns || [],
+            userConfirmations: report.userConfirmations || {},
+            responseQuality: report.responseQuality || null
+          },
+          participantSnapshot: item.participantSnapshot,
+          status: item.status,
+          createdAt: item.createdAt
+        }
+      })
       await appendAudit(OPENID, 'deidentifiedExport', 'completed-cases', 'success', { role: account.role, count: records.length })
       return { ok: true, data: { records, exportedAt: Date.now() } }
     }
@@ -802,14 +871,20 @@ exports.main = async event => {
         interviewValidationEvents.where({}).limit(100).get()
       ])
       const countBy = (items, key) => (items || []).reduce((result, item) => { const value = item[key] || 'unknown'; result[value] = Number(result[value] || 0) + 1; return result }, {})
-      const validations = validationResult.data || []
+      const participantIds = [...new Set([].concat((reportsResult.data || []).map(item => item._openid), (casesResult.data || []).map(item => item.participantId)).filter(Boolean))]
+      const consentPairs = await Promise.all(participantIds.map(async participantId => [participantId, await hasActiveConsent(participantId, 'research_use')]))
+      const researchParticipants = new Set(consentPairs.filter(([, allowed]) => allowed).map(([participantId]) => participantId))
+      const reports = (reportsResult.data || []).filter(item => researchParticipants.has(item._openid))
+      const feedback = (feedbackResult.data || []).filter(item => researchParticipants.has(item._openid))
+      const cases = (casesResult.data || []).filter(item => researchParticipants.has(item.participantId))
+      const validations = (validationResult.data || []).filter(item => researchParticipants.has(item.participantId))
       const metrics = {
-        reportCount: (reportsResult.data || []).length,
-        feedbackCount: (feedbackResult.data || []).length,
-        feedbackByValue: countBy(feedbackResult.data, 'value'),
-        caseCount: (casesResult.data || []).length,
-        caseByStatus: countBy(casesResult.data, 'status'),
-        preparationGeneratedCount: (casesResult.data || []).filter(item => item.preparation && item.preparation.generatedAt).length,
+        reportCount: reports.length,
+        feedbackCount: feedback.length,
+        feedbackByValue: countBy(feedback, 'value'),
+        caseCount: cases.length,
+        caseByStatus: countBy(cases, 'status'),
+        preparationGeneratedCount: cases.filter(item => item.preparation && item.preparation.generatedAt).length,
         validationByVerdict: countBy(validations.filter(item => item.eventType !== 'question_understanding'), 'verdict'),
         questionUnderstandingByVerdict: countBy(validations.filter(item => item.eventType === 'question_understanding'), 'verdict'),
         generatedAt: Date.now()
@@ -1009,124 +1084,25 @@ exports.main = async event => {
       return { ok: true, data: { deleted: true } }
     }
 
-    if (event.action === 'get') {
-      const document = await findOwnProfile(OPENID)
-      return {
-        ok: true,
-        data: {
-          profile: toClientProfile(document),
-          exploration: document && document.exploration ? document.exploration : null,
-          recordFeedback: document && document.recordFeedback ? document.recordFeedback : null,
-          questionnaireData: toClientQuestionnaireData(document)
-        }
-      }
-    }
-
-    if (event.action === 'saveExploration') {
-      const exploration = sanitizeExploration(event.exploration)
-      const existing = await findOwnProfile(OPENID)
-      if (existing) {
-        await profiles.doc(OPENID).update({
-          data: { exploration, updatedAt: db.serverDate(), schemaVersion: 2 }
-        })
-      } else {
-        await profiles.doc(OPENID).set({
-          data: {
-            exploration,
-            createdAt: db.serverDate(),
-            updatedAt: db.serverDate(),
-            schemaVersion: 2
-          }
-        })
-      }
-      return { ok: true, data: { exploration, syncedAt: Date.now() } }
-    }
-
-    if (event.action === 'saveRecordFeedback') {
-      const recordFeedback = sanitizeRecordFeedback(event.feedback)
-      const existing = await findOwnProfile(OPENID)
-      if (existing) {
-        await profiles.doc(OPENID).update({
-          data: { recordFeedback, updatedAt: db.serverDate(), schemaVersion: 3 }
-        })
-      } else {
-        await profiles.doc(OPENID).set({
-          data: {
-            recordFeedback,
-            createdAt: db.serverDate(),
-            updatedAt: db.serverDate(),
-            schemaVersion: 3
-          }
-        })
-      }
-      return { ok: true, data: { recordFeedback, syncedAt: Date.now() } }
-    }
-
-    if (event.action === 'saveQuestionnaireModule') {
-      const existing = await findOwnProfile(OPENID)
-      const moduleRecord = sanitizeQuestionnaireModule(event.moduleRecord)
-      const existingModule = existing && existing.questionnaireModules && existing.questionnaireModules[moduleRecord.moduleId]
-      assertQuestionnaireHistory(existingModule, moduleRecord)
-      const questionnaireModules = Object.assign({}, existing && existing.questionnaireModules, {
-        [moduleRecord.moduleId]: moduleRecord
-      })
-      if (existing) {
-        await profiles.doc(OPENID).update({
-          data: { questionnaireModules, updatedAt: db.serverDate(), schemaVersion: 4 }
-        })
-      } else {
-        await profiles.doc(OPENID).set({
-          data: {
-            questionnaireModules,
-            createdAt: db.serverDate(),
-            updatedAt: db.serverDate(),
-            schemaVersion: 4
-          }
-        })
-      }
-      return { ok: true, data: { moduleRecord, syncedAt: Date.now() } }
-    }
-
-    if (event.action === 'save') {
-      const clean = sanitizeProfile(event.profile)
-      const existing = await findOwnProfile(OPENID)
-      const data = Object.assign({}, clean, {
-        createdAt: existing && existing.createdAt ? existing.createdAt : db.serverDate(),
-        updatedAt: db.serverDate(),
-        schemaVersion: 3
-      })
-      if (!data.exploration && existing && existing.exploration) data.exploration = existing.exploration
-      if (existing && existing.recordFeedback) data.recordFeedback = existing.recordFeedback
-      if (existing && existing.questionnaireModules) data.questionnaireModules = existing.questionnaireModules
-      await profiles.doc(OPENID).set({
-        data
-      })
-      return { ok: true, data: { profile: toClientProfile(clean), syncedAt: Date.now() } }
-    }
-
-    if (event.action === 'setStatus') {
-      if (!['active', 'paused'].includes(event.status)) reject('资料状态无效')
-      const existing = await findOwnProfile(OPENID)
-      if (!existing) reject('云端资料不存在', 'PROFILE_NOT_FOUND')
-      const clientUpdatedAt = Number(event.clientUpdatedAt) || Date.now()
-      await profiles.doc(OPENID).update({
-        data: { status: event.status, clientUpdatedAt, updatedAt: db.serverDate() }
-      })
-      return { ok: true, data: { status: event.status, clientUpdatedAt } }
-    }
-
     if (event.action === 'delete') {
       const existing = await findOwnProfile(OPENID)
       if (existing) await profiles.doc(OPENID).remove()
       await removeOwnDocuments(assessmentReports, OPENID)
       await removeOwnDocuments(assessmentSessions, OPENID)
       await removeOwnDocuments(assessmentFeedbackEvents, OPENID)
+      await removeOwnDocuments(consentEvents, OPENID)
+      await removeOwnDocuments(participantRegistry, OPENID)
+      await removeOwnDocuments(participantContacts, OPENID)
       return { ok: true, data: { deleted: true } }
     }
 
     return { ok: false, code: 'UNKNOWN_ACTION', message: '不支持的操作' }
   } catch (error) {
     console.error('datingProfile failed', { action: event.action, code: error.code, message: error.message })
+    if (OPERATOR_ACTIONS.has(event.action)) {
+      const targetId = text(event.caseId || event.participantId || event.action, 128)
+      await appendAudit(OPENID, event.action, targetId, 'failure', { errorCode: error.code || 'SERVER_ERROR' }).catch(() => {})
+    }
     return { ok: false, code: error.code || 'SERVER_ERROR', message: error.message || '云端处理失败' }
   }
 }

@@ -14,7 +14,7 @@ Page({
   load() {
     const local = store.get()
     this.apply(local.consents || {}, local.participant)
-    if (isCloudReady()) getParticipant({ success: data => { const state = store.get(); state.consents = data.consents || {}; if (!state.participant.displayName && data.participant) { state.participant = data.participant; state.contact = data.contact || {} } store.save(state); this.apply(data.consents || {}, state.participant) }, fail: () => {} })
+    if (isCloudReady()) getParticipant({ success: data => { let state = store.mergeCloudConsents(data.consents || {}); if (!state.participant.displayName && data.participant) { state.participant = data.participant; state.contact = data.contact || {}; state = store.save(state) } this.apply(state.consents || {}, state.participant) }, fail: () => {} })
   },
   apply(consents, participant) {
     this.setData({ scopes: DEFINITIONS.map(item => Object.assign({}, item, { checked: Boolean(consents[item.scope] && consents[item.scope].value === 'granted'), grantedAt: consents[item.scope] && consents[item.scope].value === 'granted' ? consents[item.scope].createdAt : null })), hasProfile: Boolean(participant && participant.displayName) })
@@ -28,14 +28,15 @@ Page({
     this.setData({ isSaving: true, error: '' })
     const state = store.get()
     const previous = state.consents || {}
-    const changed = this.data.scopes.filter(item => Boolean(previous[item.scope] && previous[item.scope].value === 'granted') !== item.checked)
+    const changed = this.data.scopes.filter(item => Boolean(previous[item.scope] && previous[item.scope].value === 'granted') !== item.checked || Boolean(previous[item.scope] && previous[item.scope].pendingCloud))
     const run = index => {
       if (index >= changed.length) return this.saveProfileIfAllowed()
       const item = changed[index]
-      const consentEvent = store.appendConsent(item.scope, item.checked ? 'granted' : 'revoked')
+      const pending = previous[item.scope] && previous[item.scope].pendingCloud && Boolean(previous[item.scope].value === 'granted') === item.checked ? previous[item.scope] : null
+      const consentEvent = pending || store.appendConsent(item.scope, item.checked ? 'granted' : 'revoked')
       if (!isCloudReady()) return run(index + 1)
       const action = item.checked ? grantFollowupConsent : revokeFollowupConsent
-      action(consentEvent, { success: run.bind(null, index + 1), fail: error => this.setData({ isSaving: false, error: cloudErrorMessage(error) }) })
+      action(consentEvent, { success: data => { store.markConsentSynced(consentEvent.eventId, data.consentEvent); run(index + 1) }, fail: error => this.setData({ isSaving: false, error: cloudErrorMessage(error) }) })
     }
     run(0)
   },

@@ -1,4 +1,4 @@
-const { HYPOTHESIS_RULE_VERSION } = require('./version')
+const HYPOTHESIS_RULE_VERSION = 'serious-match-interview-rules-1.0.0'
 
 const TOPICS = Object.freeze({
   overall: '当前关系意愿与现实余力',
