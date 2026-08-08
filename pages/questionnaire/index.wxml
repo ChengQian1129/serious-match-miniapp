@@ -1,8 +1,8 @@
 <view wx:if="{{item}}" class="question-page questionnaire-page" style="padding-top: {{statusBarHeight}}px;">
   <view class="question-top">
     <view class="question-top__row">
-      <button class="question-back" aria-label="返回上一题" bind:tap="handlePrevious">
-        <text class="question-back__icon">‹</text>返回
+      <button class="question-back" aria-label="{{currentQuestion === 0 ? '回到首页' : '返回上一题'}}" bind:tap="handlePrevious">
+        <text class="question-back__icon">‹</text>{{currentQuestion === 0 ? '回到首页' : '返回上一题'}}
       </button>
       <view class="question-top__title">第 {{chapterNumber}} 组 / 6</view>
       <view class="question-top__spacer"></view>

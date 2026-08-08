@@ -11,9 +11,9 @@ const { ITEMS, CHAPTERS } = require('../utils/assessment-v2/questionnaire-defini
 const store = require('../utils/assessment-v2/session-store')
 
 assert.equal(store.hasSession(), false)
-assert.equal(store.shouldSyncAssessment(), false)
+assert.equal(store.shouldSyncAssessment(), true)
 store.setStorageChoice('local')
-assert.equal(store.shouldSyncAssessment(), false)
+assert.equal(store.shouldSyncAssessment(), true)
 store.setStorageChoice('cloud')
 assert.equal(store.shouldSyncAssessment(), true)
 
@@ -65,4 +65,4 @@ assert.equal(synced.userConfirmations[claim.id].pendingCloud, false)
 const nextVersion = store.replaceReport(Object.assign({}, cloudCopy, { reportVersion: 3, userConfirmations: {} }))
 assert.deepEqual(nextVersion.userConfirmations, {})
 
-console.log('Assessment V2 flow OK: resume, revision, confirmation, local/cloud choice')
+console.log('Assessment V2 flow OK: resume, revision, confirmation, automatic cloud sync')

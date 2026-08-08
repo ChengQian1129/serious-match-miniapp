@@ -35,12 +35,6 @@ module.exports = Object.freeze({
     detailAction: '查看完整方法说明',
     closeAction: '知道了'
   }),
-  storage: Object.freeze({
-    title: '要不要把进度存到云端？',
-    body: '存到云端后，换设备也能继续，报告和你之后的修改也会一起保留。这里只用于保存你的这次填写。访谈、研究或其他用途都会另外征求你的同意。',
-    cloud: '保存到云端',
-    local: '只存在这台手机'
-  }),
   privacy: Object.freeze({
     operator: '试点运营主体：钱程',
     contact: '联系运营者：通过小程序客服入口（公开测试前需在微信公众平台配置）',

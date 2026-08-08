@@ -1,6 +1,6 @@
 const { CHAPTERS, ITEMS, getChapter } = require('../../utils/assessment-v2/questionnaire-definitions')
 const { getSession, saveChapterInsightFeedback, shouldSyncAssessment, completeAssessment } = require('../../utils/assessment-v2/session-store')
-const { saveAssessmentDraftToCloud } = require('../../utils/cloud')
+const { isCloudReady, saveAssessmentDraftToCloud } = require('../../utils/cloud')
 const { buildChapterInsight } = require('../../utils/assessment-v2/chapter-insight-engine')
 const { getStatusBarHeight } = require('../../utils/window')
 const { navigateOnce, resetNavigation } = require('../../utils/navigation')
@@ -26,7 +26,7 @@ Page({
       const session = saveChapterInsightFeedback(this.chapterId, value)
       this.setData({ selectedFeedback: value })
       recordEvent('chapter_insight_feedback', { chapterId: this.chapterId, value })
-      if (shouldSyncAssessment()) saveAssessmentDraftToCloud(session, {})
+      if (shouldSyncAssessment() && isCloudReady()) saveAssessmentDraftToCloud(session, {})
     } catch (error) { wx.showToast({ title: error.message || '暂时无法记录', icon: 'none' }) }
   },
   toggleEvidence() {
@@ -43,6 +43,9 @@ Page({
       completeAssessment()
       navigateOnce(this, 'redirectTo', { url: '/pages/questionnaire-result/index' })
     } catch (error) { wx.showToast({ title: error.message || '请完成全部章节', icon: 'none' }) }
+  },
+  reviewChapter() {
+    navigateOnce(this, 'redirectTo', { url: `/pages/questionnaire/index?chapter=${this.chapterId}&question=7&direction=back` })
   },
   backHome() { navigateOnce(this, 'reLaunch', { url: '/pages/home/index' }) }
 })

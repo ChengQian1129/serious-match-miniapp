@@ -28,17 +28,6 @@
     <view class="sheet-title">{{guideTitle}}</view>
     <view class="sheet-copy">{{guideBody}}</view>
     <view class="sheet-copy">{{guideFocus}}</view>
-    <view class="sheet-action"><button class="dl-button" bind:tap="closeGuide">{{guide.closeAction}}</button></view>
-  </view>
-</t-popup>
-
-<t-popup placement="bottom" visible="{{showStorageChoice}}" bind:visible-change="handleStorageVisibleChange">
-  <view class="sheet-content">
-    <view class="sheet-title">{{storageTitle}}</view>
-    <view class="sheet-copy">{{storageBody}}</view>
-    <view class="sheet-action dl-stack">
-      <button class="dl-button" bind:tap="chooseCloudStorage">{{storageCloudLabel}}</button>
-      <button class="dl-button dl-button--outline" bind:tap="chooseLocalStorage">{{storageLocalLabel}}</button>
-    </view>
+    <view class="sheet-action"><button class="dl-button" bind:tap="closeGuide">{{guideCloseAction}}</button></view>
   </view>
 </t-popup>

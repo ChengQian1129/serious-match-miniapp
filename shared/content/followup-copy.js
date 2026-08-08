@@ -44,13 +44,24 @@ module.exports = Object.freeze({
     availability: '一般什么时候方便联系',
     availabilityPlaceholder: '例如：工作日晚 8 点后',
     channel: '你希望我们怎么联系',
-    value: '账号 / 手机号',
+    value: '联系方式',
     note: '还有什么需要提前知道？（可不填）',
     notePlaceholder: '例如：更方便文字联系；周末白天比较方便',
     save: '保存',
     back: '返回',
-    requiredError: '请先填写称呼、区域、方便联系的时间和联系方式',
+    participantRequiredError: '请先填写称呼、所在区域和方便联系的时间',
+    channelRequiredError: '请先选择一种联系方式',
+    contactRequiredError: '请填写你选择的联系方式',
+    phoneError: '手机号需要填写 7–15 位数字，可包含国家区号',
+    emailError: '请填写有效的邮箱地址，例如 name@example.com',
+    wechatError: '微信号不能包含空格，请检查后再试',
     consentError: '请先选择需要联系的参与方式'
   }),
-  channels: Object.freeze({ wechat: '微信号', phone: '手机号', email: '邮箱', other: '其他' })
+  channels: Object.freeze({ wechat: '微信号', phone: '手机号', email: '邮箱', other: '其他' }),
+  contactFields: Object.freeze({
+    wechat: Object.freeze({ label: '微信号', placeholder: '例如：wxid_xxxxx 或你的微信号', inputType: 'text', maxLength: 64, hint: '只填写微信号，不需要加“微信号：”等前缀。' }),
+    phone: Object.freeze({ label: '手机号', placeholder: '例如：13800138000', inputType: 'number', maxLength: 24, hint: '可以填写国家区号；我们只会用它联系你。' }),
+    email: Object.freeze({ label: '邮箱', placeholder: '例如：name@example.com', inputType: 'text', maxLength: 160, hint: '请确认这个邮箱能够收到后续联系。' }),
+    other: Object.freeze({ label: '其他联系方式', placeholder: '输入你方便留下的联系方式', inputType: 'text', maxLength: 160, hint: '例如：Telegram 用户名、备用联系方式等。' })
+  })
 })

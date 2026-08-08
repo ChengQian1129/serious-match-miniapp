@@ -115,14 +115,17 @@ function saveChapterInsightFeedback(chapterId, value, note = '') {
   })
   return saveSession(Object.assign({}, session, { chapterFeedback, status: 'pending_cloud', updatedAt: Date.now() }))
 }
-function getStorageChoice() { return wx.getStorageSync(STORAGE_CHOICE_KEY) || null }
+function getStorageChoice() {
+  const stored = wx.getStorageSync(STORAGE_CHOICE_KEY)
+  return stored && typeof stored === 'object' ? Object.assign({}, stored, { choice: 'cloud' }) : { choice: 'cloud', implicit: true }
+}
 function setStorageChoice(choice) {
   if (!['cloud', 'local'].includes(choice)) throw new Error('保存方式无效')
-  const value = { choice, decidedAt: Date.now() }
+  const value = { choice: 'cloud', decidedAt: Date.now(), implicit: true }
   wx.setStorageSync(STORAGE_CHOICE_KEY, value)
   return value
 }
-function shouldSyncAssessment() { const choice = getStorageChoice(); return Boolean(choice && choice.choice === 'cloud') }
+function shouldSyncAssessment() { return true }
 
 function confirmationsFromEvents(events) {
   return (events || []).reduce((result, event) => {

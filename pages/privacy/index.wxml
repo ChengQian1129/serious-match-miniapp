@@ -2,7 +2,7 @@
   <view class="page-header">
     <view class="page-kicker">测试版 · 关系说明书</view>
     <view class="page-title">隐私说明</view>
-    <view class="page-desc">填写中的草稿保存在当前设备；选择云端保存后，问卷和报告会存入你的私密空间。</view>
+    <view class="page-desc">填写中的草稿会先保存在当前设备，并自动同步到你的私密云端空间；网络中断时，恢复连接后会继续同步。</view>
   </view>
 
   <view class="section-title section-title--first">信息处理</view>

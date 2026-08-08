@@ -110,6 +110,6 @@ Page({
       }
     })
   },
-  openMap() { navigateOnce(this, 'reLaunch', { url: '/pages/relationship-map/index' }) },
-  openFollowup() { recordContentEvent('followup_entry_view'); navigateOnce(this, 'navigateTo', { url: '/pages/followup-intro/index' }) }
+  openMap() { navigateOnce(this, 'navigateTo', { url: '/pages/relationship-map/index' }) },
+  openFollowup() { recordContentEvent('followup_entry_view'); navigateOnce(this, 'navigateTo', { url: '/pages/followup-intro/index?returnTo=report' }) }
 })

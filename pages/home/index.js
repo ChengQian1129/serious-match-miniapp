@@ -1,10 +1,10 @@
-const { getSession, hasSession, getReport, getStorageChoice, setStorageChoice, shouldSyncAssessment, replaceSession, replaceReport } = require('../../utils/assessment-v2/session-store')
+const { getSession, hasSession, getReport, shouldSyncAssessment, replaceSession, replaceReport } = require('../../utils/assessment-v2/session-store')
 const { isCloudReady, getAssessmentFromCloud } = require('../../utils/cloud')
 const { CHAPTERS } = require('../../utils/assessment-v2/questionnaire-definitions')
 const { getStatusBarHeight } = require('../../utils/window')
 const { navigateOnce, resetNavigation } = require('../../utils/navigation')
 const { recordEvent } = require('../../utils/storage')
-const { home, guide, storage: storageCopy, CONTENT_VERSION } = require('../../shared/content/ui-copy')
+const { home, guide, CONTENT_VERSION } = require('../../shared/content/ui-copy')
 
 Page({
   data: {
@@ -23,12 +23,8 @@ Page({
     guideBody: guide.body,
     guideFocus: guide.focus,
     guideAction: guide.detailAction,
-    storageTitle: storageCopy.title,
-    storageBody: storageCopy.body,
-    storageCloudLabel: storageCopy.cloud,
-    storageLocalLabel: storageCopy.local,
-    progressText: '',
-    showStorageChoice: false
+    guideCloseAction: guide.closeAction,
+    progressText: ''
   },
 
   onShow() {
@@ -66,7 +62,6 @@ Page({
     const report = getReport()
     const session = getSession()
     if (report && !session.revisionPending) return navigateOnce(this, 'navigateTo', { url: '/pages/questionnaire-result/index' })
-    if (!getStorageChoice()) return this.setData({ showStorageChoice: true })
     this.beginAssessment()
   },
 
@@ -74,11 +69,6 @@ Page({
     const session = getSession()
     navigateOnce(this, 'navigateTo', { url: `/pages/questionnaire/index?chapter=${session.currentChapterId}&question=${session.currentItemIndex || 0}` })
   },
-
-  chooseCloudStorage() { setStorageChoice('cloud'); this.setData({ showStorageChoice: false }); this.beginAssessment() },
-  chooseLocalStorage() { setStorageChoice('local'); this.setData({ showStorageChoice: false }); this.beginAssessment() },
-  closeStorageChoice() { this.setData({ showStorageChoice: false }) },
-  handleStorageVisibleChange(event) { this.setData({ showStorageChoice: Boolean(event.detail && event.detail.visible) }) },
 
   openGuide() { this.setData({ showGuide: true }) },
   closeGuide() { this.setData({ showGuide: false }) },

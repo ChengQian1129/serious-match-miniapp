@@ -19,6 +19,7 @@ const session = { assessmentType: 'relationship_manual_v2', status: 'pending_clo
 let saveCalls = 0
 store.getSession = () => session
 store.shouldSyncAssessment = () => true
+cloud.isCloudReady = () => true
 store.markSynced = () => { session.status = 'synced'; return session }
 cloud.saveAssessmentDraftToCloud = (value, callbacks) => {
   saveCalls += 1

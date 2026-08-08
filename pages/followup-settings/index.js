@@ -4,6 +4,15 @@ const store = require('../../utils/followup-store')
 const followupCopy = require('../../shared/content/followup-copy')
 const { recordEvent } = require('../../utils/storage')
 
+function returnTarget(value) { return value === 'map' ? 'map' : 'report' }
+
+function profileUrl(target) {
+  if (!target) return '/pages/followup-profile/index'
+  return `/pages/followup-profile/index?returnTo=settings&returnAfter=${returnTarget(target)}`
+}
+
+function returnPageUrl(target) { return returnTarget(target) === 'map' ? '/pages/relationship-map/index' : '/pages/questionnaire-result/index' }
+
 const DEFINITIONS = [
   { scope: 'interview_contact', title: followupCopy.scopes.interview_contact.title, desc: followupCopy.scopes.interview_contact.description },
   { scope: 'research_use', title: followupCopy.scopes.research_use.title, desc: followupCopy.scopes.research_use.description },
@@ -12,6 +21,7 @@ const DEFINITIONS = [
 
 Page({
   data: { scopes: DEFINITIONS, copy: followupCopy.settings, isSaving: false, isDeleting: false, error: '', hasProfile: false, requiresContact: false },
+  onLoad(query) { this.returnTo = returnTarget(query && query.returnTo) },
   onShow() { resetNavigation(this); this.load(); recordEvent('followup_entry_view') },
   load() {
     const local = store.get()
@@ -48,21 +58,21 @@ Page({
   saveProfileIfAllowed() {
     const state = store.get()
     const contactGranted = store.requiresContact(state.consents)
-      const finish = data => { if (data && data.participant) store.markParticipantSynced(data.participant, data.contact); this.setData({ isSaving: false }); wx.showToast({ title: '已保存', icon: 'success' }); this.load() }
+    const finish = data => { if (data && data.participant) store.markParticipantSynced(data.participant, data.contact); this.setData({ isSaving: false }); wx.showToast({ title: '已保存', icon: 'success' }); this.load() }
     if (contactGranted && !(state.participant && state.participant.displayName)) {
       this.setData({ isSaving: false })
-      return navigateOnce(this, 'redirectTo', { url: '/pages/followup-profile/index' })
+      return navigateOnce(this, 'redirectTo', { url: profileUrl(this.returnTo) })
     }
     if (contactGranted && state.participant && state.participant.displayName && state.participantWrite && state.participantWrite.pendingCloud && isCloudReady()) return saveParticipant(state.participant, state.contact, state.participantWrite, { success: finish, fail: error => this.setData({ isSaving: false, error: cloudErrorMessage(error) }) })
     finish()
   },
-  editProfile() { navigateOnce(this, 'redirectTo', { url: '/pages/followup-profile/index' }) },
+  editProfile() { navigateOnce(this, 'redirectTo', { url: profileUrl(this.returnTo) }) },
   deleteRegistration() {
     if (this.data.isDeleting) return
     wx.showModal({ title: followupCopy.settings.deleteTitle, content: followupCopy.settings.deleteBody, confirmText: followupCopy.settings.deleteConfirm, cancelText: followupCopy.settings.deleteCancel, confirmColor: '#ff3b30', success: result => {
       if (!result.confirm) return
       this.setData({ isDeleting: true, error: '' })
-      const finish = () => { store.clear(); this.setData({ isDeleting: false }); navigateOnce(this, 'reLaunch', { url: '/pages/questionnaire-result/index' }) }
+      const finish = () => { store.clear(); this.setData({ isDeleting: false }); navigateOnce(this, 'reLaunch', { url: returnPageUrl(this.returnTo) }) }
       if (isCloudReady()) deleteParticipant({ success: finish, fail: error => this.setData({ isDeleting: false, error: cloudErrorMessage(error) }) }); else finish()
     } })
   }

@@ -56,6 +56,6 @@ Page({
     if (this.data.isViewingHistory) { wx.showToast({ title: '历史版本仅供查看', icon: 'none' }); return }
     navigateOnce(this, 'navigateTo', { url: `/pages/record-claim/index?id=${encodeURIComponent(event.currentTarget.dataset.id)}` })
   },
-  openReport() { navigateOnce(this, 'navigateTo', { url: '/pages/questionnaire-result/index' }) },
-  openFollowup() { recordEvent('followup_entry_view'); navigateOnce(this, 'navigateTo', { url: '/pages/followup-intro/index' }) }
+  openReport() { navigateOnce(this, 'navigateBack', { fail: () => navigateOnce(this, 'navigateTo', { url: '/pages/questionnaire-result/index' }) }) },
+  openFollowup() { recordEvent('followup_entry_view'); navigateOnce(this, 'navigateTo', { url: '/pages/followup-intro/index?returnTo=map' }) }
 })

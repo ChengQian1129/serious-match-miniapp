@@ -6,11 +6,15 @@
     <view class="dl-input-wrap"><view class="dl-input-label">{{copy.availability}}</view><input class="dl-input" maxlength="80" placeholder="{{copy.availabilityPlaceholder}}" value="{{form.availability}}" data-field="availability" bindinput="input" /></view>
     <view class="section-title">{{copy.channel}}</view>
     <view class="dl-input-wrap">
-      <view class="contact-channel-list">
-        <button wx:for="{{contactChannels}}" wx:key="value" class="contact-channel {{contact.channel === item.value ? 'contact-channel--selected' : ''}}" data-value="{{item.value}}" bindtap="chooseContactChannel">{{item.label}}</button>
+      <view class="contact-channel-list" aria-label="{{copy.channel}}">
+        <button wx:for="{{contactChannels}}" wx:key="value" class="contact-channel {{contact.channel === item.value ? 'contact-channel--selected' : ''}}" data-value="{{item.value}}" aria-role="radio" aria-checked="{{contact.channel === item.value}}" aria-label="{{item.label}}" hover-class="contact-channel--pressed" bindtap="chooseContactChannel">{{item.label}}</button>
       </view>
     </view>
-    <view class="dl-input-wrap"><view class="dl-input-label">{{copy.value}}</view><input class="dl-input" maxlength="160" value="{{contact.value}}" data-field="value" bindinput="inputContact" /></view>
+    <view wx:if="{{contactField}}" class="dl-input-wrap contact-value-wrap">
+      <view class="dl-input-label">{{contactField.label}}</view>
+      <input class="dl-input" type="{{contactField.inputType}}" maxlength="{{contactField.maxLength}}" placeholder="{{contactField.placeholder}}" value="{{contact.value}}" data-field="value" bindinput="inputContact" adjust-position="true" cursor-spacing="24" />
+      <view class="dl-input-hint">{{contactField.hint}}</view>
+    </view>
     <view class="dl-input-wrap"><view class="dl-input-label">{{copy.note}}</view><textarea class="dl-input dl-textarea" maxlength="500" placeholder="{{copy.notePlaceholder}}" value="{{form.note}}" data-field="note" bindinput="input" /></view>
     <view wx:if="{{error}}" class="field-error">{{error}}</view>
   </view>

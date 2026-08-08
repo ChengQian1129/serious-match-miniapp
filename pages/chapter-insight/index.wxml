@@ -1,5 +1,6 @@
 <view class="page page--with-action chapter-insight-page" style="padding-top: {{statusBarHeight}}px;">
   <view wx:if="{{chapter && insight}}" class="chapter-insight">
+    <button class="chapter-insight__back" bind:tap="reviewChapter"><text>‹</text>回看这一组</button>
     <view class="page-kicker">{{chapter.id}} · 这一组答完了</view>
     <view class="chapter-insight__chapter">{{chapter.title}}</view>
     <view class="chapter-insight__lead">{{insight.lead}}</view>

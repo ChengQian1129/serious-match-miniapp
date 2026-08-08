@@ -1,5 +1,7 @@
 .chapter-insight-page { min-height: 100vh; padding: 56rpx 40rpx calc(248rpx + env(safe-area-inset-bottom)); }
 .chapter-insight { animation: insight-in 560ms cubic-bezier(.2,.8,.2,1) both; }
+.chapter-insight__back { display: flex; align-items: center; margin: 0 0 30rpx; padding: 0; border: 0; background: transparent; color: var(--dl-grey-500); font-size: 25rpx; line-height: 36rpx; }
+.chapter-insight__back text { margin-right: 6rpx; color: var(--dl-black); font-size: 36rpx; line-height: 1; }
 .chapter-insight__chapter { margin-top: 18rpx; font-size: 48rpx; font-weight: 700; line-height: 1.2; }
 .chapter-insight__theme { margin-top: 16rpx; color: var(--dl-grey-500); font-size: 25rpx; line-height: 38rpx; }
 .chapter-insight__rule { width: 100%; height: 2rpx; margin: 52rpx 0 46rpx; background: var(--dl-black); }

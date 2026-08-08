@@ -1,6 +1,6 @@
 const { getSession, setPosition, answerItem, completeChapter, shouldSyncAssessment, markSynced } = require('../../utils/assessment-v2/session-store')
 const { getChapter, getItem, optionsFor } = require('../../utils/assessment-v2/questionnaire-definitions')
-const { saveAssessmentDraftToCloud } = require('../../utils/cloud')
+const { isCloudReady, saveAssessmentDraftToCloud } = require('../../utils/cloud')
 const { getStatusBarHeight } = require('../../utils/window')
 const { acceptNavigationTap, getMotionClass, showQuestion } = require('../../utils/question-flow')
 const { navigateOnce, resetNavigation } = require('../../utils/navigation')
@@ -26,7 +26,7 @@ Page({
   onShow() {
     resetNavigation(this)
     const session = getSession()
-    if (shouldSyncAssessment() && session.status === 'pending_cloud') this.queueCloudSync(session)
+    if (shouldSyncAssessment() && isCloudReady() && session.status === 'pending_cloud') this.queueCloudSync(session)
   },
 
   getQuestionState(index) {
@@ -46,7 +46,7 @@ Page({
     this.session = answerItem(itemId, value, { chapterId: this.chapterId, itemIndex: this.data.currentQuestion })
     this.setData({ selectedValue: value, canContinue: true })
     recordEvent('assessment_v2_answered', { chapterId: this.chapterId, itemId })
-    if (shouldSyncAssessment()) this.queueCloudSync(this.session)
+    if (shouldSyncAssessment() && isCloudReady()) this.queueCloudSync(this.session)
   },
 
   queueCloudSync(session) {
@@ -89,7 +89,7 @@ Page({
     try {
       const completedChapter = completeChapter(this.chapterId)
       this.session = completedChapter
-      if (shouldSyncAssessment()) this.queueCloudSync(completedChapter)
+      if (shouldSyncAssessment() && isCloudReady()) this.queueCloudSync(completedChapter)
       navigateOnce(this, 'redirectTo', { url: `/pages/chapter-insight/index?chapter=${this.chapterId}` })
     } catch (error) { wx.showToast({ title: error.message || '请完成这一章', icon: 'none' }) }
   }
