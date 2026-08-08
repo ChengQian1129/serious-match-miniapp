@@ -1,16 +1,18 @@
 const { navigateOnce, resetNavigation } = require('../../utils/navigation')
 const { isCloudReady, grantFollowupConsent, revokeFollowupConsent, getParticipant, saveParticipant, deleteParticipant, cloudErrorMessage } = require('../../utils/cloud')
 const store = require('../../utils/followup-store')
+const followupCopy = require('../../shared/content/followup-copy')
+const { recordEvent } = require('../../utils/storage')
 
 const DEFINITIONS = [
-  { scope: 'interview_contact', title: '联系我了解后续访谈', desc: '允许运营人员按照你留下的方式联系。不开启也不影响报告。' },
-  { scope: 'research_use', title: '用于改进问卷与报告模型', desc: '允许将去标识化后的回答和核对结果用于研究分析。' },
-  { scope: 'offline_invitation', title: '邀请我了解线下活动', desc: '允许发送大连线下交流活动信息；每个活动仍会另行确认。' }
+  { scope: 'interview_contact', title: followupCopy.scopes.interview_contact.title, desc: followupCopy.scopes.interview_contact.description },
+  { scope: 'research_use', title: followupCopy.scopes.research_use.title, desc: followupCopy.scopes.research_use.description },
+  { scope: 'offline_invitation', title: followupCopy.scopes.offline_invitation.title, desc: followupCopy.scopes.offline_invitation.description }
 ]
 
 Page({
-  data: { scopes: DEFINITIONS, isSaving: false, isDeleting: false, error: '', hasProfile: false, requiresContact: false },
-  onShow() { resetNavigation(this); this.load() },
+  data: { scopes: DEFINITIONS, copy: followupCopy.settings, isSaving: false, isDeleting: false, error: '', hasProfile: false, requiresContact: false },
+  onShow() { resetNavigation(this); this.load(); recordEvent('followup_entry_view') },
   load() {
     const local = store.get()
     this.apply(local.consents || {}, local.participant)
@@ -24,6 +26,7 @@ Page({
     const scope = event.currentTarget.dataset.scope
     const scopes = this.data.scopes.map(item => item.scope === scope ? Object.assign({}, item, { checked: !item.checked }) : item)
     this.setData({ scopes, requiresContact: scopes.some(item => item.checked && ['interview_contact', 'offline_invitation'].includes(item.scope)) })
+    recordEvent('followup_scope_change', { scope, value: scopes.find(item => item.scope === scope).checked ? 'granted' : 'revoked' })
   },
   save() {
     if (this.data.isSaving) return
@@ -45,7 +48,7 @@ Page({
   saveProfileIfAllowed() {
     const state = store.get()
     const contactGranted = store.requiresContact(state.consents)
-    const finish = data => { if (data && data.participant) store.markParticipantSynced(data.participant, data.contact); this.setData({ isSaving: false }); wx.showToast({ title: '已保存', icon: 'success' }); this.load() }
+      const finish = data => { if (data && data.participant) store.markParticipantSynced(data.participant, data.contact); this.setData({ isSaving: false }); wx.showToast({ title: '已保存', icon: 'success' }); this.load() }
     if (contactGranted && !(state.participant && state.participant.displayName)) {
       this.setData({ isSaving: false })
       return navigateOnce(this, 'redirectTo', { url: '/pages/followup-profile/index' })
@@ -56,7 +59,7 @@ Page({
   editProfile() { navigateOnce(this, 'redirectTo', { url: '/pages/followup-profile/index' }) },
   deleteRegistration() {
     if (this.data.isDeleting) return
-    wx.showModal({ title: '删除参与登记？', content: '将删除联系方式、参与资料、授权和关联访谈记录，不影响关系说明书。', confirmText: '删除', confirmColor: '#ff3b30', success: result => {
+    wx.showModal({ title: followupCopy.settings.deleteTitle, content: followupCopy.settings.deleteBody, confirmText: followupCopy.settings.deleteConfirm, cancelText: followupCopy.settings.deleteCancel, confirmColor: '#ff3b30', success: result => {
       if (!result.confirm) return
       this.setData({ isDeleting: true, error: '' })
       const finish = () => { store.clear(); this.setData({ isDeleting: false }); navigateOnce(this, 'reLaunch', { url: '/pages/questionnaire-result/index' }) }

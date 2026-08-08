@@ -1,4 +1,5 @@
 .followup-profile { padding-bottom: calc(300rpx + env(safe-area-inset-bottom)); }
+.followup-copy-text { white-space: pre-line; }
 .followup-form { margin: 0 40rpx; }
 .followup-form .dl-input-wrap + .dl-input-wrap { margin-top: 16rpx; }
 .contact-channel-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12rpx; margin-top: 14rpx; }

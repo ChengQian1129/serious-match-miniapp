@@ -1,25 +1,29 @@
 .report-page { padding-bottom: calc(72rpx + env(safe-area-inset-bottom)); }
 .report-header { padding: 62rpx 40rpx 52rpx; border-bottom: 2rpx solid var(--dl-black); }
-.report-title { max-width: 650rpx; margin-top: 18rpx; font-size: 50rpx; font-weight: 700; line-height: 1.24; }
-.report-subtitle { margin-top: 24rpx; color: var(--dl-grey-500); font-size: 25rpx; line-height: 40rpx; }
+.report-hero { margin-top: 22rpx; }
+.report-title { max-width: 650rpx; font-size: 50rpx; font-weight: 700; line-height: 1.24; }
+.report-hero__text { max-width: 650rpx; margin-top: 24rpx; font-size: 28rpx; line-height: 46rpx; }
+.report-intro { max-width: 650rpx; margin-top: 34rpx; color: var(--dl-grey-500); font-size: 25rpx; line-height: 42rpx; white-space: pre-line; }
 .report-body { padding: 0 40rpx; }
-.report-section { padding: 46rpx 0 8rpx; }
+.report-section { padding: 54rpx 0 8rpx; }
 .report-section__title { color: var(--dl-grey-500); font-size: 23rpx; font-weight: 700; line-height: 34rpx; }
 .report-claim { padding: 28rpx 0 32rpx; border-bottom: 2rpx solid var(--dl-grey-200); }
 .report-claim__title { font-size: 31rpx; font-weight: 700; line-height: 44rpx; }
 .report-claim__text { margin-top: 12rpx; font-size: 27rpx; line-height: 44rpx; }
 .report-claim__meta { margin-top: 18rpx; color: var(--dl-grey-500); font-size: 21rpx; line-height: 32rpx; }
 .report-claim .dl-chevron { float: right; font-size: 30rpx; }
-.report-unknowns, .report-share { padding-top: 42rpx; }
+.report-unknowns { padding-top: 52rpx; }
+.report-unknowns__description { margin-top: 18rpx; color: var(--dl-grey-500); font-size: 25rpx; line-height: 42rpx; white-space: pre-line; }
 .report-unknown { padding: 20rpx 0; border-bottom: 2rpx solid var(--dl-grey-200); color: var(--dl-grey-500); font-size: 24rpx; line-height: 38rpx; }
 .report-unknown__title { color: var(--dl-black); font-size: 27rpx; font-weight: 600; }
 .report-boundary { margin-top: 46rpx; padding: 28rpx 0; border-top: 2rpx solid var(--dl-black); border-bottom: 2rpx solid var(--dl-black); color: var(--dl-grey-500); font-size: 24rpx; line-height: 40rpx; }
-.report-share__item { margin-top: 14rpx; font-size: 28rpx; line-height: 42rpx; }
-.report-share-button { margin-top: 40rpx; }
-.report-compare-button { margin-top: 18rpx; }
-.report-revise { width: 100%; margin: 24rpx 0 12rpx; padding: 18rpx; border: 0; background: transparent; color: var(--dl-black); font-size: 25rpx; text-decoration: underline; }
 .report-revise-block { margin-top: 44rpx; }
 .report-chapters { margin-top: 14rpx; border-top: 2rpx solid var(--dl-black); }
 .report-chapter { display: grid; width: 100%; grid-template-columns: 54rpx minmax(0, 1fr); gap: 16rpx; margin: 0; padding: 22rpx 0; border: 0; border-bottom: 2rpx solid var(--dl-grey-200); border-radius: 0; background: transparent; color: var(--dl-black); font-size: 25rpx; line-height: 38rpx; text-align: left; }
-.report-delete { width: 100%; margin: 28rpx 0 18rpx; padding: 18rpx; border: 0; background: transparent; color: #9b3529; font-size: 24rpx; }
-@media (max-width: 360px) { .report-title { font-size: 22px; } .report-claim__text { font-size: 16px; line-height: 25px; } }
+.report-followup { margin-top: 64rpx; padding: 42rpx 0; border-top: 2rpx solid var(--dl-black); border-bottom: 2rpx solid var(--dl-black); }
+.report-followup__title { font-size: 34rpx; font-weight: 700; line-height: 46rpx; }
+.report-followup__body { margin-top: 20rpx; color: var(--dl-grey-500); font-size: 26rpx; line-height: 44rpx; white-space: pre-line; }
+.report-followup__button { width: 100%; margin: 30rpx 0 0; padding: 18rpx 0; border: 0; border-bottom: 2rpx solid var(--dl-black); border-radius: 0; background: transparent; color: var(--dl-black); font-size: 27rpx; font-weight: 700; line-height: 40rpx; text-align: left; }
+.report-data { margin-top: 62rpx; padding-top: 28rpx; border-top: 2rpx solid var(--dl-grey-200); }
+.report-data__delete { width: 100%; margin: 20rpx 0 14rpx; padding: 18rpx 0; border: 0; background: transparent; color: #9b3529; font-size: 24rpx; text-align: left; }
+@media (max-width: 360px) { .report-title { font-size: 30px; } .report-hero__text, .report-claim__text { font-size: 16px; line-height: 25px; } }

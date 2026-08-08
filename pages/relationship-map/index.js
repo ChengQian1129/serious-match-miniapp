@@ -3,6 +3,7 @@ const { isCloudReady, getAssessmentHistoryFromCloud } = require('../../utils/clo
 const { recordEvent } = require('../../utils/storage')
 const { navigateOnce, resetNavigation } = require('../../utils/navigation')
 const { FEATURES } = require('../../utils/features')
+const reportCopy = require('../../shared/content/report-copy')
 
 function reportGroups(report) {
   const confirmations = report.userConfirmations || {}
@@ -22,10 +23,10 @@ function versionDate(value) {
   return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`
 }
 
-const SECTION_LABELS = { overall: '目前比较明显的', interaction: '靠近一个人时', resource: '你比较能做到的', provide: '你通常会给出的', tension: '容易卡住的地方', observation: '值得留意的动作' }
+const SECTION_LABELS = { overall: '目前比较明显的', interaction: '关系一有变化时', resource: '你希望怎样相处', provide: '你通常能给出的', tension: '有几个地方值得多看一眼', observation: '还有一个动作值得注意' }
 
 Page({
-  data: { report: null, claims: [], groups: [], confirmed: [], unknowns: [], history: [], isViewingHistory: false, showFollowup: FEATURES.followupParticipation },
+  data: { report: null, claims: [], groups: [], confirmed: [], unknowns: [], history: [], isViewingHistory: false, showFollowup: FEATURES.followupParticipation, copy: reportCopy.map },
   onShow() {
     resetNavigation(this)
     const report = getReport()
@@ -56,5 +57,5 @@ Page({
     navigateOnce(this, 'navigateTo', { url: `/pages/record-claim/index?id=${encodeURIComponent(event.currentTarget.dataset.id)}` })
   },
   openReport() { navigateOnce(this, 'navigateTo', { url: '/pages/questionnaire-result/index' }) },
-  openFollowup() { navigateOnce(this, 'navigateTo', { url: '/pages/followup-intro/index' }) }
+  openFollowup() { recordEvent('followup_entry_view'); navigateOnce(this, 'navigateTo', { url: '/pages/followup-intro/index' }) }
 })

@@ -51,10 +51,14 @@
   line-height: 40rpx;
 }
 
+.claim-section__intro { margin-top: 12rpx; color: var(--dl-grey-500); font-size: 24rpx; line-height: 38rpx; }
+
 .claim-evidence-list {
   margin-top: 30rpx;
   border-top: 2rpx solid var(--dl-grey-200);
 }
+
+.claim-evidence-list--secondary { margin-top: 54rpx; }
 
 .claim-evidence {
   padding: 30rpx 0;
@@ -73,12 +77,9 @@
   line-height: 38rpx;
 }
 
-.claim-rule {
-  margin-top: 22rpx;
-  color: var(--dl-grey-500);
-  font-size: 21rpx;
-  line-height: 34rpx;
-}
+.claim-method { margin-top: 30rpx; border-top: 2rpx solid var(--dl-grey-200); }
+.claim-method__toggle { width: 100%; margin: 0; padding: 20rpx 0; border: 0; background: transparent; color: var(--dl-grey-500); font-size: 23rpx; line-height: 36rpx; text-align: left; }
+.claim-method__details { padding: 4rpx 0 22rpx; color: var(--dl-grey-500); font-size: 21rpx; line-height: 34rpx; }
 
 .claim-section--feedback {
   padding-top: 68rpx;

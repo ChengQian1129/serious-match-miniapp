@@ -18,7 +18,7 @@
 2. 复制 config/cloud.example.js 为 config/cloud.js，填写云环境 ID 和运营主体名称。该文件已被 Git 忽略。
 3. 建立 assessment_sessions、assessment_reports、assessment_feedback_events、consent_events、participant_registry、participant_contacts、interview_cases、interview_validation_events、operator_accounts 和 audit_events 集合。
 4. 集合权限设为客户端不可读、不可写，所有操作通过云函数完成。
-5. 上传并部署 `assessmentService`、`participantService` 和 `interviewOps`。`datingProfile` 仅作为测试阶段的兼容入口保留。
+5. 运行 `npm run deploy:cloud`，或在微信开发者工具中上传并部署 `assessmentService`、`participantService`、`interviewOps` 和兼容入口 `datingProfile`。脚本从本地 `config/cloud.js` 读取环境 ID，不会把环境标识写入仓库；如果 CLI 不在默认路径，设置 `WECHAT_DEVTOOLS_CLI`。
 6. 完成一份测试问卷，确认云端生成当前用户的 session 和 report。
 
 dating_profiles 仅作为旧版测试数据保留，不再接受新资料写入。
@@ -28,7 +28,7 @@ dating_profiles 仅作为旧版测试数据保留，不再接受新资料写入�
 - 48 道、6 章关系探索题
 - 不可变回答事件以及 NA、SKIP
 - 版本化计分和可追溯报告依据
-- 每章阶段发现与本人核对
+- 每组完成后的阶段洞察与本人核对
 - 完整关系说明书、关系底图和历史报告
 - 本机保存与可选云端保存
 - 跨设备恢复问卷和报告
@@ -55,7 +55,9 @@ dating_profiles 仅作为旧版测试数据保留，不再接受新资料写入�
 - 访谈运营接口已在云函数中实现角色校验、案例快照、准备卡和逐条验证事件；公开小程序不包含运营工作台页面
 - 不发送短信或微信通知
 - 不使用微信手机号授权接口
-- 公开测试前仍需补齐运营主体联系方式、保存期限和用户权利等正式隐私政策
+- 公开测试前需要由运营主体审核并发布联系方式、保存期限和用户权利等正式隐私政策
+
+产品公开文案遵循 `design/VOICE_AND_TONE.md`；内容体验 Sprint 2 的改造与边界见 `design/CONTENT_EXPERIENCE_SPRINT_2_AUDIT.md`。
 
 云函数从微信上下文取得 OPENID，不信任客户端传入的用户标识。数据库集合不得开放为客户端直接读写。
 

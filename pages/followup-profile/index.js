@@ -1,16 +1,18 @@
 const { navigateOnce, resetNavigation } = require('../../utils/navigation')
 const { isCloudReady, getParticipant, saveParticipant, cloudErrorMessage } = require('../../utils/cloud')
 const store = require('../../utils/followup-store')
+const followupCopy = require('../../shared/content/followup-copy')
+const { recordEvent } = require('../../utils/storage')
 
 const CONTACT_CHANNELS = [
-  { value: 'wechat', label: '微信号' },
-  { value: 'phone', label: '手机号' },
-  { value: 'email', label: '邮箱' },
-  { value: 'other', label: '其他' }
+  { value: 'wechat', label: followupCopy.channels.wechat },
+  { value: 'phone', label: followupCopy.channels.phone },
+  { value: 'email', label: followupCopy.channels.email },
+  { value: 'other', label: followupCopy.channels.other }
 ]
 
 Page({
-  data: { form: {}, contact: {}, contactChannels: CONTACT_CHANNELS, isSaving: false, error: '' },
+  data: { form: {}, contact: {}, copy: followupCopy.profile, contactChannels: CONTACT_CHANNELS, isSaving: false, error: '' },
   onShow() { resetNavigation(this); this.load() },
   load() {
     const local = store.get()
@@ -34,12 +36,13 @@ Page({
     const participationTypes = store.participationTypesFromConsents(state.consents)
     const participant = Object.assign({}, this.data.form, { participationTypes })
     const contact = Object.assign({}, this.data.contact, { preferredTime: participant.availability })
-    if (!store.requiresContact(state.consents)) return this.setData({ error: '请先在授权页面选择需要联系的参与方式' })
-    if (!participant.displayName || !participant.cityArea || !participant.availability || !contact.value || !contact.channel) return this.setData({ error: '请先填写称呼、区域、方便参与的时间和联系方式' })
+    if (!store.requiresContact(state.consents)) return this.setData({ error: followupCopy.profile.consentError })
+    if (!participant.displayName || !participant.cityArea || !participant.availability || !contact.value || !contact.channel) return this.setData({ error: followupCopy.profile.requiredError })
     const saved = store.saveParticipant(participant, contact)
     const finish = data => {
       if (data && data.participant) store.markParticipantSynced(data.participant, data.contact || contact)
       this.setData({ isSaving: false })
+      recordEvent('followup_profile_save')
       navigateOnce(this, 'redirectTo', { url: '/pages/followup-settings/index' })
     }
     if (!isCloudReady()) return finish()

@@ -4,7 +4,7 @@
       <button class="question-back" aria-label="返回上一题" bind:tap="handlePrevious">
         <text class="question-back__icon">‹</text>返回
       </button>
-      <view class="question-top__title">{{moduleTitle}}</view>
+      <view class="question-top__title">第 {{chapterNumber}} 组 / 6</view>
       <view class="question-top__spacer"></view>
     </view>
     <view class="question-progress-row">
@@ -21,9 +21,6 @@
       <view class="chapter-intro__title">{{chapterIntro.title}}</view>
       <view class="chapter-intro__body">{{chapterIntro.body}}</view>
       <view class="chapter-intro__hint">{{chapterIntro.hint}}</view>
-    </view>
-    <view class="questionnaire-meta">
-      <text class="question-eyebrow">{{dimensionTitle}}</text>
     </view>
     <view class="question-title questionnaire-title">{{item.text}}</view>
 

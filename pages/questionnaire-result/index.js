@@ -5,10 +5,16 @@ const { CHAPTERS } = require('../../utils/assessment-v2/questionnaire-definition
 const { getStatusBarHeight } = require('../../utils/window')
 const { navigateOnce, resetNavigation } = require('../../utils/navigation')
 const { FEATURES } = require('../../utils/features')
-const { sections: reportSections, confirmationLabels, CONTENT_VERSION } = require('../../shared/content/report-copy')
+const reportCopy = require('../../shared/content/report-copy')
+const { sections: reportSections, confirmationLabels, CONTENT_VERSION } = reportCopy
+const { recordEvent: recordContentEvent } = require('../../utils/storage')
+
+function coveredObservationIds(claims) {
+  return new Set(claims.filter(claim => claim.section !== 'observation').flatMap(claim => [].concat(claim.supportingItemIds || [], claim.contradictingItemIds || [], claim.qualifyingItemIds || [])))
+}
 
 Page({
-  data: { statusBarHeight: getStatusBarHeight(), contentVersion: CONTENT_VERSION, report: null, sections: [], unknowns: [], shareFragments: [], chapters: CHAPTERS, showFollowup: FEATURES.followupParticipation, showDeleteDialog: false, isDeleting: false, deleteConfirmButton: { content: '删除', theme: 'danger', variant: 'base' } },
+  data: { statusBarHeight: getStatusBarHeight(), contentVersion: CONTENT_VERSION, report: null, heroClaim: null, heroIntro: reportCopy.heroIntro, sections: [], observations: [], unknowns: [], chapters: CHAPTERS, showFollowup: FEATURES.followupParticipation, showDeleteDialog: false, isDeleting: false, deleteConfirmButton: { content: '删除', theme: 'danger', variant: 'base' } },
   onLoad() {
     this.loadReport()
   },
@@ -21,9 +27,14 @@ Page({
       return Object.assign({}, claim, { originalIndex: index, confirmationLabel: confirmation ? confirmationLabels[confirmation.value] : '' })
     })
     const orderedClaims = decoratedClaims.sort((left, right) => Number(Boolean(right.confirmationLabel)) - Number(Boolean(left.confirmationLabel)) || Number(right.confidence && right.confidence.level === 'strong') - Number(left.confidence && left.confidence.level === 'strong') || left.originalIndex - right.originalIndex)
-    const shareFragments = report.claims.filter(claim => claim.shareFragment && confirmations[claim.id] && ['fits', 'partly_fits'].includes(confirmations[claim.id].value)).map(claim => claim.shareFragment).slice(0, 2)
-    this.setData({ report, sections: reportSections.map(group => Object.assign({}, group, { claims: orderedClaims.filter(claim => claim.section === group.id) })).filter(group => group.claims.length), unknowns: report.unknowns, shareFragments, shareableCount: shareFragments.length })
-    recordEvent('assessment_v2_report_view')
+    const heroClaim = orderedClaims.find(claim => claim.section === 'overall') || orderedClaims[0] || null
+    const observationIds = coveredObservationIds(orderedClaims)
+    const observations = orderedClaims.filter(claim => claim.section === 'observation' && ![].concat(claim.supportingItemIds || [], claim.contradictingItemIds || [], claim.qualifyingItemIds || []).some(id => observationIds.has(id))).slice(0, 2)
+    const sections = reportSections.map(group => Object.assign({}, group, {
+      claims: orderedClaims.filter(claim => claim.section === group.id && (!heroClaim || claim.id !== heroClaim.id))
+    })).filter(group => group.claims.length)
+    this.setData({ report, heroClaim, sections, observations, unknowns: report.unknowns, unknownTitle: reportCopy.unknownTitle, unknownDescription: reportCopy.unknownDescription, observationTitle: reportCopy.observationTitle, boundaryCopy: reportCopy.boundary, reviseTitle: reportCopy.reviseTitle, dataTitle: reportCopy.dataTitle, dataDelete: reportCopy.dataDelete, deleteDialogTitle: reportCopy.deleteDialogTitle, deleteDialogContent: reportCopy.deleteDialogContent, deleteDialogCancel: reportCopy.deleteDialogCancel, mapAction: reportCopy.mapAction, followupTitle: reportCopy.followupTitle, followupBody: reportCopy.followupBody, followupAction: reportCopy.followupAction, claimAction: reportCopy.claimAction })
+    recordContentEvent('report_view')
   },
   onShow() { resetNavigation(this); this.loadReport(); this.syncReportIfNeeded(); this.syncPendingConfirmations() },
   syncReportIfNeeded() {
@@ -63,10 +74,17 @@ Page({
     syncNext()
   },
   revise() {
+    recordContentEvent('report_revise')
     navigateOnce(this, 'redirectTo', { url: '/pages/questionnaire/index?chapter=C1&question=0' })
   },
-  reviseChapter(event) { navigateOnce(this, 'redirectTo', { url: `/pages/questionnaire/index?chapter=${event.currentTarget.dataset.chapter}&question=0&revise=1` }) },
-  openClaim(event) { navigateOnce(this, 'navigateTo', { url: `/pages/record-claim/index?id=${encodeURIComponent(event.currentTarget.dataset.id)}` }) },
+  reviseChapter(event) {
+    recordContentEvent('report_revise', { chapterId: event.currentTarget.dataset.chapter })
+    navigateOnce(this, 'redirectTo', { url: `/pages/questionnaire/index?chapter=${event.currentTarget.dataset.chapter}&question=0&revise=1` })
+  },
+  openClaim(event) {
+    recordContentEvent('report_claim_open', { claimId: event.currentTarget.dataset.id })
+    navigateOnce(this, 'navigateTo', { url: `/pages/record-claim/index?id=${encodeURIComponent(event.currentTarget.dataset.id)}` })
+  },
   requestDeleteReport() { this.setData({ showDeleteDialog: true }) },
   cancelDeleteReport() { this.setData({ showDeleteDialog: false }) },
   confirmDeleteReport() {
@@ -93,5 +111,5 @@ Page({
     })
   },
   openMap() { navigateOnce(this, 'reLaunch', { url: '/pages/relationship-map/index' }) },
-  openFollowup() { navigateOnce(this, 'navigateTo', { url: '/pages/followup-intro/index' }) }
+  openFollowup() { recordContentEvent('followup_entry_view'); navigateOnce(this, 'navigateTo', { url: '/pages/followup-intro/index' }) }
 })

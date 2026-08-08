@@ -1,3 +1,5 @@
 .followup-intro { padding: 40rpx 40rpx 72rpx; }
 .followup-list { margin-top: 40rpx; }
 .followup-actions { margin-top: 48rpx; }
+.followup-copy-text, .followup-safety { white-space: pre-line; }
+.followup-safety { margin: 36rpx 0 0; padding: 28rpx 0; border-top: 2rpx solid var(--dl-grey-200); border-bottom: 2rpx solid var(--dl-grey-200); color: var(--dl-grey-500); font-size: 25rpx; line-height: 42rpx; }

@@ -8,6 +8,7 @@ const { rules } = require('../utils/assessment-v2/report-rules')
 const { resolveClaimCopy } = require('../shared/content/claim-copy')
 const { CONTENT_VERSION, REPORT_COPY_VERSION } = require('../shared/content/version')
 const { getChapterCopy } = require('../shared/content/chapter-copy')
+const evidenceCopy = require('../shared/content/evidence-copy')
 
 const answers = Object.fromEntries(ITEMS.map(item => [item.id, item.reverseScored ? 1 : 5]))
 const report = buildReport(answers, { generatedAt: 1000 })
@@ -31,7 +32,7 @@ const publicPages = app.pages.map(route => pageText(route + '.wxml')).join('\n')
 ;['阶段发现', '多题支持', '规则 {{claim.reportRuleVersion', '相处名片', '关系资源', '内部拉扯'].forEach(copy => {
   assert.equal(publicPages.includes(copy), false, `forbidden user copy: ${copy}`)
 })
-assert.equal(stagePage.includes('为什么会有这句话？'), true)
-assert.equal(claimPage.includes('为什么会有这句话'), true)
+assert.equal(stagePage.includes('evidenceCopy.why'), true)
+assert.equal(claimPage.includes('evidenceCopy.supporting'), true)
 
 console.log('Content experience OK: versioned copy, reflective stage insight, and internal labels stay hidden')

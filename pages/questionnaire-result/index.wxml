@@ -1,19 +1,58 @@
 <view wx:if="{{report}}" class="page report-page" style="padding-top: {{statusBarHeight}}px;">
-  <view class="report-header"><view class="page-kicker">关系说明书 · {{report.reportVersion}}.0</view><view class="report-title">{{report.title}}</view><view class="report-subtitle">{{report.subtitle}}</view></view>
+  <view class="report-header">
+    <view class="page-kicker">你的关系说明书</view>
+    <view wx:if="{{heroClaim}}" class="report-hero">
+      <view class="report-title">{{heroClaim.title}}</view>
+      <view class="report-hero__text">{{heroClaim.text}}</view>
+    </view>
+    <view class="report-intro">{{heroIntro}}</view>
+  </view>
+
   <view class="report-body">
     <view wx:for="{{sections}}" wx:key="id" class="report-section">
       <view class="report-section__title">{{item.title}}</view>
       <view wx:for="{{item.claims}}" wx:key="id" class="report-claim" data-id="{{item.id}}" bind:tap="openClaim">
-        <view class="report-claim__title">{{item.title}}</view><view class="report-claim__text">{{item.text}}</view><view class="report-claim__meta">{{item.confirmationLabel || '打开看看这句话怎么来的'}} <text class="dl-chevron">›</text></view>
+        <view class="report-claim__title">{{item.title}}</view>
+        <view class="report-claim__text">{{item.text}}</view>
+        <view class="report-claim__meta">{{item.confirmationLabel || claimAction}} <text class="dl-chevron">›</text></view>
       </view>
     </view>
-    <view wx:if="{{unknowns.length}}" class="report-unknowns"><view class="report-section__title">暂时还说不清的</view><view wx:for="{{unknowns}}" wx:key="id" class="report-unknown"><view class="report-unknown__title">{{item.title}}</view><view>{{item.text}}</view></view></view>
-    <view class="report-boundary">这份说明书来自你的自我回答，不是心理诊断。它能帮你整理关系需要，但不能替代真实相处，也不能预测一段关系一定成功。</view>
-    <view class="report-revise-block"><view class="report-section__title">想改哪一组回答？</view><view class="report-chapters"><button wx:for="{{chapters}}" wx:key="id" class="report-chapter" data-chapter="{{item.id}}" bind:tap="reviseChapter"><text>{{item.id}}</text><text>{{item.title}}</text></button></view></view>
-    <button class="report-delete" disabled="{{isDeleting}}" bind:tap="requestDeleteReport">删除这份关系说明书</button>
-    <button class="dl-button dl-button--outline" bind:tap="openMap">查看我的关系底图</button>
-    <button wx:if="{{showFollowup}}" class="dl-button dl-button--outline" bind:tap="openFollowup">了解后续访谈与活动</button>
-    <t-dialog visible="{{showDeleteDialog}}" title="删除关系说明书？" content="云端问卷、报告和核对记录都会删除，本机副本也会同时清除。删除后无法恢复。" confirm-btn="{{deleteConfirmButton}}" cancel-btn="取消" bind:confirm="confirmDeleteReport" bind:cancel="cancelDeleteReport" bind:close="cancelDeleteReport" />
+
+    <view wx:if="{{observations.length}}" class="report-section report-observation">
+      <view class="report-section__title">{{observationTitle}}</view>
+      <view wx:for="{{observations}}" wx:key="id" class="report-claim" data-id="{{item.id}}" bind:tap="openClaim">
+        <view class="report-claim__title">{{item.title}}</view>
+        <view class="report-claim__text">{{item.text}}</view>
+        <view class="report-claim__meta">{{claimAction}} <text class="dl-chevron">›</text></view>
+      </view>
+    </view>
+
+    <view wx:if="{{unknowns.length}}" class="report-unknowns">
+      <view class="report-section__title">{{unknownTitle}}</view>
+      <view class="report-unknowns__description">{{unknownDescription}}</view>
+      <view wx:for="{{unknowns}}" wx:key="id" class="report-unknown"><view class="report-unknown__title">{{item.title}}</view><view>{{item.text}}</view></view>
+    </view>
+
+    <view class="report-boundary">{{boundaryCopy}}</view>
+
+    <view class="report-revise-block">
+      <view class="report-section__title">{{reviseTitle}}</view>
+      <view class="report-chapters"><button wx:for="{{chapters}}" wx:key="id" class="report-chapter" data-chapter="{{item.id}}" bind:tap="reviseChapter"><text>{{item.id}}</text><text>{{item.title}}</text></button></view>
+    </view>
+
+    <view wx:if="{{showFollowup}}" class="report-followup">
+      <view class="report-followup__title">{{followupTitle}}</view>
+      <view class="report-followup__body">{{followupBody}}</view>
+      <button class="report-followup__button" bind:tap="openFollowup">{{followupAction}}</button>
+    </view>
+
+    <view class="report-data">
+      <view class="report-section__title">{{dataTitle}}</view>
+      <button class="report-data__delete" disabled="{{isDeleting}}" bind:tap="requestDeleteReport">{{dataDelete}}</button>
+      <button class="dl-button dl-button--outline" bind:tap="openMap">{{mapAction}}</button>
+    </view>
+
+    <t-dialog visible="{{showDeleteDialog}}" title="{{deleteDialogTitle}}" content="{{deleteDialogContent}}" confirm-btn="{{deleteConfirmButton}}" cancel-btn="{{deleteDialogCancel}}" bind:confirm="confirmDeleteReport" bind:cancel="cancelDeleteReport" bind:close="cancelDeleteReport" />
   </view>
 </view>
 <view wx:else class="page result-empty"><view class="page-kicker">关系说明书</view><view class="page-title">还没有完成这次探索</view><button class="dl-button result-empty__button" bind:tap="revise">继续回答</button></view>

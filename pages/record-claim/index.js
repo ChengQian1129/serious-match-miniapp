@@ -1,9 +1,11 @@
 const { getReport, shouldSyncAssessment, saveClaimFeedback, markFeedbackEventSynced } = require('../../utils/assessment-v2/session-store')
 const { isCloudReady, appendAssessmentFeedbackToCloud } = require('../../utils/cloud')
 const { navigateOnce, resetNavigation } = require('../../utils/navigation')
+const { recordEvent } = require('../../utils/storage')
+const evidenceCopy = require('../../shared/content/evidence-copy')
 
 Page({
-  data: { claim: null, selectedFeedback: '', feedbackNote: '', feedbackContext: '', feedbackOptions: [{ value: 'fits', label: '比较符合我' }, { value: 'partly_fits', label: '部分符合我' }, { value: 'does_not_fit', label: '不太符合我' }, { value: 'unsure', label: '我还不确定' }], canSave: false, isSaving: false, cloudError: '' },
+  data: { claim: null, selectedFeedback: '', feedbackNote: '', feedbackOptions: evidenceCopy.feedbackOptions, evidenceCopy, technicalExpanded: false, canSave: false, isSaving: false, cloudError: '' },
   onLoad(query) { this.claimId = decodeURIComponent(query.id || '') },
   onShow() {
     resetNavigation(this)
@@ -11,12 +13,13 @@ Page({
     const claim = report && report.claims.find(item => item.id === this.claimId)
     if (!claim) return navigateOnce(this, 'reLaunch', { url: '/pages/questionnaire-result/index' })
     const confirmation = report.userConfirmations && report.userConfirmations[this.claimId]
-    const decoratedClaim = Object.assign({}, claim, { label: '这句话为什么出现', statusLabel: '' })
-    this.setData({ claim: decoratedClaim, selectedFeedback: confirmation ? confirmation.value : '', feedbackNote: confirmation ? confirmation.note || '' : '', feedbackContext: confirmation ? confirmation.context || '' : '', canSave: false, isSaving: false, cloudError: '' })
+    const decoratedClaim = Object.assign({}, claim, { label: evidenceCopy.why, statusLabel: '' })
+    this.setData({ claim: decoratedClaim, selectedFeedback: confirmation ? confirmation.value : '', feedbackNote: confirmation ? confirmation.note || '' : '', technicalExpanded: false, canSave: false, isSaving: false, cloudError: '' })
+    recordEvent('report_claim_open', { claimId: this.claimId })
   },
   chooseFeedback(event) { this.setData({ selectedFeedback: event.currentTarget.dataset.value, canSave: true }) },
   inputNote(event) { this.setData({ feedbackNote: String(event.detail.value || '').slice(0, 200), canSave: Boolean(this.data.selectedFeedback) }) },
-  inputContext(event) { this.setData({ feedbackContext: String(event.detail.value || '').slice(0, 200), canSave: Boolean(this.data.selectedFeedback) }) },
+  toggleTechnical() { this.setData({ technicalExpanded: !this.data.technicalExpanded }) },
   handleSave() {
     if (!this.data.canSave || this.data.isSaving) return
     this.setData({ isSaving: true, cloudError: '' })

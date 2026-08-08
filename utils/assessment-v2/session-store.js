@@ -107,7 +107,7 @@ function completeAssessment() {
 
 function getReport() { return wx.getStorageSync(REPORT_KEY) || null }
 function saveChapterInsightFeedback(chapterId, value, note = '') {
-  if (!/^C[1-6]$/.test(chapterId) || !['fits', 'partly_fits', 'does_not_fit', 'unsure'].includes(value)) throw new Error('阶段发现核对选项无效')
+  if (!/^C[1-6]$/.test(chapterId) || !['fits', 'partly_fits', 'does_not_fit', 'unsure'].includes(value)) throw new Error('阶段反馈选项无效')
   const session = getSession()
   if (!session.completedChapters.includes(chapterId)) throw new Error('这一章还没有完成')
   const chapterFeedback = Object.assign({}, session.chapterFeedback, {

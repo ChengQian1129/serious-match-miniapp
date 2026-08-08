@@ -76,3 +76,9 @@
 - 新增 `CONTENT_VERSION` / `REPORT_COPY_VERSION`；规则文件只保留逻辑，用户文案进入独立 `shared/content/claim-copy.js`，客户端和云函数生成副本均受同步检查保护。
 
 这部分的代码、静态页面约束和内容版本测试已通过 `npm test`。尚未由代码证明的体验指标包括：用户是否想到具体经历、哪句话最有共鸣、哪句话仍显得空泛或像 AI；这些必须在冻结题库后用 8–12 人认知访谈验证。
+
+## Content Experience v1.1 Sprint 2（2026-08-08）
+
+本轮继续只改内容与呈现层：Welcome 改为单页，报告改为 narrative-first，Follow-up 三页接入 `followup-copy.js`，证据与术语统一进入内容系统；未修改题库、计分、规则、授权语义或后端 schema。具体变更和回归边界见 `design/CONTENT_EXPERIENCE_SPRINT_2_AUDIT.md`。
+
+本地完整测试和内容边界测试已通过。2026-08-08 重新执行 `npm run deploy:cloud`，`assessmentService`、`participantService`、`interviewOps` 和兼容入口 `datingProfile` 均部署成功；真实用户、真机布局、输入法、弱网失败重试和完整访谈链路仍按云端上线门槛继续回归。

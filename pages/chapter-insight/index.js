@@ -5,9 +5,10 @@ const { buildChapterInsight } = require('../../utils/assessment-v2/chapter-insig
 const { getStatusBarHeight } = require('../../utils/window')
 const { navigateOnce, resetNavigation } = require('../../utils/navigation')
 const { recordEvent } = require('../../utils/storage')
+const evidenceCopy = require('../../shared/content/evidence-copy')
 
 Page({
-  data: { statusBarHeight: getStatusBarHeight(), chapter: null, insight: null, nextChapter: null, selectedFeedback: '', evidenceExpanded: false, feedbackOptions: [{ value: 'fits', label: '符合' }, { value: 'partly_fits', label: '部分符合' }, { value: 'does_not_fit', label: '不符合' }, { value: 'unsure', label: '暂不确定' }] },
+  data: { statusBarHeight: getStatusBarHeight(), chapter: null, insight: null, nextChapter: null, selectedFeedback: '', evidenceExpanded: false, evidenceCopy, feedbackOptions: evidenceCopy.feedbackOptions },
   onLoad(query) {
     this.chapterId = query.chapter || 'C1'
     const chapter = getChapter(this.chapterId)
@@ -16,7 +17,7 @@ Page({
     const index = CHAPTERS.findIndex(item => item.id === this.chapterId)
     const savedFeedback = session.chapterFeedback && session.chapterFeedback[this.chapterId]
     this.setData({ chapter, insight: buildChapterInsight(this.chapterId, session.answers), nextChapter: CHAPTERS[index + 1] || null, selectedFeedback: savedFeedback ? savedFeedback.value : '', evidenceExpanded: false })
-    recordEvent('assessment_v2_chapter_insight_view', { chapterId: this.chapterId })
+    recordEvent('chapter_insight_view', { chapterId: this.chapterId })
   },
   onShow() { resetNavigation(this) },
   chooseFeedback(event) {
@@ -24,10 +25,15 @@ Page({
     try {
       const session = saveChapterInsightFeedback(this.chapterId, value)
       this.setData({ selectedFeedback: value })
+      recordEvent('chapter_insight_feedback', { chapterId: this.chapterId, value })
       if (shouldSyncAssessment()) saveAssessmentDraftToCloud(session, {})
     } catch (error) { wx.showToast({ title: error.message || '暂时无法记录', icon: 'none' }) }
   },
-  toggleEvidence() { this.setData({ evidenceExpanded: !this.data.evidenceExpanded }) },
+  toggleEvidence() {
+    const expanded = !this.data.evidenceExpanded
+    this.setData({ evidenceExpanded: expanded })
+    if (expanded) recordEvent('chapter_evidence_expand', { chapterId: this.chapterId })
+  },
   continueNext() {
     try {
       const session = getSession()

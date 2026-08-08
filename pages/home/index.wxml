@@ -9,7 +9,7 @@
     </view>
     <view class="home-actions dl-stack">
       <button class="dl-button" bind:tap="handleStart">{{actionText}}</button>
-      <button class="dl-button dl-button--outline" bind:tap="openGuide">这些问题怎么来的？</button>
+      <button class="dl-button dl-button--outline" bind:tap="openGuide">{{guideAction}}</button>
     </view>
   </view>
   <view class="home-example">
@@ -20,7 +20,7 @@
     <view class="section-title home-section-title">{{topicsTitle}}</view>
     <view class="home-topics"><view wx:for="{{topics}}" wx:key="*this" class="home-topic">{{item}}</view></view>
   </view>
-  <view class="home-pool-note">完成报告后，你可以选择了解后续访谈、模型研究或线下活动。它们不会影响你查看和修改自己的报告。</view>
+  <view class="home-pool-note">{{followupHint}}</view>
 </view>
 
 <t-popup placement="bottom" visible="{{showGuide}}" bind:visible-change="handleGuideVisibleChange">
@@ -28,7 +28,7 @@
     <view class="sheet-title">{{guideTitle}}</view>
     <view class="sheet-copy">{{guideBody}}</view>
     <view class="sheet-copy">{{guideFocus}}</view>
-    <view class="sheet-action"><button class="dl-button" bind:tap="closeGuide">知道了</button></view>
+    <view class="sheet-action"><button class="dl-button" bind:tap="closeGuide">{{guide.closeAction}}</button></view>
   </view>
 </t-popup>
 

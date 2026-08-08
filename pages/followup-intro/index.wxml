@@ -1,13 +1,9 @@
 <view class="page followup-intro">
   <view class="page-header">
-    <view class="page-kicker">报告之后 · 自愿选择</view>
-    <view class="page-title">了解后续访谈与模型研究</view>
-    <view class="page-desc">你已经可以完整查看、修改和删除自己的关系说明书。后续参与是独立选择，不会影响报告内容。</view>
+    <view class="page-kicker">{{copy.kicker}}</view>
+    <view class="page-title">{{copy.title}}</view>
+    <view class="page-desc followup-copy-text">{{copy.body}}</view>
   </view>
-  <view class="dl-list followup-list">
-    <view class="dl-list-row"><view class="dl-list-row__body"><view class="dl-list-row__title">可能参与的内容</view><view class="dl-list-row__desc">深度访谈、问卷理解测试、模型研究或线下交流活动。</view></view></view>
-    <view class="dl-list-row"><view class="dl-list-row__body"><view class="dl-list-row__title">你需要知道</view><view class="dl-list-row__desc">不自动参加任何项目，不自动认识其他用户，不会向其他用户公开资料；具体项目开始前会再次说明并征得同意。</view></view></view>
-    <view class="dl-list-row"><view class="dl-list-row__body"><view class="dl-list-row__title">可以随时改变决定</view><view class="dl-list-row__desc">你可以暂不参与，也可以在登记后撤回授权并删除参与资料。</view></view></view>
-  </view>
-  <view class="dl-stack followup-actions"><button class="dl-button" bind:tap="continue">{{hasRegistration ? '管理参与资料与授权' : '我愿意了解参与方式'}}</button><button class="dl-button dl-button--outline" bind:tap="defer">暂不参与</button></view>
+  <view class="followup-safety">{{copy.safety}}</view>
+  <view class="dl-stack followup-actions"><button class="dl-button" bind:tap="continue">{{hasRegistration ? '管理联系资料' : copy.primary}}</button><button class="dl-button dl-button--outline" bind:tap="defer">{{copy.secondary}}</button></view>
 </view>

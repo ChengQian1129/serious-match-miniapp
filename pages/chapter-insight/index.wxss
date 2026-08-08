@@ -18,6 +18,7 @@
 .chapter-insight__evidence { margin-top: 16rpx; }
 .chapter-insight__evidence-toggle { width: 100%; padding: 16rpx 0; border: 0; background: transparent; color: var(--dl-grey-500); font-size: 24rpx; text-align: left; }
 .chapter-insight__evidence-list { border-top: 2rpx solid var(--dl-grey-200); }
+.chapter-insight__evidence-label { padding: 20rpx 0 4rpx; color: var(--dl-grey-500); font-size: 23rpx; line-height: 36rpx; }
 .chapter-insight__evidence-item { padding: 20rpx 0; border-bottom: 2rpx solid var(--dl-grey-200); font-size: 24rpx; line-height: 36rpx; }
 .chapter-insight__evidence-answer { margin-top: 6rpx; color: var(--dl-grey-500); }
 .chapter-insight__evidence-boundary { margin-top: 22rpx; padding-top: 20rpx; border-top: 2rpx solid var(--dl-grey-200); color: var(--dl-grey-500); font-size: 23rpx; line-height: 38rpx; }

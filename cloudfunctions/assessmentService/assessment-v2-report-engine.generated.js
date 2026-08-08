@@ -1,8 +1,8 @@
 const { ITEMS, DIMENSIONS, INSTRUMENT_VERSION, optionsFor } = require('./assessment-v2-questionnaire-definitions')
 const { evaluateAssessment, SCORING_RULE_VERSION, missing, scored } = require('./assessment-v2-scoring-engine')
 const { rules, REPORT_RULE_VERSION } = require('./assessment-v2-report-rules')
-const CONTENT_VERSION = "relationship-manual-copy-1.0.0"
-const REPORT_COPY_VERSION = "relationship-manual-report-copy-1.0.0"
+const CONTENT_VERSION = "relationship-manual-copy-1.1.0"
+const REPORT_COPY_VERSION = "relationship-manual-report-copy-1.1.0"
 const { resolveClaimCopy } = require('./assessment-v2-claim-copy.generated')
 
 function readPath(evaluation, path) {

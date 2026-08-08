@@ -10,13 +10,14 @@
     </view>
     <view class="chapter-insight__reflection">{{insight.reflection}}</view>
     <view wx:if="{{insight.evidence.length}}" class="chapter-insight__evidence">
-      <button class="chapter-insight__evidence-toggle" bind:tap="toggleEvidence">{{evidenceExpanded ? '收起依据' : '为什么会有这句话？'}}</button>
+      <button class="chapter-insight__evidence-toggle" bind:tap="toggleEvidence">{{evidenceExpanded ? '收起' : evidenceCopy.why}}</button>
       <view wx:if="{{evidenceExpanded}}" class="chapter-insight__evidence-list">
-        <view wx:for="{{insight.evidence}}" wx:key="itemId" class="chapter-insight__evidence-item"><view>{{item.question}}</view><view class="chapter-insight__evidence-answer">你的选择：{{item.answer}}</view></view>
-        <view class="chapter-insight__evidence-boundary">{{insight.boundary}}</view>
+        <view class="chapter-insight__evidence-label">{{evidenceCopy.stageEvidence}}</view>
+        <view wx:for="{{insight.evidence}}" wx:key="itemId" class="chapter-insight__evidence-item"><view>{{item.question}}</view><view class="chapter-insight__evidence-answer">{{evidenceCopy.answerPrefix}}{{item.answer}}</view></view>
+        <view class="chapter-insight__evidence-boundary">{{evidenceCopy.stageBoundary}}</view>
       </view>
     </view>
-    <view class="chapter-insight__feedback-label">像你吗？</view>
+    <view class="chapter-insight__feedback-label">{{evidenceCopy.feedbackTitle}}</view>
     <view class="chapter-insight__feedback">
       <button wx:for="{{feedbackOptions}}" wx:key="value" class="chapter-insight__feedback-option {{selectedFeedback === item.value ? 'chapter-insight__feedback-option--selected' : ''}}" data-value="{{item.value}}" bind:tap="chooseFeedback">{{item.label}}</button>
     </view>
