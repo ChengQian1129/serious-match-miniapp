@@ -16,11 +16,16 @@
   </view>
 
   <view class="question-content questionnaire-content {{motionClass}}">
+    <view wx:if="{{showChapterIntro && chapterIntro}}" class="chapter-intro">
+      <view class="chapter-intro__eyebrow">{{chapterIntro.eyebrow}}</view>
+      <view class="chapter-intro__title">{{chapterIntro.title}}</view>
+      <view class="chapter-intro__body">{{chapterIntro.body}}</view>
+      <view class="chapter-intro__hint">{{chapterIntro.hint}}</view>
+    </view>
     <view class="questionnaire-meta">
       <text class="question-eyebrow">{{dimensionTitle}}</text>
     </view>
     <view class="question-title questionnaire-title">{{item.text}}</view>
-    <view class="question-desc">{{moduleInstruction}}</view>
 
     <view class="question-control choice-list questionnaire-options">
       <button

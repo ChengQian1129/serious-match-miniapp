@@ -11,8 +11,7 @@ Page({
     const claim = report && report.claims.find(item => item.id === this.claimId)
     if (!claim) return navigateOnce(this, 'reLaunch', { url: '/pages/questionnaire-result/index' })
     const confirmation = report.userConfirmations && report.userConfirmations[this.claimId]
-    const confidenceLabels = { strong: '证据较充分', moderate: '多项支持', tentative: '初步判断', context_dependent: '依赖具体情境' }
-    const decoratedClaim = Object.assign({}, claim, { label: '判断依据', statusLabel: confidenceLabels[claim.confidence && claim.confidence.level] || '需要核对' })
+    const decoratedClaim = Object.assign({}, claim, { label: '这句话为什么出现', statusLabel: '' })
     this.setData({ claim: decoratedClaim, selectedFeedback: confirmation ? confirmation.value : '', feedbackNote: confirmation ? confirmation.note || '' : '', feedbackContext: confirmation ? confirmation.context || '' : '', canSave: false, isSaving: false, cloudError: '' })
   },
   chooseFeedback(event) { this.setData({ selectedFeedback: event.currentTarget.dataset.value, canSave: true }) },
@@ -21,7 +20,7 @@ Page({
   handleSave() {
     if (!this.data.canSave || this.data.isSaving) return
     this.setData({ isSaving: true, cloudError: '' })
-    const feedbackEvent = saveClaimFeedback(this.claimId, this.data.selectedFeedback, this.data.feedbackNote, this.data.feedbackContext)
+    const feedbackEvent = saveClaimFeedback(this.claimId, this.data.selectedFeedback, this.data.feedbackNote, '')
     const report = getReport()
     const finish = () => {
       this.setData({ isSaving: false })

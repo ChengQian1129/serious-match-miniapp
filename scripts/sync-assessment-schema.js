@@ -20,14 +20,18 @@ const scoringTargets = [
 ]
 const reportRules = fs.readFileSync(path.join(root, 'shared/assessment/report-rules.js'), 'utf8')
 const reportEngine = fs.readFileSync(path.join(root, 'shared/assessment/report-engine.js'), 'utf8')
+const claimCopy = fs.readFileSync(path.join(root, 'shared/content/claim-copy.js'), 'utf8')
 const interviewRules = fs.readFileSync(path.join(root, 'shared/assessment/interview-rules.js'), 'utf8')
+const contentVersions = require(path.join(root, 'shared/content/version.js'))
+const cloudContentVersion = `const CONTENT_VERSION = ${JSON.stringify(contentVersions.CONTENT_VERSION)}\nconst REPORT_COPY_VERSION = ${JSON.stringify(contentVersions.REPORT_COPY_VERSION)}`
 const ruleTargets = [
   [path.join(root, 'utils/assessment-v2/generated/report-rules.js'), reportRules],
   [path.join(root, 'cloudfunctions/datingProfile/assessment-v2-report-rules.generated.js'), reportRules]
 ]
 const engineTargets = [
-  [path.join(root, 'utils/assessment-v2/generated/report-engine.js'), reportEngine.replaceAll("require('./schema')", "require('./questionnaire-definitions')")],
-  [path.join(root, 'cloudfunctions/datingProfile/assessment-v2-report-engine.generated.js'), reportEngine.replaceAll("require('./schema')", "require('./assessment-v2-questionnaire-definitions')").replaceAll("require('./scoring-rules')", "require('./assessment-v2-scoring-engine')").replaceAll("require('./report-rules')", "require('./assessment-v2-report-rules')")]
+  [path.join(root, 'utils/assessment-v2/generated/report-engine.js'), reportEngine.replaceAll("require('./schema')", "require('./questionnaire-definitions')").replace("require('../content/version')", "require('../../../shared/content/version')").replace("require('../content/claim-copy')", "require('../../../shared/content/claim-copy')")],
+  [path.join(root, 'cloudfunctions/datingProfile/assessment-v2-report-engine.generated.js'), reportEngine.replaceAll("require('./schema')", "require('./assessment-v2-questionnaire-definitions')").replaceAll("require('./scoring-rules')", "require('./assessment-v2-scoring-engine')").replaceAll("require('./report-rules')", "require('./assessment-v2-report-rules')").replace("const { CONTENT_VERSION, REPORT_COPY_VERSION } = require('../content/version')", cloudContentVersion).replace("require('../content/claim-copy')", "require('./assessment-v2-claim-copy.generated')")],
+  [path.join(root, 'cloudfunctions/datingProfile/assessment-v2-claim-copy.generated.js'), claimCopy]
 ]
 const interviewTargets = [
   [path.join(root, 'cloudfunctions/datingProfile/assessment-v2-interview-rules.generated.js'), interviewRules.replace("const { HYPOTHESIS_RULE_VERSION } = require('./version')", "const HYPOTHESIS_RULE_VERSION = 'serious-match-interview-rules-1.0.0'")]

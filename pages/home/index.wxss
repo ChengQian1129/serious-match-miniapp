@@ -67,6 +67,11 @@
   border-top: 2rpx solid #dedede;
 }
 
+.home-example { margin: 0 40rpx 54rpx; padding: 30rpx 0 34rpx; border-top: 2rpx solid var(--dl-black); border-bottom: 2rpx solid var(--dl-black); }
+.home-example__text { margin-top: 18rpx; font-size: 30rpx; line-height: 50rpx; }
+.home-topics { margin: 24rpx 40rpx 0; }
+.home-topic { padding: 18rpx 0; border-bottom: 2rpx solid var(--dl-grey-200); font-size: 27rpx; line-height: 40rpx; }
+
 .home-section-title {
   margin-top: 38rpx;
 }

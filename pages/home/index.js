@@ -4,14 +4,27 @@ const { CHAPTERS } = require('../../utils/assessment-v2/questionnaire-definition
 const { getStatusBarHeight } = require('../../utils/window')
 const { navigateOnce, resetNavigation } = require('../../utils/navigation')
 const { recordEvent } = require('../../utils/storage')
+const { home, guide, storage: storageCopy, CONTENT_VERSION } = require('../../shared/content/ui-copy')
 
 Page({
   data: {
     statusBarHeight: getStatusBarHeight(),
     showGuide: false,
-    actionText: '开始生成我的关系说明书',
-    heroTitle: '先了解自己怎样进入一段关系',
-    heroDesc: '48 个具体场景，分成 6 个短章节。每完成一章，都会得到一个阶段发现。',
+    contentVersion: CONTENT_VERSION,
+    actionText: home.action,
+    heroTitle: home.title,
+    heroDesc: home.description,
+    exampleLabel: home.exampleLabel,
+    exampleText: home.example,
+    topicsTitle: home.topicsTitle,
+    topics: home.topics,
+    guideTitle: guide.title,
+    guideBody: guide.body,
+    guideFocus: guide.focus,
+    storageTitle: storageCopy.title,
+    storageBody: storageCopy.body,
+    storageCloudLabel: storageCopy.cloud,
+    storageLocalLabel: storageCopy.local,
     progressText: '',
     showStorageChoice: false
   },
@@ -21,10 +34,10 @@ Page({
     const report = getReport()
     const session = getSession()
     if (report && !session.revisionPending) {
-      this.setData({ actionText: '查看我的关系说明书', heroTitle: report.title, heroDesc: report.subtitle, progressText: '关系说明书已生成' })
+      this.setData({ actionText: '打开说明书', heroTitle: home.completedTitle, heroDesc: home.completedDescription, progressText: '这份说明书可以随时修改' })
     } else if (hasSession() && Object.keys(session.answers).length) {
       const chapterIndex = Math.max(0, CHAPTERS.findIndex(chapter => chapter.id === session.currentChapterId))
-      this.setData({ actionText: '继续我的关系探索', heroTitle: '你的关系说明书正在形成', heroDesc: `已进行到第 ${chapterIndex + 1} 章，之前的回答保存在当前设备。`, progressText: `${Object.keys(session.answers).length} / 48` })
+      this.setData({ actionText: '继续', heroTitle: home.progressTitle, heroDesc: `第 ${chapterIndex + 1} 组 / 6。之前的回答都还在，接着答就行。`, progressText: `${Object.keys(session.answers).length} / 48` })
     }
     if (isCloudReady() && shouldSyncAssessment() && !this._restoreAttempted) {
       this._restoreAttempted = true

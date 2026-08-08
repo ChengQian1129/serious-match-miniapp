@@ -2,43 +2,43 @@
   <view class="home-hero">
     <view class="home-wordmark"><view class="home-mark"><view></view><view></view></view><text>关系说明书</text></view>
     <view class="home-copy">
-      <view class="page-kicker">大连 · 关系探索</view>
+      <view class="page-kicker">关系说明书</view>
       <view class="home-title">{{heroTitle}}</view>
       <view class="home-desc">{{heroDesc}}</view>
       <view wx:if="{{progressText}}" class="home-note">{{progressText}}</view>
     </view>
     <view class="home-actions dl-stack">
       <button class="dl-button" bind:tap="handleStart">{{actionText}}</button>
-      <button class="dl-button dl-button--outline" bind:tap="openGuide">它会怎样分析？</button>
+      <button class="dl-button dl-button--outline" bind:tap="openGuide">这些问题怎么来的？</button>
     </view>
   </view>
+  <view class="home-example">
+    <view class="section-title">{{exampleLabel}}</view>
+    <view class="home-example__text">{{exampleText}}</view>
+  </view>
   <view class="home-process">
-    <view class="section-title home-section-title">你会得到什么</view>
-    <view class="dl-list home-list">
-      <view class="dl-list-row"><view class="home-step">01</view><view class="dl-list-row__body"><view class="dl-list-row__title">六个短章节</view><view class="dl-list-row__desc">每章 8 题，一次只处理一个具体场景</view></view></view>
-      <view class="dl-list-row"><view class="home-step">02</view><view class="dl-list-row__body"><view class="dl-list-row__title">阶段发现</view><view class="dl-list-row__desc">每章结束后，看看系统刚刚理解了什么</view></view></view>
-      <view class="dl-list-row"><view class="home-step">03</view><view class="dl-list-row__body"><view class="dl-list-row__title">完整关系说明书</view><view class="dl-list-row__desc">查看关系资源、内部拉扯、未知和具体依据</view></view></view>
-    </view>
+    <view class="section-title home-section-title">{{topicsTitle}}</view>
+    <view class="home-topics"><view wx:for="{{topics}}" wx:key="*this" class="home-topic">{{item}}</view></view>
   </view>
   <view class="home-pool-note">完成报告后，你可以选择了解后续访谈、模型研究或线下活动。它们不会影响你查看和修改自己的报告。</view>
 </view>
 
 <t-popup placement="bottom" visible="{{showGuide}}" bind:visible-change="handleGuideVisibleChange">
   <view class="sheet-content">
-    <view class="sheet-title">它会怎样分析？</view>
-    <view class="sheet-copy">本报告参考承诺准备、关系追求动机、成人依恋二维框架、伴侣回应性和冲突修复研究设计。</view>
-    <view class="sheet-copy">它不会根据一道题贴标签，不是心理诊断，也不会预测一段关系是否成功。</view>
+    <view class="sheet-title">{{guideTitle}}</view>
+    <view class="sheet-copy">{{guideBody}}</view>
+    <view class="sheet-copy">{{guideFocus}}</view>
     <view class="sheet-action"><button class="dl-button" bind:tap="closeGuide">知道了</button></view>
   </view>
 </t-popup>
 
 <t-popup placement="bottom" visible="{{showStorageChoice}}" bind:visible-change="handleStorageVisibleChange">
   <view class="sheet-content">
-    <view class="sheet-title">保存这次关系探索</view>
-    <view class="sheet-copy">保存到私密云端后，可以跨设备继续，并保留关系说明书和核对记录。后续研究或访谈需要单独授权。</view>
+    <view class="sheet-title">{{storageTitle}}</view>
+    <view class="sheet-copy">{{storageBody}}</view>
     <view class="sheet-action dl-stack">
-      <button class="dl-button" bind:tap="chooseCloudStorage">同意保存并继续</button>
-      <button class="dl-button dl-button--outline" bind:tap="chooseLocalStorage">仅保存在本机</button>
+      <button class="dl-button" bind:tap="chooseCloudStorage">{{storageCloudLabel}}</button>
+      <button class="dl-button dl-button--outline" bind:tap="chooseLocalStorage">{{storageLocalLabel}}</button>
     </view>
   </view>
 </t-popup>

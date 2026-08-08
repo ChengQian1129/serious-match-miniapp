@@ -1,28 +1,28 @@
 <view wx:if="{{claim}}" class="page page--with-action claim-page claim-enter">
   <view class="claim-header">
-    <view class="page-kicker">{{claim.label}} · {{claim.statusLabel}}</view>
+    <view class="page-kicker">{{claim.label}}</view>
     <view class="claim-title">{{claim.title}}</view>
     <view class="claim-text">{{claim.text}}</view>
-    <view class="claim-boundary"><view class="claim-boundary__label">判断边界</view><view>{{claim.boundary}}</view></view>
+    <view class="claim-boundary"><view class="claim-boundary__label">这句话不一定适用于所有时候</view><view>{{claim.boundary}}</view></view>
   </view>
 
   <view class="claim-section">
-    <view class="claim-section__title">支持这条描述的回答</view>
+    <view class="claim-section__title">为什么会有这句话</view>
     <view class="claim-evidence-list">
       <view wx:for="{{claim.evidence.supporting}}" wx:key="itemId" class="claim-evidence">
         <view class="claim-evidence__question">{{item.question}}</view>
         <view class="claim-evidence__answer">你的选择：{{item.answer}}</view>
       </view>
     </view>
-    <view wx:if="{{claim.evidence.contradicting.length}}" class="claim-evidence-list"><view class="claim-section__title">与它不完全一致的回答</view><view wx:for="{{claim.evidence.contradicting}}" wx:key="itemId" class="claim-evidence"><view class="claim-evidence__question">{{item.question}}</view><view class="claim-evidence__answer">你的选择：{{item.answer}}</view></view></view>
-    <view wx:if="{{claim.evidence.qualifying.length}}" class="claim-evidence-list"><view class="claim-section__title">需要结合情境理解的回答</view><view wx:for="{{claim.evidence.qualifying}}" wx:key="itemId" class="claim-evidence"><view class="claim-evidence__question">{{item.question}}</view><view class="claim-evidence__answer">你的选择：{{item.answer}}</view></view></view>
-    <view wx:if="{{claim.alternativeExplanations.length}}" class="claim-evidence-list"><view class="claim-section__title">其他可能解释</view><view wx:for="{{claim.alternativeExplanations}}" wx:key="*this" class="claim-evidence"><view class="claim-evidence__question">{{item}}</view></view></view>
-    <view wx:if="{{claim.verificationQuestions.length}}" class="claim-evidence-list"><view class="claim-section__title">可以继续核对的问题</view><view wx:for="{{claim.verificationQuestions}}" wx:key="*this" class="claim-evidence"><view class="claim-evidence__question">{{item}}</view></view></view>
-    <view class="claim-rule">规则 {{claim.reportRuleVersion || 'V2 固定规则'}} · 原始回答保持不变</view>
+    <view wx:if="{{claim.evidence.contradicting.length}}" class="claim-evidence-list"><view class="claim-section__title">但你也有这些不一样的回答</view><view wx:for="{{claim.evidence.contradicting}}" wx:key="itemId" class="claim-evidence"><view class="claim-evidence__question">{{item.question}}</view><view class="claim-evidence__answer">你的选择：{{item.answer}}</view></view></view>
+    <view wx:if="{{claim.evidence.qualifying.length}}" class="claim-evidence-list"><view class="claim-section__title">所以情况可能没这么简单</view><view wx:for="{{claim.evidence.qualifying}}" wx:key="itemId" class="claim-evidence"><view class="claim-evidence__question">{{item.question}}</view><view class="claim-evidence__answer">你的选择：{{item.answer}}</view></view></view>
+    <view wx:if="{{claim.alternativeExplanations.length}}" class="claim-evidence-list"><view class="claim-section__title">还有一种可能</view><view wx:for="{{claim.alternativeExplanations}}" wx:key="*this" class="claim-evidence"><view class="claim-evidence__question">{{item}}</view></view></view>
+    <view wx:if="{{claim.verificationQuestions.length}}" class="claim-evidence-list"><view class="claim-section__title">想想最近一次</view><view wx:for="{{claim.verificationQuestions}}" wx:key="*this" class="claim-evidence"><view class="claim-evidence__question">{{item}}</view></view></view>
+    <view class="claim-rule">方法信息 · 原始回答保持不变</view>
   </view>
 
   <view class="claim-section claim-section--feedback">
-    <view class="claim-section__title">这段描述接近你的真实感受吗？</view>
+    <view class="claim-section__title">像你吗？</view>
     <view class="claim-section__desc">你的反馈会单独保存，不会修改当时的原始回答。</view>
     <view class="choice-list claim-feedback-list">
       <button wx:for="{{feedbackOptions}}" wx:key="value" class="choice-option {{selectedFeedback === item.value ? 'choice-option--selected' : ''}}" data-value="{{item.value}}" bind:tap="chooseFeedback">
@@ -30,10 +30,8 @@
         <text wx:if="{{selectedFeedback === item.value}}" class="choice-option__check">✓</text>
       </button>
     </view>
-    <view class="claim-note-label">补充说明（选填）</view>
-    <textarea class="claim-note" value="{{feedbackNote}}" maxlength="200" auto-height placeholder="例如：只在重要话题中如此" bind:input="inputNote" />
-    <view class="claim-note-label">出现这种情况的情境（选填）</view>
-    <textarea class="claim-note" value="{{feedbackContext}}" maxlength="200" auto-height placeholder="例如：关系还没有明确的时候" bind:input="inputContext" />
+    <view class="claim-note-label">哪里不太对？也可以写一个具体的例子（选填）</view>
+    <textarea class="claim-note" value="{{feedbackNote}}" maxlength="200" auto-height placeholder="写下你想到的那次经历" bind:input="inputNote" />
     <view wx:if="{{cloudError}}" class="field-error claim-error">{{cloudError}}</view>
   </view>
 </view>

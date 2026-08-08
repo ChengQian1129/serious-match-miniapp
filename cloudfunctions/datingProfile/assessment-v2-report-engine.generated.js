@@ -1,6 +1,9 @@
 const { ITEMS, DIMENSIONS, INSTRUMENT_VERSION, optionsFor } = require('./assessment-v2-questionnaire-definitions')
 const { evaluateAssessment, SCORING_RULE_VERSION, missing, scored } = require('./assessment-v2-scoring-engine')
 const { rules, REPORT_RULE_VERSION } = require('./assessment-v2-report-rules')
+const CONTENT_VERSION = "relationship-manual-copy-1.0.0"
+const REPORT_COPY_VERSION = "relationship-manual-report-copy-1.0.0"
+const { resolveClaimCopy } = require('./assessment-v2-claim-copy.generated')
 
 function readPath(evaluation, path) {
   const parts = path.split('.')
@@ -81,16 +84,17 @@ function confidenceFor(supporting, contradicting, qualifying, qualityStatus) {
 }
 
 function claimFromSelectors(definition, answers, options = {}) {
-  const selectors = definition.selectors || {}
+  const source = Object.assign({}, definition, resolveClaimCopy(definition))
+  const selectors = source.selectors || {}
   const supportIds = [...new Set((selectors.supportSelectors || []).flatMap(selector => selectItemIds(selector, answers)))]
   const contradictionIds = [...new Set((selectors.contradictionSelectors || []).flatMap(selector => selectItemIds(selector, answers)))]
   const qualificationIds = [...new Set((selectors.qualificationSelectors || []).flatMap(selector => selectItemIds(selector, answers)))].filter(id => !supportIds.includes(id) && !contradictionIds.includes(id))
   const referencedIds = [...new Set([].concat(selectors.supportSelectors || [], selectors.contradictionSelectors || [], selectors.qualificationSelectors || []).flatMap(selectorItemIds))]
   const missingIds = referencedIds.filter(id => missing(answers[id]))
   const confidence = confidenceFor(supportIds, contradictionIds, qualificationIds, options.qualityStatus)
-  return Object.assign({}, definition, {
-    claimId: definition.id,
-    statement: definition.text,
+  return Object.assign({}, source, {
+    claimId: source.id,
+    statement: source.text,
     supportingItemIds: supportIds,
     contradictingItemIds: contradictionIds,
     qualifyingItemIds: qualificationIds,
@@ -106,6 +110,8 @@ function claimFromSelectors(definition, answers, options = {}) {
     instrumentVersion: INSTRUMENT_VERSION,
     scoringRuleVersion: SCORING_RULE_VERSION,
     reportRuleVersion: REPORT_RULE_VERSION,
+    contentVersion: CONTENT_VERSION,
+    reportCopyVersion: REPORT_COPY_VERSION,
     generatedAt: Number(options.generatedAt) || Date.now()
   })
 }
@@ -191,6 +197,8 @@ function buildReport(rawAnswers, options = {}) {
     instrumentVersion: INSTRUMENT_VERSION,
     scoringRuleVersion: SCORING_RULE_VERSION,
     reportRuleVersion: REPORT_RULE_VERSION,
+    contentVersion: CONTENT_VERSION,
+    reportCopyVersion: REPORT_COPY_VERSION,
     reportVersion: Number(options.reportVersion) || 1,
     generatedAt: Number(options.generatedAt) || Date.now(),
     title: shareFragments.length ? shareFragments.join(' · ') : '你的关系说明书正在形成',

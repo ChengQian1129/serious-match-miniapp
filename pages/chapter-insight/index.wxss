@@ -3,23 +3,24 @@
 .chapter-insight__chapter { margin-top: 18rpx; font-size: 48rpx; font-weight: 700; line-height: 1.2; }
 .chapter-insight__theme { margin-top: 16rpx; color: var(--dl-grey-500); font-size: 25rpx; line-height: 38rpx; }
 .chapter-insight__rule { width: 100%; height: 2rpx; margin: 52rpx 0 46rpx; background: var(--dl-black); }
-.chapter-insight__label { color: var(--dl-grey-500); font-size: 23rpx; line-height: 34rpx; }
+.chapter-insight__lead { margin-top: 52rpx; color: var(--dl-grey-500); font-size: 25rpx; line-height: 38rpx; }
 .chapter-insight__title { margin-top: 18rpx; font-size: 42rpx; font-weight: 700; line-height: 1.3; }
 .chapter-insight__text { margin-top: 24rpx; color: var(--dl-grey-700); font-size: 29rpx; line-height: 49rpx; }
 .chapter-insight__signals { margin-top: 42rpx; border-top: 2rpx solid var(--dl-grey-200); }
 .chapter-insight__signal { display: grid; grid-template-columns: 142rpx minmax(0, 1fr); column-gap: 22rpx; padding: 27rpx 0; border-bottom: 2rpx solid var(--dl-grey-200); }
 .chapter-insight__signal-label { color: var(--dl-grey-500); font-size: 22rpx; line-height: 38rpx; }
 .chapter-insight__signal-text { font-size: 26rpx; line-height: 40rpx; }
-.chapter-insight__impact { margin-top: 36rpx; padding: 30rpx 32rpx; background: var(--dl-grey-100); }
+.chapter-insight__nuance { margin-top: 36rpx; padding: 28rpx 0; border-top: 2rpx solid var(--dl-grey-200); border-bottom: 2rpx solid var(--dl-grey-200); }
 .chapter-insight__impact-label { color: var(--dl-grey-500); font-size: 21rpx; line-height: 32rpx; }
-.chapter-insight__impact-text { margin-top: 12rpx; font-size: 27rpx; line-height: 43rpx; }
-.chapter-insight__boundary { margin-top: 30rpx; color: var(--dl-grey-500); font-size: 23rpx; line-height: 38rpx; }
+.chapter-insight__nuance-text { font-size: 27rpx; line-height: 43rpx; }
+.chapter-insight__reflection { margin-top: 38rpx; font-size: 29rpx; font-weight: 600; line-height: 46rpx; }
 .chapter-insight__note { margin-top: 28rpx; color: var(--dl-grey-500); font-size: 23rpx; line-height: 38rpx; }
 .chapter-insight__evidence { margin-top: 16rpx; }
 .chapter-insight__evidence-toggle { width: 100%; padding: 16rpx 0; border: 0; background: transparent; color: var(--dl-grey-500); font-size: 24rpx; text-align: left; }
 .chapter-insight__evidence-list { border-top: 2rpx solid var(--dl-grey-200); }
 .chapter-insight__evidence-item { padding: 20rpx 0; border-bottom: 2rpx solid var(--dl-grey-200); font-size: 24rpx; line-height: 36rpx; }
 .chapter-insight__evidence-answer { margin-top: 6rpx; color: var(--dl-grey-500); }
+.chapter-insight__evidence-boundary { margin-top: 22rpx; padding-top: 20rpx; border-top: 2rpx solid var(--dl-grey-200); color: var(--dl-grey-500); font-size: 23rpx; line-height: 38rpx; }
 .chapter-insight__feedback-label { margin-top: 42rpx; color: var(--dl-grey-500); font-size: 24rpx; line-height: 36rpx; }
 .chapter-insight__feedback { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12rpx; margin-top: 14rpx; }
 .chapter-insight__feedback-option { min-height: 72rpx; padding: 12rpx 8rpx; border: 2rpx solid var(--dl-grey-200); border-radius: 0; background: transparent; color: var(--dl-black); font-size: 24rpx; }

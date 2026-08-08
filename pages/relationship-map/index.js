@@ -5,7 +5,15 @@ const { navigateOnce, resetNavigation } = require('../../utils/navigation')
 const { FEATURES } = require('../../utils/features')
 
 function reportGroups(report) {
-  return Object.keys(SECTION_LABELS).map(id => ({ id, title: SECTION_LABELS[id], claims: report.claims.filter(claim => claim.section === id) })).filter(group => group.claims.length)
+  const confirmations = report.userConfirmations || {}
+  return Object.keys(SECTION_LABELS).map(id => ({
+    id,
+    title: SECTION_LABELS[id],
+    claims: report.claims.filter(claim => claim.section === id).map(claim => Object.assign({}, claim, {
+      mapLabel: confirmations[claim.id] ? '你自己核对过' : '可以继续想想',
+      mapStatus: confirmations[claim.id] ? '这句话已经有你的回应' : '打开看看这句话怎么来的'
+    }))
+  })).filter(group => group.claims.length)
 }
 
 function versionDate(value) {
@@ -14,7 +22,7 @@ function versionDate(value) {
   return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`
 }
 
-const SECTION_LABELS = { overall: '当前关系状态', interaction: '靠近与不确定', resource: '安全与回应', provide: '需要与提供', tension: '冲突与修复', observation: '认识新的人时' }
+const SECTION_LABELS = { overall: '目前比较明显的', interaction: '靠近一个人时', resource: '你比较能做到的', provide: '你通常会给出的', tension: '容易卡住的地方', observation: '值得留意的动作' }
 
 Page({
   data: { report: null, claims: [], groups: [], confirmed: [], unknowns: [], history: [], isViewingHistory: false, showFollowup: FEATURES.followupParticipation },

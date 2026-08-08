@@ -1,6 +1,7 @@
 const { getChapter, getItem, optionsFor } = require('./questionnaire-definitions')
 const { evaluateAssessment, scored, missing } = require('./scoring-engine')
 const { buildReport } = require('./report-engine')
+const { getChapterCopy, CONTENT_VERSION } = require('../../shared/content/chapter-copy')
 
 const PRESENT = new Set(['strong_present', 'lean_present'])
 const LESS = new Set(['strong_less', 'lean_less'])
@@ -126,12 +127,14 @@ function buildChapterInsight(chapterId, answers) {
   const sourceSet = new Set(chapter.itemIds)
   const relevant = report.allClaimCandidates.filter(claim => [].concat(claim.supportingItemIds || [], claim.contradictingItemIds || [], claim.qualifyingItemIds || []).some(id => sourceSet.has(id))).slice(0, 3)
   const narrative = chapterNarrative(chapterId, evaluation)
+  const copy = getChapterCopy(chapterId)
   return Object.assign({
     chapterId,
+    contentVersion: CONTENT_VERSION,
     boundary: '这是根据你此刻的自述形成的阶段判断，不是固定人格，也不是心理诊断。',
     evidence: answerEvidence(chapter, answers),
     claims: relevant
-  }, narrative)
+  }, copy, narrative)
 }
 
 module.exports = { buildChapterInsight }

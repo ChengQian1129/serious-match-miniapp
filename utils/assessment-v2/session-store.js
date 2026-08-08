@@ -3,6 +3,7 @@ const { SCORING_RULE_VERSION } = require('./scoring-engine')
 const { REPORT_RULE_VERSION } = require('./report-rules')
 const { buildReport } = require('./report-engine')
 const { assessResponseQuality } = require('./quality-engine')
+const { CONTENT_VERSION } = require('../../shared/content/version')
 
 const SESSION_KEY = 'serious_match_assessment_v2'
 const REPORT_KEY = 'serious_match_report_v2'
@@ -110,7 +111,7 @@ function saveChapterInsightFeedback(chapterId, value, note = '') {
   const session = getSession()
   if (!session.completedChapters.includes(chapterId)) throw new Error('这一章还没有完成')
   const chapterFeedback = Object.assign({}, session.chapterFeedback, {
-    [chapterId]: { value, note: String(note || '').slice(0, 200), reviewedAt: Date.now() }
+    [chapterId]: { value, note: String(note || '').slice(0, 200), reviewedAt: Date.now(), contentVersion: CONTENT_VERSION }
   })
   return saveSession(Object.assign({}, session, { chapterFeedback, status: 'pending_cloud', updatedAt: Date.now() }))
 }
@@ -158,7 +159,8 @@ function saveClaimFeedback(claimId, value, note = '', context = '') {
     supersedesFeedbackId: previous ? previous.eventId : null,
     pendingCloud: shouldSyncAssessment(),
     instrumentVersion: report.instrumentVersion,
-    reportRuleVersion: report.reportRuleVersion
+    reportRuleVersion: report.reportRuleVersion,
+    contentVersion: report.contentVersion || CONTENT_VERSION
   }
   feedbackEvents.push(event)
   const next = Object.assign({}, report, { feedbackEvents, userConfirmations: confirmationsFromEvents(feedbackEvents) })

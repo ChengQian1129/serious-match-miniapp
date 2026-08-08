@@ -5,9 +5,10 @@ const { getStatusBarHeight } = require('../../utils/window')
 const { acceptNavigationTap, getMotionClass, showQuestion } = require('../../utils/question-flow')
 const { navigateOnce, resetNavigation } = require('../../utils/navigation')
 const { recordEvent } = require('../../utils/storage')
+const { getChapterCopy, CONTENT_VERSION } = require('../../shared/content/chapter-copy')
 
 Page({
-  data: { statusBarHeight: getStatusBarHeight(), moduleTitle: '', moduleInstruction: '', currentQuestion: 0, questionNumber: 1, questionCount: 8, progress: 0, item: null, dimensionTitle: '', responseOptions: [], specialOptions: [], selectedValue: '', canContinue: false, continueLabel: '继续', motionClass: '' },
+  data: { statusBarHeight: getStatusBarHeight(), contentVersion: CONTENT_VERSION, moduleTitle: '', moduleInstruction: '', chapterIntro: null, showChapterIntro: false, currentQuestion: 0, questionNumber: 1, questionCount: 8, progress: 0, item: null, dimensionTitle: '', responseOptions: [], specialOptions: [], selectedValue: '', canContinue: false, continueLabel: '继续', motionClass: '' },
 
   onLoad(query) {
     this.chapterId = query.chapter || getSession().currentChapterId || 'C1'
@@ -17,7 +18,7 @@ Page({
     const requested = Number(query.question)
     const firstUnanswered = this.chapter.itemIds.findIndex(id => !(id in this.session.answers))
     const index = Number.isInteger(requested) && requested >= 0 && requested < 8 ? requested : (firstUnanswered >= 0 ? firstUnanswered : 0)
-    this.setData(Object.assign({ moduleTitle: this.chapter.title, moduleInstruction: this.chapter.instruction, questionCount: 8, currentQuestion: index, motionClass: getMotionClass(query.direction) }, this.getQuestionState(index)))
+    this.setData(Object.assign({ moduleTitle: this.chapter.title, moduleInstruction: this.chapter.instruction, chapterIntro: getChapterCopy(this.chapterId), questionCount: 8, currentQuestion: index, showChapterIntro: index === 0, motionClass: getMotionClass(query.direction) }, this.getQuestionState(index)))
     recordEvent('assessment_v2_chapter_start', { chapterId: this.chapterId, resumed: Boolean(Object.keys(this.session.answers).length) })
   },
 
@@ -31,7 +32,7 @@ Page({
     const item = getItem(this.chapter.itemIds[index])
     const options = optionsFor(item)
     const selectedValue = this.session.answers[item.id] === undefined ? '' : this.session.answers[item.id]
-    return { item, dimensionTitle: item.role === 'profile' ? '关系档案线索' : '当前正在了解的主题', questionNumber: index + 1, progress: (index + 1) / 8, responseOptions: options.filter(option => typeof option.value === 'number'), specialOptions: options.filter(option => typeof option.value !== 'number'), selectedValue, canContinue: selectedValue !== '', continueLabel: index === 7 ? '查看阶段发现' : '继续' }
+    return { item, dimensionTitle: item.role === 'profile' ? '关系档案线索' : '当前正在了解的主题', showChapterIntro: index === 0, questionNumber: index + 1, progress: (index + 1) / 8, responseOptions: options.filter(option => typeof option.value === 'number'), specialOptions: options.filter(option => typeof option.value !== 'number'), selectedValue, canContinue: selectedValue !== '', continueLabel: index === 7 ? '看这一组答出了什么' : '继续' }
   },
 
   chooseAnswer(event) { this.commitAnswer(event.currentTarget.dataset.value) },

@@ -4,14 +4,12 @@
     <view wx:for="{{sections}}" wx:key="id" class="report-section">
       <view class="report-section__title">{{item.title}}</view>
       <view wx:for="{{item.claims}}" wx:key="id" class="report-claim" data-id="{{item.id}}" bind:tap="openClaim">
-        <view class="report-claim__title">{{item.title}}</view><view class="report-claim__text">{{item.text}}</view><view class="report-claim__meta">{{item.evidence.supporting.length}} 项支持依据 · {{item.confirmationLabel || (item.confidence.level === 'strong' ? '多题支持' : '需要核对')}} <text class="dl-chevron">›</text></view>
+        <view class="report-claim__title">{{item.title}}</view><view class="report-claim__text">{{item.text}}</view><view class="report-claim__meta">{{item.confirmationLabel || '打开看看这句话怎么来的'}} <text class="dl-chevron">›</text></view>
       </view>
     </view>
-    <view wx:if="{{unknowns.length}}" class="report-unknowns"><view class="report-section__title">目前还不知道什么</view><view wx:for="{{unknowns}}" wx:key="id" class="report-unknown"><view class="report-unknown__title">{{item.title}}</view><view>{{item.text}}</view></view></view>
-    <view class="report-boundary">这份报告来自你的当前自述。它能帮助你整理关系需要，但不能替代真实相处，也不能预测一段关系一定成功。</view>
-    <view wx:if="{{shareFragments.length}}" class="report-share"><view class="report-section__title">可以分享的相处线索</view><view wx:for="{{shareFragments}}" wx:key="*this" class="report-share__item">{{item}}</view></view>
-    <button class="dl-button report-share-button" bind:tap="openShare">生成我的相处名片{{shareableCount ? ' · ' + shareableCount + ' 条已核对' : ''}}</button>
-    <view class="report-revise-block"><view class="report-section__title">修改某一章的回答</view><view class="report-chapters"><button wx:for="{{chapters}}" wx:key="id" class="report-chapter" data-chapter="{{item.id}}" bind:tap="reviseChapter"><text>{{item.id}}</text><text>{{item.title}}</text></button></view></view>
+    <view wx:if="{{unknowns.length}}" class="report-unknowns"><view class="report-section__title">暂时还说不清的</view><view wx:for="{{unknowns}}" wx:key="id" class="report-unknown"><view class="report-unknown__title">{{item.title}}</view><view>{{item.text}}</view></view></view>
+    <view class="report-boundary">这份说明书来自你的自我回答，不是心理诊断。它能帮你整理关系需要，但不能替代真实相处，也不能预测一段关系一定成功。</view>
+    <view class="report-revise-block"><view class="report-section__title">想改哪一组回答？</view><view class="report-chapters"><button wx:for="{{chapters}}" wx:key="id" class="report-chapter" data-chapter="{{item.id}}" bind:tap="reviseChapter"><text>{{item.id}}</text><text>{{item.title}}</text></button></view></view>
     <button class="report-delete" disabled="{{isDeleting}}" bind:tap="requestDeleteReport">删除这份关系说明书</button>
     <button class="dl-button dl-button--outline" bind:tap="openMap">查看我的关系底图</button>
     <button wx:if="{{showFollowup}}" class="dl-button dl-button--outline" bind:tap="openFollowup">了解后续访谈与活动</button>
