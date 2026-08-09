@@ -1,5 +1,5 @@
-.compare-page { padding: 58rpx 40rpx calc(64rpx + env(safe-area-inset-bottom)); }
-.compare-title { max-width: 650rpx; margin-top: 18rpx; font-size: 48rpx; font-weight: 700; line-height: 1.25; }
+.compare-page { padding: 58rpx var(--dl-gutter) calc(64rpx + env(safe-area-inset-bottom)); }
+.compare-title { width: 100%; max-width: none; min-width: 0; margin-top: 18rpx; font-size: 48rpx; font-weight: 700; line-height: 1.25; }
 .compare-desc { margin-top: 22rpx; color: var(--dl-grey-500); font-size: 25rpx; line-height: 42rpx; }
 .compare-panel, .compare-result { margin-top: 52rpx; padding-top: 34rpx; border-top: 2rpx solid var(--dl-black); }
 .compare-panel__title, .compare-section__title { font-size: 30rpx; font-weight: 700; line-height: 42rpx; }

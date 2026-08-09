@@ -3,7 +3,7 @@
 }
 
 .contact-form {
-  padding: 0 40rpx;
+  padding: 0 var(--dl-gutter);
 }
 
 .phone-field {
@@ -86,7 +86,7 @@
 }
 
 .confirmation-list {
-  margin: 0 40rpx;
+  margin: 0 var(--dl-gutter);
 }
 
 .confirmation-row {
@@ -138,11 +138,11 @@
 }
 
 .contact-error {
-  padding-right: 40rpx;
-  padding-left: 40rpx;
+  padding-right: var(--dl-gutter);
+  padding-left: var(--dl-gutter);
 }
 
-.contact-eligibility { margin: 20rpx 40rpx 28rpx; padding: 28rpx 0; border-top: 2rpx solid var(--dl-black); border-bottom: 2rpx solid var(--dl-black); }
+.contact-eligibility { margin: 20rpx var(--dl-gutter) 28rpx; padding: 28rpx 0; border-top: 2rpx solid var(--dl-black); border-bottom: 2rpx solid var(--dl-black); }
 .contact-eligibility__title { font-size: 29rpx; font-weight: 700; line-height: 42rpx; }
 .contact-eligibility__text { margin-top: 10rpx; color: var(--dl-grey-500); font-size: 25rpx; line-height: 40rpx; }
 
@@ -151,10 +151,10 @@
   min-height: 112rpx;
   align-items: center;
   justify-content: space-between;
-  margin: 36rpx 40rpx 0;
-  width: calc(100% - 80rpx);
-  min-width: calc(100% - 80rpx);
-  max-width: calc(100% - 80rpx);
+  margin: 36rpx var(--dl-gutter) 0;
+  width: auto;
+  min-width: 0;
+  max-width: none;
   padding: 0;
   border-radius: 0;
   border-bottom: 2rpx solid #dedede;

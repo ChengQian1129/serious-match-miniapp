@@ -3,7 +3,7 @@
   min-height: 100vh;
   flex-direction: column;
   justify-content: center;
-  padding: 64rpx 40rpx calc(64rpx + env(safe-area-inset-bottom));
+  padding: 64rpx var(--dl-gutter) calc(64rpx + env(safe-area-inset-bottom));
 }
 
 .success-symbol {
@@ -34,6 +34,7 @@
 }
 
 .success-actions {
+  width: 100%;
   margin-top: 60rpx;
 }
 

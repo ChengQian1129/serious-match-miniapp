@@ -1,4 +1,5 @@
 page {
+  --dl-gutter: 32rpx;
   --dl-black: #0a0a0a;
   --dl-white: #ffffff;
   --dl-grey-50: #f7f7f7;
@@ -48,7 +49,7 @@ button::after {
 }
 
 .page-header {
-  padding: 76rpx 40rpx 52rpx;
+  padding: 76rpx var(--dl-gutter) 52rpx;
 }
 
 .page-kicker {
@@ -59,7 +60,9 @@ button::after {
 }
 
 .page-title {
-  max-width: 650rpx;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
   margin-top: 14rpx;
   font-size: 52rpx;
   font-weight: 700;
@@ -67,7 +70,9 @@ button::after {
 }
 
 .page-desc {
-  max-width: 650rpx;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
   margin-top: 22rpx;
   color: var(--dl-grey-500);
   font-size: 29rpx;
@@ -75,7 +80,7 @@ button::after {
 }
 
 .section-title {
-  margin: 72rpx 40rpx 26rpx;
+  margin: 72rpx var(--dl-gutter) 26rpx;
   color: var(--dl-grey-500);
   font-size: 24rpx;
   font-weight: 500;
@@ -87,7 +92,7 @@ button::after {
 }
 
 .section-note {
-  padding: 20rpx 40rpx 0;
+  padding: 20rpx var(--dl-gutter) 0;
   color: var(--dl-grey-500);
   font-size: 24rpx;
   line-height: 38rpx;
@@ -96,6 +101,7 @@ button::after {
 .dl-button {
   display: flex;
   width: 100%;
+  max-width: none;
   min-height: 104rpx;
   align-items: center;
   justify-content: center;
@@ -144,8 +150,15 @@ button::after {
   margin-top: 16rpx;
 }
 
+.dl-stack,
+.action-bar > view,
+.action-bar > .dl-button,
+.action-bar > view > .dl-button {
+  width: 100%;
+}
+
 .dl-list {
-  margin: 0 40rpx;
+  margin: 0 var(--dl-gutter);
   border-top: 2rpx solid var(--dl-grey-200);
 }
 
@@ -197,7 +210,7 @@ button::after {
 }
 
 .dl-list-row__value {
-  max-width: 42%;
+  max-width: 48%;
   flex: 0 1 auto;
   color: var(--dl-grey-500);
   font-size: 25rpx;
@@ -219,7 +232,7 @@ button::after {
   right: 0;
   bottom: 0;
   left: 0;
-  padding: 24rpx calc(40rpx + env(safe-area-inset-right)) calc(24rpx + env(safe-area-inset-bottom)) calc(40rpx + env(safe-area-inset-left));
+  padding: 24rpx calc(var(--dl-gutter) + env(safe-area-inset-right)) calc(24rpx + env(safe-area-inset-bottom)) calc(var(--dl-gutter) + env(safe-area-inset-left));
   border-top: 2rpx solid var(--dl-grey-100);
   background: rgba(255, 255, 255, 0.98);
 }
@@ -235,13 +248,13 @@ button::after {
 }
 
 .question-top {
-  padding: 18rpx 40rpx 0;
+  padding: 18rpx var(--dl-gutter) 0;
 }
 
 .question-top__row {
   display: grid;
   min-height: 72rpx;
-  grid-template-columns: 136rpx 1fr 136rpx;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
 }
 
@@ -250,11 +263,16 @@ button::after {
   height: 64rpx;
   align-items: center;
   padding: 0;
+  min-width: 0;
+  max-width: 100%;
   border: 0;
   background: transparent;
   color: var(--dl-black);
   font-size: 25rpx;
   font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .question-back__icon {
@@ -264,6 +282,8 @@ button::after {
 }
 
 .question-top__title {
+  min-width: 0;
+  max-width: 100%;
   overflow: hidden;
   font-size: 25rpx;
   font-weight: 600;
@@ -273,8 +293,8 @@ button::after {
 }
 
 .question-top__count {
-  width: 76rpx;
-  flex: 0 0 76rpx;
+  min-width: 0;
+  justify-self: end;
   color: var(--dl-grey-500);
   font-size: 24rpx;
   text-align: right;
@@ -302,7 +322,7 @@ button::after {
 }
 
 .question-content {
-  padding: 88rpx 40rpx 56rpx;
+  padding: 88rpx var(--dl-gutter) 56rpx;
   opacity: 1;
   transform: translateX(0);
 }
@@ -345,7 +365,9 @@ button::after {
 }
 
 .question-title {
-  max-width: 650rpx;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
   margin-top: 10rpx;
   font-size: 48rpx;
   font-weight: 700;
@@ -353,7 +375,9 @@ button::after {
 }
 
 .question-desc {
-  max-width: 650rpx;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
   margin-top: 16rpx;
   color: var(--dl-grey-500);
   font-size: 28rpx;
@@ -532,8 +556,8 @@ button::after {
 }
 
 .info-block {
-  margin: 0 40rpx;
-  padding: 40rpx;
+  margin: 0 var(--dl-gutter);
+  padding: 32rpx;
   border: 2rpx solid var(--dl-black);
   border-radius: 8rpx;
   background: var(--dl-white);
@@ -598,14 +622,14 @@ button::after {
 }
 
 .sheet-title {
-  padding: 0 40rpx 26rpx;
+  padding: 0 var(--dl-gutter) 26rpx;
   font-size: 34rpx;
   font-weight: 700;
   line-height: 48rpx;
 }
 
 .sheet-action {
-  padding: 24rpx 40rpx 0;
+  padding: 24rpx var(--dl-gutter) 0;
 }
 
 .inline-link {
@@ -616,6 +640,7 @@ button::after {
 
 @media (max-width: 360px) {
   page {
+    --dl-gutter: 28rpx;
     font-size: 15px;
   }
 

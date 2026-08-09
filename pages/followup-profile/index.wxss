@@ -1,6 +1,6 @@
 .followup-profile { padding-bottom: calc(300rpx + env(safe-area-inset-bottom)); }
 .followup-copy-text { white-space: pre-line; }
-.followup-form { margin: 0 40rpx; }
+.followup-form { margin: 0 var(--dl-gutter); }
 .followup-form .dl-input-wrap + .dl-input-wrap { margin-top: 16rpx; }
 .contact-channel-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16rpx; margin-top: 14rpx; }
 .contact-channel { min-height: 88rpx; margin: 0; padding: 18rpx 12rpx; border: 2rpx solid var(--dl-grey-200); border-radius: 4rpx; background: var(--dl-white); color: var(--dl-black); font-size: 25rpx; line-height: 44rpx; }

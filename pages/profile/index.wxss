@@ -3,7 +3,7 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 24rpx;
-  padding: 68rpx 40rpx 46rpx;
+  padding: 68rpx var(--dl-gutter) 46rpx;
 }
 
 .profile-heading {
@@ -11,7 +11,9 @@
 }
 
 .profile-name {
-  max-width: 560rpx;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
   margin-top: 12rpx;
   overflow: hidden;
   font-size: 56rpx;

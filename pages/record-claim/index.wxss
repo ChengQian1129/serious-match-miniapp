@@ -12,7 +12,7 @@
 }
 
 .claim-header {
-  padding: 58rpx 40rpx 54rpx;
+  padding: 58rpx var(--dl-gutter) 54rpx;
   border-bottom: 2rpx solid var(--dl-black);
 }
 
@@ -36,7 +36,7 @@
 .claim-text { margin-top: 22rpx; font-size: 29rpx; line-height: 48rpx; white-space: pre-line; }
 .claim-boundary { margin-top: 28rpx; padding-top: 20rpx; border-top: 2rpx solid var(--dl-grey-200); color: var(--dl-grey-500); font-size: 24rpx; line-height: 38rpx; }
 
-.claim-section { padding: 0 40rpx; }
+.claim-section { padding: 0 var(--dl-gutter); }
 .claim-evidence-toggle { display: flex; width: 100%; align-items: center; justify-content: space-between; margin: 0; padding: 30rpx 0; border: 0; border-bottom: 2rpx solid var(--dl-grey-200); border-radius: 0; background: transparent; color: var(--dl-black); font-size: 27rpx; line-height: 40rpx; text-align: left; }
 .claim-evidence-toggle .dl-chevron { color: var(--dl-grey-500); font-size: 34rpx; }
 .claim-evidence-panel { padding-bottom: 18rpx; }
@@ -50,8 +50,8 @@
 .claim-back-action { display: block; width: 100%; margin: 0; padding: 16rpx 0; border: 0; border-radius: 0; background: transparent; color: var(--dl-grey-500); font-size: 25rpx; line-height: 40rpx; }
 
 @media (max-width: 360px) {
-  .claim-header { padding: 46rpx 32rpx 44rpx; }
-  .claim-section { padding-right: 32rpx; padding-left: 32rpx; }
+  .claim-header { padding-top: 46rpx; padding-bottom: 44rpx; }
+  .claim-section { padding-right: var(--dl-gutter); padding-left: var(--dl-gutter); }
   .claim-title { font-size: 34px; }
   .claim-text { font-size: 16px; line-height: 26px; }
 }

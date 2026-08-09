@@ -1,4 +1,4 @@
-.share-page { padding: 58rpx 40rpx calc(60rpx + env(safe-area-inset-bottom)); }
+.share-page { padding: 58rpx var(--dl-gutter) calc(60rpx + env(safe-area-inset-bottom)); }
 .share-title { margin-top: 18rpx; font-size: 50rpx; font-weight: 700; line-height: 1.2; }
 .share-desc { margin-top: 22rpx; color: var(--dl-grey-500); font-size: 25rpx; line-height: 42rpx; }
 .share-options { margin-top: 44rpx; border-top: 2rpx solid var(--dl-black); }

@@ -7,7 +7,7 @@
 }
 
 .privacy-callout {
-  margin: 0 40rpx;
+  margin: 0 var(--dl-gutter);
   padding: 28rpx;
   border: 2rpx solid #0a0a0a;
   border-radius: 8rpx;

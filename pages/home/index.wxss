@@ -2,7 +2,7 @@
   display: flex;
   min-height: 760rpx;
   flex-direction: column;
-  padding: 42rpx 40rpx 52rpx;
+  padding: 42rpx var(--dl-gutter) 52rpx;
 }
 
 .home-wordmark {
@@ -43,7 +43,9 @@
 }
 
 .home-title {
-  max-width: 640rpx;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
   margin-top: 14rpx;
   font-size: 64rpx;
   font-weight: 700;
@@ -51,7 +53,9 @@
 }
 
 .home-desc {
-  max-width: 640rpx;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
   margin-top: 22rpx;
   color: #666666;
   font-size: 27rpx;
@@ -59,6 +63,7 @@
 }
 
 .home-actions {
+  width: 100%;
   margin-top: 48rpx;
 }
 
@@ -67,9 +72,9 @@
   border-top: 2rpx solid #dedede;
 }
 
-.home-example { margin: 0 40rpx 54rpx; padding: 30rpx 0 34rpx; border-top: 2rpx solid var(--dl-black); border-bottom: 2rpx solid var(--dl-black); }
+.home-example { margin: 0 var(--dl-gutter) 54rpx; padding: 30rpx 0 34rpx; border-top: 2rpx solid var(--dl-black); border-bottom: 2rpx solid var(--dl-black); }
 .home-example__text { margin-top: 18rpx; font-size: 30rpx; line-height: 50rpx; }
-.home-topics { margin: 24rpx 40rpx 0; }
+.home-topics { margin: 24rpx var(--dl-gutter) 0; }
 .home-topic { padding: 18rpx 0; border-bottom: 2rpx solid var(--dl-grey-200); font-size: 27rpx; line-height: 40rpx; }
 
 .home-section-title {
@@ -93,7 +98,7 @@
 }
 
 .home-pool-note {
-  padding: 38rpx 40rpx calc(56rpx + env(safe-area-inset-bottom));
+  padding: 38rpx var(--dl-gutter) calc(56rpx + env(safe-area-inset-bottom));
   border-top: 2rpx solid var(--dl-grey-200);
   color: var(--dl-grey-500);
   font-size: 24rpx;

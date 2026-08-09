@@ -18,7 +18,7 @@
 }
 
 .map-header {
-  padding: 76rpx 40rpx 62rpx;
+  padding: 76rpx var(--dl-gutter) 62rpx;
   border-bottom: 2rpx solid var(--dl-black);
 }
 
@@ -37,7 +37,9 @@
 }
 
 .map-intro {
-  max-width: 650rpx;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
   margin-top: 14rpx;
   color: var(--dl-grey-500);
   font-size: 26rpx;
@@ -46,7 +48,7 @@
 }
 
 .map-section {
-  padding: 58rpx 40rpx 0;
+  padding: 58rpx var(--dl-gutter) 0;
 }
 
 .map-section__heading {
@@ -98,7 +100,7 @@
 
 .map-fact {
   display: grid;
-  grid-template-columns: 180rpx minmax(0, 1fr);
+  grid-template-columns: minmax(120rpx, 0.34fr) minmax(0, 1fr);
   gap: 6rpx 24rpx;
   padding: 30rpx 0;
   border-bottom: 2rpx solid var(--dl-grey-200);
@@ -156,7 +158,8 @@
 }
 
 .map-claim__topline {
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 4rpx;
 }
 
 .map-claim__label,
@@ -173,9 +176,9 @@
 }
 
 .map-claim__status {
-  max-width: 56%;
+  max-width: none;
   flex: 0 1 auto;
-  text-align: right;
+  text-align: left;
   overflow-wrap: anywhere;
 }
 
@@ -233,7 +236,7 @@
 
 .map-next {
   margin-top: 72rpx;
-  padding: 54rpx 40rpx calc(58rpx + env(safe-area-inset-bottom));
+  padding: 54rpx var(--dl-gutter) calc(58rpx + env(safe-area-inset-bottom));
   background: var(--dl-black);
   color: var(--dl-white);
 }
@@ -277,8 +280,8 @@
 }
 
 .map-section--other {
-  padding-right: 0;
-  padding-left: 0;
+  padding-right: var(--dl-gutter);
+  padding-left: var(--dl-gutter);
 }
 
 .map-other-title {
@@ -313,18 +316,6 @@
     margin-top: 8rpx;
   }
 
-  .map-claim__topline {
-    display: flex;
-    flex-direction: column;
-    gap: 4rpx;
-  }
-
-  .map-claim__status {
-    display: block;
-    max-width: none;
-    text-align: left;
-  }
-
   .map-section__title {
     font-size: 18px;
     line-height: 23px;
@@ -332,15 +323,5 @@
 }
 
 @media (min-width: 361px) and (max-width: 420px) {
-  .map-claim__topline {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4rpx;
-  }
-
-  .map-claim__status {
-    max-width: 100%;
-    text-align: left;
-  }
+  .map-fact { grid-template-columns: minmax(112rpx, 0.3fr) minmax(0, 1fr); }
 }

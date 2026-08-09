@@ -1,4 +1,4 @@
-.followup-intro { padding: 40rpx 40rpx 72rpx; }
+.followup-intro { padding: 40rpx var(--dl-gutter) 72rpx; }
 .followup-list { margin-top: 40rpx; }
 .followup-actions { margin-top: 48rpx; }
 .followup-copy-text, .followup-safety { white-space: pre-line; }
