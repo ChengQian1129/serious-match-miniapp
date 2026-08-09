@@ -21,7 +21,7 @@
     "normative/report_runtime_schema.yaml": "0a1419c8e5684c2ef7a61eb71390cfabe5c1d79bc3d9d8b180a647a2d517a6b4",
     "normative/response_formats.yaml": "dc51247ecb986515e73f46cb70b0115c4dcc7ce0d899f4616d1958147d4d8f7b",
     "normative/user_report_authoring_library.yaml": "fb83ba15ddb901a37c65006547da73f6d24520a43eec0e2aa9da7535701d1ce1",
-    "pilot/P0_cognitive_interview_guide.md": "04183b970eb414fc619edde0ab65a1a63ba433d2c9cca5abcd9a1c25dd7e8fe4",
+    "pilot/P0_cognitive_interview_guide.md": "8861ea4510e463ba13f9272c288b3fabe71e1165a540243268743587aa627e5c",
     "pilot/P0_questionnaire_spec.yaml": "a645a13c697d2394f8806518836308ec9a53a8a0b392bce00d399148a766342f",
     "pilot/P1_common_spine.yaml": "be7f3df8c9e067be025097286b09b6f5136b68688dc69e3664049b7e025ab1ee",
     "pilot/P1_form_A.yaml": "904f1a238d398c6cf7f390b5d4b9c67ac75e3b0c1bb68795b5b7a32ac455af31",
@@ -29,9 +29,9 @@
     "pilot/P1_form_C.yaml": "f697a7fd3169c641c1801b409ad90774f49a1c0b56e49915e51f81445e7ebcff",
     "pilot/P1_form_manifest.yaml": "2c604263d4d9327dd850b2f4c8c9a3269acb6f8436db999404abf3642b1b9c17",
     "pilot/active_branch_rules.yaml": "0fb80f1854ba0e18df74a294ad9f069a3a62a47df97385b7a0aab7f1449bd2d6",
-    "pilot/pilot_analysis_plan.md": "ac44b03ea6820fe6e7e7a985cc5f0e364b63b5978d3cd44796481b254b6b9f40",
-    "pilot/pilot_blueprint.md": "a171f77c75091e7d3ad603fa58ab7fbbb1ee24aa80582cda1b1fc9baec66fdbb",
-    "pilot/pilot_pruning_calibration.md": "0490df8e844bf2140d9e6faebec8f0c2b1e6b9994c2537a627aae39f8e51d5dc"
+    "pilot/pilot_analysis_plan.md": "1cc8197c8ed547a398f86d7c853d1420eca0b36253b88859a8e67b6e592f5a31",
+    "pilot/pilot_blueprint.md": "bd3611d73deab451a85bdc37ee8fd09e282ce7b5a812f1c5be7e707c7daa27f8",
+    "pilot/pilot_pruning_calibration.md": "198d8abf577b2dd4049fdf9e611e40207ee440df8a3b912c6fa208cf17c144f5"
   },
   "counts": {
     "candidateParentTasks": 411,
