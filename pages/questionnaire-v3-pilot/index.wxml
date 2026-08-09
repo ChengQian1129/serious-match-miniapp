@@ -1,0 +1,104 @@
+<view wx:if="{{loaded && !completed && task}}" class="question-page v3-pilot-page">
+  <view class="question-top v3-pilot-top">
+    <view class="question-top__row">
+      <button class="question-back" aria-label="{{canPrevious ? '返回上一题' : '退出研究 Pilot'}}" bind:tap="handlePrevious">
+        <text class="question-back__icon">‹</text>{{canPrevious ? '返回上一题' : '退出'}}
+      </button>
+      <view class="question-top__title">关系说明书 · 研究 Pilot</view>
+      <view class="question-top__count">{{progressText}}</view>
+    </view>
+    <view class="question-progress-row">
+      <view class="question-progress" aria-label="已完成 {{progressText}} 个任务">
+        <view class="question-progress__bar" style="transform: scaleX({{progressRatio}});"></view>
+      </view>
+    </view>
+  </view>
+
+  <view class="v3-pilot-content {{motionClass}}">
+    <view class="v3-pilot-meta">
+      <text class="v3-pilot-eyebrow">{{formLabel}}</text>
+      <text class="v3-pilot-task-count">{{task.accounted}} / {{task.expectedCount}} 项</text>
+    </view>
+    <view class="v3-pilot-section">{{task.section}}</view>
+    <view class="v3-pilot-title">{{task.prompt}}</view>
+    <view wx:if="{{task.isCompound}}" class="v3-pilot-context">这是一个情境题，请分别回答下面的每一项。</view>
+
+    <view class="v3-response-list">
+      <view wx:for="{{task.items}}" wx:key="itemId" wx:for-item="responseItem" class="v3-response">
+        <view wx:if="{{task.isCompound}}" class="v3-response__prompt">{{responseItem.prompt}}</view>
+
+        <view wx:if="{{responseItem.response.type === 'single_select' || responseItem.response.type === 'multi_select'}}" class="v3-options">
+          <button
+            wx:for="{{responseItem.response.options}}"
+            wx:key="code"
+            wx:for-item="option"
+            class="v3-option {{option.selected ? 'v3-option--selected' : ''}} {{option.isMissing ? 'v3-option--missing' : ''}}"
+            data-item-id="{{responseItem.itemId}}"
+            data-code="{{option.code}}"
+            data-missing-code="{{option.missingCode}}"
+            aria-role="{{responseItem.response.type === 'multi_select' ? 'checkbox' : 'radio'}}"
+            aria-checked="{{option.selected}}"
+            bind:tap="chooseOption"
+          >
+            <text class="v3-option__marker">{{option.selected ? (responseItem.response.type === 'multi_select' ? '✓' : '●') : (responseItem.response.type === 'multi_select' ? '□' : '○')}}</text>
+            <text class="v3-option__label">{{option.label}}</text>
+          </button>
+        </view>
+
+        <view wx:elif="{{responseItem.response.type === 'number' || responseItem.response.type === 'free_text'}}" class="v3-field">
+          <input
+            wx:if="{{responseItem.response.type === 'number'}}"
+            class="v3-input"
+            type="number"
+            value="{{responseItem.response.value}}"
+            placeholder="{{responseItem.response.placeholder}}"
+            data-item-id="{{responseItem.itemId}}"
+            bind:input="inputValue"
+            bind:blur="commitInput"
+            cursor-spacing="28"
+          />
+          <textarea
+            wx:else
+            class="v3-textarea"
+            value="{{responseItem.response.value}}"
+            maxlength="{{responseItem.response.maxLength}}"
+            placeholder="{{responseItem.response.placeholder}}"
+            data-item-id="{{responseItem.itemId}}"
+            bind:input="inputValue"
+            bind:blur="commitInput"
+            cursor-spacing="28"
+          />
+          <view wx:if="{{responseItem.response.unit || responseItem.response.hint}}" class="v3-field__hint">
+            <text wx:if="{{responseItem.response.unit}}">单位：{{responseItem.response.unit}}</text>
+            <text wx:if="{{responseItem.response.hint}}">{{responseItem.response.hint}}</text>
+          </view>
+        </view>
+
+        <view wx:if="{{responseItem.response.missing}}" class="v3-response__missing">已暂时跳过（{{responseItem.response.missingCode}}）</view>
+      </view>
+    </view>
+
+    <view wx:if="{{error}}" class="v3-feedback v3-feedback--error" role="alert">{{error}}</view>
+    <view wx:if="{{skipNotice}}" class="v3-feedback v3-feedback--notice">{{skipNotice}}</view>
+  </view>
+
+  <view class="action-bar v3-action-bar">
+    <view class="v3-action-row">
+      <button class="v3-secondary-action" disabled="{{!canSkip}}" bind:tap="skipCurrent">{{skipLabel}}</button>
+      <button class="dl-button v3-continue-action" disabled="{{!canContinue}}" bind:tap="handleContinue">{{task.accounted === task.expectedCount ? '继续' : '完成本题后继续'}}</button>
+    </view>
+  </view>
+</view>
+
+<view wx:if="{{loaded && completed}}" class="page v3-complete-page">
+  <view class="page-header v3-complete-header">
+    <view class="page-kicker">关系说明书 · 研究 Pilot</view>
+    <view class="page-title">这次记录完成了</view>
+    <view class="page-desc">你参与的是技术研究 Pilot。我们已经保存原始回答，用于验证题目和流程；这一版不会生成关系评分、匹配结果或正式报告。</view>
+  </view>
+  <view class="v3-complete-rule"></view>
+  <view class="v3-complete-note">之后如果需要参与访谈或补充说明，会由研究人员另行联系。感谢你把这些真实想法交给这次研究。</view>
+  <view class="v3-complete-actions action-bar--static">
+    <button class="dl-button" bind:tap="exitPilot">返回首页</button>
+  </view>
+</view>

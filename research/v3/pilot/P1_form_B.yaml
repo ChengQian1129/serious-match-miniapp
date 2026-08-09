@@ -1,0 +1,1528 @@
+schemaVersion: relationship-feature-model-v3.B_needs_capabilities.v0.1
+generatedAt: '2026-08-09'
+status: PRE_P0_RUNTIME_READY
+assignmentWeight: 1
+samplingPools:
+- poolId: follow_through
+  sampleCount: 5
+  samplingMethod: SAMPLE_WITHOUT_REPLACEMENT
+  tasks:
+  - taskId: FT02
+    constructId: relational_follow_through
+    prompt: 已经约好的私人见面，只要没有真正的突发情况，你通常能按原计划完成。
+    taskType: task
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - behavior_history
+    notes: []
+    response:
+      formatRef: FREQ5_NA
+  - taskId: FT04
+    constructId: relational_follow_through
+    prompt: 工作或生活突然很忙时，你仍会想办法让重要的人知道自己现在是什么状态，而不是直接消失。
+    taskType: task
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - behavior_history
+    notes: []
+    response:
+      formatRef: FREQ5_NA
+  - taskId: FT05
+    constructId: relational_follow_through
+    prompt: 一次重要谈话因为临时事情中断后，你通常会记得以后重新把它接起来。
+    taskType: task
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - behavior_history
+    notes: []
+    response:
+      formatRef: FREQ5_NA
+  - taskId: FT06
+    constructId: relational_follow_through
+    prompt: 你是否有过连续几次对同一个重要的人临时取消安排，却一直没有重新主动安排？
+    taskType: task
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - behavior_history
+    notes: []
+    response:
+      formatRef: FREQ5_NA
+  - taskId: FT07
+    constructId: relational_follow_through
+    wave: wave1
+    taskType: statement
+    prompt: 为了不让别人失望，你有时会先答应下来，之后才发现自己其实很难做到。
+    response:
+      formatRef: FREQ5_NA
+    responseContext: PAST_6_MONTHS_OR_CLOSE_RELATIONSHIP
+    probeFocus:
+    - overpromise_reason
+    - people_pleasing_vs_planning_error
+    scoringStatus: PILOT_ONLY
+    normalizationStatus: P0_NORMALIZED_PARENT
+  - taskId: FT08
+    constructId: relational_follow_through
+    prompt: 对别人说过“我之后处理 / 联系 / 发给你”的事，你有多常因为忙或忘记而没有后续？
+    taskType: task
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - behavior_history
+    notes: []
+    response:
+      formatRef: FREQ5_NA
+  - taskId: FT09
+    constructId: relational_follow_through
+    prompt: 因为自己原因取消一次重要见面后，你通常会主动提出新的时间，而不是等对方重新约。
+    taskType: task
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - behavior_history
+    notes: []
+    response:
+      formatRef: FREQ5_NA
+  - taskId: FT10
+    constructId: relational_follow_through
+    prompt: 当自己一段时间确实没有精力频繁联系时，你通常会直接说明，而不是继续给出自己做不到的联系承诺。
+    taskType: task
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - behavior_history
+    notes: []
+    response:
+      formatRef: FREQ5_NA
+  - taskId: FT-S01
+    constructId: relational_follow_through
+    wave: wave1
+    taskType: task
+    prompt: 你和正在认真了解的人约好今晚电话聊半小时。下午临时收到工作任务，基本确定今晚无法按时结束。你更接近哪种做法？
+    probeFocus:
+    - expectation_update
+    - socially_desirable_answer_risk
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 先不说，等到约定时间看能不能忙完
+        - code: '2'
+          label: 提前告诉对方今晚可能有变化，并主动讨论是否改时间
+        - code: '3'
+          label: 到时候如果没空再简单说一句
+        - code: '4'
+          label: 忙完再解释，毕竟工作突发很正常
+        - code: '5'
+          label: 视关系阶段而定
+    normalizationStatus: P0_NORMALIZED_PARENT
+  - taskId: FT-S02
+    constructId: relational_follow_through
+    prompt: 对方问周末能不能见面，但你只有大约一半把握能空出来。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags:
+    - promise_realism
+    - expectation_management
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 先答应，到时候再说
+        - code: '2'
+          label: 直接拒绝，等完全确定再约
+        - code: '3'
+          label: 告诉对方目前只有一半把握，并给一个更确定的备选时间
+        - code: '4'
+          label: 不马上回复，等自己完全确认
+  - taskId: FT-S03
+    constructId: relational_follow_through
+    prompt: 昨晚聊到一件对方比较在意的事，你临时有事中断。第二天对方没有再提。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags:
+    - return_closure
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 主动回来问是否继续
+        - code: '2'
+          label: 觉得对方没再提就是过去了
+        - code: '3'
+          label: 想起来再说
+        - code: '4'
+          label: 看事情严重程度
+- poolId: personal_space
+  sampleCount: 4
+  samplingMethod: SAMPLE_WITHOUT_REPLACEMENT
+  tasks:
+  - taskId: PS02
+    constructId: personal_space_need
+    prompt: 如果周末两天已经和伴侣一起度过了大部分时间，周日晚上你更接近：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 还会很自然地想继续一起
+        - code: '2'
+          label: 都可以
+        - code: '3'
+          label: 会开始希望有一点自己的时间
+        - code: '4'
+          label: 会明显想独处一阵
+        - code: '5'
+          label: 取决于当周状态
+  - taskId: PS04
+    constructId: personal_space_need
+    prompt: 两个人同时有完整一天休息，你觉得最舒服的默认状态更接近：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes:
+    - Overlap probe with L3 shared-time standard.
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 大部分时间一起安排
+        - code: '2'
+          label: 一起做主要活动，留一点各自时间
+        - code: '3'
+          label: 一半共同、一半各自
+        - code: '4'
+          label: 各自安排为主，选一段一起
+        - code: '5'
+          label: 没有固定模式
+  - taskId: PS05
+    constructId: personal_space_need
+    prompt: 即使伴侣愿意参与，我仍希望保留一些“主要属于我自己”的兴趣或活动。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - need_preference
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: PS06
+    constructId: personal_space_need
+    prompt: 长期关系里，如果大部分兴趣、娱乐和空闲活动都逐渐变成两个人一起做，我可能会觉得自己的生活被压缩了一些。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - need_preference
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: PS07
+    constructId: personal_space_need
+    prompt: 对我来说，一段舒服的长期关系应该允许双方都有一些彼此不参与的生活内容。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - need_preference
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: PS08
+    constructId: personal_space_need
+    prompt: 如果伴侣对我的个人兴趣没有兴趣，只要他尊重我继续做，我通常不会觉得这是关系缺少共同点。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - need_preference
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: PS-S01
+    constructId: personal_space_need
+    wave: wave2
+    taskType: task
+    prompt: 你和伴侣已经连续三天几乎一直在一起，相处也很好。第四天两个人都没有安排。
+    probeFocus:
+    - cumulative_togetherness
+    - space_need_vs_closeness_discomfort
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 继续安排整天一起
+        - code: '2'
+          label: 一起做半天，剩下时间各自安排
+        - code: '3'
+          label: 没有特别计划，各做各的也很好
+        - code: '4'
+          label: 会主动想安排一段完全自己的时间
+        - code: '5'
+          label: 取决于最近一周整体相处量
+    normalizationStatus: P0_NORMALIZED_PARENT
+  - taskId: PS-S02
+    constructId: personal_space_need
+    prompt: 你有一个一直自己做的兴趣。伴侣后来也产生兴趣，希望以后经常一起参加。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 会觉得很好，愿意大多一起
+        - code: '2'
+          label: 欢迎一起，但仍希望保留部分自己去的时间
+        - code: '3'
+          label: 偶尔一起比较舒服
+        - code: '4'
+          label: 会明显不希望它变成共同活动
+        - code: '5'
+          label: 取决于具体情况
+  - taskId: PS-S03
+    constructId: personal_space_need
+    prompt: 假设未来同居，两个人晚上都在家，没有冲突，也没有谁特别需要帮助。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes:
+    - Candidate/boundary probe; overlaps L3 shared leisure.
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 默认一起聊天 / 看东西
+        - code: '2'
+          label: 同一个空间，各做各的也算舒服陪伴
+        - code: '3'
+          label: 可以分别待在不同空间，需要时再互动
+        - code: '4'
+          label: 没有固定偏好
+- poolId: support_need
+  sampleCount: 5
+  samplingMethod: SAMPLE_WITHOUT_REPLACEMENT
+  tasks:
+  - taskId: SN-S02
+    constructId: support_need
+    prompt: 你和一个很重要的朋友发生矛盾，对方说了一些让你很受伤的话。
+    taskType: compound
+    responseContext: HYPOTHETICAL_OR_MATCHED_REAL_SUPPORT_EVENT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    children:
+    - itemId: SN-S02.a
+      field: mostHelpful
+      prompt: 你最希望伴侣先做哪两项？
+      tags: []
+      response:
+        inlineFormat:
+          type: multi_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 让我把事情完整说完，先听
+          - code: '2'
+            label: 先表达理解：这件事为什么会让我难受
+          - code: '3'
+            label: 明确表达在意、陪伴或关系上的安心
+          - code: '4'
+            label: 和我一起分析接下来怎么办
+          - code: '5'
+            label: 直接分担一点现实任务
+          - code: '6'
+            label: 陪在身边或做点别的，不持续讨论
+          - code: '7'
+            label: 先给我一点空间，但让我知道需要时可以找他/她
+          validation:
+            minSelections: 1
+            maxSelections: 2
+    - itemId: SN-S02.b
+      field: leastHelpful
+      prompt: 你最不希望对方一上来做哪一项？
+      tags: []
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 让我把事情完整说完，先听
+          - code: '2'
+            label: 先表达理解：这件事为什么会让我难受
+          - code: '3'
+            label: 明确表达在意、陪伴或关系上的安心
+          - code: '4'
+            label: 和我一起分析接下来怎么办
+          - code: '5'
+            label: 直接分担一点现实任务
+          - code: '6'
+            label: 陪在身边或做点别的，不持续讨论
+          - code: '7'
+            label: 先给我一点空间，但让我知道需要时可以找他/她
+  - taskId: SN-S03
+    constructId: support_need
+    prompt: 你面对两个都很重要的工作/生活选择，自己想了几天仍然决定不了，但没有明显情绪崩溃。
+    taskType: compound
+    responseContext: HYPOTHETICAL_OR_MATCHED_REAL_SUPPORT_EVENT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes:
+    - Extra autonomy-support response is intentionally preserved.
+    children:
+    - itemId: SN-S03.a
+      field: mostHelpful
+      prompt: 你最希望伴侣先做哪两项？
+      tags: []
+      response:
+        inlineFormat:
+          type: multi_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 让我把事情完整说完，先听
+          - code: '2'
+            label: 先表达理解：这件事为什么会让我难受
+          - code: '3'
+            label: 明确表达在意、陪伴或关系上的安心
+          - code: '4'
+            label: 和我一起分析接下来怎么办
+          - code: '5'
+            label: 直接分担一点现实任务
+          - code: '6'
+            label: 陪在身边或做点别的，不持续讨论
+          - code: '7'
+            label: 先给我一点空间，但让我知道需要时可以找他/她
+          - code: '8'
+            label: 帮我梳理信息和利弊，但最后不要替我下结论
+          validation:
+            minSelections: 1
+            maxSelections: 2
+    - itemId: SN-S03.b
+      field: leastHelpful
+      prompt: 你最不希望对方一上来做哪一项？
+      tags: []
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 让我把事情完整说完，先听
+          - code: '2'
+            label: 先表达理解：这件事为什么会让我难受
+          - code: '3'
+            label: 明确表达在意、陪伴或关系上的安心
+          - code: '4'
+            label: 和我一起分析接下来怎么办
+          - code: '5'
+            label: 直接分担一点现实任务
+          - code: '6'
+            label: 陪在身边或做点别的，不持续讨论
+          - code: '7'
+            label: 先给我一点空间，但让我知道需要时可以找他/她
+          - code: '8'
+            label: 帮我梳理信息和利弊，但最后不要替我下结论
+  - taskId: SN-S04
+    constructId: support_need
+    prompt: 你连续忙了很多天，回到家时已经明显没有精力继续处理任何事情。
+    taskType: compound
+    responseContext: HYPOTHETICAL_OR_MATCHED_REAL_SUPPORT_EVENT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    children:
+    - itemId: SN-S04.a
+      field: mostHelpful
+      prompt: 你最希望伴侣先做哪两项？
+      tags: []
+      response:
+        inlineFormat:
+          type: multi_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 让我把事情完整说完，先听
+          - code: '2'
+            label: 先表达理解：这件事为什么会让我难受
+          - code: '3'
+            label: 明确表达在意、陪伴或关系上的安心
+          - code: '4'
+            label: 和我一起分析接下来怎么办
+          - code: '5'
+            label: 直接分担一点现实任务
+          - code: '6'
+            label: 陪在身边或做点别的，不持续讨论
+          - code: '7'
+            label: 先给我一点空间，但让我知道需要时可以找他/她
+          validation:
+            minSelections: 1
+            maxSelections: 2
+    - itemId: SN-S04.b
+      field: leastHelpful
+      prompt: 你最不希望对方一上来做哪一项？
+      tags: []
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 让我把事情完整说完，先听
+          - code: '2'
+            label: 先表达理解：这件事为什么会让我难受
+          - code: '3'
+            label: 明确表达在意、陪伴或关系上的安心
+          - code: '4'
+            label: 和我一起分析接下来怎么办
+          - code: '5'
+            label: 直接分担一点现实任务
+          - code: '6'
+            label: 陪在身边或做点别的，不持续讨论
+          - code: '7'
+            label: 先给我一点空间，但让我知道需要时可以找他/她
+  - taskId: SN-S05
+    constructId: support_need
+    prompt: 你因为这段关系最近的一些变化感到不安。
+    taskType: compound
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes:
+    - clarityNeed routes jointly to C3/L3; do not absorb into generic support need.
+    children:
+    - itemId: SN-S05.a
+      field: supportForms
+      prompt: 你最希望伴侣先提供哪些回应？
+      tags: []
+      response:
+        inlineFormat:
+          type: multi_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 先听我把担心说完
+          - code: '2'
+            label: 表达理解和在意
+          - code: '3'
+            label: 明确告诉我他/她对这段关系目前的真实想法
+          - code: '4'
+            label: 给出一句关系上的明确安心 / 确认
+          - code: '5'
+            label: 先让我自己缓一会儿
+          - code: '6'
+            label: 和我一起分析现在到底发生了什么
+          validation:
+            minSelections: 1
+            maxSelections: 2
+    - itemId: SN-S05.b
+      field: clarityNeed
+      prompt: 其中“希望对方明确说明关系状态”对你有多重要？
+      tags: []
+      response:
+        formatRef: INTENSITY7_0_6
+  - taskId: SN-S06
+    constructId: support_need
+    prompt: 你生病几天，身体状态明显不好。
+    taskType: compound
+    responseContext: HYPOTHETICAL_OR_MATCHED_REAL_SUPPORT_EVENT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    children:
+    - itemId: SN-S06.a
+      field: mostHelpful
+      prompt: 你最希望伴侣先做哪两项？
+      tags: []
+      response:
+        inlineFormat:
+          type: multi_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 让我把事情完整说完，先听
+          - code: '2'
+            label: 先表达理解：这件事为什么会让我难受
+          - code: '3'
+            label: 明确表达在意、陪伴或关系上的安心
+          - code: '4'
+            label: 和我一起分析接下来怎么办
+          - code: '5'
+            label: 直接分担一点现实任务
+          - code: '6'
+            label: 陪在身边或做点别的，不持续讨论
+          - code: '7'
+            label: 先给我一点空间，但让我知道需要时可以找他/她
+          validation:
+            minSelections: 1
+            maxSelections: 2
+    - itemId: SN-S06.b
+      field: leastHelpful
+      prompt: 你最不希望对方一上来做哪一项？
+      tags: []
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 让我把事情完整说完，先听
+          - code: '2'
+            label: 先表达理解：这件事为什么会让我难受
+          - code: '3'
+            label: 明确表达在意、陪伴或关系上的安心
+          - code: '4'
+            label: 和我一起分析接下来怎么办
+          - code: '5'
+            label: 直接分担一点现实任务
+          - code: '6'
+            label: 陪在身边或做点别的，不持续讨论
+          - code: '7'
+            label: 先给我一点空间，但让我知道需要时可以找他/她
+  - taskId: SN01
+    constructId: support_need
+    prompt: 自己很难受时，我通常更希望对方先理解发生了什么，而不是马上给解决方案。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - need_preference
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: SN02
+    constructId: support_need
+    prompt: 如果我已经很清楚问题怎么解决，我更需要的是有人真正理解我现在的感受。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - need_preference
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: SN03
+    constructId: support_need
+    prompt: 面对能解决的现实问题时，只有安慰却没有任何实际帮助，有时会让我觉得支持还不够。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - need_preference
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: SN04
+    constructId: support_need
+    prompt: 有些时候，我需要的不是一直说话，而是知道对方愿意陪在身边。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - need_preference
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: SN05
+    constructId: support_need
+    wave: wave2
+    taskType: statement
+    prompt: 当我情绪很乱时，对方明确告诉我“我还在、我们可以一起处理”，通常会让我舒服一些。
+    response:
+      formatRef: AGR7
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    probeFocus:
+    - reassurance_need_vs_repetitive_reassurance_seeking
+    scoringStatus: PILOT_ONLY
+    normalizationStatus: P0_NORMALIZED_PARENT
+  - taskId: SN06
+    constructId: support_need
+    prompt: 状态非常差时，我有时更希望先自己消化一会儿，再决定要不要谈。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - need_preference
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: SN07
+    constructId: support_need
+    prompt: 如果对方不确定我需要安慰、建议还是空间，我更喜欢他直接问我。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - need_preference
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: SN08
+    constructId: support_need
+    prompt: 对我来说，好的支持经常不是做得越多越好，而是对方能判断什么时候该帮、什么时候该停。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - need_preference
+    notes: []
+    response:
+      formatRef: AGR7
+- poolId: support_signaling
+  sampleCount: 4
+  samplingMethod: SAMPLE_WITHOUT_REPLACEMENT
+  tasks:
+  - taskId: SS02
+    constructId: support_signaling
+    prompt: 如果我确实需要陪伴或帮助，我能够直接说“我现在需要你陪我一下 / 帮我一下”。
+    taskType: task
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - behavior_history
+    notes: []
+    response:
+      formatRef: FREQ5_NA
+  - taskId: SS04
+    constructId: support_signaling
+    prompt: 我有时希望对方能自己看出来我不对，而不是需要我明确开口。
+    taskType: task
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - behavior_history
+    notes: []
+    response:
+      formatRef: FREQ5_NA
+  - taskId: SS05
+    constructId: support_signaling
+    wave: wave2
+    taskType: statement
+    prompt: 即使很希望得到支持，我也可能先说“没事”，直到自己真的撑不住。
+    response:
+      formatRef: FREQ5_NA
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    probeFocus:
+    - distress_disclosure_vs_request_specificity
+    - concealment_reason
+    scoringStatus: PILOT_ONLY
+    normalizationStatus: P0_NORMALIZED_PARENT
+  - taskId: SS06
+    constructId: support_signaling
+    prompt: 如果对方的安慰方式不太适合我，我通常能直接告诉他“我现在更需要的是……”。
+    taskType: task
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - behavior_history
+    notes: []
+    response:
+      formatRef: FREQ5_NA
+  - taskId: SS07
+    constructId: support_signaling
+    prompt: 在压力刚开始变大时，我通常不会马上告诉伴侣，而是先自己处理很久。
+    taskType: task
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - behavior_history
+    notes: []
+    response:
+      formatRef: FREQ5_NA
+  - taskId: SS08
+    constructId: support_signaling
+    prompt: 当我已经表达过需要，但对方没有理解时，我能够再更具体地说明一次。
+    taskType: task
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - behavior_history
+    notes: []
+    response:
+      formatRef: FREQ5_NA
+  - taskId: SS09
+    constructId: support_signaling
+    prompt: 我有时会用语气、沉默或减少互动来让对方意识到我不开心，而不是直接说明。
+    taskType: task
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - behavior_history
+    notes: []
+    response:
+      formatRef: FREQ5_NA
+  - taskId: SS10
+    constructId: support_signaling
+    prompt: 如果我担心自己的问题会给对方增加负担，我很容易选择不说。
+    taskType: task
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - behavior_history
+    notes: []
+    response:
+      formatRef: FREQ5_NA
+  - taskId: SS-S01
+    constructId: support_signaling
+    prompt: 你今天发生了一件很糟的事情。伴侣问：“你怎么了？”
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 直接说发生了什么，并告诉他/她现在希望先听
+        - code: '2'
+          label: 说发生了什么，但不主动说需要什么
+        - code: '3'
+          label: 说“没什么”，希望之后对方能看出自己其实不对
+        - code: '4'
+          label: 先说自己想缓一会儿，并约定晚点再谈
+        - code: '5'
+          label: 不想让对方知道，自己处理
+        - code: '6'
+          label: 取决于情况
+  - taskId: SS-S02
+    constructId: support_signaling
+    wave: wave2
+    taskType: task
+    prompt: 你已经说自己很难受，对方开始不断给建议，但你现在只想把事情说完。
+    probeFocus:
+    - request_specificity
+    - indirect_signaling
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 直接说“先听我说完，暂时不用帮我想方案”
+        - code: '2'
+          label: 继续听建议，虽然其实更烦
+        - code: '3'
+          label: 变得更沉默，希望他自己发现
+        - code: '4'
+          label: 结束话题
+        - code: '5'
+          label: 取决于当时情况
+    normalizationStatus: P0_NORMALIZED_PARENT
+- poolId: responsiveness
+  sampleCount: 4
+  samplingMethod: SAMPLE_WITHOUT_REPLACEMENT
+  tasks:
+  - taskId: RC-S02
+    constructId: responsiveness_capability
+    prompt: 伴侣回家后明显比平时安静，说“没事，就是有点累”。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes:
+    - No universally correct response; captures signal detection/intrusiveness/availability.
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 直接追问到底发生什么
+        - code: '2'
+          label: 简单表示自己在，如果想说可以说
+        - code: '3'
+          label: 马上帮他/她安排解决方案
+        - code: '4'
+          label: 先给空间，完全不再提
+        - code: '5'
+          label: 观察一会儿，看状态是否持续
+        - code: '6'
+          label: 取决于情况
+  - taskId: RC-S03
+    constructId: responsiveness_capability
+    prompt: 伴侣因为一次重要面试失败很难受，并说“我现在觉得自己特别没用”。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes:
+    - Ask what participant would actually do, not which response is objectively best.
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: “别这么想，这有什么大不了的”
+        - code: '2'
+          label: “你准备了这么久，结果这样确实很难受”
+        - code: '3'
+          label: “那你下次就把这几个问题准备好”
+        - code: '4'
+          label: “你当然不是没用，不过我能理解你现在为什么会这样想”
+        - code: '5'
+          label: “我们先出去吃点东西，别想了”
+  - taskId: RC-S04
+    constructId: responsiveness_capability
+    prompt: 伴侣明确说：  “我现在有点过载，我想自己安静一两个小时，晚一点再和你说。”
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags:
+    - respect_requested_space
+    - availability_without_pressure
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 尊重一两个小时的空间，到约定时间附近再自然联系
+        - code: '2'
+          label: 继续陪着但尽量不说话
+        - code: '3'
+          label: 很快再次追问发生了什么
+        - code: '4'
+          label: 完全不再联系，等对方自己回来
+        - code: '5'
+          label: 告诉对方自己在，如果计划有变化可以说一声
+        - code: '6'
+          label: 取决于具体情况
+  - taskId: RC-S05
+    constructId: responsiveness_capability
+    prompt: 伴侣连续加班，明确说自己现在最困难的是“家里很多事情根本来不及处理”。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags:
+    - instrumental_response_calibration
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 主要继续语言安慰
+        - code: '2'
+          label: 主动问最希望自己具体分担哪件事
+        - code: '3'
+          label: 直接选几件明显的家务 / 琐事帮忙处理
+        - code: '4'
+          label: 帮忙分析怎么提高效率
+        - code: '5'
+          label: 觉得对方只是需要休息，不主动介入
+        - code: '6'
+          label: 取决于具体情况
+  - taskId: RC-S06
+    constructId: responsiveness_capability
+    prompt: 伴侣面临一个重要职业选择，请你帮他分析，但最后说：“我想听你的意见，不过最终我还是想自己决定。”
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags:
+    - autonomy_support
+    - noncoercion
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 认真给出分析和意见，并明确最后由对方决定
+        - code: '2'
+          label: 告诉对方自己认为最好的选择，并尽量说服他/她照做
+        - code: '3'
+          label: 因为最终不是自己决定，所以不表达真实意见
+        - code: '4'
+          label: 主要问问题，帮助对方自己梳理
+        - code: '5'
+          label: 取决于具体情况
+  - taskId: RC-S07
+    constructId: responsiveness_capability
+    wave: wave2
+    taskType: task
+    prompt: 你尝试安慰后，对方说：“我知道你是好意，但你这样说我现在反而更烦。”
+    probeFocus:
+    - feedback_calibration
+    - knowledge_vs_execution
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 解释自己明明是为他好
+        - code: '2'
+          label: 停下来问现在什么方式更有帮助
+        - code: '3'
+          label: 觉得被否定，停止交流
+        - code: '4'
+          label: 换一种更强的安慰方式
+        - code: '5'
+          label: 先停一下，稍后再问
+        - code: '6'
+          label: 取决于具体情况
+    normalizationStatus: P0_NORMALIZED_PARENT
+  - taskId: RC01
+    constructId: responsiveness_capability
+    prompt: 对方明确告诉你“这种安慰方式对我没帮助”以后，你通常能否调整，而不是继续按自己的方式做？
+    taskType: task
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - behavior_history
+    notes: []
+    response:
+      formatRef: FREQ5_NA
+  - taskId: RC02
+    constructId: responsiveness_capability
+    prompt: 别人状态不好时，你有多常先确认“你现在更想让我听，还是一起想办法”？
+    taskType: task
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - behavior_history
+    notes: []
+    response:
+      formatRef: FREQ5_NA
+  - taskId: RC03
+    constructId: responsiveness_capability
+    prompt: 如果对方没有直接求助，但状态明显和平时不同，你通常能否注意到？
+    taskType: task
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - behavior_history
+    notes: []
+    response:
+      formatRef: FREQ5_NA
+  - taskId: RC04
+    constructId: responsiveness_capability
+    prompt: 当你觉得对方“想太多”时，你是否仍能先理解为什么这件事对他很重要？
+    taskType: task
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - behavior_history
+    notes: []
+    response:
+      formatRef: FREQ5_NA
+  - taskId: RC05
+    constructId: responsiveness_capability
+    prompt: 你有多常因为太想帮忙，最后给了超过对方想要的建议或介入？
+    taskType: task
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - behavior_history
+    notes: []
+    response:
+      formatRef: FREQ5_NA
+  - taskId: RC06
+    constructId: responsiveness_capability
+    prompt: 如果对方需要的支持方式和你自己遇到同样事情时完全不同，你通常能否按他的方式来？
+    taskType: task
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - behavior_history
+    notes: []
+    response:
+      formatRef: FREQ5_NA
+- poolId: pacing_repair
+  sampleCount: 7
+  samplingMethod: SAMPLE_WITHOUT_REPLACEMENT
+  tasks:
+  - taskId: CP02
+    constructId: conflict_pacing_need
+    prompt: 如果只是普通但激烈的争执，你觉得一次暂停多久以后最容易重新进入可以讨论的状态？
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 基本不需要暂停
+        - code: '2'
+          label: 10–30 分钟
+        - code: '3'
+          label: 1–3 小时
+        - code: '4'
+          label: 当天晚些时候
+        - code: '5'
+          label: 第二天
+        - code: '6'
+          label: 没有固定时长 / 看问题
+  - taskId: CP03
+    constructId: conflict_pacing_need
+    prompt: 对没有安全风险的普通关系冲突，你多需要“当天至少重新建立基本联系”，即使问题还没有完全解决？
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: CP04
+    constructId: conflict_pacing_need
+    wave: wave2
+    taskType: task
+    prompt: 如果一个重要分歧晚上仍没解决，只要双方明确约好第二天继续，你对“先睡一晚”通常有多舒服？
+    probeFocus:
+    - deferred_resolution_tolerance
+    scoringStatus: PILOT_ONLY
+    response:
+      formatRef: COMFORT7_0_6
+    normalizationStatus: P0_NORMALIZED_PARENT
+  - taskId: CP05
+    constructId: conflict_pacing_need
+    prompt: 当口头争执已经很难继续时，你是否会觉得先用文字整理清楚，再回来谈更容易？
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: CP06
+    constructId: conflict_pacing_need
+    prompt: 如果你自己想继续谈，但对方已经明确说需要一小时冷静，你最理想的关系规则更接近：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 只要对方说明何时回来，可以暂停
+        - code: '2'
+          label: 重要问题最好继续说完
+        - code: '3'
+          label: 可以停，但希望很快恢复基本联系
+        - code: '4'
+          label: 取决于问题和当时强度
+  - taskId: CR02
+    constructId: repair_reengagement
+    prompt: 如果要离开争执现场，我通常会让对方知道自己大概什么时候愿意重新谈。
+    taskType: task
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - behavior_history
+    notes: []
+    response:
+      formatRef: FREQ5_NA
+  - taskId: CR03
+    constructId: repair_reengagement
+    prompt: 我很生气时，有时会直接停止联系，让对方自己判断我什么时候恢复。
+    taskType: task
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - behavior_history
+    notes: []
+    response:
+      formatRef: FREQ5_NA
+  - taskId: CR04
+    constructId: repair_reengagement
+    prompt: 即使我当时不想继续讨论，我也通常能够区分“现在不谈”和“以后不处理”。
+    taskType: task
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - behavior_history
+    notes: []
+    response:
+      formatRef: FREQ5_NA
+  - taskId: CR05
+    constructId: repair_reengagement
+    prompt: 我提出暂停时，通常是真的打算等状态好一些以后再把问题继续处理。
+    taskType: task
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - behavior_history
+    notes: []
+    response:
+      formatRef: FREQ5_NA
+  - taskId: CR07
+    constructId: repair_reengagement
+    prompt: 冲突暂停以后，只要情绪已经过去，我有时会觉得问题也没必要再提了。
+    taskType: task
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - behavior_history
+    notes: []
+    response:
+      formatRef: FREQ5_NA
+  - taskId: CR08
+    constructId: repair_reengagement
+    prompt: 如果我错过了原先说好的重启时间，我通常会主动更新，而不是继续没有说明地拖下去。
+    taskType: task
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - behavior_history
+    notes: []
+    response:
+      formatRef: FREQ5_NA
+  - taskId: CR09
+    constructId: repair_reengagement
+    prompt: 即使问题还没有完全解决，我通常也能在暂停以后先恢复基本正常的联系。
+    taskType: task
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - behavior_history
+    notes: []
+    response:
+      formatRef: FREQ5_NA
+  - taskId: CR10
+    constructId: repair_reengagement
+    prompt: 重新开始谈之前，我能够让对方知道“我还是在这段关系里，只是这个问题还没解决”。
+    taskType: task
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - behavior_history
+    notes: []
+    response:
+      formatRef: FREQ5_NA
+  - taskId: CR11
+    constructId: repair_reengagement
+    prompt: 冲突一旦让我很失望，之后即使继续联系，我也很难先恢复任何温和的互动。
+    taskType: task
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - behavior_history
+    notes: []
+    response:
+      formatRef: FREQ5_NA
+  - taskId: CR12
+    constructId: repair_reengagement
+    wave: wave2
+    taskType: statement
+    prompt: 一个重要问题如果只是因为双方太激动而暂停，我通常不会把“情绪过去了”当作“问题解决了”。
+    response:
+      formatRef: FREQ5_NA
+    responseContext: REAL_CONFLICT_HISTORY_IF_AVAILABLE
+    probeFocus:
+    - pause_signal
+    - return_execution
+    - reconnection_vs_resolution
+    scoringStatus: PILOT_ONLY
+    normalizationStatus: P0_NORMALIZED_PARENT
+  - taskId: CR13
+    constructId: repair_reengagement
+    prompt: 对关系真正重要的分歧，我愿意在双方状态更好时重新拿出来谈。
+    taskType: task
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - behavior_history
+    notes: []
+    response:
+      formatRef: FREQ5_NA
+  - taskId: CR14
+    constructId: repair_reengagement
+    prompt: 如果上一次讨论没有结果，我通常能从“谁对谁错”转回“接下来具体怎么办”。
+    taskType: task
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - behavior_history
+    notes: []
+    response:
+      formatRef: FREQ5_NA
+  - taskId: CR15
+    constructId: repair_reengagement
+    prompt: 有些问题我会反复暂停，但最后很久都没有真正重新处理。
+    taskType: task
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - behavior_history
+    notes: []
+    response:
+      formatRef: FREQ5_NA
+  - taskId: CR16
+    constructId: repair_reengagement
+    prompt: 冲突结束以后，如果发现双方对某件事的默认规则不同，我愿意把之后怎么做说得更明确。
+    taskType: task
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - behavior_history
+    notes: []
+    response:
+      formatRef: FREQ5_NA
+  - taskId: CR17
+    constructId: repair_reengagement
+    prompt: 同一个问题反复发生时，我通常会尝试改变之后的安排，而不只是每次吵完恢复正常。
+    taskType: task
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - behavior_history
+    notes: []
+    response:
+      formatRef: FREQ5_NA
+  - taskId: CR18
+    constructId: repair_reengagement
+    prompt: 我比较容易做到“和好”，但不一定会把导致冲突的结构问题真正处理掉。
+    taskType: task
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - behavior_history
+    notes: []
+    response:
+      formatRef: FREQ5_NA
+  - taskId: CR-S01
+    constructId: repair_reengagement
+    wave: wave2
+    taskType: task
+    prompt: 争执已经很激烈，你说：  “我现在真的听不进去了，我想停一小时，九点我们再谈。”
+    probeFocus:
+    - return_execution
+    - issue_reengagement
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 主动回来，哪怕先说还需要慢慢谈
+        - code: '2'
+          label: 等对方主动来找自己
+        - code: '3'
+          label: 觉得都冷静了，就没必要再谈
+        - code: '4'
+          label: 找理由继续推迟
+        - code: '5'
+          label: 先恢复普通联系，但不主动提问题
+        - code: '6'
+          label: 取决于具体情况
+    normalizationStatus: P0_NORMALIZED_PARENT
+  - taskId: CR-S02
+    constructId: repair_reengagement
+    prompt: 你原本答应晚上继续谈，但工作临时拖延，已经过了约定时间。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 提前 / 及时说明需要改时间
+        - code: '2'
+          label: 忙完以后解释并重新定时间
+        - code: '3'
+          label: 等对方来问
+        - code: '4'
+          label: 觉得这种小事不用专门解释
+        - code: '5'
+          label: 取决于情况
+  - taskId: CR-S03
+    constructId: repair_reengagement
+    prompt: 对方需要暂停，后来按约定主动回来，说：“我现在可以继续了。”
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 说明自己还需要一点时间，并给新的时间
+        - code: '2'
+          label: 勉强继续谈
+        - code: '3'
+          label: 拒绝再谈
+        - code: '4'
+          label: 先质问对方刚才为什么离开
+        - code: '5'
+          label: 取决于情况
+  - taskId: CR-S04
+    constructId: repair_reengagement
+    prompt: 双方都冷静了，但今晚没有足够时间把问题彻底解决。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags:
+    - reconnection_without_resolution
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 完全不能接受，问题没解决前很难恢复普通互动
+        - code: '2'
+          label: 比较难，但如果明确约好明天继续可以
+        - code: '3'
+          label: 大体可以接受
+        - code: '4'
+          label: 很自然，可以先恢复基本联系再继续处理
+        - code: '5'
+          label: 取决于问题
+  - taskId: CR-S05
+    constructId: repair_reengagement
+    prompt: 对方说：“刚才我说话太重了，对不起。”但导致争执的现实问题仍然没有解决。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes:
+    - Partly routes to L3 repair standard; not a pure capability score.
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 情绪修复已经足够，问题可以以后再说
+        - code: '2'
+          label: 道歉很重要，但现实问题仍需要回来处理
+        - code: '3'
+          label: 如果问题没解决，道歉本身意义不大
+        - code: '4'
+          label: 取决于具体问题
+runtimeRules:
+- Sample without replacement within each pool.
+- Use stable assessment-level random seed.
+- Store all assigned itemIds, including not answered items.
+- Do not calculate user-facing construct scores during P1 runtime.

@@ -1,0 +1,50 @@
+schemaVersion: relationship-feature-model-v3.normative-manifest.v1.0
+generatedAt: '2026-08-09'
+status: HANDOFF_FROZEN
+authorityOrder:
+- AGENT_IMPLEMENTATION_MASTER.md
+- normative/NORMATIVE_MANIFEST.yaml
+- normative/questionnaire_candidate_freeze.yaml
+- normative/construct_registry.yaml
+- normative/response_formats.yaml
+- normative/dimension_combine_conclusion.yaml
+- normative/user_report_authoring_library.yaml
+- normative/report_runtime_schema.yaml
+- normative/data_dictionary.yaml
+- normative/pilot_pruning_calibration.yaml
+- research/P1_form_manifest.yaml
+- research/P0_questionnaire_spec.yaml
+frozenFacts:
+  masterCandidateParentTasks: 411
+  reportCoreCandidateParentTasks: 266
+  reportCoreApproxIndependentResponseFields: 307
+  coreUserFacingDimensions: 14
+  coreChapters: 6
+  constructRegistryObjects: 60
+  crossChapterAuthoringPatterns: 16
+implementationScope:
+  now:
+  - V3 source compiler/generator
+  - P0.5/P1 no-production-scoring runtime
+  - generic response renderer
+  - stable assignment and resume
+  - immutable answer events
+  - missingness taxonomy
+  - telemetry
+  - P0/P1 research forms
+  - symbolic report renderer for tests only
+  - cloud contract after local P0.5 is stable
+  notNow:
+  - production V3 scoring model
+  - production V3 public report from raw answers
+  - compatibility percentage
+  - relationship success probability
+  - attachment/personality type
+  - automatic partner recommendation
+  - automatic inferred hard constraints
+supersededOrReferenceOnly:
+- P1 form manifest v0.1
+- P1 form manifest v0.2
+- questionnaire runtime v0.1
+- architecture backup v0.1
+- starter_dropin contents except as implementation reference

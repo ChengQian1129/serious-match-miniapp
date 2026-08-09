@@ -1,0 +1,1241 @@
+schemaVersion: relationship-feature-model-v3.A_reactive_psychometric.v0.1
+generatedAt: '2026-08-09'
+status: PRE_P0_RUNTIME_READY
+assignmentWeight: 1
+samplingPools:
+- poolId: readiness
+  sampleCount: 4
+  samplingMethod: SAMPLE_WITHOUT_REPLACEMENT
+  tasks:
+  - taskId: RR02
+    constructId: relationship_readiness
+    prompt: 我现在对一段关系从“认识看看”逐渐发展成稳定交往，是开放的。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: RR03
+    constructId: relationship_readiness
+    prompt: 如果关系发展得不错，我愿意让它逐渐成为接下来生活里真正重要的一部分。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: RR05
+    constructId: relationship_readiness
+    prompt: 想到自己在接下来几个月进入一段稳定关系，我不会觉得这件事明显“来得太早”。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: RR06
+    constructId: relationship_readiness
+    prompt: 如果双方都认真，我愿意把一段新的关系从初步了解继续往更稳定的方向推进。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: RR07
+    constructId: relationship_readiness
+    prompt: 对现在的我来说，就算对象合适，认真关系也更像是“以后的人生安排”，而不是当前安排。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: RR08
+    constructId: relationship_readiness
+    wave: wave1
+    taskType: statement
+    prompt: 我现在能够接受一段新的亲密关系真实地改变一部分自己的生活，而不只是停留在偶尔约会或聊天。
+    response:
+      formatRef: AGR7
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    probeFocus:
+    - readiness_vs_desire
+    - readiness_vs_capacity
+    - meaning_of_serious_or_stable_relationship
+    scoringStatus: PILOT_ONLY
+    normalizationStatus: P0_NORMALIZED_PARENT
+  - taskId: RR09
+    constructId: relationship_readiness
+    prompt: 如果有一个人值得认真了解，我目前会愿意给这段关系真正发展的机会。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: RR10
+    constructId: relationship_readiness
+    prompt: 我对恋爱并不是完全没兴趣，但认真开始一段关系对现在的我来说仍然有些“不是时候”。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: RR11
+    constructId: relationship_readiness
+    prompt: 如果认识到合适的人，我可以想象自己在未来一段时间逐渐对这段关系作出稳定投入。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: RR12
+    constructId: relationship_readiness
+    prompt: 目前即使认识新人，我更多也只是愿意看看彼此合不合适，还没有准备让关系真正进入稳定阶段。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+- poolId: motivation
+  sampleCount: 8
+  samplingMethod: SAMPLE_WITHOUT_REPLACEMENT
+  tasks:
+  - taskId: IM-IN02
+    constructId: initiation_motivation
+    prompt: 如果关系是舒服的，我会觉得“和一个人一起经历生活”这件事本身就很吸引我。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: MOTIVE7
+  - taskId: IM-IN03
+    constructId: initiation_motivation
+    prompt: 我想进入关系，一个重要原因是我确实喜欢长期亲密关系可能带来的陪伴和互动。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: MOTIVE7
+  - taskId: IM-IN04
+    constructId: initiation_motivation
+    wave: wave1
+    taskType: statement
+    prompt: 即使没有任何现实上的“应该”，我仍然会觉得认真喜欢一个人、一起建立关系是件有吸引力的事。
+    response:
+      formatRef: MOTIVE7
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    probeFocus:
+    - motivation_source
+    - intrinsic_vs_identified_or_internal_vs_external
+    scoringStatus: PILOT_ONLY
+    normalizationStatus: P0_NORMALIZED_PARENT
+  - taskId: IM-ID02
+    constructId: initiation_motivation
+    prompt: 即使真正经营关系需要付出不少精力，我仍认为这件事对我的人生有意义。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: MOTIVE7
+  - taskId: IM-ID03
+    constructId: initiation_motivation
+    wave: wave1
+    taskType: statement
+    prompt: 对我来说，拥有一段认真关系并不只是“感觉不错”，它本身也是我重视的人生目标。
+    response:
+      formatRef: MOTIVE7
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    probeFocus:
+    - motivation_source
+    - intrinsic_vs_identified_or_internal_vs_external
+    scoringStatus: PILOT_ONLY
+    normalizationStatus: P0_NORMALIZED_PARENT
+  - taskId: IM-ID04
+    constructId: initiation_motivation
+    prompt: 如果未来一直没有建立稳定伴侣关系，我会觉得自己少实现了一个个人真正看重的人生部分。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: MOTIVE7
+  - taskId: IM-PI01
+    constructId: initiation_motivation
+    prompt: 进入一段不错的关系，会让我觉得自己在人生这件事上也做得挺成功。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: MOTIVE7
+  - taskId: IM-PI02
+    constructId: initiation_motivation
+    prompt: 如果有人真心选择和我建立稳定关系，我会更容易觉得自己是有吸引力、值得被选择的人。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: MOTIVE7
+  - taskId: IM-PI03
+    constructId: initiation_motivation
+    prompt: 有一段让别人认可的关系，会让我对自己的整体状态更满意一些。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: MOTIVE7
+  - taskId: IM-PI04
+    constructId: initiation_motivation
+    prompt: 能经营好一段关系，会让我觉得自己证明了某些个人能力。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: MOTIVE7
+  - taskId: IM-NI01
+    constructId: initiation_motivation
+    wave: wave1
+    taskType: statement
+    prompt: 如果一直没有进入关系，我有时会担心这是不是说明自己哪里“不够好”。
+    response:
+      formatRef: MOTIVE7
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    probeFocus:
+    - motivation_source
+    - intrinsic_vs_identified_or_internal_vs_external
+    scoringStatus: PILOT_ONLY
+    normalizationStatus: P0_NORMALIZED_PARENT
+  - taskId: IM-NI02
+    constructId: initiation_motivation
+    prompt: 当身边很多人都有稳定伴侣时，我会更容易觉得自己落后了。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: MOTIVE7
+  - taskId: IM-NI03
+    constructId: initiation_motivation
+    prompt: 长期单身有时会让我产生一种“是不是我失败了”的感觉。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: MOTIVE7
+  - taskId: IM-NI04
+    constructId: initiation_motivation
+    prompt: 我想进入关系，有一部分是在避免自己因为单身而产生负面的自我评价。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: MOTIVE7
+  - taskId: IM-EX02
+    constructId: initiation_motivation
+    prompt: 周围同龄人的关系和婚姻进度，会让我更觉得自己现在应该开始认真找对象。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: MOTIVE7
+  - taskId: IM-EX03
+    constructId: initiation_motivation
+    prompt: 如果我进入一段稳定关系，会让一些对我重要的人更放心或更满意，这也是我的考虑之一。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: MOTIVE7
+  - taskId: IM-EX04
+    constructId: initiation_motivation
+    prompt: 有些现实生活安排会因为拥有稳定伴侣而变得更容易，这也是我想进入关系的原因之一。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: MOTIVE7
+  - taskId: IM-EX05
+    constructId: initiation_motivation
+    prompt: 如果家里完全不再询问或催促，我现在主动找对象的动力会明显下降。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: MOTIVE7
+  - taskId: IM-EX06
+    constructId: initiation_motivation
+    prompt: 如果身边同龄人也大多保持单身，我现在对进入关系的紧迫感会低不少。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: MOTIVE7
+  - taskId: IM-AM02
+    constructId: initiation_motivation
+    prompt: 我知道“谈恋爱”可能有很多好处，但这些理由目前没有哪一个真正让我很想行动。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: MOTIVE7
+  - taskId: IM-AM03
+    constructId: initiation_motivation
+    wave: wave1
+    taskType: statement
+    prompt: 对我来说，“想找对象”这件事目前有一点像一个模糊念头，而不是很明确的个人目标。
+    response:
+      formatRef: MOTIVE7
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    probeFocus:
+    - motivation_source
+    - intrinsic_vs_identified_or_internal_vs_external
+    scoringStatus: PILOT_ONLY
+    normalizationStatus: P0_NORMALIZED_PARENT
+  - taskId: IM-AM04
+    constructId: initiation_motivation
+    prompt: 如果有人问我“为什么现在想谈一段认真关系”，我可能很难给出自己真正认同的答案。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: MOTIVE7
+  samplingNote: ensure multiple motivation facets
+- poolId: uncertainty_activation
+  sampleCount: 5
+  samplingMethod: SAMPLE_WITHOUT_REPLACEMENT
+  tasks:
+  - taskId: UA02
+    constructId: uncertainty_activation
+    prompt: 如果对方突然比平时冷淡，我很难完全把它当作“可能只是今天状态不一样”。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: UA04
+    constructId: uncertainty_activation
+    wave: wave1
+    taskType: statement
+    prompt: 比起一个明确但不理想的答案，关系里长时间没有答案的状态有时更让我难受。
+    response:
+      formatRef: AGR7
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    probeFocus:
+    - vigilance_vs_threat_appraisal
+    - person_tendency_vs_actual_relationship_ambiguity
+    scoringStatus: PILOT_ONLY
+    normalizationStatus: P0_NORMALIZED_PARENT
+  - taskId: UA05
+    constructId: uncertainty_activation
+    prompt: 即使只有少量迹象让我觉得对方可能在退后，这种可能性也会很快进入我的注意力。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: UA06
+    constructId: uncertainty_activation
+    prompt: 如果我感觉关系有一点不对，但又不知道原因，这种悬着的感觉通常不会很快自己消失。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: UA07
+    constructId: uncertainty_activation
+    prompt: 对方没有明确拒绝我，但表现得不像之前那么投入时，我会明显在意这种变化。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: UA08
+    constructId: uncertainty_activation
+    prompt: 当我感觉自己可能比对方更投入时，这件事会很快影响我的情绪状态。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: UA09
+    constructId: uncertainty_activation
+    prompt: 如果我们已经持续接触了一段时间，但我仍然不清楚对方怎么看这段关系，我会越来越难把这种不确定当作无所谓。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: UA10
+    constructId: uncertainty_activation
+    wave: wave1
+    taskType: statement
+    prompt: 关系里的模糊变化发生后，我通常可以先保留几种解释，不会很快认定它意味着对方在疏远我。
+    response:
+      formatRef: AGR7
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    probeFocus:
+    - vigilance_vs_threat_appraisal
+    - person_tendency_vs_actual_relationship_ambiguity
+    scoringStatus: PILOT_ONLY
+    normalizationStatus: P0_NORMALIZED_PARENT
+  - taskId: UA11
+    constructId: uncertainty_activation
+    prompt: 当我怀疑一个重要的人可能正在减少对这段关系的投入时，我的情绪很容易明显被带动。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: UA12
+    constructId: uncertainty_activation
+    prompt: 一旦我开始怀疑关系状态发生了变化，想完全把注意力转回其他事情并不容易。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: UA13
+    constructId: uncertainty_activation
+    prompt: 即使暂时不知道对方是什么意思，我通常也能等更多信息出现，再决定这件事到底意味着什么。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: UA14
+    constructId: uncertainty_activation
+    prompt: 如果我已经觉得关系可能有问题，让这件事暂时没有结论会让我很难受。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: UA-S01
+    constructId: uncertainty_activation
+    wave: wave1
+    taskType: compound
+    prompt: 你和一个人已经持续聊了几周。之前双方基本每天都会自然联系。最近两天，对方回复明显变慢、内容也短了一些，但没有说发生了什么。
+    probeFocus:
+    - scenario_baseline
+    - activation_vs_interpretation
+    scoringStatus: PILOT_ONLY
+    children:
+    - itemId: UA-S01.a
+      field: concern
+      prompt: 这件事本身会让你多在意？
+      response:
+        formatRef: INTENSITY7_0_6
+    - itemId: UA-S01.b
+      field: attentionalCapture
+      prompt: 在没有更多信息之前，这件事会多容易一直占着你的注意力？
+      response:
+        formatRef: INTENSITY7_0_6
+    - itemId: UA-S01.c
+      field: initialInterpretation
+      prompt: 在目前信息下，你更接近哪种判断？
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 更可能只是忙 / 状态变化
+          - code: '2'
+            label: 两种可能都差不多
+          - code: '3'
+            label: 更可能是兴趣在下降
+          - code: '4'
+            label: 现在信息太少，我不会判断
+    normalizationStatus: P0_NORMALIZED_PARENT
+  - taskId: UA-S02
+    constructId: uncertainty_activation
+    prompt: 你们原本约好周六见面。周五晚上，对方说临时有事，希望改天，但没有主动给新的时间。
+    taskType: compound
+    responseContext: HYPOTHETICAL_OR_MATCHED_REAL_EVENT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes:
+    - Activation children are not scored as strategy behavior.
+    children:
+    - itemId: UA-S02.a
+      field: concern
+      prompt: 这件事本身会让你多在意？
+      tags: []
+      response:
+        formatRef: INTENSITY7_0_6
+    - itemId: UA-S02.b
+      field: attentionalCapture
+      prompt: 在没有更多信息之前，这件事会多容易一直占着你的注意力？
+      tags: []
+      response:
+        formatRef: INTENSITY7_0_6
+    - itemId: UA-S02.c
+      field: initialInterpretation
+      prompt: 在目前信息下，你更接近哪种判断？
+      tags: []
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 更可能只是临时状况 / 状态变化
+          - code: '2'
+            label: 几种可能都存在，目前无法判断
+          - code: '3'
+            label: 更可能意味着对方投入或兴趣在下降
+          - code: '4'
+            label: 我通常不会在这个阶段主动解释它意味着什么
+  - taskId: UA-S03
+    constructId: uncertainty_activation
+    prompt: 一次你自己觉得很不错的见面后，对方第二天态度正常，但明显没有你预想中那么热情。
+    taskType: compound
+    responseContext: HYPOTHETICAL_OR_MATCHED_REAL_EVENT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes:
+    - Activation children are not scored as strategy behavior.
+    children:
+    - itemId: UA-S03.a
+      field: concern
+      prompt: 这件事本身会让你多在意？
+      tags: []
+      response:
+        formatRef: INTENSITY7_0_6
+    - itemId: UA-S03.b
+      field: attentionalCapture
+      prompt: 在没有更多信息之前，这件事会多容易一直占着你的注意力？
+      tags: []
+      response:
+        formatRef: INTENSITY7_0_6
+    - itemId: UA-S03.c
+      field: initialInterpretation
+      prompt: 在目前信息下，你更接近哪种判断？
+      tags: []
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 更可能只是临时状况 / 状态变化
+          - code: '2'
+            label: 几种可能都存在，目前无法判断
+          - code: '3'
+            label: 更可能意味着对方投入或兴趣在下降
+          - code: '4'
+            label: 我通常不会在这个阶段主动解释它意味着什么
+- poolId: intimacy
+  sampleCount: 6
+  samplingMethod: SAMPLE_WITHOUT_REPLACEMENT
+  tasks:
+  - taskId: IDC01
+    constructId: intimacy_dependence_comfort
+    prompt: 当一段关系逐渐变得重要、彼此越来越了解时，我通常不会因为“太近了”而本能地想退开一些。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: IDC03
+    constructId: intimacy_dependence_comfort
+    wave: wave2
+    taskType: statement
+    prompt: 即使一段关系很好，亲密程度持续增加有时也会让我开始觉得有些被压住。
+    response:
+      formatRef: AGR7
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    probeFocus:
+    - intimacy_vs_space
+    - vulnerability_vs_reliance
+    - care_discomfort_rationale
+    scoringStatus: PILOT_ONLY
+    normalizationStatus: P0_NORMALIZED_PARENT
+  - taskId: IDC04
+    constructId: intimacy_dependence_comfort
+    prompt: 当我和一个人的关系真正进入“彼此很重要”的阶段，我通常可以适应这种靠近，而不需要因为亲密本身刻意制造距离。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: IDC05
+    constructId: intimacy_dependence_comfort
+    prompt: 在我真正信任的伴侣面前，让对方知道自己有害怕、没有把握或做得不好的地方，对我来说并不是特别困难。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: IDC06
+    constructId: intimacy_dependence_comfort
+    wave: wave2
+    taskType: statement
+    prompt: 即使关系很亲近，我也会倾向于把真正脆弱的部分留给自己。
+    response:
+      formatRef: AGR7
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    probeFocus:
+    - intimacy_vs_space
+    - vulnerability_vs_reliance
+    - care_discomfort_rationale
+    scoringStatus: PILOT_ONLY
+    normalizationStatus: P0_NORMALIZED_PARENT
+  - taskId: IDC07
+    constructId: intimacy_dependence_comfort
+    prompt: 当一件事情让我很难受时，我能够想象自己把“我现在其实撑得不太好”直接告诉长期伴侣。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: IDC08
+    constructId: intimacy_dependence_comfort
+    prompt: 如果我觉得自己某一面可能不够体面，我会很难让伴侣真正看到这一部分。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: IDC09
+    constructId: intimacy_dependence_comfort
+    prompt: 对我来说，亲密的一部分就是允许另一个人知道那些我不总能处理好的事情。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: IDC10
+    constructId: intimacy_dependence_comfort
+    prompt: 真正遇到自己一个人很难处理的事情时，我能够接受向长期伴侣求助。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: IDC11
+    constructId: intimacy_dependence_comfort
+    prompt: 即使伴侣明确愿意帮忙，我也常觉得“最好还是我自己解决”。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: IDC12
+    constructId: intimacy_dependence_comfort
+    prompt: 一件重要事情需要依靠伴侣完成一部分，并不会天然让我觉得不舒服。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: IDC14
+    constructId: intimacy_dependence_comfort
+    prompt: 我可以接受两个人长期相处以后，在一些事情上确实会彼此依靠，而不是凡事都必须完全独立。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: IDC15
+    constructId: intimacy_dependence_comfort
+    prompt: 我状态很差时，如果伴侣主动照顾我，我通常能够接受这种帮助，而不是急着证明自己不需要。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: IDC16
+    constructId: intimacy_dependence_comfort
+    wave: wave2
+    taskType: statement
+    prompt: 别人为我做很多照顾性的事情时，即使我很需要，也可能让我有明显的负担感。
+    response:
+      formatRef: AGR7
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    probeFocus:
+    - intimacy_vs_space
+    - vulnerability_vs_reliance
+    - care_discomfort_rationale
+    scoringStatus: PILOT_ONLY
+    normalizationStatus: P0_NORMALIZED_PARENT
+  - taskId: IDC17
+    constructId: intimacy_dependence_comfort
+    prompt: 如果生病或遇到现实困难，我可以接受伴侣在一段时间里替我承担更多事情。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: IDC18
+    constructId: intimacy_dependence_comfort
+    prompt: 当伴侣很认真地关心我的状态时，我通常不会因为这种关注本身而觉得被侵入。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: IDC-S01
+    constructId: intimacy_dependence_comfort
+    wave: wave2
+    taskType: compound
+    prompt: 你遇到一个影响很大的工作/学习问题，自己已经处理了几天仍然没有解决。稳定交往的伴侣知道后说：“你不用一个人扛，我们一起想办法。”
+    probeFocus:
+    - reliance_comfort_vs_problem_solving_preference
+    scoringStatus: PILOT_ONLY
+    children:
+    - itemId: IDC-S01.a
+      field: comfort
+      prompt: 这种参与对你来说有多舒服？
+      response:
+        formatRef: COMFORT7_0_6
+    - itemId: IDC-S01.b
+      field: preferredInvolvement
+      prompt: 你更接近哪种状态？
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 很愿意让对方真正参与
+          - code: '2'
+            label: 可以听建议，但核心还是想自己处理
+          - code: '3'
+            label: 希望对方知道情况，但不要参与解决
+          - code: '4'
+            label: 会本能想把事情收回自己手里
+          - code: '5'
+            label: 说不准
+    normalizationStatus: P0_NORMALIZED_PARENT
+- poolId: conflict_activation
+  sampleCount: 6
+  samplingMethod: SAMPLE_WITHOUT_REPLACEMENT
+  tasks:
+  - taskId: CA01
+    constructId: conflict_activation
+    prompt: 和重要的人争执真正升级以后，我的情绪强度有时会上升得很快。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: CA02
+    constructId: conflict_activation
+    prompt: 原本只是一个具体问题，吵到后面时我有时会感觉整个人都被这场冲突带进去。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: CA03
+    constructId: conflict_activation
+    prompt: 冲突越持续，我越容易进入一种“现在很难只是平静讨论事情”的状态。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: CA04
+    constructId: conflict_activation
+    prompt: 即使争执比较激烈，我通常仍能让自己的情绪维持在可以继续处理问题的范围。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: CA06
+    constructId: conflict_activation
+    prompt: 情绪上来以后，我有时会只抓住对方某一句话，很难再看整件事情。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: CA07
+    constructId: conflict_activation
+    prompt: 争执升级时，我会比较容易把对方接下来的话都理解成在攻击或否定我。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: CA08
+    constructId: conflict_activation
+    prompt: 即使我很生气，我通常仍能区分“我不喜欢他这句话”和“他整个人都在针对我”。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: CA10
+    constructId: conflict_activation
+    prompt: 冲突中如果信息一下很多，我会明显需要一点时间才能整理清楚自己究竟想说什么。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: CA11
+    constructId: conflict_activation
+    prompt: 有些争执里，我后来会发现自己当时其实没有完整听进去对方说了什么。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: CA12
+    constructId: conflict_activation
+    prompt: 情绪很强时，我当场做出的理解和判断，事后有时会明显改变。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: CA13
+    constructId: conflict_activation
+    prompt: 一旦冲突让我很不舒服，我会有很强的冲动想让这件事马上出现一个结果。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: CA14
+    constructId: conflict_activation
+    prompt: 冲突升级时，我可能会出现很强的“现在先离开这个场景”的冲动。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: CA15
+    constructId: conflict_activation
+    prompt: 被误解时，我会很难忍住立刻继续解释，直到对方理解为止。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: CA16
+    constructId: conflict_activation
+    prompt: 当争执让我明显过载时，我的第一需要往往不是继续讨论，而是先让强度降下来。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags:
+    - psychometric_candidate
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: CA-S01
+    constructId: conflict_activation
+    prompt: 伴侣认为你做某件事是不重视他，但你觉得自己的动机完全不是这样。你已经解释了两次，对方仍然不接受。
+    taskType: compound
+    responseContext: HYPOTHETICAL_OR_MATCHED_REAL_CONFLICT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    children:
+    - itemId: CA-S01.a
+      field: activation
+      prompt: 这种情况下你的情绪/内部激活可能有多高？
+      tags: []
+      response:
+        formatRef: INTENSITY7_0_6
+    - itemId: CA-S01.b
+      field: processingCapacity
+      prompt: 此时你觉得自己还能多有效地理解对方并组织自己的想法？
+      tags: []
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: true
+          options:
+          - code: '1'
+            label: 几乎不能
+          - code: '2'
+            label: 比较困难
+          - code: '3'
+            label: 一般
+          - code: '4'
+            label: 大体还能
+          - code: '5'
+            label: 基本可以
+    - itemId: CA-S01.c
+      field: actionUrge
+      prompt: 此时最强的冲动更接近：
+      tags: []
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 继续解释 / 继续把问题说清楚
+          - code: '2'
+            label: 先暂停，让强度降下来
+          - code: '3'
+            label: 直接结束这次讨论，不想再处理
+          - code: '4'
+            label: 没有明显单一冲动 / 看情况
+  - taskId: CA-S02
+    constructId: conflict_activation
+    prompt: 争论过程中，对方连续指出几件他长期不满意的事，而你本来以为今天只是在讨论其中一件。
+    taskType: compound
+    responseContext: HYPOTHETICAL_OR_MATCHED_REAL_CONFLICT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    children:
+    - itemId: CA-S02.a
+      field: activation
+      prompt: 这种情况下你的情绪/内部激活可能有多高？
+      tags: []
+      response:
+        formatRef: INTENSITY7_0_6
+    - itemId: CA-S02.b
+      field: processingCapacity
+      prompt: 此时你觉得自己还能多有效地理解对方并组织自己的想法？
+      tags: []
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: true
+          options:
+          - code: '1'
+            label: 几乎不能
+          - code: '2'
+            label: 比较困难
+          - code: '3'
+            label: 一般
+          - code: '4'
+            label: 大体还能
+          - code: '5'
+            label: 基本可以
+    - itemId: CA-S02.c
+      field: actionUrge
+      prompt: 此时最强的冲动更接近：
+      tags: []
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 继续解释 / 继续把问题说清楚
+          - code: '2'
+            label: 先暂停，让强度降下来
+          - code: '3'
+            label: 直接结束这次讨论，不想再处理
+          - code: '4'
+            label: 没有明显单一冲动 / 看情况
+  - taskId: CA-S03
+    constructId: conflict_activation
+    prompt: 一个问题已经讨论半小时，双方开始重复相同观点，没有辱骂或威胁，但情绪越来越强。
+    taskType: compound
+    responseContext: HYPOTHETICAL_OR_MATCHED_REAL_CONFLICT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    children:
+    - itemId: CA-S03.a
+      field: effectiveCommunicationCapacity
+      prompt: 此时你继续有效交流的能力还有多少？
+      tags: []
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: true
+          options:
+          - code: '1'
+            label: 几乎没有
+          - code: '2'
+            label: 很低
+          - code: '3'
+            label: 较低
+          - code: '4'
+            label: 中等
+          - code: '5'
+            label: 较高
+          - code: '6'
+            label: 很高
+          - code: '7'
+            label: 几乎不受影响
+    - itemId: CA-S03.b
+      field: preferredNextMove
+      prompt: 此时你最想做什么？
+      tags: []
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 继续说，尽量当场说清
+          - code: '2'
+            label: 暂停十几到几十分钟
+          - code: '3'
+            label: 暂停几小时后再谈
+          - code: '4'
+            label: 改到第二天再谈
+          - code: '5'
+            label: 结束这个问题，不想再处理
+          - code: '6'
+            label: 取决于议题
+runtimeRules:
+- Sample without replacement within each pool.
+- Use stable assessment-level random seed.
+- Store all assigned itemIds, including not answered items.
+- Do not calculate user-facing construct scores during P1 runtime.

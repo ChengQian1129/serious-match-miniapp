@@ -1,0 +1,282 @@
+schemaVersion: relationship-feature-model-v3.pilot-pruning-calibration-spec.v1.0
+generatedAt: '2026-08-09'
+status: PRE_PILOT_DECISION_FRAMEWORK
+principles:
+- Pilot exists to falsify and prune the candidate system, not to confirm the original design.
+- No single statistic automatically deletes an item.
+- Item retention must balance construct coverage, measurement quality, user comprehension, burden, and decision/report utility.
+- Different measurement grammars use different pruning criteria.
+- A shorter final questionnaire is created by evidence-based pruning, not by preassigning equal item counts per dimension.
+- All scoring models and thresholds are versioned; raw responses are immutable.
+- User-facing authoring zones are calibrated only after construct models are selected.
+- A construct can be demoted or removed even if its items are internally consistent, if it adds no distinct explanatory or decision value.
+stages:
+  P0:
+    name: Cognitive Interview
+    decisions:
+    - KEEP
+    - REWRITE
+    - SPLIT
+    - REROUTE
+    - DROP
+    - ADD_OPTION
+    - ADD_CONTEXT
+    itemFlags:
+      comprehensionFailure: Participant repeatedly answers a different question from intended construct.
+      retrievalFailure: Participants cannot retrieve a real basis and fall back to generic social rules when real-history evidence is expected.
+      mappingFailure: Real answers do not fit available options.
+      socialDesirability: One response is obviously morally preferred and participants explicitly recognize that.
+      doubleBarrel: One item contains two separable judgments.
+      constructContamination: Users interpret item primarily through another construct.
+    rule: Repeated qualitative failure across waves outranks good-looking quantitative discrimination.
+  P0_5:
+    name: Technical / UX Pilot
+    metrics:
+    - completion_time
+    - block_dropoff
+    - response_time
+    - backtracking
+    - answer_change
+    - branch_error
+    - component_error
+    rule: UX burden can move an item to a rotating/branch form; it does not by itself prove the construct is unimportant.
+  P1:
+    name: Broad Measurement Pilot
+    subsystems:
+    - psychometric
+    - behavior_scenario
+    - need_profile
+    - operating_standard
+    - preference_function
+    - constraint_life_plan
+    rule: Use object-specific analysis; never compute a whole-questionnaire alpha.
+  P2:
+    name: Retest + Interview
+    metrics:
+    - test_retest
+    - change_event_explanation
+    - history_congruence
+    - interview_usefulness
+    rule: Expected stability depends on construct time sensitivity.
+  P3_P4:
+    name: Revealed Choice + Dyadic Validation
+    metrics:
+    - stated_to_revealed
+    - pair_decision_utility
+    - partner_report
+    - event_prediction
+    - unexplained_variance
+    rule: Static assessment earns stronger claims only if it survives contact with real choices and interactions.
+grammarRules:
+  PSYCHOMETRIC:
+    appliesTo:
+    - relationship_readiness
+    - initiation_motivation
+    - uncertainty_activation
+    - intimacy_dependence_comfort
+    - conflict_activation
+    reviewFlags:
+    - flag: CATEGORY_COLLAPSE
+      trigger: One/few response categories dominate so strongly that the item contributes little information.
+    - flag: LOW_DISCRIMINATION
+      trigger: Weak relation to intended latent dimension across appropriate ordinal models.
+    - flag: CROSS_LOADING
+      trigger: Item loads materially on a competing construct/facet and content review confirms contamination.
+    - flag: LOCAL_DEPENDENCE
+      trigger: Item is nearly a wording duplicate of another retained item.
+    - flag: METHOD_EFFECT
+      trigger: Reverse/wording format creates a factor unrelated to content.
+    - flag: POOR_RETEST
+      trigger: Instability exceeds what construct time-sensitivity and real change events plausibly explain.
+    selectionObjective: Maximize construct information and facet coverage while minimizing redundancy and burden.
+    modelWorkflow:
+    - Inspect ordinal distributions and item semantics.
+    - Use EFA/exploratory model only where structure is genuinely open.
+    - Use independent/held-out data for confirmation when possible.
+    - Compare plausible factor structures, not only one preferred model.
+    - Estimate omega/reliability only for constructs where reflective latent modeling is justified.
+    - Consider IRT/ordinal item information only after dimensionality is credible.
+    doNotDo:
+    - Delete solely because loading falls below one universal cutoff.
+    - Keep solely because alpha increases.
+    - Average all psychometric constructs into one score.
+  BEHAVIOR_SCENARIO:
+    appliesTo:
+    - relational_follow_through
+    - support_signaling
+    - responsiveness_capability
+    - repair_reengagement
+    - scenario probes
+    reviewFlags:
+    - flag: OBVIOUS_BEST_ANSWER
+      trigger: Most participants identify the socially correct response rather than reveal likely behavior.
+    - flag: NO_BEHAVIORAL_SPREAD
+      trigger: Responses show little meaningful variation.
+    - flag: SCENARIO_ARTIFACT
+      trigger: Answer depends mainly on unrealistic scenario details.
+    - flag: HISTORY_MISMATCH
+      trigger: Scenario answer repeatedly conflicts with participant's own concrete history without explainable context.
+    - flag: NO_CRITERION_SIGNAL
+      trigger: Does not improve prediction/explanation of later interview, partner, or dyadic behavior.
+    selectionObjective: Retain scenarios that distinguish strategies/capabilities and generalize across realistic contexts.
+    doNotDo:
+    - Treat knowledge of the norm as demonstrated capability.
+    - Create one communication-skill score.
+  NEED_PROFILE:
+    appliesTo:
+    - personal_space_need
+    - support_need
+    - conflict_pacing_need
+    reviewFlags:
+    - flag: NO_POSITION_VARIANCE
+      trigger: Nearly everyone chooses the same need position.
+    - flag: CONTEXT_UNDEFINED
+      trigger: Users cannot answer without a missing contextual qualifier.
+    - flag: RANGE_UNSTABLE
+      trigger: Preferred/acceptable ranges vary randomly rather than with explainable context.
+    - flag: NEED_STANDARD_CONFUSION
+      trigger: Users answer what partners should do in general rather than what helps them personally.
+    selectionObjective: Recover a stable enough need/range profile with minimal context ambiguity.
+    doNotDo:
+    - Interpret higher need as worse.
+    - Force reflective-scale reliability where a range/profile is the target.
+  OPERATING_STANDARD:
+    appliesTo:
+    - L3 domains
+    reviewFlags:
+    - flag: PREMATURE_POSITION
+      trigger: High proportion of participants report they have never considered the issue and position confidence is very low.
+    - flag: SURFACE_ONLY
+      trigger: Different surface choices reflect the same underlying governance function.
+    - flag: RECIPROCITY_AMBIGUOUS
+      trigger: Self/partner rule asymmetry cannot be distinguished from real role/responsibility differences.
+    - flag: LOW_PAIR_UTILITY
+      trigger: The position rarely changes interview priorities, negotiation needs, or pair interpretation.
+    selectionObjective: Retain domains/rules that users can understand and that materially affect how a relationship would operate.
+    actionsForPremature:
+    - Move to later-stage branch
+    - Interview-only
+    - Keep position confidence and skip deep follow-up
+    doNotDo:
+    - Sum L3 into a relationship-values score.
+    - Assume same surface answer means compatibility.
+  PREFERENCE_FUNCTION:
+    appliesTo:
+    - L4 partner decision attributes
+    reviewFlags:
+    - flag: IDEAL_RANGE_NOT_DISTINGUISHABLE
+      trigger: Users cannot meaningfully distinguish ideal from acceptable.
+    - flag: NO_INDIVIDUAL_DIFFERENCE
+      trigger: Attribute is almost universally desired in the same direction and distinctive preference adds little.
+    - flag: TRADEOFF_INCONSISTENT
+      trigger: Rating says high priority but constrained choices repeatedly sacrifice the attribute.
+    - flag: NO_REVEALED_SIGNAL
+      trigger: Preference function adds little to real candidate choices once normative desirability is considered.
+    - flag: CANDIDATE_SIDE_UNMEASURABLE
+      trigger: The corresponding candidate position cannot be measured/observed with usable confidence.
+    selectionObjective: Retain attributes that have interpretable individual differences and improve directional candidate decisions.
+    doNotDo:
+    - Infer ideal partner from self score.
+    - Turn universal desirability into fake personalization.
+    - Freeze permanent preference weights from one assessment.
+  CONSTRAINT_LIFE_PLAN:
+    appliesTo:
+    - L5
+    reviewFlags:
+    - flag: PREFERENCE_NOT_HARD
+      trigger: Counterfactual confirmation shows participant would still consider a candidate.
+    - flag: UNSURE_COLLAPSED
+      trigger: UI/analysis treats uncertainty as midpoint or missing.
+    - flag: DESIRE_INTENTION_CONFLATED
+      trigger: Participants cannot distinguish ideal desire from realistic plan.
+    - flag: TIME_HORIZON_MISSING
+      trigger: Position cannot be interpreted without when it must be resolved.
+    - flag: LOW_POSITION_CONFIDENCE
+      trigger: User is forming the position for the first time.
+    selectionObjective: Accurately distinguish facts, desires, intentions, hard constraints, uncertainty, and feasibility.
+    doNotDo:
+    - Promote importance to hard constraint automatically.
+    - Reject candidate because fact is unknown.
+    - Create a life-plan total score.
+constructDecision:
+  KEEP_CORE:
+    requirements:
+    - Clear definition and boundary.
+    - Adequate response-process evidence.
+    - Measurement structure appropriate to grammar.
+    - Nonredundant information or decision/report utility.
+    - No prohibited interpretation is required to make it useful.
+  KEEP_SHORTEN:
+    requirements:
+    - Construct is useful but candidate pool contains redundancy.
+    - Core facet coverage can be retained with fewer tasks.
+  MERGE:
+    requirements:
+    - Two constructs are empirically and conceptually indistinguishable in relevant contexts.
+    - Merge does not erase an important operational distinction.
+  DEMOTE_RESEARCH_ONLY:
+    requirements:
+    - Interesting signal but insufficient reliability/observability/decision value for user-facing report.
+  DEMOTE_INTERVIEW_ONLY:
+    requirements:
+    - Question is valuable only with contextual follow-up or too premature/sensitive for onboarding.
+  DROP:
+    requirements:
+    - Cannot be clearly understood or measured.
+    - No incremental/self-insight/decision value after stronger alternatives.
+    - Candidate-side or criterion side fundamentally unobservable for intended use.
+shortFormConstruction:
+  rule: Do not target equal item counts. Target adequate information per construct.
+  steps:
+  - Freeze construct boundaries after P0 revisions.
+  - Select mandatory facet/content anchors before purely statistical item optimization.
+  - Rank redundant items by information, comprehension, burden, and contamination.
+  - For psychometric dimensions, choose items that cover the latent continuum and facets rather than only highest loadings.
+  - For scenario/capability systems, preserve multiple contexts where context-generalization is part of the claim.
+  - For need/preference systems, preserve ideal/range/tradeoff or contextual variation rather than deleting the structure to save clicks.
+  - Run simulation/holdout to test whether short-form estimates reproduce full candidate-bank conclusions with acceptable uncertainty.
+  - Only then set product REPORT_CORE v2.
+  minimumEvidenceRule: A short form cannot make a stronger claim than the evidence type retained in the short form.
+scoringCalibration:
+  versioning:
+    rawResponses: immutable
+    scoringModel: versioned separately
+    authoringLibrary: versioned separately
+    report: stores scoringModelVersion + authoringLibraryVersion
+  continuousDimensions:
+    workflow:
+    - Choose measurement model after P1.
+    - Generate person estimate + uncertainty.
+    - Calibrate authoring zones on the model scale, not directly on arbitrary raw sums.
+    - Check that adjacent zones produce meaningfully different user interpretation and external criteria.
+    - If data do not justify five zones, collapse to three or use continuous language.
+    zoneOptions:
+    - Model-based thresholds if defensible.
+    - Empirical reference bands if the reference population is clearly defined.
+    - Continuous narrative without discrete bands if thresholds add false precision.
+  profileDimensions:
+    workflow:
+    - Estimate component/facet positions separately.
+    - Define dominance only when difference exceeds a calibrated uncertainty margin.
+    - Use MIXED/CONTEXTUAL when no component clearly dominates.
+    - Do not force every user into one named profile.
+  behaviorCapability:
+    workflow:
+    - Keep source-specific evidence separate.
+    - Onboarding scenario/self-report starts PROVISIONAL.
+    - Upgrade/downgrade confidence with interview, repeated behavior, partner report, or dyadic events.
+    - Position can stay similar while confidence changes.
+  preferenceFunctions:
+    workflow:
+    - Estimate ideal/range from stated tasks.
+    - Estimate priority from constrained trade-offs.
+    - Track stated→revealed divergence without overwriting stated values.
+    - Version preference function over time.
+calibrationOutputs:
+- Item Registry vNext with KEEP/REWRITE/DROP status
+- Construct Registry vNext with CORE/MERGE/DEMOTE/DROP
+- Scoring Model v0.1
+- Authoring Zone Calibration v0.1
+- REPORT_CORE v2 short-form candidate
+- P1 Findings Memo
+- P2 Retest/Interview revision plan

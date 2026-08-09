@@ -3,6 +3,7 @@
     "pages/welcome/index",
     "pages/home/index",
     "pages/questionnaire/index",
+    "pages/questionnaire-v3-pilot/index",
     "pages/chapter-insight/index",
     "pages/questionnaire-result/index",
     "pages/relationship-map/index",

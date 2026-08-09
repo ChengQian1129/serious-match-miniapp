@@ -1,0 +1,908 @@
+schemaVersion: relationship-feature-model-v3.user-report-authoring-library.v1.0
+generatedAt: '2026-08-09'
+status: AUTHORING_SPACE_FROZEN_PILOT_CALIBRATION_PENDING
+globalRules:
+- Every C1–C6 core dimension must produce an explicit user-facing conclusion.
+- Do not show internal psychometric jargon unless needed in methodology notes.
+- Do not convert descriptive zones into moral grades.
+- Do not diagnose attachment style, mental disorder, EQ, maturity, or relationship health from these results.
+- Narrative confidence and estimated position are separate.
+- When evidence is hypothetical-only, say so in wording.
+- Chapter synthesis may add meaning but may not erase or contradict dimension-level results.
+- Cross-chapter patterns are selected only when their trigger conditions are supported; they are not personality types.
+dimensionBlocks:
+  relationship_readiness:
+    label: 关系准备度
+    states:
+      VERY_LOW:
+        headline: 现在并不是你特别想让一段认真关系进入生活的阶段
+        summary: 你的回答没有表现出很强的关系启动时机感。相比“赶紧开始”，你现在更像是在保留空间，或者还没有觉得这件事需要进入生活中心。
+        relationshipMeaning: 这描述的是当前阶段，不是长期能力。一个人可以很有建立关系的能力，但当下并不准备开始。
+        possibleFriction:
+        - 如果外界催促很强，你可能会出现“行动比内在准备走得更快”的情况。
+        usefulConditions:
+        - 允许自己把“现在不想开始”和“永远不想要关系”分开。
+        caveat: 如果你最近刚经历分手、工作变动或重大生活事件，这个结果可能很快变化。
+      LOW:
+        headline: 你对开始认真关系有一些开放，但时机感还不算强
+        summary: 你并不是完全排斥关系，只是“现在就让它真正进入生活”的准备还比较有限。
+        relationshipMeaning: 你可能愿意认识人，但会更谨慎地决定关系要不要继续加深。
+        possibleFriction:
+        - 如果对方推进很快，你可能会比自己预想得更想放慢。
+        usefulConditions:
+        - 把认识新人和承诺进入长期关系分成不同阶段，会更符合你的当前状态。
+        caveat: ''
+      MID:
+        headline: 你对关系的准备度比较看具体阶段和对象
+        summary: 你没有表现出非常明确的“现在必须开始”，也不是明显不准备。真正的启动感可能要等到遇到合适的人、现实条件允许时才会变得清楚。
+        relationshipMeaning: 这种状态不需要被强行归类成“准备好”或“没准备好”。
+        possibleFriction:
+        - 如果你把自己的犹豫误解成“我一定有问题”，反而会制造额外压力。
+        usefulConditions:
+        - 后续更值得看现实承载力和动机来源。
+        caveat: ''
+      HIGH:
+        headline: 你已经比较准备好让一段认真关系进入生活
+        summary: 你现在不仅愿意认识人，也比较能想象自己持续投入时间、注意力和关系建设。
+        relationshipMeaning: 这是一种当前的启动准备，而不是“关系能力认证”。
+        possibleFriction:
+        - 如果现实承载力不足，准备度高仍可能转化成挫败。
+        usefulConditions:
+        - 下一步重点不是继续证明自己想谈，而是看生活是否真的装得下。
+        caveat: ''
+      VERY_HIGH:
+        headline: 开始一段认真关系现在对你是非常明确的生活方向
+        summary: 关系启动对你不是模糊愿望，而是已经进入当前人生优先事项。
+        relationshipMeaning: 你可能更愿意主动认识、推进和确认关系。
+        possibleFriction:
+        - 高准备度如果同时伴随高外部压力，容易把“明确想要”变成“必须尽快得到”。
+        usefulConditions:
+        - 保留对具体对象的判断，不要让时间表替代选择。
+        caveat: ''
+  initiation_motivation:
+    label: 开始关系的动机结构
+    states:
+      AUTONOMOUS_DOMINANT:
+        headline: 你想开始关系，主要因为这件事本身对你有价值
+        summary: 你的动机更多来自关系本身的吸引力，或你确实把亲密关系视为自己想要的人生方向，而不是主要由外界催促推动。
+        relationshipMeaning: 这通常意味着“我想要”比“我应该要”更清楚。
+        possibleFriction:
+        - 自主愿望强并不代表现实条件一定合适。
+        usefulConditions:
+        - 把愿望与当前承载力一起看。
+        caveat: ''
+      AUTONOMOUS_PLUS_PRESSURE:
+        headline: 你自己确实想开始，但时间表也在推着你
+        summary: 你对关系有真实愿望，同时年龄、家庭、同龄比较或人生时间表也在增加紧迫感。
+        relationshipMeaning: 这两股力量可以同时存在，不需要把其中任何一股解释成虚假。
+        possibleFriction:
+        - 在具体选择里，压力可能让你降低本来很重要的标准，或过快确认关系。
+        usefulConditions:
+        - 遇到重大取舍时问自己：如果没有时间压力，我还会做同样选择吗？
+        caveat: ''
+      PRESSURE_DOMINANT:
+        headline: “应该开始了”的力量目前比“我真的很想开始”更突出
+        summary: 你的回答里，外部期待、比较或自我时间表带来的推动更明显。
+        relationshipMeaning: 这不意味着你不想要关系，而是当前启动动力里压力成分较高。
+        possibleFriction:
+        - 可能出现为了赶进度而进入并不真正想要的关系。
+        usefulConditions:
+        - 后续择偶时把“降低焦虑”与“真正喜欢这个人”分开。
+        caveat: ''
+      LOW_MOTIVATION:
+        headline: 关系启动目前不是一个很强的内在驱动力
+        summary: 无论是关系本身的吸引力，还是外部压力，你当前都没有很强的启动动力。
+        relationshipMeaning: 这可能只是人生阶段，也可能说明你目前把精力放在其他目标上。
+        possibleFriction:
+        - 如果产品或家人把“低动机”当成需要纠正的问题，会误读你的状态。
+        usefulConditions:
+        - 允许这个结果随人生阶段更新。
+        caveat: ''
+      MIXED:
+        headline: 你开始关系的原因比较复杂，没有单一力量占绝对主导
+        summary: 你可能同时有真实愿望、人生规划、比较压力和现实顾虑。不同场景会把不同动机推到前面。
+        relationshipMeaning: 对你来说，理解“此刻是哪一种动机在做决定”比得到一个总分更有意义。
+        possibleFriction:
+        - 混合动机容易在推进速度上出现摇摆。
+        usefulConditions:
+        - 在重大决定前区分“我想要什么”和“我怕错过什么”。
+        caveat: ''
+  available_capacity:
+    label: 当前关系承载力
+    states:
+      LOW:
+        headline: 你现在真正缺的可能不是愿望，而是可持续的生活空间
+        summary: 时间、日程可预测性、精神余力或其他责任目前会明显挤压新关系。
+        relationshipMeaning: 这不是人格问题，而是当前资源配置。
+        possibleFriction:
+        - 关系可能只能靠临时挤时间，导致双方不断重新解释“是不是不够在意”。
+        usefulConditions:
+        - 如果仍开始关系，提前说明现实限制、建立可预期节奏会很重要。
+        caveat: 承载力是高度时间敏感的结果，应定期重测。
+      MID:
+        headline: 你有空间，但能不能稳定投入很看阶段
+        summary: 你的生活并非完全装不下关系，但忙碌、波动或责任会让可用空间有明显变化。
+        relationshipMeaning: 对你来说，关系节奏比“平均每周有几小时”更重要。
+        possibleFriction:
+        - 在高负荷阶段，临时减少投入可能被对方误读。
+        usefulConditions:
+        - 建立忙碌期的最低联系和更新规则。
+        caveat: ''
+      HIGH:
+        headline: 你当前有比较稳定的现实空间容纳一段新关系
+        summary: 从时间、可预测性和精神余力看，你不太需要完全靠挤压其他生活来维持关系。
+        relationshipMeaning: 这意味着现实承载不是当前最大的启动障碍。
+        possibleFriction:
+        - 有空间不等于一定会持续兑现承诺。
+        usefulConditions:
+        - 继续结合 follow-through 看“有空间”能不能变成稳定行动。
+        caveat: ''
+  relational_follow_through:
+    label: 关系中的持续兑现
+    states:
+      VERY_LOW:
+        headline: 关系安排比较容易在执行阶段掉下来
+        summary: 从你的行为回答看，答应、执行、提前更新和重新收尾之间存在比较明显的断点。
+        relationshipMeaning: 这描述的是关系情境中的可预期性，而不是“你这个人不可靠”。
+        possibleFriction:
+        - 对方可能不断需要猜计划是否还有效。
+        usefulConditions:
+        - 优先练习少承诺、早更新、明确收尾。
+        caveat: ''
+      LOW:
+        headline: 你有兑现意愿，但持续执行并不总是稳定
+        summary: 一些安排能够完成，但临时变化、过度答应或缺少后续更新会降低可预期性。
+        relationshipMeaning: 问题更可能出在管理承诺，而不是有没有好意。
+        possibleFriction:
+        - “我本来想做”可能无法抵消对方长期的不确定感。
+        usefulConditions:
+        - 在答应前评估把握，变化时主动更新。
+        caveat: ''
+      MID:
+        headline: 你的持续兑现比较依赖情境
+        summary: 你并不稳定地落在“很可靠”或“经常失约”的一端，重要程度、忙碌状态和关系阶段都会影响执行。
+        relationshipMeaning: 后续真实行为比一次自评更重要。
+        possibleFriction:
+        - 在压力大时更容易暴露执行弱点。
+        usefulConditions:
+        - 关注哪些情境最容易让承诺断掉。
+        caveat: ''
+      HIGH:
+        headline: 你通常能把关系中的承诺做得比较可预期
+        summary: 你不仅倾向完成已经答应的事情，出现变化时也比较愿意提前说明或重新安排。
+        relationshipMeaning: 这种可预期性往往比“从不失约”更现实。
+        possibleFriction:
+        - 高可靠性也可能让你过度承担。
+        usefulConditions:
+        - 保留说“不确定”和拒绝不现实承诺的空间。
+        caveat: ''
+      VERY_HIGH:
+        headline: 你非常重视关系安排的兑现和闭环
+        summary: 你对答应、执行、通知变化和重新收尾都表现出很强的一致性。
+        relationshipMeaning: 这是一种关系运行优势，但仍需要真实互动验证。
+        possibleFriction:
+        - 可能对伴侣的执行标准也自然较高。
+        usefulConditions:
+        - 把自己的高标准与对方可协商的现实差异分开。
+        caveat: ''
+  uncertainty_activation:
+    label: 不确定中的激活程度
+    states:
+      VERY_LOW:
+        headline: 关系里的模糊通常不太容易把你卷进去
+        summary: 回应变慢、定义暂时不清等信号通常不会长时间占据你的注意力。
+        relationshipMeaning: 低激活不等于不在乎，也可能只是你需要更强证据才会判断关系出了问题。
+        possibleFriction:
+        - 如果窗口过长，真实问题也可能被延后处理。
+        usefulConditions:
+        - 结合 ambiguity window 和直接沟通策略一起看。
+        caveat: ''
+      LOW:
+        headline: 你会注意到关系变化，但通常不会迅速把它解释成威胁
+        summary: 你能感知信号，但大多数时候可以等待更多信息。
+        relationshipMeaning: 这可能让你在早期关系中保持较多认知余地。
+        possibleFriction:
+        - 如果你习惯把不舒服都压到很后面，仍可能错过边界表达。
+        usefulConditions:
+        - 在真正重要时保持主动确认。
+        caveat: ''
+      MID:
+        headline: 不确定对你的影响很看具体信号和关系投入
+        summary: 小变化未必会影响你，但当投入变深或多个信号同时出现时，激活可能明显上升。
+        relationshipMeaning: 这是很常见的情境依赖型状态。
+        possibleFriction:
+        - 同一行为在不同关系阶段可能触发不同反应。
+        usefulConditions:
+        - 报告时应结合场景差异，不给单一标签。
+        caveat: ''
+      HIGH:
+        headline: 关系一旦变得模糊，你会比较快被这些变化影响
+        summary: 你容易注意到回应、投入和关系定义的变化，而且信息不足时这些问题可能持续占据注意力。
+        relationshipMeaning: 真正决定体验的下一步，是你用什么策略处理这种激活。
+        possibleFriction:
+        - 如果长期没有清晰信息，反刍或重复确认可能增加。
+        usefulConditions:
+        - 尽量把“我观察到什么”和“我推断这意味着什么”分开。
+        caveat: ''
+      VERY_HIGH:
+        headline: 关系不确定很容易迅速成为你当前注意力的中心
+        summary: 当关系信号发生变化时，你的威胁感和解决紧迫感可能很快升高。
+        relationshipMeaning: 这不是诊断，也不能单独说明依恋类型。
+        possibleFriction:
+        - 在缺少新信息时更容易把最坏解释当成事实。
+        usefulConditions:
+        - 对你来说，清晰的沟通和可预期性可能具有很高关系价值。
+        caveat: ''
+  uncertainty_regulation:
+    label: 不确定中的应对方式
+    states:
+      CLARIFYING:
+        headline: 你更倾向直接把不确定说出来
+        summary: 当关系出现模糊，你比较愿意通过直接询问或确认获得信息。
+        relationshipMeaning: 这能减少纯猜测，但效果仍取决于提问方式和对方是否愿意回应。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+      OBSERVING:
+        headline: 你更倾向先观察，再决定要不要问
+        summary: 你通常不会在第一个异常信号出现时立刻推进确认，而是希望看到更多行为证据。
+        relationshipMeaning: 这能避免过早下结论，但观察窗口过长也可能增加悬而未决。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+      REASSURANCE_ORIENTED:
+        headline: 你会比较希望获得明确的关系确认
+        summary: 不确定出现时，来自对方的安心和明确表态对你很有调节作用。
+        relationshipMeaning: 这是一种需要，不等于一定会重复索取确认；是否形成循环要看真实行为。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+      MONITORING_ORIENTED:
+        headline: 你更容易从间接线索继续寻找答案
+        summary: 当直接信息不足时，你可能会关注在线状态、社交信息或其他行为线索。
+        relationshipMeaning: 这种策略能提供一些信息，但也容易制造更多可解释空间。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+      RUMINATIVE:
+        headline: 你比较容易在脑内持续分析关系信号
+        summary: 没有新信息时，你仍可能反复回想、比较和推演。
+        relationshipMeaning: 真正消耗你的可能不是某个结论，而是问题长期没有结论。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+      TESTING_PROTEST:
+        headline: 你有时会通过改变自己的投入来测试对方
+        summary: 你可能减少主动、变冷或等待对方追上来，以此判断对方是否在意。
+        relationshipMeaning: 这种策略有信息功能，但也可能让双方同时减少投入。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+      TOLERANT_WAITING:
+        headline: 你能够在一段时间内保留多种解释
+        summary: 你不需要每个异常信号立刻得到答案，可以等待更多信息再判断。
+        relationshipMeaning: 这并不等于无限容忍模糊；你的 ambiguity window 仍应单独看。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+      WITHDRAWING:
+        headline: 长期不确定时，你更倾向降低投入或退出
+        summary: 当关系持续无法变得清楚，你更可能把精力收回来，而不是无限追问。
+        relationshipMeaning: 这不等于回避型人格，它可能是边界策略，也可能是自我保护。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+      MIXED:
+        headline: 你的应对方式明显会随情境变化
+        summary: 你没有单一固定策略。关系阶段、对方行为和你当时的投入程度都会改变你怎么做。
+        relationshipMeaning: 这种情况下，报告更应该展示策略排序而不是一个类型。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+  intimacy_dependence_comfort:
+    label: 亲密与依靠的舒适度
+    states:
+      VERY_LOW:
+        headline: 真正依靠另一个人对你并不自然
+        summary: 关系变深、暴露脆弱或接受照顾时，你比较容易感到不舒服或想把事情重新收回自己手里。
+        relationshipMeaning: 这更接近亲密/依靠舒适度，而不是“需要多少独处”。
+        possibleFriction:
+        - 伴侣可能把你的自我处理理解成不需要他/她。
+        usefulConditions:
+        - 可以先从小范围、可控的依赖和表达开始。
+        caveat: ''
+      LOW:
+        headline: 你能进入亲密，但对深度依靠仍比较谨慎
+        summary: 你并非排斥亲近，只是在真正暴露脆弱、把重要事情交给对方时需要更多信任和时间。
+        relationshipMeaning: 这种谨慎与个人空间需要是两回事。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+      MID:
+        headline: 你对亲密和依靠的舒适度很看关系质量
+        summary: 在信任足够时你可以靠近，但并不会在所有关系中自然地开放或依赖。
+        relationshipMeaning: 具体对象和关系经验会显著改变这个结果。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+      HIGH:
+        headline: 信任建立后，你通常能比较自然地靠近和依靠伴侣
+        summary: 分享脆弱、接受照顾或让对方参与重要事情，对你总体不算很困难。
+        relationshipMeaning: 这并不意味着你不需要独立空间。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+      VERY_HIGH:
+        headline: 深度亲密和相互依靠对你通常是很自然的关系状态
+        summary: 你对被照顾、表达脆弱和真正依赖伴侣的防御比较低。
+        relationshipMeaning: 高亲密舒适也需要边界，不能自动等于融合越多越好。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+  personal_space_need:
+    label: 个人空间需要
+    states:
+      LOW:
+        headline: 你不太需要很多独处时间来维持舒服的关系状态
+        summary: 高密度共同活动和日常陪伴通常不会迅速让你觉得被占满。
+        relationshipMeaning: 这不等于你没有自主性需求。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+      MID:
+        headline: 你既喜欢共同时间，也需要适量各自生活
+        summary: 你的个人空间需要不低也不高，更依赖当周相处量和个人状态。
+        relationshipMeaning: 对你来说，固定比例可能没有动态协调重要。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+      HIGH:
+        headline: 即使关系很好，你仍需要比较明确的个人空间
+        summary: 你希望长期保留自己的时间、兴趣和独立活动。
+        relationshipMeaning: 这是关系需要，不等于疏远或缺乏投入。
+        possibleFriction:
+        - 如果伴侣把空间需求解释成拒绝，容易产生追近—退后循环。
+        usefulConditions:
+        - 提前把“我需要自己待一会儿”定义成正常运行规则。
+        caveat: ''
+  support_need:
+    label: 你需要怎样被支持
+    states:
+      LISTEN_VALIDATE:
+        headline: 你更容易从被听见和被理解中感到支持
+        summary: 对你来说，对方先真正理解发生了什么、承认你的感受，往往比立刻给建议更有帮助。
+        relationshipMeaning: 对你来说，对方先真正理解发生了什么、承认你的感受，往往比立刻给建议更有帮助。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+      CLARITY_REASSURANCE:
+        headline: 在不安情境里，明确的信息和安心确认对你特别重要
+        summary: 尤其当问题和关系本身有关时，“对方到底怎么想”可能比一般安慰更能降低不确定。
+        relationshipMeaning: 尤其当问题和关系本身有关时，“对方到底怎么想”可能比一般安慰更能降低不确定。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+      PROBLEM_SOLVING:
+        headline: 一起把问题拆开、找到下一步，会让你更有被支持的感觉
+        summary: 你并不只需要情绪陪伴，能共同思考解决方案本身就是支持。
+        relationshipMeaning: 你并不只需要情绪陪伴，能共同思考解决方案本身就是支持。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+      PRACTICAL_HELP:
+        headline: 现实上的分担对你很有支持价值
+        summary: 当事情真的很多时，帮你承担具体任务往往比说很多安慰话更有效。
+        relationshipMeaning: 当事情真的很多时，帮你承担具体任务往往比说很多安慰话更有效。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+      PRESENCE:
+        headline: 陪在身边本身就有很强的支持价值
+        summary: 你不一定需要持续分析问题，共同活动、安静陪伴或把注意力暂时带离压力也可能很有效。
+        relationshipMeaning: 你不一定需要持续分析问题，共同活动、安静陪伴或把注意力暂时带离压力也可能很有效。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+      SPACE:
+        headline: 压力高时，先获得空间有时比持续追问更有帮助
+        summary: 你可能希望先自己消化一段时间，但这不等于希望对方彻底消失。
+        relationshipMeaning: 你可能希望先自己消化一段时间，但这不等于希望对方彻底消失。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+      CONTEXTUAL_MIXED:
+        headline: 你没有一种万能支持方式
+        summary: 不同压力类型下，你真正需要的回应会明显变化。对你来说，伴侣能不能问清楚“现在什么最有帮助”比固定一种风格更重要。
+        relationshipMeaning: 不同压力类型下，你真正需要的回应会明显变化。对你来说，伴侣能不能问清楚“现在什么最有帮助”比固定一种风格更重要。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+  support_signaling:
+    label: 你怎么让对方知道你需要什么
+    states:
+      LOW:
+        headline: 需要支持时，你不一定会把真正需要的东西说出来
+        summary: 你可能让对方知道自己状态不好，却很少明确说希望对方听、陪、确认、给空间还是一起解决。
+        relationshipMeaning: 伴侣可能只能靠猜。
+        possibleFriction:
+        - 对方好心但猜错时，你可能更容易觉得没被理解。
+        usefulConditions:
+        - 从一句具体请求开始，比要求自己“更会沟通”更可操作。
+        caveat: ''
+      MID:
+        headline: 你会表达一些需要，但具体程度很看情境
+        summary: 在安全或熟悉的关系中你可能说得比较清楚，压力高或怕麻烦对方时又会收回来。
+        relationshipMeaning: 这是一种情境型 signaling pattern。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+      HIGH:
+        headline: 你通常比较能让伴侣知道自己需要什么
+        summary: 你不仅会表达不舒服，也较能说明现在最希望对方怎么回应。
+        relationshipMeaning: 这能减少“对方必须猜”的负担，但仍不保证对方有能力做到。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+  responsiveness_capability:
+    label: 回应伴侣需要的能力线索
+    states:
+      LOW:
+        headline: 目前的情境题只显示出有限的回应适配证据
+        summary: 你可能容易很快进入自己熟悉的帮助方式，而不是先确认对方到底需要什么。
+        relationshipMeaning: 这只是 onboarding 的能力线索，不能直接认定你现实中“不体贴”。
+        possibleFriction:
+        - 不同人需要的支持不同，固定一种帮助方式容易错配。
+        usefulConditions:
+        - 真实互动和伴侣体验会比自评更重要。
+        caveat: 当前必须标为 provisional。
+      MID:
+        headline: 你有一定识别和调整能力，但并不在所有情境都稳定
+        summary: 你能理解一部分信号，也有时会根据对方需要换方式，但仍受自己的默认风格影响。
+        relationshipMeaning: 后续真实支持事件会显著提高判断质量。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: 当前必须标为 provisional。
+      HIGH:
+        headline: 从情境判断看，你比较会根据对方需要调整回应
+        summary: 你不只是“愿意帮助”，还比较能区分对方现在想被听、想一起解决还是需要空间。
+        relationshipMeaning: 这是很有价值的能力线索，但仍不是客观能力认证。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: 当前必须标为 provisional，需 partner/dyadic evidence 升级。
+  conflict_activation:
+    label: 冲突中的激活程度
+    states:
+      VERY_LOW:
+        headline: 冲突升高时，你通常还能保持较多处理空间
+        summary: 即使意见很强烈，你的注意和表达不太容易迅速被情绪完全占据。
+        relationshipMeaning: 这不等于你一定更会解决问题。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+      LOW:
+        headline: 大多数冲突不会很快让你失去处理能力
+        summary: 你会被影响，但通常仍能继续听、组织和回应。
+        relationshipMeaning: 后续还要看你是否愿意真正回来处理问题。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+      MID:
+        headline: 冲突激活很看议题和互动方式
+        summary: 普通分歧你可以处理，但被误解、提高音量或持续追问等特定情境可能明显提高强度。
+        relationshipMeaning: 情境差异比一个总标签更有价值。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+      HIGH:
+        headline: 冲突变强时，你比较容易进入难以继续有效讨论的状态
+        summary: 高强度下注意力变窄、表达变急或理解能力下降的可能性较高。
+        relationshipMeaning: 真正关键的是你需要怎样暂停，以及之后能不能回来。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+      VERY_HIGH:
+        headline: 高强度冲突很容易迅速压缩你的处理能力
+        summary: 当冲突升级时，继续当场解决未必能提高质量，反而可能让表达和理解都恶化。
+        relationshipMeaning: 这不是生理 flooding 诊断。
+        possibleFriction:
+        - 如果伴侣坚持必须当场说完，双方可能形成升级循环。
+        usefulConditions:
+        - 预先约定暂停和返回规则会特别重要。
+        caveat: ''
+  conflict_pacing_need:
+    label: 冲突节奏需要
+    states:
+      IMMEDIATE:
+        headline: 你更偏好尽量当场把重要问题处理清楚
+        summary: 悬着不谈本身可能让你更不舒服。
+        relationshipMeaning: 这不等于你一定会逼迫对方立即回应；关键是能否尊重双方处理能力。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+      SHORT_PAUSE:
+        headline: 你通常适合短暂停一下再继续
+        summary: 几十分钟到几小时的恢复窗口可能比硬撑着当场谈完更有效。
+        relationshipMeaning: 暂停如果带有明确返回信号，通常和撤离不同。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+      LONGER_PAUSE:
+        headline: 你更需要较长恢复窗口
+        summary: 重要冲突之后，你可能需要到当天晚些时候甚至第二天才重新具备有效处理空间。
+        relationshipMeaning: 真正重要的是暂停是否有说明，以及有没有回来。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+      FLEXIBLE:
+        headline: 你没有固定的冲突节奏
+        summary: 议题、强度和当时状态会决定是当场谈还是暂停。
+        relationshipMeaning: 对你来说，一套可调整的冲突程序比固定“必须立刻/必须冷静一晚”更合适。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+  repair_reengagement:
+    label: 重新回来与修复
+    states:
+      LOW:
+        headline: 冲突暂停以后，重新把问题接上可能是更困难的一步
+        summary: 情绪过去以后，你可能容易恢复普通互动，却不一定重新处理真正没解决的问题。
+        relationshipMeaning: 这比“吵架会不会激动”更直接影响问题是否积累。
+        possibleFriction:
+        - 未处理的问题可能以同样形式重复出现。
+        usefulConditions:
+        - 把“恢复联系”和“重新处理议题”当成两个步骤。
+        caveat: ''
+      MID:
+        headline: 你有回来的倾向，但执行比较受情境影响
+        summary: 一些问题你会主动收尾，另一些可能因为时间、尴尬或觉得算了而逐渐放下。
+        relationshipMeaning: 后续真实冲突记录会更有信息。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+      HIGH:
+        headline: 即使需要暂停，你通常仍比较愿意回来重新接上
+        summary: 你较能把“我现在处理不了”与“我不再处理”分开，并在恢复后重新联系、确认或继续讨论。
+        relationshipMeaning: 这是一种重要的修复线索，但仍需真实互动验证。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+chapterPatterns:
+  C1:
+    label: 你现在想不想开始
+    patterns:
+      READY_SELF_DRIVEN:
+        headline: 你是真的想开始，而且现在也比较准备好了
+        summary: 你的关系准备度较高，启动动机也主要来自自己的愿望和价值。
+        relationshipMeaning: 现在更值得关注现实承载力和具体选择，而不是继续确认自己到底想不想谈。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+      READY_WITH_PRESSURE:
+        headline: 你准备开始，但时间表也在推着你
+        summary: 你并不是被动进入关系；自己的愿望是真实的，但外部/内部时间压力也很强。
+        relationshipMeaning: 对你最重要的是别让紧迫感替代对具体人的判断。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+      WANT_BUT_NOT_READY:
+        headline: 你想要关系，但还没完全准备好让它进入生活
+        summary: 内在愿望存在，但当前时机感还没有完全跟上。
+        relationshipMeaning: 认识人可以继续，承诺和推进速度则更适合保留余地。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+      PRESSURED_NOT_READY:
+        headline: “应该开始”目前走在“真正准备好”前面
+        summary: 时间表、比较或外部期待比内在准备更突出。
+        relationshipMeaning: 先把压力和真实愿望拆开，会比单纯加快找对象更有价值。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+      LOW_INITIATION:
+        headline: 现阶段关系启动并不是你的生活中心
+        summary: 准备度和启动动机都不突出。
+        relationshipMeaning: 这只是当前阶段，不需要被解释成缺少亲密能力。
+        possibleFriction: []
+        usefulConditions: []
+        caveat: ''
+  C2:
+    label: 你现在装不装得下
+    grid:
+      HIGH_HIGH: 你现在既有比较稳定的现实空间，也较能让关系安排保持可预期。
+      HIGH_MID: 现实空间不是大问题，但关系执行是否稳定还会比较看具体情境。
+      HIGH_LOW: 你不缺时间，真正需要关注的是答应以后能不能稳定执行和更新预期。
+      MID_HIGH: 你在承诺执行上比较可靠，但当前生活窗口并不总是稳定。
+      MID_MID: 你的现实容量和执行都比较阶段化，关系需要更清楚的节奏安排。
+      MID_LOW: 生活波动和承诺执行可能同时增加新关系摩擦。
+      LOW_HIGH: 你可以是一个很可靠的人，但现在确实没有太多空间装下新的持续投入。
+      LOW_MID: 你有一定执行意愿，但现实空间不足会让关系很容易依赖临时挤时间。
+      LOW_LOW: 目前更适合把它理解成‘当前阶段承载不足’，而不是把问题归因到人格。
+  C3:
+    label: 关系变得不确定时
+    compositionRule: Activation zone × top regulation strategy. If top two strategies are close, use dual-strategy narrative.
+    strategyModifiers:
+      CLARIFYING: 你更倾向主动把问题拿出来确认。
+      OBSERVING: 你更倾向先看更多行为证据。
+      REASSURANCE_ORIENTED: 你更需要来自对方的明确确认来恢复安全感。
+      MONITORING_ORIENTED: 你更容易从间接线索继续寻找答案。
+      RUMINATIVE: 没有新信息时，你也容易继续在脑内反复分析。
+      TESTING_PROTEST: 你有时会通过改变自己的投入来测试对方。
+      TOLERANT_WAITING: 你能在一段时间内保留多种解释并等待更多信息。
+      WITHDRAWING: 长期模糊时，你更倾向降低投入或离开。
+      MIXED: 你的策略会明显随情境变化。
+  C4:
+    label: 亲密和个人空间之间
+    grid:
+      HIGH_HIGH: 你可以很亲密，也需要明确的个人空间；独处并不等于疏远。
+      HIGH_MID: 你对亲密总体舒服，也希望长期保留适量各自生活。
+      HIGH_LOW: 你对高密度亲密和共同生活通常比较舒服，对独处时间要求不高。
+      MID_HIGH: 你会进入亲密，但也需要较强空间保护；节奏和边界会特别重要。
+      MID_MID: 你对亲密和空间都比较看具体关系与阶段。
+      MID_LOW: 你不特别要求很多独处，但真正深度依靠仍需要关系质量支持。
+      LOW_HIGH: 你既需要较多个人空间，对深度依靠也相对谨慎；两件事必须分别解释。
+      LOW_MID: 你对依靠比较谨慎，但并不是总想离开共同生活。
+      LOW_LOW: 你不特别追求独处，但把重要事情真正交给另一个人仍可能不自然。
+  C5:
+    label: 需要支持的时候
+    patterns:
+      NEED_CLEAR_SIGNAL_LOW: 你其实知道什么支持对自己有效，但未必会把这些需要说得足够具体。
+      NEED_CONTEXTUAL: 你需要的支持高度随情境变化，固定一种“帮助风格”很容易错配。
+      SIGNAL_HIGH_RESPONSE_LOW: 你比较能表达自己要什么，但面对伴侣的不同需要时，调整回应方式的证据还有限。
+      SIGNAL_LOW_RESPONSE_HIGH: 你可能比较会照顾别人，但轮到自己需要支持时反而不一定说得清楚。
+      REASSURANCE_HIGH_SIGNAL_LOW: 你在关系不安时很需要明确确认，但又未必直接说出来，这容易形成‘对方不知道你到底在等什么’。
+      SPACE_NEED_SIGNAL_HIGH: 你压力高时可能需要先获得空间，而且通常能够说明这一点，减少被误解成突然冷淡的风险。
+      PROBLEM_SOLVING_MISMATCH_RISK: 你很看重一起解决问题，如果伴侣只提供情绪安慰，你可能会觉得对方虽然关心但没有真正帮到。
+      VALIDATION_MISMATCH_RISK: 你更需要先被理解，如果伴侣第一反应总是给方案，容易出现‘建议很多但没被听见’。
+      BALANCED: 你对自己的支持需要有一定认识，也较能表达，同时情境题显示出一定回应适配线索。
+      PROVISIONAL: 目前关于你如何回应伴侣的部分主要来自情境题，仍需要真实互动来验证。
+  C6:
+    label: 发生冲突以后
+    patterns:
+      HIGH_SHORT_HIGH: 冲突容易把你推到高激活，但短暂停一下以后，你通常仍愿意回来继续处理。
+      HIGH_LONG_HIGH: 你需要更长恢复窗口，但需要暂停和逃避问题并不是一回事；关键是你之后能回来。
+      HIGH_ANY_LOW: 真正的风险点不只是激活高，而是暂停以后一些问题可能较难稳定重新接上。
+      MID_FLEX_HIGH: 你的冲突强度和节奏比较看情境，但整体仍有不错的返回和修复倾向。
+      LOW_IMMEDIATE_HIGH: 你在冲突里通常还能保持处理能力，也比较愿意当场或较快重新解决。
+      LOW_ANY_LOW: 你不一定会明显失控，但一些问题仍可能因为情绪过去以后没有重新处理而积累。
+      PAUSE_WITHOUT_SIGNAL: 你可能确实需要暂停，但如果暂停没有说明和返回时间，对方很容易把调节需要体验成撤离。
+      RETURN_WITHOUT_ISSUE: 你比较能恢复普通联系，但恢复联系不一定等于问题已经解决。
+      REPAIR_STRONG: 你的重要优势不是‘从不冲突’，而是在发生冲突以后能够重新回来。
+      PACING_MISMATCH_SENSITIVE: 你对讨论节奏有比较明确需要，未来伴侣能不能尊重暂停/返回规则会显著影响冲突体验。
+crossChapterPatterns:
+- patternId: READINESS_CAPACITY_GAP
+  triggers:
+  - C1.readiness>=HIGH
+  - C2.capacity=LOW
+  headline: 你想开始，但生活暂时装不下
+  summary: 你的关系准备度和现实承载力并不同步。你可能真心想开始一段关系，但当前时间、精力或责任会让稳定投入变得困难。
+  recommendations:
+  - 不要把现实容量不足误读成“不够喜欢”。
+  - 如果开始关系，提前说明可投入节奏。
+  priority: HIGH
+  maxUsePerReport: 1
+- patternId: PRESSURE_CAPACITY_GAP
+  triggers:
+  - C1.pressure=HIGH
+  - C2.capacity=LOW
+  headline: 时间压力很高，但现实空间也最紧
+  summary: 你可能同时觉得“不能再等了”和“现在真的很忙”。这种组合容易让选择速度越来越快，但关系投入空间越来越少。
+  recommendations:
+  - 优先防止为了赶时间表而承诺超过现实容量。
+  priority: HIGH
+  maxUsePerReport: 1
+- patternId: HIGH_READINESS_LOW_FOLLOWTHROUGH
+  triggers:
+  - C1.readiness>=HIGH
+  - C2.followThrough<=LOW
+  headline: 愿望很明确，但执行链需要单独补上
+  summary: 你可能非常想认真开始，但关系中的具体约定、更新和收尾还未必同样稳定。
+  recommendations:
+  - 把“认真”翻译成可持续行为，而不只是主观意愿。
+  priority: HIGH
+  maxUsePerReport: 1
+- patternId: HIGH_ACTIVATION_LOW_SIGNAL
+  triggers:
+  - C3.activation>=HIGH
+  - C5.signaling=LOW
+  headline: 你容易被不确定影响，但未必会直接说出自己需要什么
+  summary: 关系变化可能很快占据你的注意力，而你又不一定直接表达需要的信息或确认。
+  recommendations:
+  - 这容易形成大量内部分析、较少外部澄清。
+  priority: HIGH
+  maxUsePerReport: 1
+- patternId: HIGH_ACTIVATION_REASSURANCE
+  triggers:
+  - C3.activation>=HIGH
+  - C5.supportNeed=CLARITY_REASSURANCE
+  headline: 清晰和确认对你有很高的关系价值
+  summary: 不确定本身容易激活你，而明确的信息和关系确认又特别能帮助你恢复稳定。
+  recommendations:
+  - 这不等于你必须获得无限确认；更重要的是双方是否能建立可预期沟通。
+  priority: HIGH
+  maxUsePerReport: 1
+- patternId: INTIMACY_HIGH_SPACE_HIGH
+  triggers:
+  - C4.intimacy>=HIGH
+  - C4.space=HIGH
+  headline: 你想要的不是距离，而是“亲密里仍有空间”
+  summary: 你可以接受很深的连接，同时也需要长期保留自己的时间和活动。
+  recommendations:
+  - 最需要避免的是伴侣把空间需求自动解释成关系降温。
+  priority: HIGH
+  maxUsePerReport: 1
+- patternId: INTIMACY_LOW_SUPPORT_SIGNAL_LOW
+  triggers:
+  - C4.intimacy<=LOW
+  - C5.signaling=LOW
+  headline: 越需要暴露脆弱的时刻，你可能越倾向自己处理
+  summary: 深度依靠本身对你较谨慎，而需要支持时又不一定把需要说出来。
+  recommendations:
+  - 伴侣可能低估你的实际需要。
+  priority: HIGH
+  maxUsePerReport: 1
+- patternId: SUPPORT_NEED_SIGNAL_GAP
+  triggers:
+  - C5.supportNeedKnown=TRUE
+  - C5.signaling=LOW
+  headline: 你知道什么对自己有帮助，但别人未必知道
+  summary: 支持需求本身比较清楚，表达环节却较弱。
+  recommendations:
+  - 这是可操作的关系机制，不需要上升成“沟通差”。
+  priority: HIGH
+  maxUsePerReport: 1
+- patternId: RESPONSIVE_SELF_SILENT
+  triggers:
+  - C5.responsiveness>=HIGH
+  - C5.signaling=LOW
+  headline: 你可能很会照顾别人，但不太擅长让别人照顾你
+  summary: 情境题显示你较能理解并调整对伴侣的回应，但自己的需要未必同样容易表达。
+  recommendations:
+  - 关系里容易形成单向照顾角色。
+  priority: HIGH
+  maxUsePerReport: 1
+- patternId: CONFLICT_HIGH_REPAIR_HIGH
+  triggers:
+  - C6.activation>=HIGH
+  - C6.repair=HIGH
+  headline: 你不是不激动，而是还能回来
+  summary: 冲突中你可能会明显被激活，但修复和重新接入的倾向也较强。
+  recommendations:
+  - 不要把“会激动”与“关系一定处理不好”划等号。
+  priority: HIGH
+  maxUsePerReport: 1
+- patternId: CONFLICT_LOW_REPAIR_LOW
+  triggers:
+  - C6.activation<=LOW
+  - C6.repair=LOW
+  headline: 表面不激烈，不代表问题一定被解决
+  summary: 你未必经常经历高强度冲突，但重要问题仍可能因为后续不再处理而积累。
+  recommendations:
+  - 报告要避免把低冲突激活包装成自动优势。
+  priority: HIGH
+  maxUsePerReport: 1
+- patternId: SPACE_PACING_SHARED
+  triggers:
+  - C4.space=HIGH
+  - C6.pacing in [LONGER_PAUSE,FLEXIBLE]
+  headline: 你在亲密和冲突里都需要一定恢复空间
+  summary: 个人空间和冲突暂停可能共享一个现实需求：在高密度互动后重新获得自主处理时间。
+  recommendations:
+  - 仍需区分日常空间需要和冲突撤离。
+  priority: HIGH
+  maxUsePerReport: 1
+- patternId: FOLLOWTHROUGH_REPAIR_LINK
+  triggers:
+  - C2.followThrough<=LOW
+  - C6.repair<=LOW
+  headline: “回来继续”可能是跨情境的共同难点
+  summary: 无论是一般关系安排还是冲突后的返回，你都较容易在后续执行阶段失去闭环。
+  recommendations:
+  - Pilot 应检验 repair return_execution 是否只是 follow-through 的情境特例。
+  priority: HIGH
+  maxUsePerReport: 1
+- patternId: FOLLOWTHROUGH_REPAIR_DIVERGENCE
+  triggers:
+  - C2.followThrough>=HIGH
+  - C6.repair<=LOW
+  headline: 你平时很可靠，但冲突后的返回是特殊难点
+  summary: 一般安排你可以稳定兑现，但关系情绪升高以后，重新回来处理问题变得更困难。
+  recommendations:
+  - 这说明不能用一般责任心替代冲突修复测量。
+  priority: HIGH
+  maxUsePerReport: 1
+- patternId: CAPACITY_SPACE_DISTINCT
+  triggers:
+  - C2.capacity=LOW
+  - C4.space=HIGH
+  headline: 没时间和需要个人空间不是同一件事
+  summary: 你当前现实承载力较低，同时也确实需要较多个人空间。这两个原因可能同时减少共同时间，但含义完全不同。
+  recommendations:
+  - 运营/伴侣解释时必须区分资源限制与关系需要。
+  priority: HIGH
+  maxUsePerReport: 1
+- patternId: AUTONOMOUS_READINESS_CONSTRAINT
+  triggers:
+  - C1.autonomous>=HIGH
+  - L5.majorConstraintConflict=TRUE
+  headline: 很想开始，也不代表应该忽略人生方向冲突
+  summary: 你的关系启动愿望是真实的，但重大人生计划或硬条件仍应作为独立决策层。
+  recommendations:
+  - 不要用高准备度去覆盖孩子、关系结构或城市等硬冲突。
+  priority: HIGH
+  maxUsePerReport: 1
+reportAssembly:
+  sections:
+  - id: cover
+    title: 你的关系画像
+    contents:
+    - three-line executive summary
+    - current assessment date
+    - pilot/provisional note
+  - id: summary
+    title: 先看最重要的三件事
+    contents:
+    - top cross-chapter pattern
+    - second pattern
+    - highest-value uncertainty
+  - id: C1
+    title: 你现在想不想开始
+    contents:
+    - 2 dimension cards
+    - chapter synthesis
+  - id: C2
+    title: 你现在装不装得下
+    contents:
+    - 2 dimension cards
+    - chapter synthesis
+  - id: C3
+    title: 关系变得不确定时
+    contents:
+    - 2 dimension cards
+    - chapter synthesis
+  - id: C4
+    title: 亲密和个人空间之间
+    contents:
+    - 2 dimension cards
+    - chapter synthesis
+  - id: C5
+    title: 需要支持的时候
+    contents:
+    - 3 dimension cards
+    - gap synthesis
+  - id: C6
+    title: 发生冲突以后
+    contents:
+    - 3 dimension cards
+    - event-chain synthesis
+  - id: decision_map
+    title: 你的关系决策地图
+    contents:
+    - L3 operating map
+    - L4 partner decision profile
+    - L5 life plan & feasibility
+  - id: unknowns
+    title: 现在还不能从问卷里知道的事
+    contents:
+    - dyadic attraction
+    - chemistry
+    - humor fit
+    - low-confidence positions
+    - interaction-dependent unknowns
+  - id: interview
+    title: 如果继续深访，最值得聊什么
+    contents:
+    - top 3–5 interview priorities
+  - id: method
+    title: 这些结论是怎么来的
+    contents:
+    - measurement sources
+    - confidence
+    - pilot status
+    - not a compatibility percentage
+  selectionRules:
+  - Show every C1–C6 dimension exactly once.
+  - Show one chapter synthesis for every chapter.
+  - Select at most 3 cross-chapter patterns on the main summary page.
+  - Prefer high decision-value patterns over merely surprising patterns.
+  - Do not show two cross-chapter patterns that explain essentially the same mechanism.
+  - If measurement confidence is low, the narrative must explicitly soften the claim.

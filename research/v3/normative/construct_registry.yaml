@@ -1,0 +1,1939 @@
+schemaVersion: relationship-feature-model-v3.master-construct-registry.v0.1
+generatedAt: '2026-08-09'
+architectureStatus: STATIC_MODEL_MOTHER_BANK_V0_1_COMPLETE
+globalRules:
+- SELF != IDEAL_PARTNER
+- STATE != PERSONALITY
+- NEED != CAPABILITY
+- NEED != STANDARD
+- PREFERENCE != CONSTRAINT
+- STATED != REVEALED != EXPERIENCED
+- UNKNOWN != LOW
+- UNKNOWN != MISMATCH
+- DIFFERENCE != CONTRADICTION
+- COMPATIBILITY_IS_PAIR_LEVEL
+- NO_GLOBAL_RELATIONSHIP_SCORE
+- NO_SCIENTIFIC_MATCH_PERCENTAGE
+- MEASUREMENT_CONFIDENCE != POSITION_CONFIDENCE
+informationStatuses:
+- MEASURED
+- PROVISIONAL
+- CONTEXTUAL
+- INSUFFICIENT
+- CONFLICTING
+- NOT_ASSESSED
+- NOT_APPLICABLE
+measurementSources:
+- factual
+- self_report
+- validated_scale
+- scenario_assessment
+- behavioral_history
+- interview
+- observed_behavior
+- partner_report
+- repeated_followup
+- dyadic_observation
+constructs:
+  core_facts:
+    layer: L0
+    status: FROZEN
+    dataKind: FACT_SET
+    measurementGrammar:
+    - FACT
+    definition: 现实人口学、生活、教育、职业、家庭与运营资料；事实字段不人格化。
+    anchorConstructs: []
+    outputObject:
+      type: fact_profile
+    timeSensitivity: mixed
+    observabilityStage: onboarding
+    decisionValue: {}
+    prohibitedUse:
+    - personality_inference_from_fact_alone
+    - unknown_as_negative
+    routingNotes: []
+    pilotPriority: P1
+    notes: []
+  relationship_readiness:
+    layer: L1
+    status: FROZEN_CORE
+    dataKind: CURRENT_STATE
+    measurementGrammar:
+    - PSYCHOMETRIC
+    definition: 当前人生阶段对让一段认真稳定关系真正进入生活的主观准备程度与时机感。
+    anchorConstructs:
+    - commitment_readiness
+    outputObject:
+      type: continuous_or_profile
+      productionThresholds: UNVALIDATED
+    timeSensitivity: medium
+    observabilityStage: onboarding
+    decisionValue:
+      selfInsight: high
+      interview: high
+      pairRanking: prohibited
+    prohibitedUse:
+    - character_judgment
+    - candidate_quality_ranking
+    routingNotes: []
+    pilotPriority: P1_CORE
+    notes: []
+  initiation_motivation:
+    layer: L1
+    status: EVIDENCE_UPGRADED_CANDIDATE
+    dataKind: MOTIVATION_PROFILE
+    measurementGrammar:
+    - PSYCHOMETRIC
+    definition: 当前追求浪漫关系时，不同性质的动机组合。
+    anchorConstructs:
+    - AMRPS
+    - self_determination_theory
+    outputObject:
+      type: multidimensional_profile
+      candidateFacets:
+      - intrinsic
+      - identified
+      - positive_introjected
+      - negative_introjected
+      - external
+      - amotivation
+    timeSensitivity: medium
+    observabilityStage: onboarding
+    decisionValue:
+      selfInsight: high
+      interview: high
+      pairRanking: prohibited
+    prohibitedUse:
+    - good_bad_autonomy_grade
+    - infer_readiness_from_motivation
+    routingNotes: []
+    pilotPriority: P1_CORE
+    notes:
+    - 中国样本探索 external_family / external_peer_timeline 的结构。
+  available_capacity:
+    layer: L1
+    status: FROZEN_CORE
+    dataKind: CURRENT_INVENTORY
+    measurementGrammar:
+    - STRUCTURED_INVENTORY
+    definition: 当前时间、日程可预测性、精神余力、竞争责任和物流稳定性能够为新关系提供多少现实承载空间。
+    anchorConstructs: []
+    outputObject:
+      type: facet_inventory
+      facets:
+      - time_availability
+      - schedule_predictability
+      - emotional_bandwidth
+      - competing_responsibilities
+      - logistical_stability
+      - near_term_change
+    timeSensitivity: high
+    observabilityStage: onboarding
+    decisionValue:
+      selfInsight: high
+      interview: high
+      feasibility: high
+    prohibitedUse:
+    - personality_score
+    - moral_judgment
+    - low_capacity_equals_low_readiness
+    routingNotes: []
+    pilotPriority: P1_CORE
+    notes: []
+  relational_follow_through:
+    layer: L2
+    status: FROZEN_CORE
+    dataKind: CAPABILITY_BEHAVIOR
+    measurementGrammar:
+    - BEHAVIORAL_HISTORY
+    definition: 在重要关系互动中，对已经给出的联系、见面和后续承诺能够持续完成，或无法完成时及时更新预期的行为倾向。
+    anchorConstructs: []
+    outputObject:
+      type: capability_profile
+      facets:
+      - promise_realism
+      - execution
+      - early_notice
+      - return_closure
+      - continuity
+    timeSensitivity: medium
+    observabilityStage: onboarding_to_repeated_behavior
+    decisionValue:
+      interview: high
+      pairHypothesis: high
+      ranking: confidence_gated
+    prohibitedUse:
+    - general_conscientiousness_label
+    - busy_equals_unreliable
+    routingNotes: []
+    pilotPriority: P1_CORE
+    notes: []
+  dyadic_uncertainty_exposure:
+    layer: L6
+    status: FROZEN_PAIR_CONTEXT
+    dataKind: PAIR_CONTEXT
+    measurementGrammar:
+    - DYADIC_OBSERVATION
+    definition: 具体 A-B 关系当前在自我、伴侣和关系状态层面的不确定程度。
+    anchorConstructs:
+    - relational_uncertainty
+    outputObject:
+      type: pair_context
+      facets:
+      - self_uncertainty
+      - partner_uncertainty
+      - relationship_uncertainty
+    timeSensitivity: high
+    observabilityStage: specific_pair_only
+    decisionValue:
+      dyadicLearning: high
+      pairHypothesis: high
+    prohibitedUse:
+    - infer_personality
+    - infer_attachment_from_exposure
+    routingNotes: []
+    pilotPriority: P4_DYADIC
+    notes: []
+  uncertainty_activation:
+    layer: L1
+    status: CANDIDATE_OPERATIONALIZATION
+    dataKind: REACTIVE_TENDENCY
+    measurementGrammar:
+    - PSYCHOMETRIC
+    - SCENARIO_ACTIVATION
+    definition: 关系出现模糊、距离、回应变化或投入不确定信号时，内部警觉、威胁感和认知占用被激活的程度。
+    anchorConstructs:
+    - attachment_anxiety
+    - relational_uncertainty_context
+    outputObject:
+      type: continuous_or_faceted
+      candidateFacets:
+      - cue_vigilance
+      - threat_appraisal
+      - affective_activation
+      - cognitive_occupation
+      - resolution_urgency
+    timeSensitivity: medium
+    observabilityStage: onboarding
+    decisionValue:
+      selfInsight: high
+      interview: high
+      pairHypothesis: medium
+    prohibitedUse:
+    - attachment_diagnosis
+    - mental_health_diagnosis
+    - automatic_rejection
+    routingNotes: []
+    pilotPriority: P1_CORE
+    notes:
+    - 若控制 attachment anxiety 后无增量效度，应合并或删除自建 construct。
+  uncertainty_regulation:
+    layer: L1
+    status: FROZEN_MULTIDIMENSIONAL_STRUCTURE
+    dataKind: STRATEGY_PROFILE
+    measurementGrammar:
+    - SCENARIO_STRATEGY
+    - BEHAVIORAL_HISTORY
+    definition: 关系不确定被激活后，为获取信息、调节情绪、保护自己或推动关系恢复确定性所采用的策略组合。
+    anchorConstructs: []
+    outputObject:
+      type: strategy_profile
+      candidateStrategies:
+      - direct_clarification
+      - reassurance_seeking
+      - passive_observation
+      - indirect_monitoring
+      - testing_protest
+      - rumination
+      - tolerant_waiting
+      - withdrawal
+    timeSensitivity: medium
+    observabilityStage: onboarding_to_dyadic_event
+    decisionValue:
+      selfInsight: high
+      interview: high
+      pairHypothesis: medium
+    prohibitedUse:
+    - healthy_unhealthy_single_axis
+    - attachment_style_category
+    routingNotes: []
+    pilotPriority: P1_CORE
+    notes: []
+  intimacy_dependence_comfort:
+    layer: L1
+    status: CANDIDATE_OPERATIONALIZATION
+    dataKind: REACTIVE_TENDENCY
+    measurementGrammar:
+    - PSYCHOMETRIC
+    - SCENARIO_COMFORT
+    definition: 关系变深、分享脆弱、接受照顾或实际依靠伴侣时体验到的舒适程度。
+    anchorConstructs:
+    - attachment_avoidance
+    outputObject:
+      type: facet_profile
+      candidateFacets:
+      - emotional_closeness
+      - vulnerability
+      - reliance
+      - receiving_care
+    timeSensitivity: medium
+    observabilityStage: onboarding
+    decisionValue:
+      selfInsight: high
+      interview: high
+      pairHypothesis: medium
+    prohibitedUse:
+    - attachment_style_label
+    - infer_personal_space_need
+    routingNotes: []
+    pilotPriority: P1_CORE
+    notes:
+    - 若与成熟 attachment avoidance 几乎完全重合且无增量，优先采用成熟构念。
+  personal_space_need:
+    layer: L2
+    status: FROZEN_NEED_PROFILE
+    dataKind: NEED_PROFILE
+    measurementGrammar:
+    - BEHAVIORAL_ANCHOR
+    - PREFERENCE_RANGE
+    definition: 即使关系安全亲密且无冲突，仍希望保留多少属于自己的时间与独立活动。
+    anchorConstructs: []
+    outputObject:
+      type: need_profile
+      facets:
+      - personal_time
+      - independent_activity
+    timeSensitivity: medium
+    observabilityStage: onboarding
+    decisionValue:
+      selfInsight: high
+      operatingAlignment: high
+    prohibitedUse:
+    - attachment_avoidance_inference
+    - SDT_autonomy_score
+    - introversion_inference
+    routingNotes: []
+    pilotPriority: P1_CORE
+    notes: []
+  support_need:
+    layer: L2
+    status: FROZEN_NEED_PROFILE
+    dataKind: NEED_PROFILE
+    measurementGrammar:
+    - SCENARIO_PREFERENCE
+    - SUPPORT_FORM_CHOICE
+    definition: 在压力、失落、不确定或现实困难中，哪些伴侣回应形式更容易让本人体验到被支持。
+    anchorConstructs: []
+    outputObject:
+      type: contextual_need_profile
+      candidateForms:
+      - listening
+      - validation
+      - reassurance
+      - problem_solving
+      - practical_help
+      - presence
+      - space
+    timeSensitivity: medium
+    observabilityStage: onboarding
+    decisionValue:
+      selfInsight: high
+      pairHypothesis: high
+    prohibitedUse:
+    - neediness_label
+    - single_high_low_score
+    routingNotes: []
+    pilotPriority: P1_CORE
+    notes: []
+  support_signaling:
+    layer: L2
+    status: FROZEN_CORE
+    dataKind: BEHAVIOR_TENDENCY
+    measurementGrammar:
+    - BEHAVIORAL_HISTORY
+    - SCENARIO
+    definition: 需要支持时，是否、何时以及通过何种方式让伴侣能够识别自己的状态和希望的回应形式。
+    anchorConstructs: []
+    outputObject:
+      type: signaling_profile
+      candidateFacets:
+      - distress_disclosure
+      - request_directness
+      - request_specificity
+      - timing
+      - indirect_signaling
+      - concealment
+    timeSensitivity: medium
+    observabilityStage: onboarding_to_dyadic_event
+    decisionValue:
+      selfInsight: high
+      interview: high
+      pairHypothesis: high
+    prohibitedUse:
+    - communication_skill_total
+    - direct_is_always_better
+    routingNotes: []
+    pilotPriority: P1_CORE
+    notes: []
+  responsiveness_capability:
+    layer: L2
+    status: FROZEN_CORE_PROVISIONAL_ONBOARDING
+    dataKind: CAPABILITY
+    measurementGrammar:
+    - SCENARIO_ASSESSMENT
+    - BEHAVIORAL_HISTORY
+    - INTERVIEW
+    - DYADIC_OBSERVATION
+    definition: 当伴侣需要支持时，理解其处境与需要，并以对方可体验为理解、认可、关心的方式作出适当回应的行为潜力。
+    anchorConstructs:
+    - perceived_partner_responsiveness
+    outputObject:
+      type: capability_profile
+      candidateFacets:
+      - signal_detection
+      - need_understanding
+      - validation
+      - response_calibration
+      - care_enactment
+      onboardingEvidenceStatus: PROVISIONAL
+    timeSensitivity: medium
+    observabilityStage: onboarding_to_partner_report
+    decisionValue:
+      interview: high
+      pairHypothesis: high
+      ranking: confidence_gated
+    prohibitedUse:
+    - objective_capability_from_self_report
+    - EQ_label
+    - more_support_is_always_better
+    routingNotes: []
+    pilotPriority: P1_CORE
+    notes: []
+  perceived_partner_responsiveness:
+    layer: L6
+    status: FROZEN_DYADIC_CRITERION
+    dataKind: DYADIC_OUTCOME
+    measurementGrammar:
+    - PARTNER_REPORT
+    - DYADIC_OBSERVATION
+    definition: 接收者对具体伴侣是否理解、认可并关心自己的体验。
+    anchorConstructs:
+    - PPR
+    - C-PPRS
+    outputObject:
+      type: dyadic_outcome
+    timeSensitivity: high
+    observabilityStage: specific_pair_only
+    decisionValue:
+      dyadicLearning: high
+      criterionValidity: high
+    prohibitedUse:
+    - provider_static_trait_inference
+    routingNotes: []
+    pilotPriority: P4_DYADIC
+    notes: []
+  conflict_activation:
+    layer: L1
+    status: CANDIDATE_CORE
+    dataKind: REACTIVE_TENDENCY
+    measurementGrammar:
+    - PSYCHOMETRIC
+    - SCENARIO_ACTIVATION
+    definition: 重要关系冲突升级时，情绪、注意力和信息处理多容易进入难以继续有效互动的高激活状态。
+    anchorConstructs:
+    - self_reported_flooding
+    outputObject:
+      type: facet_profile
+      candidateFacets:
+      - affective_escalation
+      - cognitive_narrowing
+      - processing_difficulty
+      - action_urgency
+      - recovery_latency
+    timeSensitivity: medium
+    observabilityStage: onboarding
+    decisionValue:
+      selfInsight: high
+      interview: high
+      pairHypothesis: medium
+    prohibitedUse:
+    - physiological_flooding_claim
+    - emotion_dysregulation_diagnosis
+    - automatic_rejection
+    routingNotes: []
+    pilotPriority: P1_CORE
+    notes: []
+  conflict_pacing_need:
+    layer: L2
+    status: FROZEN_NEED
+    dataKind: NEED_PROFILE
+    measurementGrammar:
+    - SCENARIO_PREFERENCE
+    - BEHAVIORAL_ANCHOR
+    definition: 冲突达到一定强度后，为重新进入可处理状态所需要的讨论节奏、暂停长度和重启时机。
+    anchorConstructs: []
+    outputObject:
+      type: pacing_profile
+    timeSensitivity: medium
+    observabilityStage: onboarding
+    decisionValue:
+      selfInsight: high
+      operatingAlignment: high
+    prohibitedUse:
+    - pause_equals_avoidance
+    - immediate_resolution_equals_demanding
+    routingNotes: []
+    pilotPriority: P1_CORE
+    notes: []
+  repair_reengagement:
+    layer: L2
+    status: FROZEN_CORE_CANDIDATE_OPERATIONALIZATION
+    dataKind: CAPABILITY_BEHAVIOR
+    measurementGrammar:
+    - BEHAVIORAL_HISTORY
+    - SCENARIO
+    - DYADIC_OBSERVATION
+    definition: 冲突暂停或互动中断后，重新建立基本联系，并对尚未处理的问题进行后续处理的行为倾向与执行能力。
+    anchorConstructs:
+    - conflict_recovery_research
+    outputObject:
+      type: capability_profile
+      candidateFacets:
+      - pause_communication
+      - return_intention
+      - return_execution
+      - reconnection
+      - issue_reengagement
+      - update_learning
+      onboardingEvidenceStatus: PROVISIONAL
+    timeSensitivity: medium
+    observabilityStage: onboarding_to_repeated_conflict_events
+    decisionValue:
+      selfInsight: high
+      interview: high
+      pairHypothesis: high
+    prohibitedUse:
+    - equate_with_existing_recovery_scale
+    - reconnection_equals_resolution
+    routingNotes: []
+    pilotPriority: P1_CORE
+    notes:
+    - 检验 return_execution 是否只是 relational_follow_through 的情境特例。
+  contact_relationship_clarity:
+    layer: L3
+    status: FROZEN_DOMAIN
+    dataKind: OPERATING_STANDARD
+    measurementGrammar:
+    - POSITION
+    - ACCEPTABLE_ALTERNATIVES
+    - NEGOTIABILITY
+    - HARD_BOUNDARY
+    - RATIONALE
+    definition: 日常联系、回应可预期性、忙碌说明、最低连接和关系定义/模糊窗口的共同规则。
+    anchorConstructs: []
+    outputObject:
+      type: operating_standard
+      fitLogic:
+      - RANGE_OVERLAP
+      - STANDARD_TO_CAPABILITY
+      requiredMeta:
+      - salience
+      - positionConfidence
+      - contextConditions
+      - reciprocityExpectation
+      - standardFunction
+    timeSensitivity: medium
+    observabilityStage: onboarding_or_life_stage_branch
+    decisionValue:
+      operatingAlignment: high
+      interview: high
+    prohibitedUse:
+    - global_values_score
+    - same_answer_equals_compatibility
+    routingNotes: []
+    pilotPriority: P1_CORE
+    notes: []
+  shared_time_independence:
+    layer: L3
+    status: FROZEN_DOMAIN
+    dataKind: OPERATING_STANDARD
+    measurementGrammar:
+    - POSITION
+    - ACCEPTABLE_ALTERNATIVES
+    - NEGOTIABILITY
+    - HARD_BOUNDARY
+    - RATIONALE
+    definition: 共同时间、独立时间、各自活动以及个人决定/共同决定边界的运行规则。
+    anchorConstructs: []
+    outputObject:
+      type: operating_standard
+      fitLogic:
+      - RANGE_OVERLAP
+      - NEED_TO_ACCEPTANCE
+      - JOINT_GOVERNANCE
+      requiredMeta:
+      - salience
+      - positionConfidence
+      - contextConditions
+      - reciprocityExpectation
+      - standardFunction
+    timeSensitivity: medium
+    observabilityStage: onboarding_or_life_stage_branch
+    decisionValue:
+      operatingAlignment: high
+      interview: high
+    prohibitedUse:
+    - global_values_score
+    - same_answer_equals_compatibility
+    routingNotes: []
+    pilotPriority: P1_CORE
+    notes: []
+  social_boundary:
+    layer: L3
+    status: FROZEN_DOMAIN
+    dataKind: OPERATING_STANDARD
+    measurementGrammar:
+    - POSITION
+    - ACCEPTABLE_ALTERNATIVES
+    - NEGOTIABILITY
+    - HARD_BOUNDARY
+    - RATIONALE
+    definition: 外部社交、单独见朋友、前任联系、披露要求和共享社交圈的边界规则。
+    anchorConstructs: []
+    outputObject:
+      type: operating_standard
+      fitLogic:
+      - MUTUAL_RULE
+      - RECIPROCITY_CHECK
+      requiredMeta:
+      - salience
+      - positionConfidence
+      - contextConditions
+      - reciprocityExpectation
+      - standardFunction
+    timeSensitivity: medium
+    observabilityStage: onboarding_or_life_stage_branch
+    decisionValue:
+      operatingAlignment: high
+      interview: high
+    prohibitedUse:
+    - global_values_score
+    - same_answer_equals_compatibility
+    routingNotes: []
+    pilotPriority: P1_BRANCH
+    notes: []
+  digital_privacy:
+    layer: L3
+    status: FROZEN_DOMAIN
+    dataKind: OPERATING_STANDARD
+    measurementGrammar:
+    - POSITION
+    - ACCEPTABLE_ALTERNATIVES
+    - NEGOTIABILITY
+    - HARD_BOUNDARY
+    - RATIONALE
+    definition: 手机、密码、聊天记录、定位和线上公开的个人隐私与关系透明度规则。
+    anchorConstructs: []
+    outputObject:
+      type: operating_standard
+      fitLogic:
+      - JOINT_GOVERNANCE
+      - RECIPROCITY_CHECK
+      requiredMeta:
+      - salience
+      - positionConfidence
+      - contextConditions
+      - reciprocityExpectation
+      - standardFunction
+    timeSensitivity: medium
+    observabilityStage: onboarding_or_life_stage_branch
+    decisionValue:
+      operatingAlignment: high
+      interview: high
+    prohibitedUse:
+    - global_values_score
+    - same_answer_equals_compatibility
+    routingNotes: []
+    pilotPriority: P1_BRANCH
+    notes: []
+  conflict_process_standard:
+    layer: L3
+    status: FROZEN_DOMAIN
+    dataKind: OPERATING_STANDARD
+    measurementGrammar:
+    - POSITION
+    - ACCEPTABLE_ALTERNATIVES
+    - NEGOTIABILITY
+    - HARD_BOUNDARY
+    - RATIONALE
+    definition: 冲突暂停、说明、返回时间、未解决议题以及尊重/安全底线的共同程序。
+    anchorConstructs: []
+    outputObject:
+      type: operating_standard
+      fitLogic:
+      - PROCEDURAL_COMPATIBILITY
+      requiredMeta:
+      - salience
+      - positionConfidence
+      - contextConditions
+      - reciprocityExpectation
+      - standardFunction
+    timeSensitivity: medium
+    observabilityStage: onboarding_or_life_stage_branch
+    decisionValue:
+      operatingAlignment: high
+      interview: high
+    prohibitedUse:
+    - global_values_score
+    - same_answer_equals_compatibility
+    routingNotes: []
+    pilotPriority: P1_CORE
+    notes: []
+  money_governance:
+    layer: L3
+    status: FROZEN_DOMAIN
+    dataKind: OPERATING_STANDARD
+    measurementGrammar:
+    - POSITION
+    - ACCEPTABLE_ALTERNATIVES
+    - NEGOTIABILITY
+    - HARD_BOUNDARY
+    - RATIONALE
+    definition: 收入、债务、账户、共同支出、个人支出、储蓄和重大财务决策的共同治理。
+    anchorConstructs: []
+    outputObject:
+      type: operating_standard
+      fitLogic:
+      - JOINT_GOVERNANCE
+      requiredMeta:
+      - salience
+      - positionConfidence
+      - contextConditions
+      - reciprocityExpectation
+      - standardFunction
+    timeSensitivity: medium
+    observabilityStage: onboarding_or_life_stage_branch
+    decisionValue:
+      operatingAlignment: high
+      interview: high
+    prohibitedUse:
+    - global_values_score
+    - same_answer_equals_compatibility
+    routingNotes: []
+    pilotPriority: P1_CORE
+    notes: []
+  household_operation:
+    layer: L3
+    status: FROZEN_DOMAIN
+    dataKind: OPERATING_STANDARD
+    measurementGrammar:
+    - POSITION
+    - ACCEPTABLE_ALTERNATIVES
+    - NEGOTIABILITY
+    - HARD_BOUNDARY
+    - RATIONALE
+    definition: 家务任务 ownership、执行、公平原则与负担变化后的再平衡规则。
+    anchorConstructs: []
+    outputObject:
+      type: operating_standard
+      fitLogic:
+      - ROLE_COORDINATION
+      - FAIRNESS_ALIGNMENT
+      requiredMeta:
+      - salience
+      - positionConfidence
+      - contextConditions
+      - reciprocityExpectation
+      - standardFunction
+    timeSensitivity: medium
+    observabilityStage: onboarding_or_life_stage_branch
+    decisionValue:
+      operatingAlignment: high
+      interview: high
+    prohibitedUse:
+    - global_values_score
+    - same_answer_equals_compatibility
+    routingNotes: []
+    pilotPriority: P1_BRANCH
+    notes: []
+  career_geography_governance:
+    layer: L3
+    status: FROZEN_DOMAIN
+    dataKind: OPERATING_STANDARD
+    measurementGrammar:
+    - POSITION
+    - ACCEPTABLE_ALTERNATIVES
+    - NEGOTIABILITY
+    - HARD_BOUNDARY
+    - RATIONALE
+    definition: 职业机会、迁居、双事业冲突和临时异地时采用的协调原则。
+    anchorConstructs: []
+    outputObject:
+      type: operating_standard
+      fitLogic:
+      - NEGOTIATION_MODEL
+      - LIFE_PLAN_FEASIBILITY
+      requiredMeta:
+      - salience
+      - positionConfidence
+      - contextConditions
+      - reciprocityExpectation
+      - standardFunction
+    timeSensitivity: high
+    observabilityStage: onboarding_or_life_stage_branch
+    decisionValue:
+      operatingAlignment: high
+      interview: high
+    prohibitedUse:
+    - global_values_score
+    - same_answer_equals_compatibility
+    routingNotes: []
+    pilotPriority: P1_BRANCH
+    notes: []
+  family_of_origin_boundary:
+    layer: L3
+    status: FROZEN_DOMAIN
+    dataKind: OPERATING_STANDARD
+    measurementGrammar:
+    - POSITION
+    - ACCEPTABLE_ALTERNATIVES
+    - NEGOTIABILITY
+    - HARD_BOUNDARY
+    - RATIONALE
+    definition: 双方父母在决策、节日、经济支持、照护、同住和冲突中的参与边界。
+    anchorConstructs: []
+    outputObject:
+      type: operating_standard
+      fitLogic:
+      - JOINT_GOVERNANCE
+      - RECIPROCITY_CHECK
+      requiredMeta:
+      - salience
+      - positionConfidence
+      - contextConditions
+      - reciprocityExpectation
+      - standardFunction
+    timeSensitivity: medium
+    observabilityStage: onboarding_or_life_stage_branch
+    decisionValue:
+      operatingAlignment: high
+      interview: high
+    prohibitedUse:
+    - global_values_score
+    - same_answer_equals_compatibility
+    routingNotes: []
+    pilotPriority: P1_CORE
+    notes: []
+  shared_leisure:
+    layer: L3
+    status: FROZEN_DOMAIN
+    dataKind: OPERATING_STANDARD
+    measurementGrammar:
+    - POSITION
+    - ACCEPTABLE_ALTERNATIVES
+    - NEGOTIABILITY
+    - HARD_BOUNDARY
+    - RATIONALE
+    definition: 共同娱乐、并行陪伴、居家/外出、共同兴趣与共同探索的运行节奏。
+    anchorConstructs: []
+    outputObject:
+      type: operating_standard
+      fitLogic:
+      - RANGE_OVERLAP
+      requiredMeta:
+      - salience
+      - positionConfidence
+      - contextConditions
+      - reciprocityExpectation
+      - standardFunction
+    timeSensitivity: medium
+    observabilityStage: onboarding_or_life_stage_branch
+    decisionValue:
+      operatingAlignment: high
+      interview: high
+    prohibitedUse:
+    - global_values_score
+    - same_answer_equals_compatibility
+    routingNotes: []
+    pilotPriority: P1_BRANCH
+    notes: []
+  sexual_exclusivity_agreement:
+    layer: L3
+    status: FROZEN_DOMAIN
+    dataKind: OPERATING_STANDARD
+    measurementGrammar:
+    - POSITION
+    - ACCEPTABLE_ALTERNATIVES
+    - NEGOTIABILITY
+    - HARD_BOUNDARY
+    - RATIONALE
+    definition: 在自愿、安全和尊重前提下，对排他性、亲密行为和相关边界的共同协议。
+    anchorConstructs: []
+    outputObject:
+      type: operating_standard
+      fitLogic:
+      - HARD_ALIGNMENT
+      - JOINT_AGREEMENT
+      - DYADIC
+      requiredMeta:
+      - salience
+      - positionConfidence
+      - contextConditions
+      - reciprocityExpectation
+      - standardFunction
+    timeSensitivity: medium
+    observabilityStage: onboarding_or_life_stage_branch
+    decisionValue:
+      operatingAlignment: high
+      interview: high
+    prohibitedUse:
+    - global_values_score
+    - same_answer_equals_compatibility
+    - treat_consent_or_coercion_as_negotiable_style_difference
+    routingNotes: []
+    pilotPriority: P1_CORE
+    notes: []
+  parenting_operation:
+    layer: L3
+    status: FROZEN_DOMAIN
+    dataKind: OPERATING_STANDARD
+    measurementGrammar:
+    - POSITION
+    - ACCEPTABLE_ALTERNATIVES
+    - NEGOTIABILITY
+    - HARD_BOUNDARY
+    - RATIONALE
+    definition: 在未来有孩子的前提下，育儿分工、职业调整、祖辈参与和重大育儿决策的治理。
+    anchorConstructs: []
+    outputObject:
+      type: operating_standard
+      fitLogic:
+      - ROLE_COORDINATION
+      - JOINT_GOVERNANCE
+      - LIFE_PLAN
+      requiredMeta:
+      - salience
+      - positionConfidence
+      - contextConditions
+      - reciprocityExpectation
+      - standardFunction
+    timeSensitivity: high
+    observabilityStage: onboarding_or_life_stage_branch
+    decisionValue:
+      operatingAlignment: high
+      interview: high
+    prohibitedUse:
+    - global_values_score
+    - same_answer_equals_compatibility
+    routingNotes:
+    - Only branch when L5 parenthood plan is wants/possibly_wants.
+    pilotPriority: P1_BRANCH
+    notes: []
+  character_trustworthiness_floor:
+    layer: L4
+    status: FROZEN_CORE
+    dataKind: QUALITY_FLOOR
+    measurementGrammar:
+    - BEHAVIORAL_SCENARIO
+    - INTERVIEW
+    - REPEATED_BEHAVIOR
+    definition: 长期伴侣在诚实、可靠、尊重和不操控等方面不得低于的基本质量门槛。
+    anchorConstructs:
+    - ideal_standards_warmth_trustworthiness
+    - dealbreaker_research
+    outputObject:
+      type: floor_and_boundary
+    timeSensitivity: medium
+    observabilityStage: onboarding_to_repeated_behavior
+    decisionValue:
+      screening: confidence_gated
+      interview: high
+    prohibitedUse:
+    - one_personality_score
+    - self_report_only_high_trustworthiness_claim
+    routingNotes: []
+    pilotPriority: P1_CORE
+    notes: []
+  physical_preference:
+    layer: L4
+    status: FROZEN_CORE
+    dataKind: PREFERENCE_FUNCTION
+    measurementGrammar:
+    - FACT_RANGE
+    - PREFERENCE_RANGE
+    - TRADEOFF
+    definition: 对年龄、身高、体型、外表与呈现方式等 pre-contact physical attributes 的理想与可接受范围。
+    anchorConstructs: []
+    outputObject:
+      type: preference_function
+      shape:
+      - ACCEPTABLE_RANGE
+      - FLOOR
+      - DYADIC_LINK
+    timeSensitivity: medium
+    observabilityStage: onboarding
+    decisionValue:
+      candidateRanking: medium
+      pairHypothesis: medium
+    prohibitedUse:
+    - actual_attraction_inference
+    - universal_attractiveness_score
+    routingNotes: []
+    pilotPriority: P1_CORE
+    notes: []
+  resources_life_competence:
+    layer: L4
+    status: FROZEN_CORE
+    dataKind: PREFERENCE_SET
+    measurementGrammar:
+    - FACT_THRESHOLD
+    - PREFERENCE_FUNCTION
+    - TRADEOFF
+    definition: 对经济独立、稳定性、现实资源、职业能力与负担等方面的最低要求、理想与优先级。
+    anchorConstructs:
+    - ideal_standards_status_resources
+    outputObject:
+      type: multi_object_preference
+      facets:
+      - economic_floor
+      - financial_stability
+      - career_competence
+      - current_resources
+      - debt_burden
+      - family_resource_burden
+    timeSensitivity: medium
+    observabilityStage: onboarding
+    decisionValue:
+      candidateRanking: medium
+      screening: constraint_gated
+    prohibitedUse:
+    - single_resources_score
+    - salary_equals_ambition
+    routingNotes: []
+    pilotPriority: P1_CORE
+    notes: []
+  intellectual_engagement_preference:
+    layer: L4
+    status: CANDIDATE_CORE
+    dataKind: PREFERENCE_FUNCTION
+    measurementGrammar:
+    - BEHAVIORAL_PROTOTYPE
+    - SCENARIO
+    - INTERACTION
+    definition: 希望长期伴侣在认知节奏、求知、讨论深度和知识/文化重叠方面达到怎样的互动参与水平。
+    anchorConstructs: []
+    outputObject:
+      type: preference_function
+      candidateFacets:
+      - cognitive_pace
+      - curiosity
+      - conversational_depth
+      - knowledge_cultural_overlap
+    timeSensitivity: medium
+    observabilityStage: onboarding_to_interaction
+    decisionValue:
+      candidateRanking: candidate
+      dyadicLearning: high
+    prohibitedUse:
+    - education_equals_intelligence
+    - IQ_inference
+    routingNotes: []
+    pilotPriority: P1_VALIDATION
+    notes: []
+  partner_social_engagement_preference:
+    layer: L4
+    status: CANDIDATE_CORE
+    dataKind: PREFERENCE_FUNCTION
+    measurementGrammar:
+    - MIRRORED_BEHAVIORAL_ANCHOR
+    - RANGE_SELECTION
+    - DIRECTIONAL_MISMATCH
+    definition: 希望长期伴侣拥有多高密度、多广泛、多主动的日常社会交往。
+    anchorConstructs:
+    - extraversion_facets_for_discriminant_validation
+    outputObject:
+      type: asymmetric_ideal_point
+      candidateFacets:
+      - social_frequency
+      - network_breadth
+      - social_initiative
+      - social_stimulation_appetite
+    timeSensitivity: medium
+    observabilityStage: onboarding
+    decisionValue:
+      candidateRanking: candidate
+      selfInsight: medium
+    prohibitedUse:
+    - broad_extraversion_as_direct_target
+    - more_social_is_better
+    routingNotes: []
+    pilotPriority: P1_VALIDATION
+    notes: []
+  partner_experiential_exploration_preference:
+    layer: L4
+    status: CANDIDATE_CORE
+    dataKind: PREFERENCE_FUNCTION
+    measurementGrammar:
+    - MIRRORED_BEHAVIORAL_ANCHOR
+    - RANGE_SELECTION
+    - DIRECTIONAL_MISMATCH
+    definition: 希望长期伴侣在日常生活中多愿意主动接触和尝试尚不熟悉的新体验。
+    anchorConstructs:
+    - openness_for_discriminant_validation
+    - sensation_seeking_for_discriminant_validation
+    outputObject:
+      type: asymmetric_ideal_point
+      candidateFacets:
+      - familiar_vs_new_choice
+      - active_seeking
+      - exploration_breadth
+      - exploration_cadence
+    timeSensitivity: medium
+    observabilityStage: onboarding
+    decisionValue:
+      candidateRanking: candidate
+    prohibitedUse:
+    - BigFive_openness_as_same_construct
+    - risk_taking_inference
+    - travel_frequency_proxy
+    routingNotes: []
+    pilotPriority: P1_VALIDATION
+    notes: []
+  partner_ambition_orientation:
+    layer: L4
+    status: CANDIDATE_CORE
+    dataKind: PREFERENCE_FUNCTION
+    measurementGrammar:
+    - BEHAVIORAL_PROTOTYPE
+    - RANGE_SELECTION
+    - TRADEOFF
+    definition: 希望伴侣把职业成就、持续向上、竞争和工作中心性放在多高位置。
+    anchorConstructs: []
+    outputObject:
+      type: asymmetric_ideal_point
+    timeSensitivity: medium
+    observabilityStage: onboarding
+    decisionValue:
+      candidateRanking: candidate
+    prohibitedUse:
+    - income_equals_ambition
+    - more_ambition_is_better
+    routingNotes: []
+    pilotPriority: P1_VALIDATION
+    notes: []
+  partner_family_orientation:
+    layer: L4
+    status: FROZEN_CORE_CONCEPT
+    dataKind: PREFERENCE_FUNCTION
+    measurementGrammar:
+    - BEHAVIORAL_PROTOTYPE
+    - RANGE_SELECTION
+    definition: 希望伴侣本人把建立和经营家庭放在生活中的什么位置。
+    anchorConstructs: []
+    outputObject:
+      type: ideal_point_and_floor
+    timeSensitivity: medium
+    observabilityStage: onboarding
+    decisionValue:
+      candidateRanking: medium
+    prohibitedUse:
+    - children_plan_inference
+    - parent_boundary_inference
+    - childcare_inference
+    routingNotes: []
+    pilotPriority: P1_CORE
+    notes: []
+  conditional_worldview_preference:
+    layer: L4
+    status: FROZEN_SALIENCE_GATED
+    dataKind: CONDITIONAL_PREFERENCE
+    measurementGrammar:
+    - SALIENCE_GATE
+    - POSITION
+    - RANGE
+    - CONSTRAINT
+    definition: 当宗教、世界观、道德或政治议题确实影响择偶时，对相关立场差异的可接受范围与硬度。
+    anchorConstructs: []
+    outputObject:
+      type: salience_gated_preference
+    timeSensitivity: medium
+    observabilityStage: onboarding
+    decisionValue:
+      screening: if_salient
+      interview: if_salient
+    prohibitedUse:
+    - mandatory_deep_assessment_for_all
+    - generic_compatibility_score
+    routingNotes: []
+    pilotPriority: P1_BRANCH
+    notes: []
+  cultural_aesthetic_orientation:
+    layer: L4
+    status: P2_CANDIDATE
+    dataKind: PREFERENCE_FUNCTION
+    measurementGrammar:
+    - SALIENCE_GATE
+    - BEHAVIORAL_PROTOTYPE
+    definition: 对文化、艺术、审美与创造性生活方式的伴侣偏好；是否有独立增量价值尚待验证。
+    anchorConstructs: []
+    outputObject:
+      type: candidate_preference
+    timeSensitivity: medium
+    observabilityStage: onboarding
+    decisionValue:
+      researchOnly: initially
+    prohibitedUse: []
+    routingNotes: []
+    pilotPriority: P2
+    notes: []
+  humor_fit:
+    layer: L6
+    status: INTERACTION_HEAVY
+    dataKind: DYADIC_OUTCOME
+    measurementGrammar:
+    - DYADIC_OBSERVATION
+    definition: 具体两个人在幽默、玩笑和互动节奏上的实际适配体验。
+    anchorConstructs: []
+    outputObject:
+      type: dyadic_fit
+    timeSensitivity: medium
+    observabilityStage: chat_or_meeting
+    decisionValue:
+      dyadicLearning: high
+    prohibitedUse:
+    - static_humor_match_score
+    routingNotes: []
+    pilotPriority: P4_DYADIC
+    notes: []
+  dyadic_attraction:
+    layer: L6
+    status: FROZEN_DYADIC
+    dataKind: DYADIC_OUTCOME
+    measurementGrammar:
+    - PHOTO_REACTION
+    - CHAT_REACTION
+    - IN_PERSON_REACTION
+    definition: A 对具体 B 在不同接触阶段产生的真实浪漫/身体吸引。
+    anchorConstructs: []
+    outputObject:
+      type: directional_dyadic_reaction
+    timeSensitivity: medium
+    observabilityStage: candidate_specific
+    decisionValue:
+      candidateContinuation: high
+      dyadicLearning: high
+    prohibitedUse:
+    - infer_from_static_physical_preference
+    routingNotes: []
+    pilotPriority: P4_DYADIC
+    notes: []
+  dyadic_chemistry:
+    layer: L6
+    status: DYADIC_ONLY
+    dataKind: DYADIC_OUTCOME
+    measurementGrammar:
+    - DYADIC_OBSERVATION
+    definition: 具体 A-B 互动中产生的吸引、连接、自然感和继续接近欲望等整体化体验；不提前静态预测。
+    anchorConstructs: []
+    outputObject:
+      type: dyadic_only
+    timeSensitivity: medium
+    observabilityStage: interaction_only
+    decisionValue:
+      dyadicLearning: high
+    prohibitedUse:
+    - static_prediction
+    - scientific_probability
+    routingNotes: []
+    pilotPriority: P4_DYADIC
+    notes: []
+  preference_tradeoff:
+    layer: L4
+    status: FROZEN_CORE_MEASUREMENT_COMPONENT
+    dataKind: CHOICE_DATA
+    measurementGrammar:
+    - FORCED_CHOICE
+    - PROFILE_TRADEOFF
+    - LIMITED_BUDGET
+    definition: 在不能同时获得所有理想条件时，通过受约束选择恢复当前优先级与边际价值。
+    anchorConstructs:
+    - mate_budget_research
+    - conjoint_choice_methods
+    outputObject:
+      type: current_priority_profile
+      versioned: true
+    timeSensitivity: medium
+    observabilityStage: onboarding
+    decisionValue:
+      candidateRanking: high
+      researchValidity: high
+    prohibitedUse:
+    - permanent_weight
+    - moral_priority_interpretation
+    routingNotes: []
+    pilotPriority: P1_CORE
+    notes: []
+  parenthood_plan:
+    layer: L5
+    status: FROZEN_CORE
+    dataKind: LIFE_PLAN
+    measurementGrammar:
+    - POSITION
+    - INTENTION
+    - TIME_HORIZON
+    - CONSTRAINT
+    definition: 成为父母的愿望、现实意图、时间、数量、生物学亲子重要性、不确定原因和硬度。
+    anchorConstructs:
+    - fertility_desire_intention_research
+    outputObject:
+      type: life_plan_constraint
+      requiredMeta:
+      - positionConfidence
+      - assessedAt
+      - contextVersion
+      possibleFields:
+      - fact
+      - desire
+      - intention
+      - preferredRange
+      - acceptableRange
+      - statedHardness
+      - negotiability
+      - rationale
+      - constraintSource
+      - feasibility
+      - timeHorizon
+      - revealedEvidence
+    timeSensitivity: high
+    observabilityStage: onboarding
+    decisionValue:
+      eligibility: domain_dependent
+      feasibility: high
+    prohibitedUse:
+    - unsure_as_midpoint
+    - unknown_as_reject
+    - importance_auto_promotes_to_hard
+    routingNotes: []
+    pilotPriority: P1_CORE
+    notes: []
+  marriage_plan:
+    layer: L5
+    status: FROZEN_CORE
+    dataKind: LIFE_PLAN
+    measurementGrammar:
+    - POSITION
+    - INTENTION
+    - TIME_HORIZON
+    - CONSTRAINT
+    definition: 对法律/社会意义婚姻的愿望、现实意图、必要性和时间窗口。
+    anchorConstructs: []
+    outputObject:
+      type: life_plan_constraint
+      requiredMeta:
+      - positionConfidence
+      - assessedAt
+      - contextVersion
+      possibleFields:
+      - fact
+      - desire
+      - intention
+      - preferredRange
+      - acceptableRange
+      - statedHardness
+      - negotiability
+      - rationale
+      - constraintSource
+      - feasibility
+      - timeHorizon
+      - revealedEvidence
+    timeSensitivity: high
+    observabilityStage: onboarding
+    decisionValue:
+      eligibility: domain_dependent
+      feasibility: high
+    prohibitedUse:
+    - unsure_as_midpoint
+    - unknown_as_reject
+    - importance_auto_promotes_to_hard
+    routingNotes: []
+    pilotPriority: P1_CORE
+    notes: []
+  relationship_structure:
+    layer: L5
+    status: FROZEN_CORE
+    dataKind: LIFE_PLAN_CONSTRAINT
+    measurementGrammar:
+    - CATEGORICAL_POSITION
+    - HARD_ALIGNMENT
+    definition: 希望进入的长期关系结构；具体 exclusivity rules 另由 L3 管理。
+    anchorConstructs: []
+    outputObject:
+      type: life_plan_constraint
+      requiredMeta:
+      - positionConfidence
+      - assessedAt
+      - contextVersion
+      possibleFields:
+      - fact
+      - desire
+      - intention
+      - preferredRange
+      - acceptableRange
+      - statedHardness
+      - negotiability
+      - rationale
+      - constraintSource
+      - feasibility
+      - timeHorizon
+      - revealedEvidence
+    timeSensitivity: high
+    observabilityStage: onboarding
+    decisionValue:
+      eligibility: domain_dependent
+      feasibility: high
+    prohibitedUse:
+    - unsure_as_midpoint
+    - unknown_as_reject
+    - importance_auto_promotes_to_hard
+    routingNotes: []
+    pilotPriority: P1_CORE
+    notes: []
+  location_distance_plan:
+    layer: L5
+    status: FROZEN_CORE
+    dataKind: LIFE_PLAN_FEASIBILITY
+    measurementGrammar:
+    - FACT
+    - POSITION
+    - RANGE
+    - TIME_HORIZON
+    definition: 当前地点、未来地点、迁居意愿、异地可接受性与结束异地的时间条件。
+    anchorConstructs: []
+    outputObject:
+      type: life_plan_constraint
+      requiredMeta:
+      - positionConfidence
+      - assessedAt
+      - contextVersion
+      possibleFields:
+      - fact
+      - desire
+      - intention
+      - preferredRange
+      - acceptableRange
+      - statedHardness
+      - negotiability
+      - rationale
+      - constraintSource
+      - feasibility
+      - timeHorizon
+      - revealedEvidence
+    timeSensitivity: high
+    observabilityStage: onboarding
+    decisionValue:
+      eligibility: domain_dependent
+      feasibility: high
+    prohibitedUse:
+    - unsure_as_midpoint
+    - unknown_as_reject
+    - importance_auto_promotes_to_hard
+    routingNotes: []
+    pilotPriority: P1_CORE
+    notes: []
+  existing_children_fact_acceptance:
+    layer: L5
+    status: FROZEN_FACT_CONSTRAINT
+    dataKind: FACT_AND_CONSTRAINT
+    measurementGrammar:
+    - FACT
+    - ACCEPTANCE
+    - CONSTRAINT
+    definition: 现有孩子、照护和共同育儿现实，以及另一侧对此现实结构的接受度。
+    anchorConstructs: []
+    outputObject:
+      type: life_plan_constraint
+      requiredMeta:
+      - positionConfidence
+      - assessedAt
+      - contextVersion
+      possibleFields:
+      - fact
+      - desire
+      - intention
+      - preferredRange
+      - acceptableRange
+      - statedHardness
+      - negotiability
+      - rationale
+      - constraintSource
+      - feasibility
+      - timeHorizon
+      - revealedEvidence
+    timeSensitivity: high
+    observabilityStage: onboarding
+    decisionValue:
+      eligibility: domain_dependent
+      feasibility: high
+    prohibitedUse:
+    - unsure_as_midpoint
+    - unknown_as_reject
+    - importance_auto_promotes_to_hard
+    routingNotes: []
+    pilotPriority: P1_BRANCH
+    notes: []
+  marital_history_fact_acceptance:
+    layer: L5
+    status: FROZEN_FACT_CONSTRAINT
+    dataKind: FACT_AND_CONSTRAINT
+    measurementGrammar:
+    - FACT
+    - ACCEPTANCE
+    - CONSTRAINT
+    definition: 婚史事实及另一侧的接受范围，不产生人格风险分。
+    anchorConstructs: []
+    outputObject:
+      type: life_plan_constraint
+      requiredMeta:
+      - positionConfidence
+      - assessedAt
+      - contextVersion
+      possibleFields:
+      - fact
+      - desire
+      - intention
+      - preferredRange
+      - acceptableRange
+      - statedHardness
+      - negotiability
+      - rationale
+      - constraintSource
+      - feasibility
+      - timeHorizon
+      - revealedEvidence
+    timeSensitivity: high
+    observabilityStage: onboarding
+    decisionValue:
+      eligibility: domain_dependent
+      feasibility: high
+    prohibitedUse:
+    - unsure_as_midpoint
+    - unknown_as_reject
+    - importance_auto_promotes_to_hard
+    routingNotes: []
+    pilotPriority: P1_BRANCH
+    notes: []
+  smoking_constraint:
+    layer: L5
+    status: FROZEN_OPERATING_CONSTRAINT
+    dataKind: FACT_AND_CONSTRAINT
+    measurementGrammar:
+    - FACT
+    - ACCEPTABLE_RANGE
+    - HARD_BOUNDARY
+    definition: 吸烟现实行为与伴侣侧可接受频率/硬边界。
+    anchorConstructs: []
+    outputObject:
+      type: life_plan_constraint
+      requiredMeta:
+      - positionConfidence
+      - assessedAt
+      - contextVersion
+      possibleFields:
+      - fact
+      - desire
+      - intention
+      - preferredRange
+      - acceptableRange
+      - statedHardness
+      - negotiability
+      - rationale
+      - constraintSource
+      - feasibility
+      - timeHorizon
+      - revealedEvidence
+    timeSensitivity: high
+    observabilityStage: onboarding
+    decisionValue:
+      eligibility: domain_dependent
+      feasibility: high
+    prohibitedUse:
+    - unsure_as_midpoint
+    - unknown_as_reject
+    - importance_auto_promotes_to_hard
+    routingNotes: []
+    pilotPriority: P1_CORE
+    notes: []
+  alcohol_constraint:
+    layer: L5
+    status: FROZEN_OPERATING_CONSTRAINT
+    dataKind: FACT_AND_CONSTRAINT
+    measurementGrammar:
+    - FACT
+    - ACCEPTABLE_RANGE
+    - HARD_BOUNDARY
+    definition: 饮酒现实行为与伴侣侧可接受频率/硬边界。
+    anchorConstructs: []
+    outputObject:
+      type: life_plan_constraint
+      requiredMeta:
+      - positionConfidence
+      - assessedAt
+      - contextVersion
+      possibleFields:
+      - fact
+      - desire
+      - intention
+      - preferredRange
+      - acceptableRange
+      - statedHardness
+      - negotiability
+      - rationale
+      - constraintSource
+      - feasibility
+      - timeHorizon
+      - revealedEvidence
+    timeSensitivity: high
+    observabilityStage: onboarding
+    decisionValue:
+      eligibility: domain_dependent
+      feasibility: high
+    prohibitedUse:
+    - unsure_as_midpoint
+    - unknown_as_reject
+    - importance_auto_promotes_to_hard
+    routingNotes: []
+    pilotPriority: P1_BRANCH
+    notes: []
+  schedule_feasibility:
+    layer: L5
+    status: FROZEN_FEASIBILITY
+    dataKind: FEASIBILITY
+    measurementGrammar:
+    - FACT
+    - DERIVED_FEASIBILITY
+    definition: 双方工作/作息/出差等事实是否能够形成足够共同生活窗口。
+    anchorConstructs: []
+    outputObject:
+      type: life_plan_constraint
+      requiredMeta:
+      - positionConfidence
+      - assessedAt
+      - contextVersion
+      possibleFields:
+      - fact
+      - desire
+      - intention
+      - preferredRange
+      - acceptableRange
+      - statedHardness
+      - negotiability
+      - rationale
+      - constraintSource
+      - feasibility
+      - timeHorizon
+      - revealedEvidence
+    timeSensitivity: high
+    observabilityStage: onboarding
+    decisionValue:
+      eligibility: domain_dependent
+      feasibility: high
+    prohibitedUse:
+    - unsure_as_midpoint
+    - unknown_as_reject
+    - importance_auto_promotes_to_hard
+    routingNotes: []
+    pilotPriority: P1_BRANCH
+    notes: []
+  education_filter:
+    layer: L5
+    status: FROZEN_PROMOTION_LOGIC
+    dataKind: PREFERENCE_TO_CONSTRAINT
+    measurementGrammar:
+    - FACT
+    - PREFERENCE
+    - COUNTERFACTUAL_CONFIRMATION
+    definition: 学历理想、soft filter 与显式 hard constraint 的分层。
+    anchorConstructs: []
+    outputObject:
+      type: life_plan_constraint
+      requiredMeta:
+      - positionConfidence
+      - assessedAt
+      - contextVersion
+      possibleFields:
+      - fact
+      - desire
+      - intention
+      - preferredRange
+      - acceptableRange
+      - statedHardness
+      - negotiability
+      - rationale
+      - constraintSource
+      - feasibility
+      - timeHorizon
+      - revealedEvidence
+    timeSensitivity: high
+    observabilityStage: onboarding
+    decisionValue:
+      eligibility: domain_dependent
+      feasibility: high
+    prohibitedUse:
+    - unsure_as_midpoint
+    - unknown_as_reject
+    - importance_auto_promotes_to_hard
+    routingNotes: []
+    pilotPriority: P1_BRANCH
+    notes: []
+  age_filter:
+    layer: L5
+    status: FROZEN_PROMOTION_LOGIC
+    dataKind: PREFERENCE_TO_CONSTRAINT
+    measurementGrammar:
+    - FACT
+    - RANGE
+    - COUNTERFACTUAL_CONFIRMATION
+    definition: 年龄理想、可接受范围与 hard boundary。
+    anchorConstructs: []
+    outputObject:
+      type: life_plan_constraint
+      requiredMeta:
+      - positionConfidence
+      - assessedAt
+      - contextVersion
+      possibleFields:
+      - fact
+      - desire
+      - intention
+      - preferredRange
+      - acceptableRange
+      - statedHardness
+      - negotiability
+      - rationale
+      - constraintSource
+      - feasibility
+      - timeHorizon
+      - revealedEvidence
+    timeSensitivity: high
+    observabilityStage: onboarding
+    decisionValue:
+      eligibility: domain_dependent
+      feasibility: high
+    prohibitedUse:
+    - unsure_as_midpoint
+    - unknown_as_reject
+    - importance_auto_promotes_to_hard
+    routingNotes: []
+    pilotPriority: P1_BRANCH
+    notes: []
+  height_filter:
+    layer: L5
+    status: FROZEN_PROMOTION_LOGIC
+    dataKind: PREFERENCE_TO_CONSTRAINT
+    measurementGrammar:
+    - FACT
+    - RANGE
+    - COUNTERFACTUAL_CONFIRMATION
+    definition: 身高理想、可接受范围与 hard boundary。
+    anchorConstructs: []
+    outputObject:
+      type: life_plan_constraint
+      requiredMeta:
+      - positionConfidence
+      - assessedAt
+      - contextVersion
+      possibleFields:
+      - fact
+      - desire
+      - intention
+      - preferredRange
+      - acceptableRange
+      - statedHardness
+      - negotiability
+      - rationale
+      - constraintSource
+      - feasibility
+      - timeHorizon
+      - revealedEvidence
+    timeSensitivity: high
+    observabilityStage: onboarding
+    decisionValue:
+      eligibility: domain_dependent
+      feasibility: high
+    prohibitedUse:
+    - unsure_as_midpoint
+    - unknown_as_reject
+    - importance_auto_promotes_to_hard
+    routingNotes: []
+    pilotPriority: P1_BRANCH
+    notes: []
+  income_resource_filter:
+    layer: L5
+    status: FROZEN_PROMOTION_LOGIC
+    dataKind: PREFERENCE_TO_CONSTRAINT
+    measurementGrammar:
+    - FACT
+    - THRESHOLD
+    - COUNTERFACTUAL_CONFIRMATION
+    definition: 收入/资源最低要求是否真的升级为 hard filter；未知事实不得当作不满足。
+    anchorConstructs: []
+    outputObject:
+      type: life_plan_constraint
+      requiredMeta:
+      - positionConfidence
+      - assessedAt
+      - contextVersion
+      possibleFields:
+      - fact
+      - desire
+      - intention
+      - preferredRange
+      - acceptableRange
+      - statedHardness
+      - negotiability
+      - rationale
+      - constraintSource
+      - feasibility
+      - timeHorizon
+      - revealedEvidence
+    timeSensitivity: high
+    observabilityStage: onboarding
+    decisionValue:
+      eligibility: domain_dependent
+      feasibility: high
+    prohibitedUse:
+    - unsure_as_midpoint
+    - unknown_as_reject
+    - importance_auto_promotes_to_hard
+    routingNotes: []
+    pilotPriority: P1_BRANCH
+    notes: []
+  support_event:
+    layer: L6
+    status: FROZEN_EVENT_SCHEMA
+    dataKind: DYADIC_EVENT
+    measurementGrammar:
+    - DYADIC_EVENT_LOG
+    definition: 一次具体支持事件中 seeker 的压力/请求、provider 的回应以及 recipient 的体验。
+    anchorConstructs: []
+    outputObject:
+      type: event
+      fields:
+      - stressor
+      - requested_support
+      - signaling_clarity
+      - actual_response
+      - felt_understood
+      - felt_validated
+      - felt_cared_for
+      - response_fit
+      - outcome
+    timeSensitivity: event
+    observabilityStage: specific_pair_only
+    decisionValue:
+      criterionValidity: high
+      dyadicLearning: high
+    prohibitedUse: []
+    routingNotes: []
+    pilotPriority: P4_DYADIC
+    notes: []
+  conflict_event:
+    layer: L6
+    status: FROZEN_EVENT_SCHEMA
+    dataKind: DYADIC_EVENT
+    measurementGrammar:
+    - DYADIC_EVENT_LOG
+    definition: 一次具体冲突中的议题、谁希望改变什么、双方 activation、行为序列、暂停、返回、repair 与结果。
+    anchorConstructs: []
+    outputObject:
+      type: event
+    timeSensitivity: event
+    observabilityStage: specific_pair_only
+    decisionValue:
+      criterionValidity: high
+      dyadicLearning: high
+    prohibitedUse: []
+    routingNotes: []
+    pilotPriority: P4_DYADIC
+    notes: []
+  dyadic_conflict_pattern:
+    layer: L6
+    status: FROZEN_PAIR_DERIVED
+    dataKind: PAIR_PATTERN
+    measurementGrammar:
+    - REPEATED_DYADIC_EVENTS
+    definition: 基于多次真实冲突事件推导的 A-B 互动序列，例如 demand-withdraw；不是个体固定人格。
+    anchorConstructs:
+    - demand_withdraw_research
+    outputObject:
+      type: pair_pattern
+    timeSensitivity: medium
+    observabilityStage: repeated_pair_events
+    decisionValue:
+      dyadicLearning: high
+    prohibitedUse:
+    - fixed_demander_personality
+    - fixed_withdrawer_personality
+    routingNotes: []
+    pilotPriority: P4_DYADIC
+    notes: []
+  revealed_preference_event:
+    layer: L6
+    status: FROZEN_EVENT_SCHEMA
+    dataKind: CHOICE_EVENT
+    measurementGrammar:
+    - BEHAVIORAL_CHOICE
+    definition: 用户在看到真实候选信息后表现出的继续了解、拒绝、二次见面或主动联系等选择。
+    anchorConstructs: []
+    outputObject:
+      type: choice_event
+    timeSensitivity: event
+    observabilityStage: candidate_specific
+    decisionValue:
+      preferenceValidity: high
+      modelLearning: high
+    prohibitedUse:
+    - use_to_shame_stated_preferences
+    routingNotes: []
+    pilotPriority: P4_DYADIC
+    notes: []
+derivedEngines:
+  pair_engine:
+    status: FROZEN_ARCHITECTURE
+    sequence:
+    - ELIGIBILITY_HARD_CONSTRAINT
+    - FEASIBILITY
+    - PREFERENCE_SATISFACTION_DIRECTIONAL
+    - NEED_TO_PROVISION
+    - OPERATING_ALIGNMENT
+    - HIGH_VALUE_UNKNOWNS
+    - DYADIC_REALITY
+    forbidden:
+    - single_similarity_score
+    - scientific_success_probability
+  gap_engine:
+    status: FROZEN_CONCEPT
+    channels:
+    - DESIRE_vs_CAPACITY
+    - NEED_vs_SIGNALING
+    - STANDARD_vs_CAPABILITY
+    - PREFERENCE_vs_TRADEOFF
+    - PLAN_vs_FEASIBILITY
+    - STATED_vs_REVEALED
+    rule: DIFFERENCE != CONTRADICTION
+  reciprocity_engine:
+    status: FROZEN_CONCEPT
+    compare: rule_requested_from_partner vs rule_accepted_for_self
+    states:
+    - SYMMETRIC
+    - CONTEXTUALLY_ASYMMETRIC
+    - UNEXPLAINED_ASYMMETRIC
+    - NOT_COMPARABLE
+    - UNKNOWN
+evidenceAnchors:
+  commitment_readiness: Hadden, Agnew & Tan (2018), Commitment Readiness and Relationship Formation.
+  AMRPS: MacDonald et al. (2026), Autonomous Motivation for Romantic Pursuit Scale.
+  PPR: Perceived Partner Responsiveness research tradition.
+  C-PPRS: Zhou et al. (2022), Chinese Perceived Partner Responsiveness Scale.
+  ideal_partner_matching: Eastwick et al., worldwide 43-country/22-language ideal-partner preference matching study.
+  planned_missing_design: Graham et al. planned missing data design tradition; later practical/simulation work.

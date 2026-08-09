@@ -1,0 +1,279 @@
+schemaVersion: relationship-feature-model-v3.data-dictionary.v0.1
+generatedAt: '2026-08-09'
+principles:
+- Raw item responses are immutable source data; derived estimates live in separate tables.
+- Planned-missing items are coded as NOT_SHOWN_BY_DESIGN, never as respondent missing.
+- NOT_APPLICABLE, USER_SKIPPED, TECHNICAL_MISSING, and NOT_SHOWN_BY_DESIGN are distinct.
+- Item wording/version, app version, registry version, and randomization assignment must be recoverable for every response.
+- Person-level constructs and pair-level/dyadic constructs are stored separately.
+missingnessCodes:
+  NOT_SHOWN_BY_DESIGN: Item intentionally not assigned under common/form/branch design.
+  NOT_APPLICABLE: Question does not apply to the participant/context.
+  USER_SKIPPED: Participant saw item but did not answer.
+  TECHNICAL_MISSING: Item was expected but unavailable due to software/data failure.
+  WITHDRAWN: Participant withdrew data if research protocol permits/requests removal.
+  UNKNOWN: Participant explicitly answered that the underlying fact/position is unknown.
+tables:
+  participants:
+    primaryKey: participant_id
+    fields:
+      participant_id: uuid/string
+      created_at: datetime
+      eligibility_status: enum
+      consent_version: string
+      research_cohort: string
+      account_user_id: nullable external id
+      withdrawal_status: enum
+  assessments:
+    primaryKey: assessment_id
+    foreignKeys:
+      participant_id: participants.participant_id
+    fields:
+      assessment_id: uuid/string
+      participant_id: string
+      study_phase: P0|P0_5|P1|P2|P3|P4|PRODUCT_BETA
+      study_version: string
+      app_version: string
+      construct_registry_version: string
+      item_registry_version: string
+      report_version: nullable string
+      started_at: datetime
+      completed_at: nullable datetime
+      completion_status: enum
+      relationship_context_basis: enum
+      current_dating_status: enum
+  randomization_assignments:
+    primaryKey: assignment_id
+    foreignKeys:
+      assessment_id: assessments.assessment_id
+    fields:
+      assignment_id: uuid/string
+      assessment_id: string
+      main_form: COMMON_ONLY|A|B|C|OTHER
+      stratum: nullable string
+      validation_block: nullable string
+      random_seed_or_assignment_token: string
+      assigned_blocks: json array
+      assigned_item_ids: json array
+      created_at: datetime
+  item_responses:
+    primaryKey: response_id
+    foreignKeys:
+      assessment_id: assessments.assessment_id
+    fields:
+      response_id: uuid/string
+      assessment_id: string
+      participant_id: string
+      parent_task_id: string
+      item_id: string
+      item_version: string
+      construct_id: string
+      facet: nullable string
+      response_raw: json
+      response_code: nullable scalar/string
+      response_context: enum/string
+      missingness_code: nullable enum
+      shown_at: nullable datetime
+      answered_at: nullable datetime
+      response_time_ms: nullable integer
+      answer_change_count: integer default 0
+      original_response_raw: nullable json
+      research_form: nullable string
+      branch_path: nullable json
+    rules:
+    - Do not overwrite original_response_raw after cognitive-interview probing.
+    - Do not coerce explicit UNKNOWN to numeric midpoint.
+    - Do not infer NOT_SHOWN_BY_DESIGN from null alone; assignment table must prove it.
+  task_events:
+    primaryKey: task_event_id
+    fields:
+      task_event_id: uuid/string
+      assessment_id: string
+      parent_task_id: string
+      event_type: SHOWN|ANSWERED|BACK|SKIP|BRANCH_ENTER|BRANCH_EXIT|ERROR
+      timestamp: datetime
+      payload: json
+  facts:
+    primaryKey: fact_record_id
+    fields:
+      fact_record_id: uuid/string
+      participant_id: string
+      fact_type: string
+      value: json
+      source: self_report|verified|operator_entered|other
+      verification_status: enum
+      effective_from: datetime
+      effective_to: nullable datetime
+  construct_estimates:
+    primaryKey: estimate_id
+    fields:
+      estimate_id: uuid/string
+      participant_id: string
+      assessment_id: string
+      construct_id: string
+      estimate: nullable json/number
+      facets: nullable json
+      scoring_model_version: string
+      evidence_status: MEASURED|PROVISIONAL|CONTEXTUAL|INSUFFICIENT|CONFLICTING
+      measurement_confidence: enum/number
+      context_basis: string
+      coverage: nullable number
+      consistency: nullable number
+      assessed_at: datetime
+      valid_until: nullable datetime
+    rules:
+    - Never store a production estimate without scoring_model_version.
+    - Recomputation creates a new estimate row/version; raw responses stay unchanged.
+  operating_standards:
+    primaryKey: standard_id
+    fields:
+      standard_id: uuid/string
+      participant_id: string
+      assessment_id: string
+      domain: string
+      preferred_rule: json
+      acceptable_alternatives: json array
+      salience: nullable scalar
+      negotiability: nullable scalar
+      hard_boundary: nullable json
+      reciprocity_expectation: nullable json
+      standard_function: nullable json
+      fit_logic: string
+      stage_applicability: nullable json
+      position_confidence: nullable scalar
+      context_conditions: nullable json
+      assessed_at: datetime
+      context_version: string
+  preference_functions:
+    primaryKey: preference_id
+    fields:
+      preference_id: uuid/string
+      participant_id: string
+      assessment_id: string
+      construct_id: string
+      shape: FLOOR|MONOTONIC_SATURATION|IDEAL_POINT|ACCEPTABLE_RANGE|CATEGORICAL|DYADIC
+      ideal_position: nullable json/number
+      acceptable_lower: nullable json/number
+      acceptable_upper: nullable json/number
+      acceptable_levels: nullable json array
+      lower_mismatch_sensitivity: nullable scalar
+      upper_mismatch_sensitivity: nullable scalar
+      salience: nullable scalar
+      negotiability: nullable scalar
+      hard_boundary: nullable json
+      rationale: nullable json array
+      position_confidence: nullable scalar
+      assessed_at: datetime
+      context_version: string
+      evidence_status: string
+  tradeoff_events:
+    primaryKey: tradeoff_event_id
+    fields:
+      tradeoff_event_id: uuid/string
+      participant_id: string
+      assessment_id: string
+      task_id: string
+      profiles_shown: json
+      choice: json/string
+      attributes_varied: json array
+      timestamp: datetime
+      context_version: string
+  life_plans:
+    primaryKey: life_plan_id
+    fields:
+      life_plan_id: uuid/string
+      participant_id: string
+      assessment_id: string
+      domain: string
+      self_fact: nullable json
+      desire: nullable json
+      intention: nullable json
+      preferred_range: nullable json
+      acceptable_range: nullable json
+      stated_hardness: nullable scalar/enum
+      negotiability: nullable scalar
+      rationale: nullable json
+      constraint_source: nullable enum
+      position_confidence: nullable scalar
+      feasibility: nullable json
+      time_horizon: nullable json
+      uncertainty_reason: nullable json
+      assessed_at: datetime
+      context_version: string
+  candidate_attribute_evidence:
+    primaryKey: candidate_evidence_id
+    fields:
+      candidate_evidence_id: uuid/string
+      candidate_participant_id: string
+      construct_id: string
+      estimated_position: nullable json/number
+      facets: nullable json
+      measurement_source: string
+      measurement_confidence: nullable scalar
+      observability_stage: string
+      evidence_status: string
+      assessed_at: datetime
+  pair_profiles:
+    primaryKey: pair_profile_id
+    fields:
+      pair_profile_id: uuid/string
+      participant_a_id: string
+      participant_b_id: string
+      pair_engine_version: string
+      eligibility_result: json
+      a_to_b_fit: json
+      b_to_a_fit: json
+      operating_alignment: json
+      high_salience_mismatches: json
+      high_value_unknowns: json
+      interview_priorities: json
+      created_at: datetime
+    rules:
+    - No scientific relationship-success probability field.
+    - A_to_B and B_to_A remain separate.
+  candidate_choice_events:
+    primaryKey: choice_event_id
+    fields:
+      choice_event_id: uuid/string
+      viewer_participant_id: string
+      candidate_participant_id: string
+      stage: PROFILE|PHOTO|INTRO|CHAT|MEETING|LATER_MEETING
+      information_shown: json
+      decision: CONTINUE|DECLINE|UNSURE
+      reason_codes: nullable json array
+      initiated_by_user: nullable boolean
+      timestamp: datetime
+  dyadic_events:
+    primaryKey: dyadic_event_id
+    fields:
+      dyadic_event_id: uuid/string
+      participant_a_id: string
+      participant_b_id: string
+      event_type: UNCERTAINTY|SUPPORT|CONFLICT|ATTRACTION|OTHER
+      event_schema_version: string
+      event_time: datetime
+      event_payload: json
+      reported_by: A|B|BOTH|OPERATOR|OBSERVED
+      confidence: nullable scalar
+  interviews:
+    primaryKey: interview_id
+    fields:
+      interview_id: uuid/string
+      participant_id: string
+      phase: P0|P2|OPERATOR|OTHER
+      guide_version: string
+      interviewer_id: string
+      started_at: datetime
+      completed_at: datetime
+      notes_reference: nullable string
+      coded_findings: json
+  version_manifest:
+    primaryKey: version_id
+    fields:
+      version_id: string
+      artifact_type: CONSTRUCT_REGISTRY|ITEM_REGISTRY|RESPONSE_LIBRARY|FORM|SCORING_MODEL|REPORT|APP
+      semantic_version: string
+      created_at: datetime
+      parent_version: nullable string
+      change_summary: string
+      content_hash: nullable string

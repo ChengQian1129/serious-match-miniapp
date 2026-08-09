@@ -1,0 +1,341 @@
+.v3-pilot-page {
+  min-height: 100vh;
+  padding-bottom: calc(196rpx + env(safe-area-inset-bottom));
+}
+
+.v3-pilot-top {
+  padding-top: 12rpx;
+}
+
+.v3-pilot-top .question-top__row {
+  grid-template-columns: 148rpx minmax(0, 1fr) 116rpx;
+}
+
+.v3-pilot-top .question-top__title {
+  color: var(--dl-grey-500);
+  font-size: 23rpx;
+  font-weight: 500;
+}
+
+.v3-pilot-top .question-top__count {
+  width: auto;
+  flex: 0 0 auto;
+  font-size: 23rpx;
+}
+
+.v3-pilot-content {
+  min-height: 760rpx;
+  padding: 66rpx 40rpx 70rpx;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.v3-pilot-content--enter-forward {
+  animation: v3-pilot-enter-forward 240ms cubic-bezier(.2, .8, .2, 1) both;
+}
+
+.v3-pilot-content--enter-back {
+  animation: v3-pilot-enter-back 240ms cubic-bezier(.2, .8, .2, 1) both;
+}
+
+@keyframes v3-pilot-enter-forward {
+  from { opacity: 0; transform: translateX(24rpx); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes v3-pilot-enter-back {
+  from { opacity: 0; transform: translateX(-24rpx); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.v3-pilot-meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24rpx;
+}
+
+.v3-pilot-eyebrow,
+.v3-pilot-task-count,
+.v3-pilot-section {
+  color: var(--dl-grey-500);
+  font-size: 23rpx;
+  line-height: 34rpx;
+}
+
+.v3-pilot-task-count {
+  flex: 0 0 auto;
+  text-align: right;
+}
+
+.v3-pilot-section {
+  margin-top: 28rpx;
+  color: var(--dl-black);
+  font-weight: 600;
+}
+
+.v3-pilot-title {
+  max-width: 650rpx;
+  margin-top: 12rpx;
+  font-size: 43rpx;
+  font-weight: 700;
+  line-height: 1.38;
+  overflow-wrap: anywhere;
+}
+
+.v3-pilot-context {
+  max-width: 650rpx;
+  margin-top: 18rpx;
+  color: var(--dl-grey-500);
+  font-size: 26rpx;
+  line-height: 42rpx;
+}
+
+.v3-response-list {
+  margin-top: 52rpx;
+}
+
+.v3-response {
+  padding-top: 28rpx;
+  border-top: 2rpx solid var(--dl-grey-200);
+}
+
+.v3-response + .v3-response {
+  margin-top: 52rpx;
+}
+
+.v3-response__prompt {
+  margin-bottom: 22rpx;
+  font-size: 29rpx;
+  font-weight: 600;
+  line-height: 1.48;
+  overflow-wrap: anywhere;
+}
+
+.v3-options {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.v3-option {
+  display: flex;
+  width: 100%;
+  min-height: 88rpx;
+  align-items: center;
+  gap: 20rpx;
+  margin: 0;
+  padding: 18rpx 22rpx;
+  border: 2rpx solid var(--dl-grey-200);
+  border-radius: 6rpx;
+  background: var(--dl-white);
+  color: var(--dl-black);
+  font-size: 27rpx;
+  line-height: 40rpx;
+  text-align: left;
+  transition: border-color 160ms ease-out, background-color 160ms ease-out, color 160ms ease-out, transform 160ms ease-out;
+}
+
+.v3-option + .v3-option {
+  margin-top: 14rpx;
+}
+
+.v3-option:active {
+  transform: translateY(2rpx);
+}
+
+.v3-option--selected {
+  border-color: var(--dl-black);
+  background: var(--dl-black);
+  color: var(--dl-white);
+}
+
+.v3-option--missing {
+  border-style: dashed;
+}
+
+.v3-option__marker {
+  width: 34rpx;
+  flex: 0 0 34rpx;
+  color: var(--dl-grey-500);
+  font-size: 28rpx;
+  line-height: 1;
+  text-align: center;
+}
+
+.v3-option--selected .v3-option__marker {
+  color: var(--dl-white);
+}
+
+.v3-option__label {
+  min-width: 0;
+  flex: 1;
+  overflow-wrap: anywhere;
+}
+
+.v3-field {
+  width: 100%;
+}
+
+.v3-input,
+.v3-textarea {
+  width: 100%;
+  border: 0;
+  border-bottom: 2rpx solid var(--dl-black);
+  border-radius: 0;
+  background: var(--dl-grey-50);
+  color: var(--dl-black);
+  font-size: 30rpx;
+  line-height: 44rpx;
+}
+
+.v3-input {
+  min-height: 96rpx;
+  padding: 24rpx 20rpx;
+}
+
+.v3-textarea {
+  min-height: 220rpx;
+  padding: 22rpx 20rpx;
+}
+
+.v3-field__hint {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx 18rpx;
+  margin-top: 14rpx;
+  color: var(--dl-grey-500);
+  font-size: 23rpx;
+  line-height: 34rpx;
+}
+
+.v3-response__missing {
+  margin-top: 14rpx;
+  color: var(--dl-grey-500);
+  font-size: 23rpx;
+  line-height: 34rpx;
+}
+
+.v3-feedback {
+  margin-top: 28rpx;
+  padding: 22rpx 0;
+  border-top: 2rpx solid var(--dl-grey-200);
+  font-size: 25rpx;
+  line-height: 38rpx;
+}
+
+.v3-feedback--error {
+  color: var(--dl-danger);
+}
+
+.v3-feedback--notice {
+  color: var(--dl-grey-500);
+}
+
+.v3-action-bar {
+  padding-top: 18rpx;
+}
+
+.v3-action-row {
+  display: grid;
+  grid-template-columns: minmax(190rpx, 0.8fr) minmax(0, 1.5fr);
+  align-items: center;
+  gap: 16rpx;
+}
+
+.v3-secondary-action {
+  min-height: 80rpx;
+  margin: 0;
+  padding: 16rpx 0;
+  border: 0;
+  background: transparent;
+  color: var(--dl-grey-500);
+  font-size: 24rpx;
+  line-height: 36rpx;
+  text-align: left;
+}
+
+.v3-secondary-action[disabled] {
+  color: #a0a0a0;
+}
+
+.v3-continue-action {
+  min-height: 88rpx;
+  padding: 20rpx 18rpx;
+  font-size: 27rpx;
+}
+
+.v3-complete-page {
+  min-height: 100vh;
+  padding-bottom: calc(56rpx + env(safe-area-inset-bottom));
+}
+
+.v3-complete-header {
+  padding-bottom: 36rpx;
+}
+
+.v3-complete-rule {
+  height: 2rpx;
+  margin: 0 40rpx;
+  background: var(--dl-black);
+}
+
+.v3-complete-note {
+  margin: 34rpx 40rpx 56rpx;
+  color: var(--dl-grey-500);
+  font-size: 27rpx;
+  line-height: 46rpx;
+}
+
+.action-bar--static {
+  position: static;
+  border-top: 0;
+  background: transparent;
+}
+
+@media (max-width: 360px) {
+  .v3-pilot-content {
+    padding: 46rpx 32rpx 60rpx;
+  }
+
+  .v3-pilot-top .question-top__row {
+    grid-template-columns: 124rpx minmax(0, 1fr) 96rpx;
+  }
+
+  .v3-pilot-title {
+    font-size: 36rpx;
+    line-height: 1.42;
+  }
+
+  .v3-option {
+    min-height: 82rpx;
+    padding: 16rpx 18rpx;
+    font-size: 25rpx;
+    line-height: 36rpx;
+  }
+
+  .v3-action-bar {
+    padding-right: calc(32rpx + env(safe-area-inset-right));
+    padding-left: calc(32rpx + env(safe-area-inset-left));
+  }
+
+  .v3-action-row {
+    grid-template-columns: minmax(154rpx, 0.85fr) minmax(0, 1.4fr);
+    gap: 10rpx;
+  }
+
+  .v3-secondary-action {
+    font-size: 22rpx;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v3-pilot-content--enter-forward,
+  .v3-pilot-content--enter-back {
+    animation: none;
+  }
+
+  .v3-option {
+    transition: none;
+  }
+}

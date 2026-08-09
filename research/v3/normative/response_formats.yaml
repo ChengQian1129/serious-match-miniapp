@@ -1,0 +1,210 @@
+schemaVersion: relationship-feature-model-v3.response-format-library.v0.1
+generatedAt: '2026-08-09'
+formats:
+  AGR7:
+    type: single_select
+    ordered: true
+    options:
+    - code: 1
+      label: 完全不符合
+    - code: 2
+      label: 比较不符合
+    - code: 3
+      label: 有一点不符合
+    - code: 4
+      label: 说不准 / 一半一半
+    - code: 5
+      label: 有一点符合
+    - code: 6
+      label: 比较符合
+    - code: 7
+      label: 非常符合
+    scoringNote: Raw ordinal response only until construct-specific pilot scoring is validated.
+  MOTIVE7:
+    type: single_select
+    ordered: true
+    options:
+    - code: 1
+      label: 完全不是我的原因
+    - code: 2
+      label: 很少是
+    - code: 3
+      label: 有一点
+    - code: 4
+      label: 一半左右
+    - code: 5
+      label: 比较是
+    - code: 6
+      label: 很大程度是
+    - code: 7
+      label: 非常主要的原因
+  FREQ5_NA:
+    type: single_select
+    ordered: true
+    options:
+    - code: 1
+      label: 几乎从不
+    - code: 2
+      label: 较少
+    - code: 3
+      label: 有时
+    - code: 4
+      label: 多数时候
+    - code: 5
+      label: 几乎总是
+    - code: null
+      label: 没有类似情况
+      missingCode: NOT_APPLICABLE
+  LIKELY5:
+    type: single_select
+    ordered: true
+    options:
+    - code: 1
+      label: 非常不像我会做的
+    - code: 2
+      label: 比较不像
+    - code: 3
+      label: 说不准 / 看情况
+    - code: 4
+      label: 比较像
+    - code: 5
+      label: 非常像我会做的
+  COMFORT7_0_6:
+    type: single_select
+    ordered: true
+    options:
+    - code: 0
+      label: 非常不舒服
+    - code: 1
+      label: 很不舒服
+    - code: 2
+      label: 有些不舒服
+    - code: 3
+      label: 中间 / 说不准
+    - code: 4
+      label: 有些舒服
+    - code: 5
+      label: 比较舒服
+    - code: 6
+      label: 非常舒服
+  INTENSITY7_0_6:
+    type: single_select
+    ordered: true
+    options:
+    - code: 0
+      label: 几乎没有
+    - code: 1
+      label: 非常低
+    - code: 2
+      label: 比较低
+    - code: 3
+      label: 中等
+    - code: 4
+      label: 比较高
+    - code: 5
+      label: 很高
+    - code: 6
+      label: 非常高
+  ENERGY5:
+    type: single_select
+    ordered: true
+    options:
+    - code: 1
+      label: 几乎没有
+    - code: 2
+      label: 很少
+    - code: 3
+      label: 一般
+    - code: 4
+      label: 比较有
+    - code: 5
+      label: 非常充足
+  ACCEPT5:
+    type: single_select
+    ordered: true
+    options:
+    - code: 1
+      label: 完全不能接受
+    - code: 2
+      label: 比较难接受
+    - code: 3
+      label: 取决于具体情况
+    - code: 4
+      label: 大体可以接受
+    - code: 5
+      label: 完全可以接受
+  HARDNESS5:
+    type: single_select
+    ordered: true
+    options:
+    - code: 1
+      label: 可以认真协商
+    - code: 2
+      label: 明显影响，但不一定因此停止
+    - code: 3
+      label: 目前不确定
+    - code: 4
+      label: 基本不能让步
+    - code: 5
+      label: 明确硬条件 / 明确冲突
+  POSITION_CONFIDENCE5:
+    type: single_select
+    ordered: true
+    options:
+    - code: 1
+      label: 几乎没想过，只是现在的直觉
+    - code: 2
+      label: 有一点想法，但真实关系里可能会变
+    - code: 3
+      label: 有倾向，但还不算很确定
+    - code: 4
+      label: 比较确定
+    - code: 5
+      label: 很确定，或过去经历也支持
+  LEVEL5_IDEAL:
+    type: single_select
+    ordered: true
+    options:
+    - code: 1
+      label: Level 1
+    - code: 2
+      label: Level 2
+    - code: 3
+      label: Level 3
+    - code: 4
+      label: Level 4
+    - code: 5
+      label: Level 5
+  LEVEL5_ACCEPTABLE:
+    type: multi_select
+    options:
+    - code: 1
+      label: Level 1
+    - code: 2
+      label: Level 2
+    - code: 3
+      label: Level 3
+    - code: 4
+      label: Level 4
+    - code: 5
+      label: Level 5
+    validation:
+      minSelections: 1
+    note: Do not force contiguity in raw data. Flag non-contiguous choices for interview.
+  NUMBER_CM:
+    type: number
+    unit: cm
+    validation:
+      min: 100
+      max: 230
+    allowBlank: true
+  FREE_TEXT_SHORT:
+    type: free_text
+    maxChars: 300
+rules:
+- Raw response codes are never interpreted across constructs without construct-specific scoring.
+- NOT_APPLICABLE and NOT_ASSESSED are not numerical zero.
+- Inline option sets must retain option codes across wording revisions unless semantic meaning changes; substantive change
+  requires a new item version.
+- Multi-select acceptable ranges retain raw non-contiguous selections; do not silently coerce to a continuous interval.
+- Hypothetical and real-history responses must carry different contextBasis metadata.

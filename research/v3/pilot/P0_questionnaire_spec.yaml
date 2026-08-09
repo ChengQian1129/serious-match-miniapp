@@ -1,0 +1,1914 @@
+schemaVersion: relationship-feature-model-v3.p0-questionnaire-spec.v0.1
+generatedAt: '2026-08-09'
+status: READY_FOR_COGNITIVE_INTERVIEW_BUILD_NOT_PRODUCTION
+purpose: Cognitive interview item/response-process testing before P1.
+administration:
+  design: 3 iterative waves
+  recommendedPerWave: 8–12 participants
+  note: Waves are iterative research waves, not three mandatory sections for one participant.
+contextCapture:
+  required:
+  - relationshipHistoryCategory
+  - currentDatingStatus
+  - responseContextForRelationshipItems
+  allowedContextBasis:
+  - CURRENT_DATING
+  - RECENT_MEANINGFUL_RELATIONSHIP
+  - PAST_RELATIONSHIP
+  - CLOSE_NONROMANTIC_RELATIONSHIP
+  - HYPOTHETICAL
+waves:
+  wave1:
+  - taskId: RR01
+    constructId: relationship_readiness
+    wave: wave1
+    taskType: statement
+    prompt: 如果最近遇到一个彼此都觉得合适的人，我会觉得“现在是可以认真开始一段关系的时候”。
+    response:
+      formatRef: AGR7
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    probeFocus:
+    - readiness_vs_desire
+    - readiness_vs_capacity
+    - meaning_of_serious_or_stable_relationship
+    scoringStatus: PILOT_ONLY
+  - taskId: RR04
+    constructId: relationship_readiness
+    wave: wave1
+    taskType: statement
+    prompt: 即使近期遇到很合适的人，我目前仍更希望把认真谈恋爱这件事放到以后。
+    response:
+      formatRef: AGR7
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    probeFocus:
+    - readiness_vs_desire
+    - readiness_vs_capacity
+    - meaning_of_serious_or_stable_relationship
+    scoringStatus: PILOT_ONLY
+  - taskId: RR08
+    constructId: relationship_readiness
+    wave: wave1
+    taskType: statement
+    prompt: 我现在能够接受一段新的亲密关系真实地改变一部分自己的生活，而不只是停留在偶尔约会或聊天。
+    response:
+      formatRef: AGR7
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    probeFocus:
+    - readiness_vs_desire
+    - readiness_vs_capacity
+    - meaning_of_serious_or_stable_relationship
+    scoringStatus: PILOT_ONLY
+  - taskId: IM-IN04
+    constructId: initiation_motivation
+    wave: wave1
+    taskType: statement
+    prompt: 即使没有任何现实上的“应该”，我仍然会觉得认真喜欢一个人、一起建立关系是件有吸引力的事。
+    response:
+      formatRef: MOTIVE7
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    probeFocus:
+    - motivation_source
+    - intrinsic_vs_identified_or_internal_vs_external
+    scoringStatus: PILOT_ONLY
+  - taskId: IM-ID03
+    constructId: initiation_motivation
+    wave: wave1
+    taskType: statement
+    prompt: 对我来说，拥有一段认真关系并不只是“感觉不错”，它本身也是我重视的人生目标。
+    response:
+      formatRef: MOTIVE7
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    probeFocus:
+    - motivation_source
+    - intrinsic_vs_identified_or_internal_vs_external
+    scoringStatus: PILOT_ONLY
+  - taskId: IM-NI01
+    constructId: initiation_motivation
+    wave: wave1
+    taskType: statement
+    prompt: 如果一直没有进入关系，我有时会担心这是不是说明自己哪里“不够好”。
+    response:
+      formatRef: MOTIVE7
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    probeFocus:
+    - motivation_source
+    - intrinsic_vs_identified_or_internal_vs_external
+    scoringStatus: PILOT_ONLY
+  - taskId: IM-EX01
+    constructId: initiation_motivation
+    wave: wave1
+    taskType: statement
+    prompt: 家人希望我尽快进入稳定关系，这确实会推动我去认识和考虑对象。
+    response:
+      formatRef: MOTIVE7
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    probeFocus:
+    - motivation_source
+    - intrinsic_vs_identified_or_internal_vs_external
+    scoringStatus: PILOT_ONLY
+  - taskId: IM-AM03
+    constructId: initiation_motivation
+    wave: wave1
+    taskType: statement
+    prompt: 对我来说，“想找对象”这件事目前有一点像一个模糊念头，而不是很明确的个人目标。
+    response:
+      formatRef: MOTIVE7
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    probeFocus:
+    - motivation_source
+    - intrinsic_vs_identified_or_internal_vs_external
+    scoringStatus: PILOT_ONLY
+  - taskId: CAP01
+    constructId: available_capacity
+    wave: wave1
+    taskType: task
+    prompt: 接下来一个月，如果你真的开始稳定了解一个人，一周现实中大概有多少个 **相对稳定、可以提前安排的时间段** 用于见面？
+    probeFocus:
+    - actual_schedulable_time_vs_theoretical_free_time
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 0 个
+        - code: '2'
+          label: 1 个
+        - code: '3'
+          label: 2 个
+        - code: '4'
+          label: 3 个
+        - code: '5'
+          label: 4 个及以上
+        - code: '6'
+          label: 很难预测
+  - taskId: CAP06
+    constructId: available_capacity
+    wave: wave1
+    taskType: statement
+    prompt: 完成每天必须处理的事情以后，你通常还剩多少精力去认真了解一个新的人？
+    response:
+      formatRef: ENERGY5
+    responseContext: CURRENT_LAST_2_TO_4_WEEKS
+    probeFocus:
+    - current_state_not_personality
+    scoringStatus: PILOT_ONLY
+  - taskId: FT07
+    constructId: relational_follow_through
+    wave: wave1
+    taskType: statement
+    prompt: 为了不让别人失望，你有时会先答应下来，之后才发现自己其实很难做到。
+    response:
+      formatRef: FREQ5_NA
+    responseContext: PAST_6_MONTHS_OR_CLOSE_RELATIONSHIP
+    probeFocus:
+    - overpromise_reason
+    - people_pleasing_vs_planning_error
+    scoringStatus: PILOT_ONLY
+  - taskId: FT-S01
+    constructId: relational_follow_through
+    wave: wave1
+    taskType: task
+    prompt: 你和正在认真了解的人约好今晚电话聊半小时。下午临时收到工作任务，基本确定今晚无法按时结束。你更接近哪种做法？
+    probeFocus:
+    - expectation_update
+    - socially_desirable_answer_risk
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 先不说，等到约定时间看能不能忙完
+        - code: '2'
+          label: 提前告诉对方今晚可能有变化，并主动讨论是否改时间
+        - code: '3'
+          label: 到时候如果没空再简单说一句
+        - code: '4'
+          label: 忙完再解释，毕竟工作突发很正常
+        - code: '5'
+          label: 视关系阶段而定
+  - taskId: UA01
+    constructId: uncertainty_activation
+    wave: wave1
+    taskType: statement
+    prompt: 当一个正在认真了解的人，联系语气或频率和之前有明显变化时，我通常会比较快注意到。
+    response:
+      formatRef: AGR7
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    probeFocus:
+    - vigilance_vs_threat_appraisal
+    - person_tendency_vs_actual_relationship_ambiguity
+    scoringStatus: PILOT_ONLY
+  - taskId: UA04
+    constructId: uncertainty_activation
+    wave: wave1
+    taskType: statement
+    prompt: 比起一个明确但不理想的答案，关系里长时间没有答案的状态有时更让我难受。
+    response:
+      formatRef: AGR7
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    probeFocus:
+    - vigilance_vs_threat_appraisal
+    - person_tendency_vs_actual_relationship_ambiguity
+    scoringStatus: PILOT_ONLY
+  - taskId: UA10
+    constructId: uncertainty_activation
+    wave: wave1
+    taskType: statement
+    prompt: 关系里的模糊变化发生后，我通常可以先保留几种解释，不会很快认定它意味着对方在疏远我。
+    response:
+      formatRef: AGR7
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    probeFocus:
+    - vigilance_vs_threat_appraisal
+    - person_tendency_vs_actual_relationship_ambiguity
+    scoringStatus: PILOT_ONLY
+  - taskId: UA-S01
+    constructId: uncertainty_activation
+    wave: wave1
+    taskType: compound
+    prompt: 你和一个人已经持续聊了几周。之前双方基本每天都会自然联系。最近两天，对方回复明显变慢、内容也短了一些，但没有说发生了什么。
+    probeFocus:
+    - scenario_baseline
+    - activation_vs_interpretation
+    scoringStatus: PILOT_ONLY
+    children:
+    - itemId: UA-S01.a
+      field: concern
+      prompt: 这件事本身会让你多在意？
+      response:
+        formatRef: INTENSITY7_0_6
+    - itemId: UA-S01.b
+      field: attentionalCapture
+      prompt: 在没有更多信息之前，这件事会多容易一直占着你的注意力？
+      response:
+        formatRef: INTENSITY7_0_6
+    - itemId: UA-S01.c
+      field: initialInterpretation
+      prompt: 在目前信息下，你更接近哪种判断？
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 更可能只是忙 / 状态变化
+          - code: '2'
+            label: 两种可能都差不多
+          - code: '3'
+            label: 更可能是兴趣在下降
+          - code: '4'
+            label: 现在信息太少，我不会判断
+  - taskId: UR-DC01
+    constructId: uncertainty_regulation
+    wave: wave1
+    taskType: statement
+    prompt: 感觉对方态度发生变化时，我更愿意找一个合适的时机直接问，而不是主要靠自己猜。
+    response:
+      formatRef: FREQ5_NA
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    probeFocus:
+    - strategy_not_moral_grade
+    - strategy_sequence
+    scoringStatus: PILOT_ONLY
+  - taskId: UR-RS02
+    constructId: uncertainty_regulation
+    wave: wave1
+    taskType: statement
+    prompt: 即使对方已经明确说过关系没有问题，我有时仍会很快再次需要确认。
+    response:
+      formatRef: FREQ5_NA
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    probeFocus:
+    - strategy_not_moral_grade
+    - strategy_sequence
+    scoringStatus: PILOT_ONLY
+  - taskId: UR-TW03
+    constructId: uncertainty_regulation
+    wave: wave1
+    taskType: statement
+    prompt: 我能够同时保留“可能真的有问题”和“也可能只是暂时变化”两种可能。
+    response:
+      formatRef: FREQ5_NA
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    probeFocus:
+    - strategy_not_moral_grade
+    - strategy_sequence
+    scoringStatus: PILOT_ONLY
+  - taskId: UR-WD01
+    constructId: uncertainty_regulation
+    wave: wave1
+    taskType: statement
+    prompt: 当我觉得对方可能没那么在意我时，我有时会先把自己的投入降下来，避免继续陷进去。
+    response:
+      formatRef: FREQ5_NA
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    probeFocus:
+    - strategy_not_moral_grade
+    - strategy_sequence
+    scoringStatus: PILOT_ONLY
+  wave2:
+  - taskId: IDC03
+    constructId: intimacy_dependence_comfort
+    wave: wave2
+    taskType: statement
+    prompt: 即使一段关系很好，亲密程度持续增加有时也会让我开始觉得有些被压住。
+    response:
+      formatRef: AGR7
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    probeFocus:
+    - intimacy_vs_space
+    - vulnerability_vs_reliance
+    - care_discomfort_rationale
+    scoringStatus: PILOT_ONLY
+  - taskId: IDC06
+    constructId: intimacy_dependence_comfort
+    wave: wave2
+    taskType: statement
+    prompt: 即使关系很亲近，我也会倾向于把真正脆弱的部分留给自己。
+    response:
+      formatRef: AGR7
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    probeFocus:
+    - intimacy_vs_space
+    - vulnerability_vs_reliance
+    - care_discomfort_rationale
+    scoringStatus: PILOT_ONLY
+  - taskId: IDC13
+    constructId: intimacy_dependence_comfort
+    wave: wave2
+    taskType: statement
+    prompt: 如果我发现自己开始“真的需要这个人”，这种依赖感本身可能让我有些想后退。
+    response:
+      formatRef: AGR7
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    probeFocus:
+    - intimacy_vs_space
+    - vulnerability_vs_reliance
+    - care_discomfort_rationale
+    scoringStatus: PILOT_ONLY
+  - taskId: IDC16
+    constructId: intimacy_dependence_comfort
+    wave: wave2
+    taskType: statement
+    prompt: 别人为我做很多照顾性的事情时，即使我很需要，也可能让我有明显的负担感。
+    response:
+      formatRef: AGR7
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    probeFocus:
+    - intimacy_vs_space
+    - vulnerability_vs_reliance
+    - care_discomfort_rationale
+    scoringStatus: PILOT_ONLY
+  - taskId: IDC-S01
+    constructId: intimacy_dependence_comfort
+    wave: wave2
+    taskType: compound
+    prompt: 你遇到一个影响很大的工作/学习问题，自己已经处理了几天仍然没有解决。稳定交往的伴侣知道后说：“你不用一个人扛，我们一起想办法。”
+    probeFocus:
+    - reliance_comfort_vs_problem_solving_preference
+    scoringStatus: PILOT_ONLY
+    children:
+    - itemId: IDC-S01.a
+      field: comfort
+      prompt: 这种参与对你来说有多舒服？
+      response:
+        formatRef: COMFORT7_0_6
+    - itemId: IDC-S01.b
+      field: preferredInvolvement
+      prompt: 你更接近哪种状态？
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 很愿意让对方真正参与
+          - code: '2'
+            label: 可以听建议，但核心还是想自己处理
+          - code: '3'
+            label: 希望对方知道情况，但不要参与解决
+          - code: '4'
+            label: 会本能想把事情收回自己手里
+          - code: '5'
+            label: 说不准
+  - taskId: PS01
+    constructId: personal_space_need
+    wave: wave2
+    taskType: task
+    prompt: 假设两个人关系稳定、住得也不远，而且这一周都没有特殊事情。除工作/学习外，你理想中希望一周有多少个晚上主要由自己安排，不默认和伴侣一起？
+    probeFocus:
+    - space_need_vs_introversion
+    - concrete_time_anchor
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 0 个晚上
+        - code: '2'
+          label: 1 个晚上
+        - code: '3'
+          label: 2 个晚上
+        - code: '4'
+          label: 3 个晚上
+        - code: '5'
+          label: 4 个及以上
+        - code: '6'
+          label: 不适合按晚上计算
+  - taskId: PS03
+    constructId: personal_space_need
+    wave: wave2
+    taskType: task
+    prompt: 即使同居，你理想中是否希望每天仍有一段“不默认互动、彼此各做各的”的时间？
+    probeFocus:
+    - personal_time_not_attachment_avoidance
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 基本不需要
+        - code: '2'
+          label: 偶尔需要
+        - code: '3'
+          label: 每天有一点比较舒服
+        - code: '4'
+          label: 每天需要比较明确的一段
+        - code: '5'
+          label: 无法固定，看状态
+  - taskId: PS-S01
+    constructId: personal_space_need
+    wave: wave2
+    taskType: task
+    prompt: 你和伴侣已经连续三天几乎一直在一起，相处也很好。第四天两个人都没有安排。
+    probeFocus:
+    - cumulative_togetherness
+    - space_need_vs_closeness_discomfort
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 继续安排整天一起
+        - code: '2'
+          label: 一起做半天，剩下时间各自安排
+        - code: '3'
+          label: 没有特别计划，各做各的也很好
+        - code: '4'
+          label: 会主动想安排一段完全自己的时间
+        - code: '5'
+          label: 取决于最近一周整体相处量
+  - taskId: SN-S01
+    constructId: support_need
+    wave: wave2
+    taskType: compound
+    prompt: 你花了很长时间准备的一件工作/学习任务最后失败了，而且短期内没有办法马上补救。回家后你明显很沮丧。
+    probeFocus:
+    - context_specific_support_need
+    - first_response_order
+    scoringStatus: PILOT_ONLY
+    children:
+    - itemId: SN-S01.a
+      field: mostHelpful
+      prompt: 最希望伴侣先做哪两项？
+      response:
+        inlineFormat:
+          type: multi_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 让我把事情完整说完，先听
+          - code: '2'
+            label: 告诉我这种失落很正常，他理解我为什么难受
+          - code: '3'
+            label: 明确告诉我，他仍然相信我、不会因为这件事看低我
+          - code: '4'
+            label: 帮我一起分析接下来还能做什么
+          - code: '5'
+            label: 直接帮我处理一点现实上的后续
+          - code: '6'
+            label: 陪着我做点别的，不一直讨论
+          - code: '7'
+            label: 先让我自己待一会儿，需要时再来
+          validation:
+            maxSelections: 2
+            minSelections: 1
+    - itemId: SN-S01.b
+      field: leastHelpful
+      prompt: 最不希望对方一上来做什么？
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 先听我把事情说完
+          - code: '2'
+            label: 先表达理解和认可
+          - code: '3'
+            label: 明确给我安慰和信心
+          - code: '4'
+            label: 立刻分析解决方案
+          - code: '5'
+            label: 直接介入现实后续
+          - code: '6'
+            label: 转移注意力、陪我做别的
+          - code: '7'
+            label: 先给我空间
+  - taskId: SN05
+    constructId: support_need
+    wave: wave2
+    taskType: statement
+    prompt: 当我情绪很乱时，对方明确告诉我“我还在、我们可以一起处理”，通常会让我舒服一些。
+    response:
+      formatRef: AGR7
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    probeFocus:
+    - reassurance_need_vs_repetitive_reassurance_seeking
+    scoringStatus: PILOT_ONLY
+  - taskId: SS03
+    constructId: support_signaling
+    wave: wave2
+    taskType: statement
+    prompt: 我比较容易告诉对方自己难受，但不一定会说清楚希望他怎么回应。
+    response:
+      formatRef: FREQ5_NA
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    probeFocus:
+    - distress_disclosure_vs_request_specificity
+    - concealment_reason
+    scoringStatus: PILOT_ONLY
+  - taskId: SS05
+    constructId: support_signaling
+    wave: wave2
+    taskType: statement
+    prompt: 即使很希望得到支持，我也可能先说“没事”，直到自己真的撑不住。
+    response:
+      formatRef: FREQ5_NA
+    responseContext: REAL_HISTORY_IF_AVAILABLE_ELSE_HYPOTHETICAL_PROBE
+    probeFocus:
+    - distress_disclosure_vs_request_specificity
+    - concealment_reason
+    scoringStatus: PILOT_ONLY
+  - taskId: SS-S02
+    constructId: support_signaling
+    wave: wave2
+    taskType: task
+    prompt: 你已经说自己很难受，对方开始不断给建议，但你现在只想把事情说完。
+    probeFocus:
+    - request_specificity
+    - indirect_signaling
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 直接说“先听我说完，暂时不用帮我想方案”
+        - code: '2'
+          label: 继续听建议，虽然其实更烦
+        - code: '3'
+          label: 变得更沉默，希望他自己发现
+        - code: '4'
+          label: 结束话题
+        - code: '5'
+          label: 取决于当时情况
+  - taskId: RC-S01A
+    constructId: responsiveness_capability
+    wave: wave2
+    taskType: task
+    prompt: 伴侣因为工作问题很生气，对你说：  “我现在不想分析怎么办，我就想先把今天这件事说完。”
+    probeFocus:
+    - response_calibration
+    - social_desirability_recognition
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 让他继续说，跟着确认自己听懂了什么
+        - code: '2'
+          label: 开始帮他分析同事为什么这样做
+        - code: '3'
+          label: 告诉他别想太多，事情没那么严重
+        - code: '4'
+          label: 转移注意力，带他去做点开心的事
+        - code: '5'
+          label: 问他是否希望自己只是听，还是也需要别的
+        - code: '6'
+          label: 取决于具体情况
+  - taskId: RC-S01B
+    constructId: responsiveness_capability
+    wave: wave2
+    taskType: task
+    prompt: “我已经想乱了，你能不能认真帮我分析一下明天应该怎么处理？”
+    probeFocus:
+    - paired_scenario_calibration
+    - does_response_change_when_need_changes
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 先让他继续表达，不急着给具体方案
+        - code: '2'
+          label: 认真和他一起分析明天可以怎么处理
+        - code: '3'
+          label: 告诉他不用想太多，明天自然会解决
+        - code: '4'
+          label: 先带他做别的，等情绪好一点再说
+        - code: '5'
+          label: 再确认他最希望自己帮他分析哪一部分
+        - code: '6'
+          label: 取决于具体情况
+  - taskId: RC-S07
+    constructId: responsiveness_capability
+    wave: wave2
+    taskType: task
+    prompt: 你尝试安慰后，对方说：“我知道你是好意，但你这样说我现在反而更烦。”
+    probeFocus:
+    - feedback_calibration
+    - knowledge_vs_execution
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 解释自己明明是为他好
+        - code: '2'
+          label: 停下来问现在什么方式更有帮助
+        - code: '3'
+          label: 觉得被否定，停止交流
+        - code: '4'
+          label: 换一种更强的安慰方式
+        - code: '5'
+          label: 先停一下，稍后再问
+        - code: '6'
+          label: 取决于具体情况
+  - taskId: CA05
+    constructId: conflict_activation
+    wave: wave2
+    taskType: statement
+    prompt: 冲突很激烈时，我会越来越难同时理解对方的意思和整理自己的想法。
+    response:
+      formatRef: AGR7
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    probeFocus:
+    - activation_vs_general_conflict_skill
+    scoringStatus: PILOT_ONLY
+  - taskId: CA09
+    constructId: conflict_activation
+    wave: wave2
+    taskType: statement
+    prompt: 争执持续到一定程度后，就算对方继续解释，我可能已经很难真正吸收他说的内容。
+    response:
+      formatRef: AGR7
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    probeFocus:
+    - activation_vs_general_conflict_skill
+    scoringStatus: PILOT_ONLY
+  - taskId: CP01
+    constructId: conflict_pacing_need
+    wave: wave2
+    taskType: task
+    prompt: 当你已经明显感觉“继续说下去只会越来越乱”时，你最希望：
+    probeFocus:
+    - pause_need_vs_withdrawal
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 继续说，尽量当场讲清
+        - code: '2'
+          label: 暂停 10–30 分钟
+        - code: '3'
+          label: 暂停 1–3 小时
+        - code: '4'
+          label: 当天晚些时候再谈
+        - code: '5'
+          label: 第二天再谈
+        - code: '6'
+          label: 取决于问题
+  - taskId: CP04
+    constructId: conflict_pacing_need
+    wave: wave2
+    taskType: task
+    prompt: 如果一个重要分歧晚上仍没解决，只要双方明确约好第二天继续，你对“先睡一晚”通常有多舒服？
+    probeFocus:
+    - deferred_resolution_tolerance
+    scoringStatus: PILOT_ONLY
+    response:
+      formatRef: COMFORT7_0_6
+  - taskId: CR01
+    constructId: repair_reengagement
+    wave: wave2
+    taskType: statement
+    prompt: 冲突中如果我需要停一下，我通常能够直接告诉对方“我现在需要暂停”，而不是突然结束互动。
+    response:
+      formatRef: FREQ5_NA
+    responseContext: REAL_CONFLICT_HISTORY_IF_AVAILABLE
+    probeFocus:
+    - pause_signal
+    - return_execution
+    - reconnection_vs_resolution
+    scoringStatus: PILOT_ONLY
+  - taskId: CR06
+    constructId: repair_reengagement
+    wave: wave2
+    taskType: statement
+    prompt: 已经和对方说好“晚点回来谈”的事情，我通常会主动回来，而不是等对方重新追问。
+    response:
+      formatRef: FREQ5_NA
+    responseContext: REAL_CONFLICT_HISTORY_IF_AVAILABLE
+    probeFocus:
+    - pause_signal
+    - return_execution
+    - reconnection_vs_resolution
+    scoringStatus: PILOT_ONLY
+  - taskId: CR12
+    constructId: repair_reengagement
+    wave: wave2
+    taskType: statement
+    prompt: 一个重要问题如果只是因为双方太激动而暂停，我通常不会把“情绪过去了”当作“问题解决了”。
+    response:
+      formatRef: FREQ5_NA
+    responseContext: REAL_CONFLICT_HISTORY_IF_AVAILABLE
+    probeFocus:
+    - pause_signal
+    - return_execution
+    - reconnection_vs_resolution
+    scoringStatus: PILOT_ONLY
+  - taskId: CR-S01
+    constructId: repair_reengagement
+    wave: wave2
+    taskType: task
+    prompt: 争执已经很激烈，你说：  “我现在真的听不进去了，我想停一小时，九点我们再谈。”
+    probeFocus:
+    - return_execution
+    - issue_reengagement
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 主动回来，哪怕先说还需要慢慢谈
+        - code: '2'
+          label: 等对方主动来找自己
+        - code: '3'
+          label: 觉得都冷静了，就没必要再谈
+        - code: '4'
+          label: 找理由继续推迟
+        - code: '5'
+          label: 先恢复普通联系，但不主动提问题
+        - code: '6'
+          label: 取决于具体情况
+  wave3:
+  - taskId: L3-CT02
+    constructId: contact_relationship_clarity
+    wave: wave3
+    taskType: task
+    prompt: 如果对方当天特别忙，你更容易接受哪种情况？
+    probeFocus:
+    - frequency_vs_predictability
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 几乎不联系，只要提前说今天会很忙
+        - code: '2'
+          label: 零散回复几次
+        - code: '3'
+          label: 晚上固定联系一次
+        - code: '4'
+          label: 仍希望和平时差不多
+        - code: '5'
+          label: 取决于具体情况
+  - taskId: L3-CT03
+    constructId: contact_relationship_clarity
+    wave: wave3
+    taskType: task
+    prompt: 在没有提前说明的情况下，稳定交往中的伴侣多久没有任何回应，你会开始觉得“这已经不只是普通的忙”？
+    probeFocus:
+    - absence_boundary_depends_on_baseline
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 几小时
+        - code: '2'
+          label: 半天
+        - code: '3'
+          label: 当天结束前
+        - code: '4'
+          label: 约 24 小时
+        - code: '5'
+          label: 两三天
+        - code: '6'
+          label: 没有固定标准
+        - code: '7'
+          label: 取决于原本的联系模式
+  - taskId: L3-CT06
+    constructId: contact_relationship_clarity
+    wave: wave3
+    taskType: compound
+    prompt: 两个人已经稳定见面两个月，互动也明显亲密，但一直没有讨论是否排他、是否想继续发展。
+    probeFocus:
+    - ambiguity_window_not_activation
+    scoringStatus: PILOT_ONLY
+    children:
+    - itemId: L3-CT06.a
+      field: stance
+      prompt: 你更接近哪种想法？
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 完全可以，没必要急着定义
+          - code: '2'
+            label: 可以继续一段时间再看
+          - code: '3'
+            label: 会希望近期谈清楚双方方向
+          - code: '4'
+            label: 两个月仍完全不谈会让我难以接受
+          - code: '5'
+            label: 取决于双方互动强度
+    - itemId: L3-CT06.b
+      field: additionalAmbiguityWindow
+      prompt: 如果其他方面很好，从现在起你最长还大概能接受这种状态持续多久？
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: true
+          options:
+          - code: '1'
+            label: 基本不想继续等
+          - code: '2'
+            label: 再等几周
+          - code: '3'
+            label: 再等 1–2 个月
+          - code: '4'
+            label: 再等 3 个月以上
+          - code: '5'
+            label: 没有明确上限
+          - code: '6'
+            label: 取决于互动变化
+  - taskId: L3-ST02
+    constructId: shared_time_independence
+    wave: wave3
+    taskType: task
+    prompt: 如果伴侣明确说“今晚我想自己做点事情，不安排两个人活动”，而最近关系没有冲突，你最舒服的理解是：
+    probeFocus:
+    - partner_space_acceptance_vs_own_space_need
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 很正常
+        - code: '2'
+          label: 偶尔可以，频繁会不舒服
+        - code: '3'
+          label: 希望提前协调
+        - code: '4'
+          label: 如果经常这样会觉得关系投入不足
+        - code: '5'
+          label: 取决于具体情况
+  - taskId: L3-ST06
+    constructId: shared_time_independence
+    wave: wave3
+    taskType: compound
+    prompt: 下面三类事情，你觉得长期关系中默认应该由谁拥有最终决定权？
+    probeFocus:
+    - autonomy_noncoercion_not_alone_time
+    - domain_specific_governance
+    scoringStatus: PILOT_ONLY
+    children:
+    - itemId: L3-ST06.hobby
+      field: hobby
+      prompt: 一项主要影响本人、不会明显改变共同生活的个人兴趣
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: true
+          options:
+          - code: '1'
+            label: 本人决定即可
+          - code: '2'
+            label: 本人决定，但应让伴侣知情
+          - code: '3'
+            label: 认真讨论，但最终本人决定
+          - code: '4'
+            label: 最好双方达成一致
+          - code: '5'
+            label: 必须双方同意
+          - code: '6'
+            label: 不适用
+    - itemId: L3-ST06.appearance
+      field: appearance
+      prompt: 日常外貌或穿着选择
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: true
+          options:
+          - code: '1'
+            label: 本人决定即可
+          - code: '2'
+            label: 本人决定，但应让伴侣知情
+          - code: '3'
+            label: 认真讨论，但最终本人决定
+          - code: '4'
+            label: 最好双方达成一致
+          - code: '5'
+            label: 必须双方同意
+          - code: '6'
+            label: 不适用
+    - itemId: L3-ST06.career
+      field: career
+      prompt: 一份收入相近、不需要搬家、但本人更喜欢的工作选择
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: true
+          options:
+          - code: '1'
+            label: 本人决定即可
+          - code: '2'
+            label: 本人决定，但应让伴侣知情
+          - code: '3'
+            label: 认真讨论，但最终本人决定
+          - code: '4'
+            label: 最好双方达成一致
+          - code: '5'
+            label: 必须双方同意
+          - code: '6'
+            label: 不适用
+  - taskId: L3-ST07
+    constructId: shared_time_independence
+    wave: wave3
+    taskType: task
+    prompt: 对于你认为应由本人最终决定的个人事项，这条规则对自己和伴侣是否应该同样适用？
+    probeFocus:
+    - reciprocity_without_moral_judgment
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 完全对称
+        - code: '2'
+          label: 原则对称，但现实责任不同会有例外
+        - code: '3'
+          label: 某些领域不需要对称
+        - code: '4'
+          label: 我还没认真想过
+  - taskId: L3-SB04
+    constructId: social_boundary
+    wave: wave3
+    taskType: task
+    prompt: 伴侣与一个彼此可能产生吸引的人单独见面时，你觉得：
+    probeFocus:
+    - transparency_rule_not_trust_score
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 不需要特意说
+        - code: '2'
+          label: 事后自然提到即可
+        - code: '3'
+          label: 最好提前告诉
+        - code: '4'
+          label: 应该先讨论是否合适
+        - code: '5'
+          label: 取决于具体关系和对象
+  - taskId: L3-SB05
+    constructId: social_boundary
+    wave: wave3
+    taskType: task
+    prompt: 如果同样情况换成你自己与一个彼此可能产生吸引的人单独见面，你认为披露规则应当：
+    probeFocus:
+    - reciprocity
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 和我要求伴侣的规则完全一样
+        - code: '2'
+          label: 原则一样，但具体情境可以不同
+        - code: '3'
+          label: 可以有不同规则
+        - code: '4'
+          label: 我还没想过
+  - taskId: L3-DP03
+    constructId: digital_privacy
+    wave: wave3
+    taskType: task
+    prompt: 假设伴侣知道你的手机密码。未经你询问或同意，他直接打开你的私人聊天记录，你对此：
+    probeFocus:
+    - password_knowledge_vs_inspection_permission
+    scoringStatus: PILOT_ONLY
+    response:
+      formatRef: ACCEPT5
+  - taskId: L3-DP05
+    constructId: digital_privacy
+    wave: wave3
+    taskType: task
+    prompt: 对手机、定位或聊天内容的分享，你更接近哪种原则？
+    probeFocus:
+    - voluntary_sharing_vs_required_access
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 我愿意主动分享，也认为伴侣通常有权要求查看
+        - code: '2'
+          label: 我愿意主动分享，但不认为伴侣因此有权要求查看
+        - code: '3'
+          label: 我通常不愿分享，也不认为伴侣有权要求
+        - code: '4'
+          label: 不同类型信息边界不同
+        - code: '5'
+          label: 我还没有明确想法
+  - taskId: L3-CF01
+    constructId: conflict_process_standard
+    wave: wave3
+    taskType: compound
+    prompt: 如果一方已经明显无法继续有效讨论，你最希望双方默认：
+    probeFocus:
+    - preferred_vs_acceptable
+    - personal_need_vs_shared_rule
+    scoringStatus: PILOT_ONLY
+    children:
+    - itemId: L3-CF01.a
+      field: preferredProcedure
+      prompt: 你的首选规则是？
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 仍尽量当场说完
+          - code: '2'
+            label: 允许暂停，但说明原因
+          - code: '3'
+            label: 允许暂停，并给大概重启时间
+          - code: '4'
+            label: 任何一方都可以直接停止，之后再说
+          - code: '5'
+            label: 取决于问题
+    - itemId: L3-CF01.b
+      field: acceptableProcedures
+      prompt: 哪些方案虽然不是首选，但你长期也可以接受？
+      response:
+        inlineFormat:
+          type: multi_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 仍尽量当场说完
+          - code: '2'
+            label: 允许暂停，但说明原因
+          - code: '3'
+            label: 允许暂停，并给大概重启时间
+          - code: '4'
+            label: 任何一方都可以直接停止，之后再说
+  - taskId: L3-CF03
+    constructId: conflict_process_standard
+    wave: wave3
+    taskType: task
+    prompt: 情绪过去以后，如果现实问题仍没解决，你认为：
+    probeFocus:
+    - reconnection_vs_issue_resolution
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 能恢复正常就够了
+        - code: '2'
+          label: 看问题是否还重要
+        - code: '3'
+          label: 重要问题必须找时间重新处理
+        - code: '4'
+          label: 取决于具体情况
+  - taskId: L3-MG03
+    constructId: money_governance
+    wave: wave3
+    taskType: compound
+    prompt: 假设关系已经进入长期共同生活阶段，你对账户结构更接近哪种想法？
+    probeFocus:
+    - ideal_vs_acceptable
+    - position_confidence
+    scoringStatus: PILOT_ONLY
+    children:
+    - itemId: L3-MG03.a
+      field: ideal
+      prompt: 最理想的是：
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 完全独立
+          - code: '2'
+            label: 主要独立 + 共同生活账户
+          - code: '3'
+            label: 共同账户 + 各自个人账户
+          - code: '4'
+            label: 大部分共同
+          - code: '5'
+            label: 完全共同
+          - code: '6'
+            label: 尚未形成观点
+    - itemId: L3-MG03.b
+      field: acceptable
+      prompt: 哪些结构虽然不是首选，但你也能长期接受？
+      response:
+        inlineFormat:
+          type: multi_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 完全独立
+          - code: '2'
+            label: 主要独立 + 共同生活账户
+          - code: '3'
+            label: 共同账户 + 各自个人账户
+          - code: '4'
+            label: 大部分共同
+          - code: '5'
+            label: 完全共同
+    optionalMetaResponse:
+      field: positionConfidence
+      prompt: 你对这个答案本身有多确定？
+      response:
+        formatRef: POSITION_CONFIDENCE5
+  - taskId: L3-MG05
+    constructId: money_governance
+    wave: wave3
+    taskType: compound
+    prompt: 谈到共同支出时，你心里的“公平”主要更接近哪些原则？
+    probeFocus:
+    - mathematical_equality_vs_experienced_fairness
+    scoringStatus: PILOT_ONLY
+    children:
+    - itemId: L3-MG05.a
+      field: acceptablePrinciples
+      prompt: 请选择最多 3 个你认可的原则。
+      response:
+        inlineFormat:
+          type: multi_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 金额 / 任务尽量相等
+          - code: '2'
+            label: 按收入或能力比例
+          - code: '3'
+            label: 资源主要视为共同
+          - code: '4'
+            label: 尽量保留个人控制
+          - code: '5'
+            label: 按现实需要动态调整
+          - code: '6'
+            label: 不要求每次相等，但长期大致互惠
+          validation:
+            maxSelections: 3
+            minSelections: 1
+    - itemId: L3-MG05.b
+      field: primaryPrinciple
+      prompt: 其中最重要的一个是？
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 金额 / 任务尽量相等
+          - code: '2'
+            label: 按收入或能力比例
+          - code: '3'
+            label: 资源主要视为共同
+          - code: '4'
+            label: 尽量保留个人控制
+          - code: '5'
+            label: 按现实需要动态调整
+          - code: '6'
+            label: 不要求每次相等，但长期大致互惠
+  - taskId: L3-HH01
+    constructId: household_operation
+    wave: wave3
+    taskType: compound
+    prompt: 长期同居以后，你心里的“家务公平”更接近哪些原则？
+    probeFocus:
+    - household_fairness_not_50_50_only
+    scoringStatus: PILOT_ONLY
+    children:
+    - itemId: L3-HH01.a
+      field: selectedPrinciples
+      prompt: 请选择最多 3 项。
+      response:
+        inlineFormat:
+          type: multi_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 双方投入时间尽量一样
+          - code: '2'
+            label: 承担的任务数量尽量一样
+          - code: '3'
+            label: 按各自擅长 / 喜欢分
+          - code: '4'
+            label: 工作更忙的人可以暂时少做
+          - code: '5'
+            label: 收入更多不自动等于可以少做
+          - code: '6'
+            label: 隐形的记忆、计划和协调工作也要算进去
+          - code: '7'
+            label: 阶段变化时动态重新调整
+          validation:
+            maxSelections: 3
+            minSelections: 1
+    - itemId: L3-HH01.b
+      field: primaryPrinciple
+      prompt: 如果只能保留一个，最重要的是？
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 双方投入时间尽量一样
+          - code: '2'
+            label: 承担的任务数量尽量一样
+          - code: '3'
+            label: 按各自擅长 / 喜欢分
+          - code: '4'
+            label: 工作更忙的人可以暂时少做
+          - code: '5'
+            label: 收入更多不自动等于可以少做
+          - code: '6'
+            label: 隐形的记忆、计划和协调工作也要算进去
+          - code: '7'
+            label: 阶段变化时动态重新调整
+    optionalMetaResponse:
+      field: positionConfidence
+      prompt: 你对这个答案本身有多确定？
+      response:
+        formatRef: POSITION_CONFIDENCE5
+  - taskId: L3-HH04
+    constructId: household_operation
+    wave: wave3
+    taskType: task
+    prompt: 现在双方大致各承担一半家务。一方未来三个月工作突然非常忙，你认为：
+    probeFocus:
+    - dynamic_rebalancing
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 原分工尽量保持
+        - code: '2'
+          label: 另一方临时多承担，之后恢复
+        - code: '3'
+          label: 重新按双方总负荷调整
+        - code: '4'
+          label: 可以通过外包等方式解决
+        - code: '5'
+          label: 取决于具体情况
+  - taskId: L3-FO01
+    constructId: family_of_origin_boundary
+    wave: wave3
+    taskType: task
+    prompt: 买房、搬家、婚育等重大决定，你更希望默认：
+    probeFocus:
+    - consultation_vs_decision_authority
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 两个人决定后再告诉父母
+        - code: '2'
+          label: 可以主动征求父母意见，但最终两个人决定
+        - code: '3'
+          label: 重要决定最好得到双方父母基本支持
+        - code: '4'
+          label: 父母应共同参与
+        - code: '5'
+          label: 取决于具体事情
+    optionalMetaResponse:
+      field: positionConfidence
+      prompt: 你对这个答案本身有多确定？
+      response:
+        formatRef: POSITION_CONFIDENCE5
+  - taskId: L3-FO07
+    constructId: family_of_origin_boundary
+    wave: wave3
+    taskType: task
+    prompt: 你对“自己的父母”和“伴侣的父母”参与关系决策的规则，原则上应该：
+    probeFocus:
+    - reciprocity_and_real_responsibility
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 完全对称
+        - code: '2'
+          label: 原则对称，但照护 / 经济等现实责任可造成例外
+        - code: '3'
+          label: 可以明显不同
+        - code: '4'
+          label: 我还没认真想过
+  - taskId: L4-PH01
+    constructId: physical_preference
+    wave: wave3
+    taskType: compound
+    prompt: 为了测试“理想范围”和“可接受范围”是否能被清楚区分，这里先以身高作为一个可量化例子。
+    probeFocus:
+    - ideal_vs_acceptable_vs_hard
+    - grammar_test_not_full_physical_module
+    scoringStatus: PILOT_ONLY
+    children:
+    - itemId: L4-PH01.a
+      field: salient
+      prompt: 身高是否会真实影响你选择长期伴侣？
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 基本不影响
+          - code: '2'
+            label: 有一点影响
+          - code: '3'
+            label: 会明显影响
+          - code: '4'
+            label: 可能成为硬条件
+    - itemId: L4-PH01.b
+      field: idealLower
+      prompt: 如果有理想下限，可填写；没有可留空。
+      response:
+        formatRef: NUMBER_CM
+    - itemId: L4-PH01.c
+      field: idealUpper
+      prompt: 如果有理想上限，可填写；没有可留空。
+      response:
+        formatRef: NUMBER_CM
+    - itemId: L4-PH01.d
+      field: acceptableLower
+      prompt: 长期仍可接受的下限；没有可留空。
+      response:
+        formatRef: NUMBER_CM
+    - itemId: L4-PH01.e
+      field: acceptableUpper
+      prompt: 长期仍可接受的上限；没有可留空。
+      response:
+        formatRef: NUMBER_CM
+  - taskId: L4-PH02
+    constructId: physical_preference
+    wave: wave3
+    taskType: task
+    prompt: 如果一个人的外貌只是达到你的可接受范围，但认知交流、相处感和其他重要方面明显更好，你还愿意继续了解吗？
+    probeFocus:
+    - physical_salience_under_tradeoff
+    scoringStatus: PILOT_ONLY
+    response:
+      formatRef: ACCEPT5
+  - taskId: L4-IE01
+    constructId: intellectual_engagement_preference
+    wave: wave3
+    taskType: compound
+    prompt: 下面是伴侣在长期认知交流参与程度上的五种描述。
+    probeFocus:
+    - intellectual_engagement_vs_education
+    - ideal_vs_range
+    scoringStatus: PILOT_ONLY
+    children:
+    - itemId: L4-IE01.a
+      field: ideal
+      prompt: 哪一层最接近你的理想？
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: true
+          options:
+          - code: '1'
+            label: 日常交流主要围绕现实生活，很少主动深入讨论抽象、复杂或陌生话题
+          - code: '2'
+            label: 对自己熟悉的东西愿意讨论，但较少主动探索不熟悉领域
+          - code: '3'
+            label: 有一些稳定兴趣，也愿意和伴侣讨论观点、问题或新知识
+          - code: '4'
+            label: 经常主动理解复杂问题，喜欢深入交换观点
+          - code: '5'
+            label: 高度认知驱动，复杂讨论、学习和观点交流是生活的重要组成部分
+    - itemId: L4-IE01.b
+      field: acceptable
+      prompt: 哪些层级你长期都可以接受？
+      response:
+        inlineFormat:
+          type: multi_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 日常交流主要围绕现实生活，很少主动深入讨论抽象、复杂或陌生话题
+          - code: '2'
+            label: 对自己熟悉的东西愿意讨论，但较少主动探索不熟悉领域
+          - code: '3'
+            label: 有一些稳定兴趣，也愿意和伴侣讨论观点、问题或新知识
+          - code: '4'
+            label: 经常主动理解复杂问题，喜欢深入交换观点
+          - code: '5'
+            label: 高度认知驱动，复杂讨论、学习和观点交流是生活的重要组成部分
+    optionalMetaResponse:
+      field: positionConfidence
+      prompt: 你对这个答案本身有多确定？
+      response:
+        formatRef: POSITION_CONFIDENCE5
+  - taskId: SE-P04
+    constructId: partner_social_engagement_preference
+    wave: wave3
+    taskType: task
+    prompt: 理想伴侣的稳定社交圈更接近：
+    probeFocus:
+    - network_breadth_vs_social_frequency
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 少数几个长期深交
+        - code: '2'
+          label: 几个固定朋友圈
+        - code: '3'
+          label: 多个明显不同社交圈
+        - code: '4'
+          label: 很广泛的人际网络
+  - taskId: EX-P01
+    constructId: partner_experiential_exploration_preference
+    wave: wave3
+    taskType: task
+    prompt: 周末有一个一直去、确定舒服的地方，同时看到一个没去过但似乎不错的新地方。你更希望伴侣通常：
+    probeFocus:
+    - novelty_choice_not_risk_taking
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 更常选熟悉的
+        - code: '2'
+          label: 两边差不多
+        - code: '3'
+          label: 更常愿意试新的
+  - taskId: L4-AM01
+    constructId: partner_ambition_orientation
+    wave: wave3
+    taskType: compound
+    prompt: 下面是伴侣事业导向的五种状态。
+    probeFocus:
+    - ambition_not_income
+    - more_is_not_always_better
+    scoringStatus: PILOT_ONLY
+    children:
+    - itemId: L4-AM01.a
+      field: ideal
+      prompt: 哪一层最接近你的理想？
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: true
+          options:
+          - code: '1'
+            label: 工作主要是维持生活，对升职、成就或持续发展兴趣不大
+          - code: '2'
+            label: 希望工作稳定、做得不错，但不会持续追求更高位置
+          - code: '3'
+            label: 有明确发展目标，也愿意投入，但工作不是生活唯一中心
+          - code: '4'
+            label: 职业成就非常重要，愿意为发展投入大量时间和精力
+          - code: '5'
+            label: 高度竞争和成就导向，事业通常优先于其他生活领域
+    - itemId: L4-AM01.b
+      field: acceptable
+      prompt: 哪些层级你长期都可以接受？
+      response:
+        inlineFormat:
+          type: multi_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 工作主要是维持生活，对升职、成就或持续发展兴趣不大
+          - code: '2'
+            label: 希望工作稳定、做得不错，但不会持续追求更高位置
+          - code: '3'
+            label: 有明确发展目标，也愿意投入，但工作不是生活唯一中心
+          - code: '4'
+            label: 职业成就非常重要，愿意为发展投入大量时间和精力
+          - code: '5'
+            label: 高度竞争和成就导向，事业通常优先于其他生活领域
+    optionalMetaResponse:
+      field: positionConfidence
+      prompt: 你对这个答案本身有多确定？
+      response:
+        formatRef: POSITION_CONFIDENCE5
+  - taskId: L4-FA01
+    constructId: partner_family_orientation
+    wave: wave3
+    taskType: compound
+    prompt: 下面是伴侣把家庭放在生活中不同位置的五种状态。
+    probeFocus:
+    - family_orientation_not_children_or_parent_boundary
+    scoringStatus: PILOT_ONLY
+    children:
+    - itemId: L4-FA01.a
+      field: ideal
+      prompt: 哪一层最接近你的理想？
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: true
+          options:
+          - code: '1'
+            label: 长期伴侣关系可以重要，但家庭并不是本人生活的中心组织原则
+          - code: '2'
+            label: 重视伴侣和家庭，但会和个人事业、朋友、兴趣保持较强独立
+          - code: '3'
+            label: 家庭是几个核心生活领域之一，会持续投入
+          - code: '4'
+            label: 建立和维护家庭生活是人生非常重要的优先事项
+          - code: '5'
+            label: 大多数重要生活选择都会优先围绕家庭整体来安排
+    - itemId: L4-FA01.b
+      field: acceptable
+      prompt: 哪些层级你长期都可以接受？
+      response:
+        inlineFormat:
+          type: multi_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 长期伴侣关系可以重要，但家庭并不是本人生活的中心组织原则
+          - code: '2'
+            label: 重视伴侣和家庭，但会和个人事业、朋友、兴趣保持较强独立
+          - code: '3'
+            label: 家庭是几个核心生活领域之一，会持续投入
+          - code: '4'
+            label: 建立和维护家庭生活是人生非常重要的优先事项
+          - code: '5'
+            label: 大多数重要生活选择都会优先围绕家庭整体来安排
+    optionalMetaResponse:
+      field: positionConfidence
+      prompt: 你对这个答案本身有多确定？
+      response:
+        formatRef: POSITION_CONFIDENCE5
+  - taskId: L4-TR02
+    constructId: preference_tradeoff
+    wave: wave3
+    taskType: task
+    prompt: '假设两个人其他未提到的方面都差不多：
+
+      A：外貌很理想；认知交流可接受；事业稳定；支持互动很好。
+
+      B：外貌可接受但非理想；认知交流非常理想；事业稳定；支持互动普通。'
+    probeFocus:
+    - constrained_priority
+    - no_objectively_better_candidate
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 更愿意继续了解 A
+        - code: '2'
+          label: 略偏 A
+        - code: '3'
+          label: 两者差不多 / 信息还不够
+        - code: '4'
+          label: 略偏 B
+        - code: '5'
+          label: 更愿意继续了解 B
+  - taskId: L5-CH01
+    constructId: parenthood_plan
+    wave: wave3
+    taskType: task
+    prompt: 如果暂时不考虑收入、工作、住房、年龄或是否已经有伴侣，只看你理想中的未来生活，你希望自己成为父母吗？
+    probeFocus:
+    - desire_not_intention
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 明确不希望
+        - code: '2'
+          label: 偏向不希望
+        - code: '3'
+          label: 说不准
+        - code: '4'
+          label: 偏向希望
+        - code: '5'
+          label: 明确希望
+    optionalMetaResponse:
+      field: positionConfidence
+      prompt: 你对这个答案本身有多确定？
+      response:
+        formatRef: POSITION_CONFIDENCE5
+  - taskId: L5-CH02
+    constructId: parenthood_plan
+    wave: wave3
+    taskType: task
+    prompt: 如果未来进入一段稳定、合适的长期关系，按照你现在的真实计划，你是否打算有孩子？
+    probeFocus:
+    - intention_not_desire
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 明确不打算
+        - code: '2'
+          label: 大概率不打算
+        - code: '3'
+          label: 目前无法决定
+        - code: '4'
+          label: 大概率会
+        - code: '5'
+          label: 明确会
+    optionalMetaResponse:
+      field: positionConfidence
+      prompt: 你对这个答案本身有多确定？
+      response:
+        formatRef: POSITION_CONFIDENCE5
+  - taskId: L5-CH07
+    constructId: parenthood_plan
+    wave: wave3
+    taskType: task
+    prompt: 如果一个其他方面很合适的人，对未来孩子的想法和你不同，这件事对你属于：
+    probeFocus:
+    - hardness_not_derived_from_desire
+    scoringStatus: PILOT_ONLY
+    response:
+      formatRef: HARDNESS5
+  - taskId: L5-MR03
+    constructId: marriage_plan
+    wave: wave3
+    taskType: task
+    prompt: 如果一段关系长期稳定、彼此承诺，但对方始终不愿结婚登记，你是否可以接受？
+    probeFocus:
+    - marriage_necessity_not_desire
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 可以
+        - code: '2'
+          label: 大概率可以
+        - code: '3'
+          label: 不确定
+        - code: '4'
+          label: 大概率不能
+        - code: '5'
+          label: 明确不能
+    optionalMetaResponse:
+      field: positionConfidence
+      prompt: 你对这个答案本身有多确定？
+      response:
+        formatRef: POSITION_CONFIDENCE5
+  - taskId: L5-MR04
+    constructId: marriage_plan
+    wave: wave3
+    taskType: compound
+    prompt: 从确认双方是长期关系开始，你对进入婚姻的时间有什么想法？
+    probeFocus:
+    - ideal_timing_vs_max_acceptable
+    scoringStatus: PILOT_ONLY
+    children:
+    - itemId: L5-MR04.a
+      field: idealTiming
+      prompt: 理想中多久进入婚姻比较合适？
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: true
+          options:
+          - code: '1'
+            label: 1 年以内
+          - code: '2'
+            label: 1–2 年
+          - code: '3'
+            label: 2–3 年
+          - code: '4'
+            label: 3–5 年
+          - code: '5'
+            label: 5 年以上
+          - code: '6'
+            label: 不设明确时间
+    - itemId: L5-MR04.b
+      field: maxAcceptableTiming
+      prompt: 最长超过多久会让你觉得双方方向可能不一致？
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: true
+          options:
+          - code: '1'
+            label: 1 年
+          - code: '2'
+            label: 2 年
+          - code: '3'
+            label: 3 年
+          - code: '4'
+            label: 5 年
+          - code: '5'
+            label: 5 年以上
+          - code: '6'
+            label: 没有明确上限
+          - code: '7'
+            label: 目前说不准
+    optionalMetaResponse:
+      field: positionConfidence
+      prompt: 你对这个答案本身有多确定？
+      response:
+        formatRef: POSITION_CONFIDENCE5
+  - taskId: L5-GEO04
+    constructId: location_distance_plan
+    wave: wave3
+    taskType: compound
+    prompt: 关于长期关系中的异地，你目前更接近怎样的现实边界？
+    probeFocus:
+    - distance_vs_uncertainty
+    scoringStatus: PILOT_ONLY
+    children:
+    - itemId: L5-GEO04.a
+      field: canStartLongDistance
+      prompt: 你会考虑从一开始就是异地的关系吗？
+      response:
+        formatRef: ACCEPT5
+    - itemId: L5-GEO04.b
+      field: canTemporarilyLongDistance
+      prompt: 已经稳定交往后，因工作等原因暂时异地，你能接受吗？
+      response:
+        formatRef: ACCEPT5
+    - itemId: L5-GEO04.c
+      field: maxDuration
+      prompt: 如果确定只是暂时异地，你目前可接受的最长时间更接近：
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: true
+          options:
+          - code: '1'
+            label: 不接受
+          - code: '2'
+            label: 3 个月内
+          - code: '3'
+            label: 约 6 个月
+          - code: '4'
+            label: 约 1 年
+          - code: '5'
+            label: 1–2 年
+          - code: '6'
+            label: 没有固定上限
+          - code: '7'
+            label: 取决于见面频率
+    - itemId: L5-GEO04.d
+      field: endPlanRequirement
+      prompt: 对你来说，异地是否需要一个大致明确的结束计划？
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: true
+          options:
+          - code: '1'
+            label: 完全不需要
+          - code: '2'
+            label: 最好有
+          - code: '3'
+            label: 比较需要
+          - code: '4'
+            label: 必须有
+          - code: '5'
+            label: 说不准
+    optionalMetaResponse:
+      field: positionConfidence
+      prompt: 你对这个答案本身有多确定？
+      response:
+        formatRef: POSITION_CONFIDENCE5
+  - taskId: L5-GEO05
+    constructId: location_distance_plan
+    wave: wave3
+    taskType: compound
+    prompt: 比较下面两种异地情况：
+    probeFocus:
+    - distance_burden_vs_uncertainty_burden
+    scoringStatus: PILOT_ONLY
+    children:
+    - itemId: L5-GEO05.a
+      field: finite8Months
+      prompt: 对方未来 8 个月在另一座城市工作，之后有明确回到同城计划。你愿意继续了解的程度？
+      response:
+        formatRef: ACCEPT5
+    - itemId: L5-GEO05.b
+      field: indefinite
+      prompt: 对方未来几年在哪里都不确定，也没有明确结束异地的时间。你愿意继续了解的程度？
+      response:
+        formatRef: ACCEPT5
+  - taskId: L5-HC01
+    constructId: income_resource_filter
+    wave: wave3
+    taskType: task
+    prompt: 如果你刚刚把某个条件标成了“硬条件”：假设一个人其他方面都非常符合，但只有这一点不满足，你仍然不希望系统把他/她作为候选吗？
+    probeFocus:
+    - preference_vs_soft_filter_vs_hard_constraint
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 是，仍然不要作为候选
+        - code: '2'
+          label: 大概率不要，但想保留极少例外
+        - code: '3'
+          label: 需要看具体人，不能算真正硬条件
+        - code: '4'
+          label: 可以作为候选，只是优先级较低
+    branchCondition: ONLY_AFTER_USER_MARKS_ANY_ATTRIBUTE_AS_HARD
+globalRules:
+- Do not show construct names or scoring direction to participants.
+- Do not provide user-facing profile results during P0 before the retrospective probes are complete.
+- For sensitive/high-social-desirability items, interviewer must use neutral non-evaluative wording.
+- Any answer change after interviewer probing must preserve both originalResponse and revisedResponse.

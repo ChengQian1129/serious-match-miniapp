@@ -1,0 +1,2097 @@
+schemaVersion: relationship-feature-model-v3.C_operating_decision.v0.2
+generatedAt: '2026-08-09'
+status: PRE_P0_RUNTIME_READY
+supersedes: relationship_manual_v3_P1_C_operating_decision_spec_v0.1.yaml
+samplingPools:
+- poolId: operating_social_privacy
+  sampleCount: 6
+  samplingMethod: SAMPLE_WITHOUT_REPLACEMENT
+  tasks:
+  - taskId: L3-CT03
+    constructId: contact_relationship_clarity
+    wave: wave3
+    taskType: task
+    prompt: 在没有提前说明的情况下，稳定交往中的伴侣多久没有任何回应，你会开始觉得“这已经不只是普通的忙”？
+    probeFocus:
+    - absence_boundary_depends_on_baseline
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 几小时
+        - code: '2'
+          label: 半天
+        - code: '3'
+          label: 当天结束前
+        - code: '4'
+          label: 约 24 小时
+        - code: '5'
+          label: 两三天
+        - code: '6'
+          label: 没有固定标准
+        - code: '7'
+          label: 取决于原本的联系模式
+    normalizationStatus: P0_NORMALIZED_PARENT
+  - taskId: L3-CT04
+    constructId: contact_relationship_clarity
+    prompt: 已经约好联系或见面，但对方发现自己无法按计划做到。你最希望的默认规则是：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 只要最后解释即可
+        - code: '2'
+          label: 最好提前告诉
+        - code: '3'
+          label: 提前告诉，并主动给替代安排
+        - code: '4'
+          label: 看事情重要程度
+  - taskId: L3-CT05
+    constructId: contact_relationship_clarity
+    prompt: 即使双方一周都很忙，你觉得最低保持什么，才仍会觉得“这段关系在正常运行”？
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 不用固定
+        - code: '2'
+          label: 每天一点联系
+        - code: '3'
+          label: 每天至少一次完整交流
+        - code: '4'
+          label: 一周几次完整交流即可
+        - code: '5'
+          label: 固定见面比消息更重要
+        - code: '6'
+          label: 其他 / 看情况
+  - taskId: L3-ST03
+    constructId: shared_time_independence
+    prompt: 长期关系里，你认为双方保留一些对方不参与的兴趣或活动：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 最好大多数兴趣共同
+        - code: '2'
+          label: 有少量各自兴趣很正常
+        - code: '3'
+          label: 双方各自有完整兴趣生活也很好
+        - code: '4'
+          label: 不设默认，按实际情况
+  - taskId: L3-ST04
+    constructId: shared_time_independence
+    prompt: 两个人晚上都在家时，“待在同一个空间各做各的”对你来说算不算高质量的共同时间？
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 基本不算
+        - code: '2'
+          label: 偶尔算
+        - code: '3'
+          label: 有时很舒服
+        - code: '4'
+          label: 非常算
+        - code: '5'
+          label: 看当天状态
+  - taskId: L3-ST05
+    constructId: shared_time_independence
+    prompt: 如果一年有几次完整假期，你最希望默认：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 假期基本都一起
+        - code: '2'
+          label: 主要一起，偶尔各自
+        - code: '3'
+          label: 共同旅行与各自旅行都可以
+        - code: '4'
+          label: 不需要默认一起
+        - code: '5'
+          label: 看具体情况
+  - taskId: L3-ST06
+    constructId: shared_time_independence
+    wave: wave3
+    taskType: compound
+    prompt: 下面三类事情，你觉得长期关系中默认应该由谁拥有最终决定权？
+    probeFocus:
+    - autonomy_noncoercion_not_alone_time
+    - domain_specific_governance
+    scoringStatus: PILOT_ONLY
+    children:
+    - itemId: L3-ST06.hobby
+      field: hobby
+      prompt: 一项主要影响本人、不会明显改变共同生活的个人兴趣
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: true
+          options:
+          - code: '1'
+            label: 本人决定即可
+          - code: '2'
+            label: 本人决定，但应让伴侣知情
+          - code: '3'
+            label: 认真讨论，但最终本人决定
+          - code: '4'
+            label: 最好双方达成一致
+          - code: '5'
+            label: 必须双方同意
+          - code: '6'
+            label: 不适用
+    - itemId: L3-ST06.appearance
+      field: appearance
+      prompt: 日常外貌或穿着选择
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: true
+          options:
+          - code: '1'
+            label: 本人决定即可
+          - code: '2'
+            label: 本人决定，但应让伴侣知情
+          - code: '3'
+            label: 认真讨论，但最终本人决定
+          - code: '4'
+            label: 最好双方达成一致
+          - code: '5'
+            label: 必须双方同意
+          - code: '6'
+            label: 不适用
+    - itemId: L3-ST06.career
+      field: career
+      prompt: 一份收入相近、不需要搬家、但本人更喜欢的工作选择
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: true
+          options:
+          - code: '1'
+            label: 本人决定即可
+          - code: '2'
+            label: 本人决定，但应让伴侣知情
+          - code: '3'
+            label: 认真讨论，但最终本人决定
+          - code: '4'
+            label: 最好双方达成一致
+          - code: '5'
+            label: 必须双方同意
+          - code: '6'
+            label: 不适用
+    normalizationStatus: P0_NORMALIZED_PARENT
+  - taskId: L3-ST07
+    constructId: shared_time_independence
+    wave: wave3
+    taskType: task
+    prompt: 对于你认为应由本人最终决定的个人事项，这条规则对自己和伴侣是否应该同样适用？
+    probeFocus:
+    - reciprocity_without_moral_judgment
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 完全对称
+        - code: '2'
+          label: 原则对称，但现实责任不同会有例外
+        - code: '3'
+          label: 某些领域不需要对称
+        - code: '4'
+          label: 我还没认真想过
+    normalizationStatus: P0_NORMALIZED_PARENT
+  - taskId: L3-SB01
+    constructId: social_boundary
+    prompt: 伴侣偶尔自己和朋友聚会、不带你参加，你对这种状态：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 非常正常
+        - code: '2'
+          label: 偶尔可以
+        - code: '3'
+          label: 希望大多数社交一起
+        - code: '4'
+          label: 如果经常不带自己会不舒服
+        - code: '5'
+          label: 看频率和关系状态
+  - taskId: L3-SB02
+    constructId: social_boundary
+    prompt: 对于伴侣与可能产生吸引的人单独见面，你的边界会根据关系类型变化。请先选择最接近的默认规则：
+    taskType: compound
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    children:
+    - itemId: L3-SB02.oldFriend
+      field: oldFriend
+      prompt: 认识多年的好友
+      tags: []
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: true
+          options:
+          - code: '1'
+            label: 可以正常单独见面
+          - code: '2'
+            label: 可以，但希望提前知道
+          - code: '3'
+            label: 只接受公开场合 / 较低频率
+          - code: '4'
+            label: 不接受
+          - code: '5'
+            label: 看具体情况
+    - itemId: L3-SB02.newFriend
+      field: newFriend
+      prompt: 新认识的朋友
+      tags: []
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: true
+          options:
+          - code: '1'
+            label: 可以正常单独见面
+          - code: '2'
+            label: 可以，但希望提前知道
+          - code: '3'
+            label: 只接受公开场合 / 较低频率
+          - code: '4'
+            label: 不接受
+          - code: '5'
+            label: 看具体情况
+    - itemId: L3-SB02.pastAmbiguity
+      field: pastAmbiguity
+      prompt: 曾经有过暧昧的人
+      tags: []
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: true
+          options:
+          - code: '1'
+            label: 可以正常单独见面
+          - code: '2'
+            label: 可以，但希望提前知道
+          - code: '3'
+            label: 只接受公开场合 / 较低频率
+          - code: '4'
+            label: 不接受
+          - code: '5'
+            label: 看具体情况
+  - taskId: L3-SB03
+    constructId: social_boundary
+    prompt: 对于伴侣和前任保持联系，你更需要根据联系原因判断。
+    taskType: compound
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    children:
+    - itemId: L3-SB03.necessary
+      field: necessary
+      prompt: 共同孩子 / 必要事务
+      tags: []
+      response:
+        formatRef: ACCEPT5
+    - itemId: L3-SB03.friendship
+      field: friendship
+      prompt: 普通朋友式联系
+      tags: []
+      response:
+        formatRef: ACCEPT5
+    - itemId: L3-SB03.emotionalSupport
+      field: emotionalSupport
+      prompt: 把前任作为持续的重要情感支持对象
+      tags: []
+      response:
+        formatRef: ACCEPT5
+  - taskId: L3-SB04
+    constructId: social_boundary
+    wave: wave3
+    taskType: task
+    prompt: 伴侣与一个彼此可能产生吸引的人单独见面时，你觉得：
+    probeFocus:
+    - transparency_rule_not_trust_score
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 不需要特意说
+        - code: '2'
+          label: 事后自然提到即可
+        - code: '3'
+          label: 最好提前告诉
+        - code: '4'
+          label: 应该先讨论是否合适
+        - code: '5'
+          label: 取决于具体关系和对象
+    normalizationStatus: P0_NORMALIZED_PARENT
+  - taskId: L3-SB05
+    constructId: social_boundary
+    wave: wave3
+    taskType: task
+    prompt: 如果同样情况换成你自己与一个彼此可能产生吸引的人单独见面，你认为披露规则应当：
+    probeFocus:
+    - reciprocity
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 和我要求伴侣的规则完全一样
+        - code: '2'
+          label: 原则一样，但具体情境可以不同
+        - code: '3'
+          label: 可以有不同规则
+        - code: '4'
+          label: 我还没想过
+    normalizationStatus: P0_NORMALIZED_PARENT
+  - taskId: L3-DP01
+    constructId: digital_privacy
+    prompt: 长期伴侣知道彼此手机密码这件事，对你来说：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 完全不舒服
+        - code: '2'
+          label: 比较不舒服
+        - code: '3'
+          label: 都可以
+        - code: '4'
+          label: 比较舒服
+        - code: '5'
+          label: 完全不介意 / 很自然
+  - taskId: L3-DP02
+    constructId: digital_privacy
+    prompt: 即使伴侣知道手机密码，你认为未经再次询问时，他/她可以：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 只在紧急或明确需要时使用
+        - code: '2'
+          label: 接电话 / 导航等功能性使用
+        - code: '3'
+          label: 一般使用手机都可以，但不包括私人聊天
+        - code: '4'
+          label: 大多数内容都可以直接查看
+        - code: '5'
+          label: 没有固定规则
+  - taskId: L3-DP03
+    constructId: digital_privacy
+    wave: wave3
+    taskType: task
+    prompt: 假设伴侣知道你的手机密码。未经你询问或同意，他直接打开你的私人聊天记录，你对此：
+    probeFocus:
+    - password_knowledge_vs_inspection_permission
+    scoringStatus: PILOT_ONLY
+    response:
+      formatRef: ACCEPT5
+    normalizationStatus: P0_NORMALIZED_PARENT
+  - taskId: L3-DP04
+    constructId: digital_privacy
+    prompt: 位置共享在下面哪些情境里对你是舒服的？
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: multi_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 临时出行 / 接人等便利
+        - code: '2'
+          label: 安全需要时临时开启
+        - code: '3'
+          label: 长期持续共享
+        - code: '4'
+          label: 伴侣要求时应当开启
+        - code: '5'
+          label: 基本都不希望共享
+        validation:
+          minSelections: 1
+  - taskId: L3-DP05
+    constructId: digital_privacy
+    wave: wave3
+    taskType: task
+    prompt: 对手机、定位或聊天内容的分享，你更接近哪种原则？
+    probeFocus:
+    - voluntary_sharing_vs_required_access
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 我愿意主动分享，也认为伴侣通常有权要求查看
+        - code: '2'
+          label: 我愿意主动分享，但不认为伴侣因此有权要求查看
+        - code: '3'
+          label: 我通常不愿分享，也不认为伴侣有权要求
+        - code: '4'
+          label: 不同类型信息边界不同
+        - code: '5'
+          label: 我还没有明确想法
+    normalizationStatus: P0_NORMALIZED_PARENT
+  - taskId: L3-DP06
+    constructId: digital_privacy
+    prompt: 如果长期伴侣明确不愿互相查看私人聊天记录，你更倾向认为：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 这只是正常隐私边界
+        - code: '2'
+          label: 会有一点不理解，但不代表有问题
+        - code: '3'
+          label: 会明显降低安全感
+        - code: '4'
+          label: 会怀疑对方有事隐瞒
+        - code: '5'
+          label: 看具体关系
+- poolId: money_household_family
+  sampleCount: 6
+  samplingMethod: SAMPLE_WITHOUT_REPLACEMENT
+  tasks:
+  - taskId: L3-MG01
+    constructId: money_governance
+    prompt: 如果关系进入共同生活 / 准备结婚阶段，你认为双方对收入情况应该：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 不需要精确知道
+        - code: '2'
+          label: 知道大概即可
+        - code: '3'
+          label: 重要阶段应比较完整透明
+        - code: '4'
+          label: 共同财务前必须完整透明
+        - code: '5'
+          label: 看具体阶段
+  - taskId: L3-MG02
+    constructId: money_governance
+    prompt: 在形成共同财务责任前，对现有债务你认为：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 各自处理即可
+        - code: '2'
+          label: 重大债务需要说明
+        - code: '3'
+          label: 所有持续债务应说明
+        - code: '4'
+          label: 双方应完全了解
+  - taskId: L3-MG04
+    constructId: money_governance
+    prompt: 共同生活支出，你最容易接受的默认分担方式是：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 严格平分
+        - code: '2'
+          label: 按收入比例
+        - code: '3'
+          label: 收入主要共同视为家庭资源
+        - code: '4'
+          label: 按项目分工
+        - code: '5'
+          label: 谁方便谁多承担
+        - code: '6'
+          label: 动态根据阶段调整
+  - taskId: L3-MG05
+    constructId: money_governance
+    wave: wave3
+    taskType: compound
+    prompt: 谈到共同支出时，你心里的“公平”主要更接近哪些原则？
+    probeFocus:
+    - mathematical_equality_vs_experienced_fairness
+    scoringStatus: PILOT_ONLY
+    children:
+    - itemId: L3-MG05.a
+      field: acceptablePrinciples
+      prompt: 请选择最多 3 个你认可的原则。
+      response:
+        inlineFormat:
+          type: multi_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 金额 / 任务尽量相等
+          - code: '2'
+            label: 按收入或能力比例
+          - code: '3'
+            label: 资源主要视为共同
+          - code: '4'
+            label: 尽量保留个人控制
+          - code: '5'
+            label: 按现实需要动态调整
+          - code: '6'
+            label: 不要求每次相等，但长期大致互惠
+          validation:
+            maxSelections: 3
+            minSelections: 1
+    - itemId: L3-MG05.b
+      field: primaryPrinciple
+      prompt: 其中最重要的一个是？
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 金额 / 任务尽量相等
+          - code: '2'
+            label: 按收入或能力比例
+          - code: '3'
+            label: 资源主要视为共同
+          - code: '4'
+            label: 尽量保留个人控制
+          - code: '5'
+            label: 按现实需要动态调整
+          - code: '6'
+            label: 不要求每次相等，但长期大致互惠
+    normalizationStatus: P0_NORMALIZED_PARENT
+  - taskId: L3-MG06
+    constructId: money_governance
+    prompt: 使用已经约定属于个人自由支配的钱时，你认为：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 基本不用解释
+        - code: '2'
+          label: 超过某个较大金额应告知
+        - code: '3'
+          label: 影响共同目标时应讨论
+        - code: '4'
+          label: 所有明显消费都应讨论
+        - code: '5'
+          label: 看具体情况
+  - taskId: L3-MG07
+    constructId: money_governance
+    prompt: 使用共同资金进行较大单笔消费时，你觉得从什么程度开始应该由双方共同决定？
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes:
+    - Threshold anchors are pilot usability anchors, not normative financial rules.
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 只要是共同资金就应共同决定
+        - code: '2'
+          label: 约占家庭月可支配收入 10% 起
+        - code: '3'
+          label: 约 25% 起
+        - code: '4'
+          label: 约 50% 起
+        - code: '5'
+          label: 更高金额才需要
+        - code: '6'
+          label: 更看用途而不是比例
+  - taskId: L3-MG08
+    constructId: money_governance
+    prompt: 一方长期给父母固定经济支持，关系进入共同财务后你认为：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 属于个人责任，不需共同决定
+        - code: '2'
+          label: 可保留，但双方应知道
+        - code: '3'
+          label: 金额明显影响家庭时应共同讨论
+        - code: '4'
+          label: 任何固定支持都应共同同意
+        - code: '5'
+          label: 看具体情况
+  - taskId: L3-MG09
+    constructId: money_governance
+    prompt: 如果使用共同资金进行较高风险投资，你认为：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 一方可在一定额度内自主决定
+        - code: '2'
+          label: 超过约定阈值需要双方同意
+        - code: '3'
+          label: 共同资金原则上只做双方都接受的风险
+        - code: '4'
+          label: 看具体投资和金额
+  - taskId: L3-HH01
+    constructId: household_operation
+    wave: wave3
+    taskType: compound
+    prompt: 长期同居以后，你心里的“家务公平”更接近哪些原则？
+    probeFocus:
+    - household_fairness_not_50_50_only
+    scoringStatus: PILOT_ONLY
+    children:
+    - itemId: L3-HH01.a
+      field: selectedPrinciples
+      prompt: 请选择最多 3 项。
+      response:
+        inlineFormat:
+          type: multi_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 双方投入时间尽量一样
+          - code: '2'
+            label: 承担的任务数量尽量一样
+          - code: '3'
+            label: 按各自擅长 / 喜欢分
+          - code: '4'
+            label: 工作更忙的人可以暂时少做
+          - code: '5'
+            label: 收入更多不自动等于可以少做
+          - code: '6'
+            label: 隐形的记忆、计划和协调工作也要算进去
+          - code: '7'
+            label: 阶段变化时动态重新调整
+          validation:
+            maxSelections: 3
+            minSelections: 1
+    - itemId: L3-HH01.b
+      field: primaryPrinciple
+      prompt: 如果只能保留一个，最重要的是？
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 双方投入时间尽量一样
+          - code: '2'
+            label: 承担的任务数量尽量一样
+          - code: '3'
+            label: 按各自擅长 / 喜欢分
+          - code: '4'
+            label: 工作更忙的人可以暂时少做
+          - code: '5'
+            label: 收入更多不自动等于可以少做
+          - code: '6'
+            label: 隐形的记忆、计划和协调工作也要算进去
+          - code: '7'
+            label: 阶段变化时动态重新调整
+    optionalMetaResponse:
+      field: positionConfidence
+      prompt: 你对这个答案本身有多确定？
+      response:
+        formatRef: POSITION_CONFIDENCE5
+    normalizationStatus: P0_NORMALIZED_PARENT
+  - taskId: L3-HH02
+    constructId: household_operation
+    prompt: 以“预约一次家庭维修”为例，你觉得真正的任务负担应该包含哪些部分？
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes:
+    - Research probe for ownership/mental-load concept; not a compatibility score.
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 只看最后是谁打电话 / 执行
+        - code: '2'
+          label: 发现问题和执行
+        - code: '3'
+          label: 发现、记住、找方案、跟进与确认都算
+        - code: '4'
+          label: 我没想过这种区分
+  - taskId: L3-HH03
+    constructId: household_operation
+    prompt: 如果未来共同生活，你更倾向使用哪种家务分工原则？
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 谁更擅长谁负责
+        - code: '2'
+          label: 尽量轮换
+        - code: '3'
+          label: 固定分工
+        - code: '4'
+          label: 共同做
+        - code: '5'
+          label: 不预设，按实际情况
+  - taskId: L3-HH04
+    constructId: household_operation
+    wave: wave3
+    taskType: task
+    prompt: 现在双方大致各承担一半家务。一方未来三个月工作突然非常忙，你认为：
+    probeFocus:
+    - dynamic_rebalancing
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 原分工尽量保持
+        - code: '2'
+          label: 另一方临时多承担，之后恢复
+        - code: '3'
+          label: 重新按双方总负荷调整
+        - code: '4'
+          label: 可以通过外包等方式解决
+        - code: '5'
+          label: 取决于具体情况
+    normalizationStatus: P0_NORMALIZED_PARENT
+  - taskId: L3-FO02
+    constructId: family_of_origin_boundary
+    prompt: 春节 / 重要节日等，长期默认更希望：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 轮流
+        - code: '2'
+          label: 两边都安排
+        - code: '3'
+          label: 优先某一方
+        - code: '4'
+          label: 各自回家也可以
+        - code: '5'
+          label: 建立自己的节日安排
+        - code: '6'
+          label: 看具体情况
+  - taskId: L3-FO03
+    constructId: family_of_origin_boundary
+    prompt: 伴侣长期给父母固定经济支持，你对这件事的接受度：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes:
+    - Governance threshold is separately captured in L3-MG08.
+    response:
+      formatRef: ACCEPT5
+  - taskId: L3-FO04
+    constructId: family_of_origin_boundary
+    prompt: 如果一方父母未来需要长期照护，你认为更合理的默认原则是：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 成年子女本人主要承担
+        - code: '2'
+          label: 伴侣也应共同承担较多
+        - code: '3'
+          label: 优先兄弟姐妹共同分担
+        - code: '4'
+          label: 优先经济支持 / 专业照护
+        - code: '5'
+          label: 按双方现实能力协商
+        - code: '6'
+          label: 目前很难判断
+    optionalMetaResponse:
+      field: positionConfidence
+      prompt: 你对这个答案有多确定？
+      response:
+        formatRef: POSITION_CONFIDENCE5
+  - taskId: L3-FO05
+    constructId: family_of_origin_boundary
+    prompt: 关于父母和伴侣共同居住，你的接受范围更接近：
+    taskType: compound
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    children:
+    - itemId: L3-FO05.short
+      field: shortTermCare
+      prompt: 短期照顾性同住
+      tags: []
+      response:
+        formatRef: ACCEPT5
+    - itemId: L3-FO05.phase
+      field: phaseCoResidence
+      prompt: 阶段性同住
+      tags: []
+      response:
+        formatRef: ACCEPT5
+    - itemId: L3-FO05.long
+      field: longTermCoResidence
+      prompt: 长期同住
+      tags: []
+      response:
+        formatRef: ACCEPT5
+    - itemId: L3-FO05.default
+      field: defaultAfterMarriage
+      prompt: 默认婚后与父母同住
+      tags: []
+      response:
+        formatRef: ACCEPT5
+  - taskId: L3-FO06
+    constructId: family_of_origin_boundary
+    prompt: 两个人发生冲突以后，把问题告诉父母并请他们介入，你认为：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 一般不应该
+        - code: '2'
+          label: 可以寻求情绪支持，但不应让父母介入决定
+        - code: '3'
+          label: 严重问题可以
+        - code: '4'
+          label: 很正常
+        - code: '5'
+          label: 看具体情况
+  - taskId: L3-FO07
+    constructId: family_of_origin_boundary
+    wave: wave3
+    taskType: task
+    prompt: 你对“自己的父母”和“伴侣的父母”参与关系决策的规则，原则上应该：
+    probeFocus:
+    - reciprocity_and_real_responsibility
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 完全对称
+        - code: '2'
+          label: 原则对称，但照护 / 经济等现实责任可造成例外
+        - code: '3'
+          label: 可以明显不同
+        - code: '4'
+          label: 我还没认真想过
+    normalizationStatus: P0_NORMALIZED_PARENT
+- poolId: career_leisure
+  sampleCount: 4
+  samplingMethod: SAMPLE_WITHOUT_REPLACEMENT
+  tasks:
+  - taskId: L3-CG01
+    constructId: career_geography_governance
+    prompt: 一方得到外地非常好的职业机会，收入和发展明显提升；另一方当前工作也比较稳定。你更认可哪类决策逻辑？
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 职业机会更大的一方优先
+        - code: '2'
+          label: 当前家庭基础更稳的一方优先
+        - code: '3'
+          label: 比较双方长期损失后决定
+        - code: '4'
+          label: 原则上不为工作长期分居
+        - code: '5'
+          label: 可以先异地一段时间再决定
+        - code: '6'
+          label: 看具体情况
+  - taskId: L3-CG02
+    constructId: career_geography_governance
+    prompt: 如果两个人的职业在同一时期都进入关键阶段，你认为：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 双方尽量不要求任何一方牺牲
+        - code: '2'
+          label: 按机会大小轮流优先
+        - code: '3'
+          label: 按家庭整体收益决定
+        - code: '4'
+          label: 按原有分工
+        - code: '5'
+          label: 没有固定原则，逐次谈
+  - taskId: L3-CG03
+    constructId: career_geography_governance
+    prompt: 如果因职业需要暂时异地，你认为一套可接受的关系安排至少应该明确哪些内容？
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes:
+    - Governance checklist; life-plan tolerance is measured in L5-GEO04/05.
+    response:
+      inlineFormat:
+        type: multi_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 能否接受异地
+        - code: '2'
+          label: 最长大概多久
+        - code: '3'
+          label: 最低见面频率
+        - code: '4'
+          label: 结束异地的条件
+        - code: '5'
+          label: 以上都应该讨论清楚
+        validation:
+          minSelections: 1
+  - taskId: L3-CG04
+    constructId: career_geography_governance
+    prompt: 如果伴侣获得一个短期收入降低、但本人非常看重且长期发展更好的职业机会，你认为：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 原则上应支持本人选择
+        - code: '2'
+          label: 应先看对共同财务 / 生活影响
+        - code: '3'
+          label: 如果家庭成本明显增加应双方同意
+        - code: '4'
+          label: 短期收入下降通常不值得
+        - code: '5'
+          label: 看具体情况
+  - taskId: L3-SL01
+    constructId: shared_leisure
+    prompt: 长期关系里，你希望“真正一起做的娱乐 / 休闲活动”在整体空闲时间中大概占多少？
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 很少也可以
+        - code: '2'
+          label: 少部分
+        - code: '3'
+          label: 大约一半
+        - code: '4'
+          label: 大部分
+        - code: '5'
+          label: 几乎都希望一起
+        - code: '6'
+          label: 不适合按比例想
+  - taskId: L3-SL02
+    constructId: shared_leisure
+    prompt: 两个人在同一空间，各自看自己的东西、玩自己的游戏、做自己的兴趣，对你来说：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 不算真正共同时间
+        - code: '2'
+          label: 偶尔舒服
+        - code: '3'
+          label: 经常也很舒服
+        - code: '4'
+          label: 这是我很喜欢的相处方式
+        - code: '5'
+          label: 看当天状态
+  - taskId: L3-SL03
+    constructId: shared_leisure
+    prompt: 双人休闲默认更希望：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 居家为主
+        - code: '2'
+          label: 居家稍多
+        - code: '3'
+          label: 均衡
+        - code: '4'
+          label: 外出稍多
+        - code: '5'
+          label: 外出活动为主
+        - code: '6'
+          label: 无固定
+  - taskId: L3-SL04
+    constructId: shared_leisure
+    prompt: 两个人长期在一起后，你理想中多久主动安排一次双方都没有体验过的新活动 / 地方？
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 基本不需要
+        - code: '2'
+          label: 几个月一次
+        - code: '3'
+          label: 大约每月一次
+        - code: '4'
+          label: 每月数次
+        - code: '5'
+          label: 几乎每周都希望有
+        - code: '6'
+          label: 没有固定节奏
+  - taskId: L3-SL05
+    constructId: shared_leisure
+    prompt: 如果双方几乎没有共同 hobby，但可以一起吃饭、聊天、旅行且相处舒服，你是否会觉得仍然缺少重要部分？
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      formatRef: AGR7
+- poolId: preference_decision
+  sampleCount: 7
+  samplingMethod: SAMPLE_WITHOUT_REPLACEMENT
+  tasks:
+  - taskId: CF-S01
+    constructId: character_trustworthiness_floor
+    prompt: 对方为了避免一次小争执，对一件不影响你重大决定的小事说了不完全真实的话；后来被问到时承认。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: CF-S03
+    constructId: character_trustworthiness_floor
+    prompt: 对方答应了一件对你很重要的事情，但因为自己安排不好没有做到；他主动承认并提出补救。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: CF-S04
+    constructId: character_trustworthiness_floor
+    prompt: 争执中对方故意拿你非常在意的弱点羞辱你，事后说“我就是气头上”。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      formatRef: AGR7
+  - taskId: L4-PH02
+    constructId: physical_preference
+    wave: wave3
+    taskType: task
+    prompt: 如果一个人的外貌只是达到你的可接受范围，但认知交流、相处感和其他重要方面明显更好，你还愿意继续了解吗？
+    probeFocus:
+    - physical_salience_under_tradeoff
+    scoringStatus: PILOT_ONLY
+    response:
+      formatRef: ACCEPT5
+    normalizationStatus: P0_NORMALIZED_PARENT
+  - taskId: L4-RC01
+    constructId: resources_life_competence
+    prompt: 对长期伴侣最基本的经济独立和现实生活能力要求，哪些属于你的最低门槛？
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: multi_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 能基本自给
+        - code: '2'
+          label: 收入 / 工作状态具有一定稳定性
+        - code: '3'
+          label: 不长期完全依赖父母维持日常生活
+        - code: '4'
+          label: 没有明显且无法解释的重大债务
+        - code: '5'
+          label: 能管理自己的基本日常生活
+        - code: '6'
+          label: 这些都不是硬门槛
+        validation:
+          minSelections: 1
+  - taskId: L4-RC02
+    constructId: resources_life_competence
+    prompt: 如果只看经济与现实资源，你更希望伴侣处在什么位置？
+    taskType: compound
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    children:
+    - itemId: L4-RC02.a
+      field: ideal
+      prompt: 理想状态更接近：
+      tags: []
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: true
+          options:
+          - code: '1'
+            label: 能基本自给即可
+          - code: '2'
+            label: 稳定且能覆盖自己的生活
+          - code: '3'
+            label: 有一定储蓄 / 抗风险能力
+          - code: '4'
+            label: 资源明显宽裕
+          - code: '5'
+            label: 资源非常充足
+          - code: '6'
+            label: 不希望用这一维做理想排序
+    - itemId: L4-RC02.b
+      field: acceptableMinimum
+      prompt: 最低长期可接受状态更接近：
+      tags: []
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: true
+          options:
+          - code: '1'
+            label: 目前暂时依赖家人也可
+          - code: '2'
+            label: 能基本自给
+          - code: '3'
+            label: 需要相对稳定
+          - code: '4'
+            label: 需要一定储蓄 / 抗风险能力
+          - code: '5'
+            label: 需要资源明显宽裕
+          - code: '6'
+            label: 看具体人
+  - taskId: L4-RC03
+    constructId: resources_life_competence
+    prompt: 你在意伴侣经济 / 资源条件，主要是因为哪些原因？
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: multi_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 基本生活安全
+        - code: '2'
+          label: 希望双方生活水平接近
+        - code: '3'
+          label: 未来婚育成本
+        - code: '4'
+          label: 欣赏现实能力 / 职业能力
+        - code: '5'
+          label: 担心家庭负担
+        - code: '6'
+          label: 社会背景 / 生活圈
+        - code: '7'
+          label: 消费方式
+        - code: '8'
+          label: 其他
+        validation:
+          minSelections: 1
+          maxSelections: 3
+  - taskId: L4-IE02
+    constructId: intellectual_engagement_preference
+    prompt: 你讲一个自己很在意、背景略复杂的问题时，你最希望伴侣：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 不需要完全懂，只要愿意听
+        - code: '2'
+          label: 能跟上大意并继续问
+        - code: '3'
+          label: 能很快抓住核心、和你来回讨论
+        - code: '4'
+          label: 最好能主动提出新的角度
+        - code: '5'
+          label: 没有特别要求
+  - taskId: L4-IE03
+    constructId: intellectual_engagement_preference
+    prompt: 对伴侣完全不了解但你很在意的领域，你更希望他/她：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 尊重即可，不需要深入
+        - code: '2'
+          label: 愿意听一点
+        - code: '3'
+          label: 愿意主动了解一些
+        - code: '4'
+          label: 会因为你的兴趣而真正产生探索欲
+        - code: '5'
+          label: 没有特别要求
+  - taskId: SE-P01
+    constructId: partner_social_engagement_preference
+    prompt: 如果没有工作或家庭硬性安排，你更希望伴侣平时和朋友见面、聚会或参加社交活动的频率接近哪种状态？
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes:
+    - Behavioral anchor labels must be presented from item-specific UI text; numeric level is not value judgment.
+    response:
+      formatRef: LEVEL5_IDEAL
+  - taskId: SE-P02
+    constructId: partner_social_engagement_preference
+    prompt: 普通周末，你更希望伴侣：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes:
+    - Behavioral anchor labels must be presented from item-specific UI text; numeric level is not value judgment.
+    response:
+      formatRef: LEVEL5_IDEAL
+  - taskId: SE-P03
+    constructId: partner_social_engagement_preference
+    prompt: 连续一两周没见朋友时，你希望伴侣：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes:
+    - Behavioral anchor labels must be presented from item-specific UI text; numeric level is not value judgment.
+    response:
+      formatRef: LEVEL5_IDEAL
+  - taskId: SE-P05
+    constructId: partner_social_engagement_preference
+    prompt: 除了最亲近朋友，你希望伴侣平时和普通朋友、同事、熟人维持多少往来？
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes:
+    - Behavioral anchor labels must be presented from item-specific UI text; numeric level is not value judgment.
+    response:
+      formatRef: LEVEL5_IDEAL
+  - taskId: SE-P06
+    constructId: partner_social_engagement_preference
+    prompt: 你更希望伴侣在朋友之间：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes:
+    - Behavioral anchor labels must be presented from item-specific UI text; numeric level is not value judgment.
+    response:
+      formatRef: LEVEL5_IDEAL
+  - taskId: SE-P07
+    constructId: partner_social_engagement_preference
+    prompt: 如果生活连续一段时间只有工作、回家和固定两三个人，你希望伴侣：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes:
+    - Behavioral anchor labels must be presented from item-specific UI text; numeric level is not value judgment.
+    response:
+      formatRef: LEVEL5_IDEAL
+  - taskId: EX-P02
+    constructId: partner_experiential_exploration_preference
+    prompt: 在吃饭、休闲或娱乐上，你希望伴侣多久会主动提出一次“试试没体验过的东西”？
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes:
+    - Level represents behavioral position, not 'more is better'.
+    response:
+      formatRef: LEVEL5_IDEAL
+  - taskId: EX-P03
+    constructId: partner_experiential_exploration_preference
+    prompt: 遇到一个以前完全没接触、但风险不大的活动时，你希望伴侣：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_RULE_BASED
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes:
+    - Level represents behavioral position, not 'more is better'.
+    response:
+      formatRef: LEVEL5_IDEAL
+  - taskId: L4-AM02
+    constructId: partner_ambition_orientation
+    prompt: 如果一个人比你的理想事业导向低很多或高很多，哪一侧更影响你继续了解？
+    taskType: compound
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    children:
+    - itemId: L4-AM02.low
+      field: lowerMismatch
+      prompt: 比理想明显更低，对你影响多大？
+      tags: []
+      response:
+        formatRef: INTENSITY7_0_6
+    - itemId: L4-AM02.high
+      field: upperMismatch
+      prompt: 比理想明显更高、事业经常优先于关系，对你影响多大？
+      tags: []
+      response:
+        formatRef: INTENSITY7_0_6
+  - taskId: L4-AM03
+    constructId: partner_ambition_orientation
+    prompt: 你在意伴侣事业导向，主要是因为：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: multi_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 欣赏有目标的人
+        - code: '2'
+          label: 希望双方成长节奏接近
+        - code: '3'
+          label: 经济预期
+        - code: '4'
+          label: 社会身份 / 生活方式
+        - code: '5'
+          label: 担心太低缺少目标
+        - code: '6'
+          label: 担心太高让工作长期压过关系
+        - code: '7'
+          label: 其他
+        validation:
+          minSelections: 1
+          maxSelections: 3
+  - taskId: L4-FA02
+    constructId: partner_family_orientation
+    prompt: 如果伴侣的家庭导向明显偏离你的理想：
+    taskType: compound
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    children:
+    - itemId: L4-FA02.low
+      field: lowerMismatch
+      prompt: 家庭投入明显低于理想，对你影响多大？
+      tags: []
+      response:
+        formatRef: INTENSITY7_0_6
+    - itemId: L4-FA02.high
+      field: upperMismatch
+      prompt: 家庭在生活中占比明显高于理想、压缩个人边界，对你影响多大？
+      tags: []
+      response:
+        formatRef: INTENSITY7_0_6
+  - taskId: L4-TR01
+    constructId: preference_tradeoff
+    prompt: 如果两个人其他方面差不多，你更愿意优先保留哪一项？
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes:
+    - Adaptive engine should later choose attribute pairs based on information gain.
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 认知交流更接近理想
+        - code: '2'
+          label: 外貌更接近理想
+        - code: '3'
+          label: 两者差不多 / 信息不足
+  - taskId: L4-TR02
+    constructId: preference_tradeoff
+    wave: wave3
+    taskType: task
+    prompt: '假设两个人其他未提到的方面都差不多：
+
+      A：外貌很理想；认知交流可接受；事业稳定；支持互动很好。
+
+      B：外貌可接受但非理想；认知交流非常理想；事业稳定；支持互动普通。'
+    probeFocus:
+    - constrained_priority
+    - no_objectively_better_candidate
+    scoringStatus: PILOT_ONLY
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 更愿意继续了解 A
+        - code: '2'
+          label: 略偏 A
+        - code: '3'
+          label: 两者差不多 / 信息还不够
+        - code: '4'
+          label: 略偏 B
+        - code: '5'
+          label: 更愿意继续了解 B
+    normalizationStatus: P0_NORMALIZED_PARENT
+  - taskId: L4-TR03
+    constructId: preference_tradeoff
+    prompt: 假设一个候选人在所有重要方面都达到你的“可接受范围”，但你只有 3 个升级点，可以把三个属性从“可以”升级到“很理想”。请选择最多 3 项。
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes:
+    - Measures current marginal value, not permanent weights.
+    response:
+      inlineFormat:
+        type: multi_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 外貌
+        - code: '2'
+          label: 经济 / 现实能力
+        - code: '3'
+          label: 认知交流
+        - code: '4'
+          label: 社交参与
+        - code: '5'
+          label: 生活探索
+        - code: '6'
+          label: 事业导向
+        - code: '7'
+          label: 家庭导向
+        - code: '8'
+          label: 情绪支持互动
+        validation:
+          minSelections: 1
+          maxSelections: 3
+- poolId: life_plan_general
+  sampleCount: 5
+  samplingMethod: SAMPLE_WITHOUT_REPLACEMENT
+  tasks:
+  - taskId: L5-MR01
+    constructId: marriage_plan
+    prompt: 理想中的长期伴侣关系，你是否希望最终进入法律 / 社会意义上的婚姻？
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 明确不希望
+        - code: '2'
+          label: 偏向不希望
+        - code: '3'
+          label: 无所谓 / 看情况
+        - code: '4'
+          label: 偏向希望
+        - code: '5'
+          label: 明确希望
+  - taskId: L5-MR02
+    constructId: marriage_plan
+    prompt: 如果遇到合适的长期伴侣，按照你现在的人生计划，你是否打算结婚？
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 明确不打算
+        - code: '2'
+          label: 大概率不打算
+        - code: '3'
+          label: 目前无法决定
+        - code: '4'
+          label: 大概率会
+        - code: '5'
+          label: 明确会
+  - taskId: L5-MR04
+    constructId: marriage_plan
+    wave: wave3
+    taskType: compound
+    prompt: 从确认双方是长期关系开始，你对进入婚姻的时间有什么想法？
+    probeFocus:
+    - ideal_timing_vs_max_acceptable
+    scoringStatus: PILOT_ONLY
+    children:
+    - itemId: L5-MR04.a
+      field: idealTiming
+      prompt: 理想中多久进入婚姻比较合适？
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: true
+          options:
+          - code: '1'
+            label: 1 年以内
+          - code: '2'
+            label: 1–2 年
+          - code: '3'
+            label: 2–3 年
+          - code: '4'
+            label: 3–5 年
+          - code: '5'
+            label: 5 年以上
+          - code: '6'
+            label: 不设明确时间
+    - itemId: L5-MR04.b
+      field: maxAcceptableTiming
+      prompt: 最长超过多久会让你觉得双方方向可能不一致？
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: true
+          options:
+          - code: '1'
+            label: 1 年
+          - code: '2'
+            label: 2 年
+          - code: '3'
+            label: 3 年
+          - code: '4'
+            label: 5 年
+          - code: '5'
+            label: 5 年以上
+          - code: '6'
+            label: 没有明确上限
+          - code: '7'
+            label: 目前说不准
+    optionalMetaResponse:
+      field: positionConfidence
+      prompt: 你对这个答案本身有多确定？
+      response:
+        formatRef: POSITION_CONFIDENCE5
+  - taskId: L5-MR05
+    constructId: marriage_plan
+    prompt: 婚姻对你如果重要，主要原因有哪些？
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: multi_select
+        ordered: false
+        options:
+        - code: '1'
+          label: 法律保障
+        - code: '2'
+          label: 家庭认可
+        - code: '3'
+          label: 孩子计划
+        - code: '4'
+          label: 长期承诺象征
+        - code: '5'
+          label: 生活安排
+        - code: '6'
+          label: 经济 / 财产制度
+        - code: '7'
+          label: 个人价值
+        - code: '8'
+          label: 社会时间表
+        - code: '9'
+          label: 其他
+        validation:
+          minSelections: 1
+          maxSelections: 3
+  - taskId: L5-GEO02
+    constructId: location_distance_plan
+    prompt: 如果不考虑具体伴侣，你目前最希望未来 3–5 年生活在哪里？
+    taskType: compound
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    children:
+    - itemId: L5-GEO02.type
+      field: locationPreferenceType
+      prompt: 你更接近：
+      tags: []
+      response:
+        inlineFormat:
+          type: single_select
+          ordered: false
+          options:
+          - code: '1'
+            label: 明确某个城市
+          - code: '2'
+            label: 明确某个地区 / 城市群
+          - code: '3'
+            label: 有多个可接受城市
+          - code: '4'
+            label: 地点比较开放
+          - code: '5'
+            label: 目前不确定
+    - itemId: L5-GEO02.text
+      field: locationText
+      prompt: 如有明确地点，可填写。
+      tags: []
+      response:
+        inlineFormat:
+          type: free_text
+          maxChars: 120
+  - taskId: L5-GEO03
+    constructId: location_distance_plan
+    prompt: 如果关系很稳定，对方因职业 / 家庭原因需要换城市，你：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 基本不会考虑迁居
+        - code: '2'
+          label: 只有极少数条件下
+        - code: '3'
+          label: 可以认真讨论
+        - code: '4'
+          label: 如果整体更好可以迁
+        - code: '5'
+          label: 地点本身不是重要约束
+  - taskId: L5-GEO05
+    constructId: location_distance_plan
+    wave: wave3
+    taskType: compound
+    prompt: 比较下面两种异地情况：
+    probeFocus:
+    - distance_burden_vs_uncertainty_burden
+    scoringStatus: PILOT_ONLY
+    children:
+    - itemId: L5-GEO05.a
+      field: finite8Months
+      prompt: 对方未来 8 个月在另一座城市工作，之后有明确回到同城计划。你愿意继续了解的程度？
+      response:
+        formatRef: ACCEPT5
+    - itemId: L5-GEO05.b
+      field: indefinite
+      prompt: 对方未来几年在哪里都不确定，也没有明确结束异地的时间。你愿意继续了解的程度？
+      response:
+        formatRef: ACCEPT5
+  - taskId: L5-GEO06
+    constructId: location_distance_plan
+    prompt: 对于未来长期生活地点，这对你目前属于：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 只是偏好，比较灵活
+        - code: '2'
+          label: 有明显偏好但可协商
+        - code: '3'
+          label: 某些地区是 soft filter
+        - code: '4'
+          label: 有明确不能长期离开的地区 / 城市
+        - code: '5'
+          label: 目前不确定
+  - taskId: L5-AL01
+    constructId: alcohol_constraint
+    prompt: 你目前饮酒情况更接近：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes:
+    - Pilot broad behavior only; detailed quantity requires separate necessity/privacy review.
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 基本不喝
+        - code: '2'
+          label: 偶尔少量
+        - code: '3'
+          label: 偶尔会喝到明显醉意
+        - code: '4'
+          label: 每周规律饮酒
+        - code: '5'
+          label: 更高频 / 不方便说明
+  - taskId: L5-AL02
+    constructId: alcohol_constraint
+    prompt: 你对长期伴侣饮酒的接受范围更接近：
+    taskType: task
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    response:
+      inlineFormat:
+        type: single_select
+        ordered: true
+        options:
+        - code: '1'
+          label: 基本任何饮酒都难接受
+        - code: '2'
+          label: 偶尔少量可以
+        - code: '3'
+          label: 偶尔喝醉也能接受
+        - code: '4'
+          label: 规律饮酒只要不影响生活即可
+        - code: '5'
+          label: 基本不作为筛选条件
+        - code: '6'
+          label: 看具体情况
+  - taskId: L5-AGE01
+    constructId: age_filter
+    prompt: 对长期伴侣年龄，你目前是否有明确范围？
+    taskType: compound
+    responseContext: ADAPTIVE_HISTORY_CONTEXT
+    normalizationStatus: P1_NORMALIZED_MANUAL
+    scoringStatus: PILOT_ONLY
+    tags: []
+    notes: []
+    children:
+    - itemId: L5-AGE01.idealLower
+      field: idealLower
+      prompt: 理想下限（岁，可留空）
+      tags: []
+      response:
+        inlineFormat:
+          type: number
+          unit: years
+          allowBlank: true
+          validation:
+            min: 18
+            max: 80
+    - itemId: L5-AGE01.idealUpper
+      field: idealUpper
+      prompt: 理想上限（岁，可留空）
+      tags: []
+      response:
+        inlineFormat:
+          type: number
+          unit: years
+          allowBlank: true
+          validation:
+            min: 18
+            max: 80
+    - itemId: L5-AGE01.acceptableLower
+      field: acceptableLower
+      prompt: 可接受下限（岁，可留空）
+      tags: []
+      response:
+        inlineFormat:
+          type: number
+          unit: years
+          allowBlank: true
+          validation:
+            min: 18
+            max: 80
+    - itemId: L5-AGE01.acceptableUpper
+      field: acceptableUpper
+      prompt: 可接受上限（岁，可留空）
+      tags: []
+      response:
+        inlineFormat:
+          type: number
+          unit: years
+          allowBlank: true
+          validation:
+            min: 18
+            max: 80
+runtimeRules:
+- Sample without replacement within each unconditional pool.
+- Conditional life-plan tasks are never selected here; they are enabled only by runtime branches.
+- Use stable assessment-level random seed.
+- No construct scoring in runtime.

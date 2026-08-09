@@ -1,0 +1,438 @@
+schemaVersion: relationship-feature-model-v3.p1-form-manifest.v0.3
+generatedAt: '2026-08-09'
+status: DRAFT_FOR_P0_REFINEMENT
+supersedes: relationship_manual_v3_P1_form_manifest_v0.2.yaml
+auditCorrection:
+  v0_1CommonParentItemCount: 88
+  v0_2CommonParentTaskCount: 57
+  reason: v0.1 manifest contradicted the Pilot Blueprint target of roughly 50–65 common interaction/task units; v0.2 moves
+    nonessential items into planned-missing forms.
+commonSpine:
+  sections:
+    facts:
+    - FACT01
+    - FACT02
+    - FACT03
+    - FACT04
+    - FACT05
+    - FACT06
+    - FACT07
+    - FACT08
+    c1_c2:
+    - RR01
+    - RR04
+    - IM-IN01
+    - IM-ID01
+    - IM-EX01
+    - IM-AM01
+    - CAP01
+    - CAP06
+    - FT01
+    - FT03
+    c3:
+    - UA01
+    - UA03
+    - UR-DC01
+    - UR-RU01
+    - UR-TW01
+    c4:
+    - IDC02
+    - IDC13
+    - PS01
+    - PS03
+    c5:
+    - SN-S01
+    - SS01
+    - SS03
+    - RC-S01A
+    - RC-S01B
+    c6:
+    - CA05
+    - CA09
+    - CP01
+    - CR01
+    - CR06
+    l3:
+    - L3-CT02
+    - L3-CT06
+    - L3-ST02
+    - L3-CF01
+    - L3-MG03
+    - L3-FO01
+    l4:
+    - CF-S02
+    - L4-PH01
+    - L4-IE01
+    - SE-P04
+    - EX-P01
+    - L4-AM01
+    - L4-FA01
+    l5:
+    - L5-CH01
+    - L5-CH02
+    - L5-CH07
+    - L5-MR03
+    - L5-RS01
+    - L5-GEO04
+    - L5-SM02
+  parentTaskCount: 57
+  exactTaskSpecFile: relationship_manual_v3_P1_common_spine_spec_v0.1.yaml
+forms:
+  A_reactive_psychometric:
+    samplingPools:
+      readiness:
+        pool:
+        - RR02
+        - RR03
+        - RR05
+        - RR06
+        - RR07
+        - RR08
+        - RR09
+        - RR10
+        - RR11
+        - RR12
+        sample: 4
+      motivation:
+        pool:
+        - IM-IN02
+        - IM-IN03
+        - IM-IN04
+        - IM-ID02
+        - IM-ID03
+        - IM-ID04
+        - IM-PI01
+        - IM-PI02
+        - IM-PI03
+        - IM-PI04
+        - IM-NI01
+        - IM-NI02
+        - IM-NI03
+        - IM-NI04
+        - IM-EX02
+        - IM-EX03
+        - IM-EX04
+        - IM-EX05
+        - IM-EX06
+        - IM-AM02
+        - IM-AM03
+        - IM-AM04
+        sample: 8
+        stratify: ensure multiple motivation facets
+      uncertainty_activation:
+        pool:
+        - UA02
+        - UA04
+        - UA05
+        - UA06
+        - UA07
+        - UA08
+        - UA09
+        - UA10
+        - UA11
+        - UA12
+        - UA13
+        - UA14
+        - UA-S01
+        - UA-S02
+        - UA-S03
+        sample: 5
+      intimacy:
+        pool:
+        - IDC01
+        - IDC03
+        - IDC04
+        - IDC05
+        - IDC06
+        - IDC07
+        - IDC08
+        - IDC09
+        - IDC10
+        - IDC11
+        - IDC12
+        - IDC14
+        - IDC15
+        - IDC16
+        - IDC17
+        - IDC18
+        - IDC-S01
+        sample: 6
+      conflict_activation:
+        pool:
+        - CA01
+        - CA02
+        - CA03
+        - CA04
+        - CA06
+        - CA07
+        - CA08
+        - CA10
+        - CA11
+        - CA12
+        - CA13
+        - CA14
+        - CA15
+        - CA16
+        - CA-S01
+        - CA-S02
+        - CA-S03
+        sample: 6
+    targetExtraParentTasks: 29
+  B_needs_capabilities:
+    samplingPools:
+      follow_through:
+        pool:
+        - FT02
+        - FT04
+        - FT05
+        - FT06
+        - FT07
+        - FT08
+        - FT09
+        - FT10
+        - FT-S01
+        - FT-S02
+        - FT-S03
+        sample: 5
+      personal_space:
+        pool:
+        - PS02
+        - PS04
+        - PS05
+        - PS06
+        - PS07
+        - PS08
+        - PS-S01
+        - PS-S02
+        - PS-S03
+        sample: 4
+      support_need:
+        pool:
+        - SN-S02
+        - SN-S03
+        - SN-S04
+        - SN-S05
+        - SN-S06
+        - SN01
+        - SN02
+        - SN03
+        - SN04
+        - SN05
+        - SN06
+        - SN07
+        - SN08
+        sample: 5
+      support_signaling:
+        pool:
+        - SS02
+        - SS04
+        - SS05
+        - SS06
+        - SS07
+        - SS08
+        - SS09
+        - SS10
+        - SS-S01
+        - SS-S02
+        sample: 4
+      responsiveness:
+        pool:
+        - RC-S02
+        - RC-S03
+        - RC-S04
+        - RC-S05
+        - RC-S06
+        - RC-S07
+        - RC01
+        - RC02
+        - RC03
+        - RC04
+        - RC05
+        - RC06
+        sample: 4
+      pacing_repair:
+        pool:
+        - CP02
+        - CP03
+        - CP04
+        - CP05
+        - CP06
+        - CR02
+        - CR03
+        - CR04
+        - CR05
+        - CR07
+        - CR08
+        - CR09
+        - CR10
+        - CR11
+        - CR12
+        - CR13
+        - CR14
+        - CR15
+        - CR16
+        - CR17
+        - CR18
+        - CR-S01
+        - CR-S02
+        - CR-S03
+        - CR-S04
+        - CR-S05
+        sample: 7
+    targetExtraParentTasks: 29
+  C_operating_decision:
+    samplingPools:
+      operating_social_privacy:
+        pool:
+        - L3-CT03
+        - L3-CT04
+        - L3-CT05
+        - L3-ST03
+        - L3-ST04
+        - L3-ST05
+        - L3-ST06
+        - L3-ST07
+        - L3-SB01
+        - L3-SB02
+        - L3-SB03
+        - L3-SB04
+        - L3-SB05
+        - L3-DP01
+        - L3-DP02
+        - L3-DP03
+        - L3-DP04
+        - L3-DP05
+        - L3-DP06
+        sample: 6
+      money_household_family:
+        pool:
+        - L3-MG01
+        - L3-MG02
+        - L3-MG04
+        - L3-MG05
+        - L3-MG06
+        - L3-MG07
+        - L3-MG08
+        - L3-MG09
+        - L3-HH01
+        - L3-HH02
+        - L3-HH03
+        - L3-HH04
+        - L3-FO02
+        - L3-FO03
+        - L3-FO04
+        - L3-FO05
+        - L3-FO06
+        - L3-FO07
+        sample: 6
+      career_leisure:
+        pool:
+        - L3-CG01
+        - L3-CG02
+        - L3-CG03
+        - L3-CG04
+        - L3-SL01
+        - L3-SL02
+        - L3-SL03
+        - L3-SL04
+        - L3-SL05
+        sample: 4
+      preference_decision:
+        pool:
+        - CF-S01
+        - CF-S03
+        - CF-S04
+        - L4-PH02
+        - L4-RC01
+        - L4-RC02
+        - L4-RC03
+        - L4-IE02
+        - L4-IE03
+        - SE-P01
+        - SE-P02
+        - SE-P03
+        - SE-P05
+        - SE-P06
+        - SE-P07
+        - EX-P02
+        - EX-P03
+        - L4-AM02
+        - L4-AM03
+        - L4-FA02
+        - L4-TR01
+        - L4-TR02
+        - L4-TR03
+        sample: 7
+      life_plan_general:
+        pool:
+        - L5-MR01
+        - L5-MR02
+        - L5-MR04
+        - L5-MR05
+        - L5-GEO02
+        - L5-GEO03
+        - L5-GEO05
+        - L5-GEO06
+        - L5-AL01
+        - L5-AL02
+        - L5-AGE01
+        sample: 5
+    targetExtraParentTasks: 28
+assignment:
+  mainForm: random 1:1:1 unless balancing by relationship-history stratum is required
+  plannedMissingness: by_design
+  analysisRequirement: store assignment/form/block/item version for every assessment
+adaptiveBranches:
+  parenthoodTiming:
+    condition: L5-CH02 in [likely_yes, definite_yes]
+    items:
+    - L5-CH03
+  parenthoodOpenOrWants:
+    condition: L5-CH01/L5-CH02 indicates wants, likely wants, or open uncertainty
+    items:
+    - L5-CH04
+    - L5-CH05
+    - L3-PO01
+    - L3-PO02
+    - L3-PO03
+    - L3-PO04
+  parenthoodUncertain:
+    condition: L5-CH01 or L5-CH02 is explicit uncertainty
+    items:
+    - L5-CH06
+  hardConstraintConfirmation:
+    condition: any preference/filter is explicitly marked potentially hard
+    items:
+    - L5-HC01
+  worldviewDeep:
+    condition: L4-WV01 salience is materially positive
+    items:
+    - L4-WV02
+  existingChildrenAcceptance:
+    condition: operationally relevant
+    items:
+    - L5-EC01
+  maritalHistoryAcceptance:
+    condition: operationally relevant
+    items:
+    - L5-MH01
+  educationHardness:
+    condition: education preference salient
+    items:
+    - L5-ED01
+    - L5-ED02
+  heightHardness:
+    condition: height preference salient
+    items:
+    - L5-HT01
+  incomeHardness:
+    condition: resource minimum salient
+    items:
+    - L5-IN01
+warning: Parent task count is not completion-time equivalence; compound tasks contain child responses. P0.5 must measure actual
+  time and may require further splitting.
+auditCorrectionV03:
+  issue: Form C v0.2 life_plan_deep pool contained parenthood conditional items and L5-HC01, so random sampling could show
+    non-applicable tasks or duplicate later adaptive branches.
+  fix: Remove conditional parenthood/hard-confirmation tasks from rotating pool; keep them only in adaptive branches. Preserve
+    Form C target extra task count at 28.

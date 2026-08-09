@@ -59,6 +59,21 @@ dating_profiles 仅作为旧版测试数据保留，不再接受新资料写入�
 
 产品公开文案遵循 `design/VOICE_AND_TONE.md`；内容体验 Sprint 2 的改造与边界见 `design/CONTENT_EXPERIENCE_SPRINT_2_AUDIT.md`。
 
+## V3 研究 Pilot（默认关闭）
+
+V3 是按照 `research/v3/` 规范编译的本地研究 Pilot，与当前公开 V2 流程并行存在。它使用 Common Spine 加 A/B/C 稳定随机表单，并支持复合题、父母计划分支和明确缺失类型；当前只保存不可变原始回答与任务事件，不做生产评分、不生成关系报告，也不接云端。
+
+临时在微信开发者工具中测试时，将 `utils/features.js` 中的 `FEATURES.v3Pilot` 改为 `true`，然后直接打开 `/pages/questionnaire-v3-pilot/index`。测试完成后恢复为 `false`，生产默认不会展示该入口。
+
+题库源文件只能通过以下命令生成 runtime bundle，不能手改生成文件：
+
+```text
+npm run sync:assessment-v3-pilot
+npm run test:v3-pilot
+```
+
+当前自动分支为 `PARENTHOOD_TIMING`、`PARENTHOOD_OPEN_OR_WANTS`、`PARENTHOOD_UNSURE`；硬约束、世界观、教育、身高和收入分支仍是 deferred，等统一的 machine-readable trigger 进入规范后再启用。
+
 云函数从微信上下文取得 OPENID，不信任客户端传入的用户标识。数据库集合不得开放为客户端直接读写。
 
 使用 Codex Computer Use 检查微信开发者工具时，如遇到 NW.js 窗口归属错误，请查看 TROUBLESHOOTING.md。

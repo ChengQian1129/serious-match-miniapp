@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "relationship-feature-model-v3.runtime-manifest.v0.1",
+  "generatedAt": "2026-08-09",
+  "instrument": {
+    "id": "relationship_manual_v3_pilot",
+    "version": "3.0.0-p0.5",
+    "scoring": "NONE_IN_RUNTIME",
+    "manifestVersion": "0.3",
+    "taskLibraryVersion": "0.1",
+    "responseFormatVersion": "0.1"
+  },
+  "sourceFiles": {
+    "normative/NORMATIVE_MANIFEST.yaml": "474f13336fa6d65c9bc2ed50a0eabca4bc02f3d26879277bdf641cf4237da9c6",
+    "normative/SOURCE_OF_TRUTH_POLICY.md": "35a044d876882dc8aa40c3049abada0fc98e3816c13910c82aed9f3b5935256f",
+    "normative/construct_registry.yaml": "1efcbb56dcdb472f6726a1a9f2853b2130b4fd3e6159afa1625c35687e0fdc58",
+    "normative/data_dictionary.yaml": "21ffe1adb850bedc1fe12cb43100c7fd3d4c9c3710c5e88043e938cd71f1fa01",
+    "normative/dimension_combine_conclusion.yaml": "c697b89a57c38cba70f8c19c4b62842d9011efd0d604289d0db142400e828238",
+    "normative/pilot_pruning_calibration.yaml": "10ceefa70eb11f221782b7f3ef348b0ab18ecbf042b3c062ee0c6bea1435cf1e",
+    "normative/questionnaire_candidate_freeze.yaml": "552d51faaad8d3a3a9c0e4bb005d4fe3bc55c404b6f4c312a7fe34ae77ad56c7",
+    "normative/report_core_candidate.yaml": "c06a60c52e8ed04b3ec93b62181e3c631dbcb6f81185c6488b94ee8f3fa72d86",
+    "normative/report_runtime_schema.yaml": "0a1419c8e5684c2ef7a61eb71390cfabe5c1d79bc3d9d8b180a647a2d517a6b4",
+    "normative/response_formats.yaml": "dc51247ecb986515e73f46cb70b0115c4dcc7ce0d899f4616d1958147d4d8f7b",
+    "normative/user_report_authoring_library.yaml": "fb83ba15ddb901a37c65006547da73f6d24520a43eec0e2aa9da7535701d1ce1",
+    "pilot/P0_cognitive_interview_guide.md": "04183b970eb414fc619edde0ab65a1a63ba433d2c9cca5abcd9a1c25dd7e8fe4",
+    "pilot/P0_questionnaire_spec.yaml": "a645a13c697d2394f8806518836308ec9a53a8a0b392bce00d399148a766342f",
+    "pilot/P1_common_spine.yaml": "be7f3df8c9e067be025097286b09b6f5136b68688dc69e3664049b7e025ab1ee",
+    "pilot/P1_form_A.yaml": "904f1a238d398c6cf7f390b5d4b9c67ac75e3b0c1bb68795b5b7a32ac455af31",
+    "pilot/P1_form_B.yaml": "6a27bf38004c41c8815724bf6cb3fe4ba0c3d9b7d7889520c812b0767807dcd1",
+    "pilot/P1_form_C.yaml": "f697a7fd3169c641c1801b409ad90774f49a1c0b56e49915e51f81445e7ebcff",
+    "pilot/P1_form_manifest.yaml": "2c604263d4d9327dd850b2f4c8c9a3269acb6f8436db999404abf3642b1b9c17",
+    "pilot/active_branch_rules.yaml": "0fb80f1854ba0e18df74a294ad9f069a3a62a47df97385b7a0aab7f1449bd2d6",
+    "pilot/pilot_analysis_plan.md": "ac44b03ea6820fe6e7e7a985cc5f0e364b63b5978d3cd44796481b254b6b9f40",
+    "pilot/pilot_blueprint.md": "a171f77c75091e7d3ad603fa58ab7fbbb1ee24aa80582cda1b1fc9baec66fdbb",
+    "pilot/pilot_pruning_calibration.md": "0490df8e844bf2140d9e6faebec8f0c2b1e6b9994c2537a627aae39f8e51d5dc"
+  },
+  "counts": {
+    "candidateParentTasks": 411,
+    "reportCoreParentTasks": 266,
+    "commonParentTasks": 57,
+    "runtimeTaskLibrary": 411,
+    "childResponseFields": 119,
+    "constructRegistryObjects": 60
+  },
+  "runtimeHash": "b7c13fc43aec1f0d0fee5293687828dc381b12e850edfb0c5a2b94ee5ac0f5c0"
+}

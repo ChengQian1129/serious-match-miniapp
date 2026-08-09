@@ -1,0 +1,38 @@
+schemaVersion: relationship-feature-model-v3.active-branch-rules.v0.1
+status: ACTIVE_MACHINE_READABLE
+rules:
+  - id: PARENTHOOD_TIMING
+    when:
+      taskId: L5-CH02
+      codes: ['4', '5']
+    enable: [L5-CH03]
+  - id: PARENTHOOD_OPEN_OR_WANTS
+    whenAny:
+      - taskId: L5-CH01
+        codes: ['3', '4', '5']
+      - taskId: L5-CH02
+        codes: ['3', '4', '5']
+    enable: [L5-CH04, L5-CH05, L3-PO01, L3-PO02, L3-PO03, L3-PO04]
+  - id: PARENTHOOD_UNSURE
+    whenAny:
+      - taskId: L5-CH01
+        codes: ['3']
+      - taskId: L5-CH02
+        codes: ['3']
+    enable: [L5-CH06]
+deferred:
+  - id: HARD_CONSTRAINT_CONFIRMATION
+    reason: Current P1 bundle does not expose a uniform machine-readable potential-hard trigger.
+    planned: [L5-HC01]
+  - id: WORLDVIEW_DEEP
+    reason: No guaranteed machine-readable worldview salience gate is in the current P1 flow.
+    planned: [L4-WV02]
+  - id: EDUCATION_HARDNESS
+    reason: No guaranteed machine-readable education salience gate is in the current P1 flow.
+    planned: [L5-ED01, L5-ED02]
+  - id: HEIGHT_HARDNESS
+    reason: No guaranteed machine-readable height-hardness gate is in the current P1 flow.
+    planned: [L5-HT01]
+  - id: INCOME_HARDNESS
+    reason: No guaranteed machine-readable resource-hardness gate is in the current P1 flow.
+    planned: [L5-IN01]

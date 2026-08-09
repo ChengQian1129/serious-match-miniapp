@@ -4,7 +4,8 @@ const FEATURES = Object.freeze({
   matchingProfile: false,
   matchingPool: false,
   followupParticipation: true,
-  interviewResearchConsent: true
+  interviewResearchConsent: true,
+  v3Pilot: false
 })
 
 module.exports = { FEATURES }

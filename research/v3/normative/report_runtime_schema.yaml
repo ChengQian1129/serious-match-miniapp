@@ -1,0 +1,80 @@
+schemaVersion: relationship-feature-model-v3.report-runtime-schema.v1.0
+generatedAt: '2026-08-09'
+status: AUTHORING_RUNTIME_READY_SCORING_NOT_INCLUDED
+input:
+  assessmentMeta:
+    assessmentId: string
+    assessedAt: datetime
+    scoringModelVersion: string
+    authoringLibraryVersion: v1.0
+    reportVersion: v1.0
+    pilotStatus: string
+  dimensionResults:
+    relationship_readiness:
+      state: VERY_LOW|LOW|MID|HIGH|VERY_HIGH
+      confidence: LOW|MEDIUM|HIGH
+    initiation_motivation:
+      state: AUTONOMOUS_DOMINANT|AUTONOMOUS_PLUS_PRESSURE|PRESSURE_DOMINANT|LOW_MOTIVATION|MIXED
+      confidence: LOW|MEDIUM|HIGH
+    available_capacity:
+      state: LOW|MID|HIGH
+      confidence: LOW|MEDIUM|HIGH
+    relational_follow_through:
+      state: VERY_LOW|LOW|MID|HIGH|VERY_HIGH
+      confidence: LOW|MEDIUM|HIGH
+    uncertainty_activation:
+      state: VERY_LOW|LOW|MID|HIGH|VERY_HIGH
+      confidence: LOW|MEDIUM|HIGH
+    uncertainty_regulation:
+      state: CLARIFYING|OBSERVING|REASSURANCE_ORIENTED|MONITORING_ORIENTED|RUMINATIVE|TESTING_PROTEST|TOLERANT_WAITING|WITHDRAWING|MIXED
+      secondaryState: nullable
+      confidence: LOW|MEDIUM|HIGH
+    intimacy_dependence_comfort:
+      state: VERY_LOW|LOW|MID|HIGH|VERY_HIGH
+      confidence: LOW|MEDIUM|HIGH
+    personal_space_need:
+      state: LOW|MID|HIGH
+      confidence: LOW|MEDIUM|HIGH
+    support_need:
+      state: LISTEN_VALIDATE|CLARITY_REASSURANCE|PROBLEM_SOLVING|PRACTICAL_HELP|PRESENCE|SPACE|CONTEXTUAL_MIXED
+      confidence: LOW|MEDIUM|HIGH
+    support_signaling:
+      state: LOW|MID|HIGH
+      confidence: LOW|MEDIUM|HIGH
+    responsiveness_capability:
+      state: LOW|MID|HIGH
+      confidence: LOW|MEDIUM|HIGH
+      evidenceStatus: PROVISIONAL|MEASURED
+    conflict_activation:
+      state: VERY_LOW|LOW|MID|HIGH|VERY_HIGH
+      confidence: LOW|MEDIUM|HIGH
+    conflict_pacing_need:
+      state: IMMEDIATE|SHORT_PAUSE|LONGER_PAUSE|FLEXIBLE
+      confidence: LOW|MEDIUM|HIGH
+    repair_reengagement:
+      state: LOW|MID|HIGH
+      confidence: LOW|MEDIUM|HIGH
+      evidenceStatus: PROVISIONAL|MEASURED
+  decisionMap: separate L3/L4/L5 result object
+  patternContext:
+    majorConstraintConflict: boolean
+    supportNeedKnown: boolean
+output:
+  executiveSummary: max 3 selected cross-chapter patterns + highest-value uncertainty
+  dimensionCards: 14 cards
+  chapterSyntheses: '6'
+  decisionMap: L3/L4/L5
+  unknowns: interaction-dependent or low-confidence areas
+  interviewPriorities: 3-5
+  methodNote: measurement confidence / pilot status / no compatibility percentage
+confidenceLanguage:
+  HIGH: ''
+  MEDIUM: 从目前的回答看，
+  LOW: 目前的证据还比较有限，但你的回答暂时更接近：
+selectionRules:
+- Every dimension card is rendered exactly once.
+- Low confidence changes claim strength, not estimated state.
+- Responsiveness and repair capability remain provisional when evidenceStatus=PROVISIONAL.
+- No more than three cross-chapter patterns appear in executive summary.
+- Suppress redundant cross-chapter patterns when one is a more specific explanation of another.
+- Never infer L3/L4/L5 conclusions from C1–C6 dimension scores.
