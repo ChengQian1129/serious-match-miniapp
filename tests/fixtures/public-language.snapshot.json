@@ -807,7 +807,7 @@
   {
     "surface": "pages/privacy/index.wxml",
     "key": "text.40",
-    "text": "你可以随时取消后续联系，也可以删除联系方式和参与资料。删除问卷和结果时，本次答题相关的记录也会一起删除。"
+    "text": "你可以随时取消后续联系，也可以删除联系方式和后续联系资料。删除问卷和结果时，本次答题相关的记录也会一起删除。"
   },
   {
     "surface": "pages/privacy/index.wxml",
@@ -927,26 +927,16 @@
   {
     "surface": "pages/questionnaire-v3-pilot/index.js",
     "key": "literal.21",
-    "text": "暂时跳过未填写项"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.js",
-    "key": "literal.22",
     "text": "答题"
   },
   {
     "surface": "pages/questionnaire-v3-pilot/index.js",
-    "key": "literal.23",
+    "key": "literal.22",
     "text": "本题已完成"
   },
   {
     "surface": "pages/questionnaire-v3-pilot/index.js",
-    "key": "literal.24",
-    "text": "暂时跳过未填写项"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.js",
-    "key": "literal.25",
+    "key": "literal.23",
     "text": "当前题目仍有未完成的回答"
   },
   {
@@ -1023,21 +1013,6 @@
     "surface": "pages/questionnaire-v3-pilot/index.wxml",
     "key": "text.53",
     "text": "已暂时跳过"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.wxml",
-    "key": "text.73",
-    "text": "这次答题完成了"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.wxml",
-    "key": "text.75",
-    "text": "你的回答已经保存。这还是测试版本，目前不会根据这些回答生成正式结论。"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.wxml",
-    "key": "text.79",
-    "text": "如果你之后愿意参加一对一访谈或线下交流，我们会先说明具体安排，再由你决定。"
   },
   {
     "surface": "pages/questionnaire-v3-pilot/index.wxml",
@@ -20837,17 +20812,17 @@
   {
     "surface": "shared/content/followup-copy.js",
     "key": "scopes.research_use.title",
-    "text": "可以用我去掉身份信息后的回答改进这套题"
+    "text": "可以用不含身份信息的回答改进这套题"
   },
   {
     "surface": "shared/content/followup-copy.js",
     "key": "settings.deleteAction",
-    "text": "删除后续参与资料"
+    "text": "删除后续联系资料"
   },
   {
     "surface": "shared/content/followup-copy.js",
     "key": "settings.deleteBody",
-    "text": "删除后，我们会删除用于后续联系的授权、联系方式、参与资料和相关访谈记录。你的问卷和结果不会受影响。"
+    "text": "删除后，我们会删除用于后续联系的授权、联系方式、后续联系资料和相关访谈记录。你的问卷和结果不会受影响。"
   },
   {
     "surface": "shared/content/followup-copy.js",
@@ -21157,17 +21132,17 @@
   {
     "surface": "shared/content/public-language.generated.js",
     "key": "ui.followup.scopes.research_use.title",
-    "text": "可以用我去掉身份信息后的回答改进这套题"
+    "text": "可以用不含身份信息的回答改进这套题"
   },
   {
     "surface": "shared/content/public-language.generated.js",
     "key": "ui.followup.settings.deleteAction",
-    "text": "删除后续参与资料"
+    "text": "删除后续联系资料"
   },
   {
     "surface": "shared/content/public-language.generated.js",
     "key": "ui.followup.settings.deleteBody",
-    "text": "删除后，我们会删除用于后续联系的授权、联系方式、参与资料和相关访谈记录。你的问卷和结果不会受影响。"
+    "text": "删除后，我们会删除用于后续联系的授权、联系方式、后续联系资料和相关访谈记录。你的问卷和结果不会受影响。"
   },
   {
     "surface": "shared/content/public-language.generated.js",
@@ -21392,7 +21367,7 @@
   {
     "surface": "shared/content/public-language.generated.js",
     "key": "ui.privacy.retention",
-    "text": "问卷和结果会保存到你主动删除为止。后续参与资料和联系方式会在你撤回或删除后清除。做研究分析时，我们会先去掉能直接识别你的信息；这类记录最多保留到试点结束后 12 个月，之后删除，或只保留无法识别个人的统计结果。"
+    "text": "问卷和结果会保存到你主动删除为止。后续联系资料和联系方式会在你撤回或删除后清除。做研究分析时，我们会先去掉能直接识别你的信息；这类记录最多保留到试点结束后 12 个月，之后删除，或只保留无法识别个人的统计结果。"
   },
   {
     "surface": "shared/content/public-language.generated.js",
@@ -21402,7 +21377,7 @@
   {
     "surface": "shared/content/public-language.generated.js",
     "key": "ui.privacy.rights",
-    "text": "你可以查看和修改自己的回答，也可以随时撤回后续联系的授权，或删除问卷、结果和参与资料。"
+    "text": "你可以查看和修改自己的回答，也可以随时撤回后续联系的授权，或删除问卷、结果和后续联系资料。"
   },
   {
     "surface": "shared/content/public-language.generated.js",
@@ -21592,12 +21567,17 @@
   {
     "surface": "shared/content/public-language.generated.js",
     "key": "ui.v3Pilot.completion",
-    "text": "这次答题完成了。"
+    "text": "这次答题完成了"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3Pilot.completionFollowup",
+    "text": "如果你之后愿意参加一对一访谈或线下交流，我们会先说明具体安排，再由你决定。"
   },
   {
     "surface": "shared/content/public-language.generated.js",
     "key": "ui.v3Pilot.completionNote",
-    "text": "这还是测试版本，目前不会根据这些回答生成正式结论。"
+    "text": "这是测试版，这次不会生成结果。"
   },
   {
     "surface": "shared/content/public-language.generated.js",
@@ -23072,7 +23052,7 @@
   {
     "surface": "shared/content/report-copy.js",
     "key": "sections[3].title",
-    "text": "你通常能给出的"
+    "text": "你通常会怎么做"
   },
   {
     "surface": "shared/content/report-copy.js",
@@ -23082,7 +23062,7 @@
   {
     "surface": "shared/content/report-copy.js",
     "key": "sections[4].title",
-    "text": "值得再想一想的地方"
+    "text": "还有几件事，可以再想想"
   },
   {
     "surface": "shared/content/report-copy.js",
@@ -23227,7 +23207,7 @@
   {
     "surface": "shared/content/ui-copy.js",
     "key": "privacy.retention",
-    "text": "问卷和结果会保存到你主动删除为止。后续参与资料和联系方式会在你撤回或删除后清除。做研究分析时，我们会先去掉能直接识别你的信息；这类记录最多保留到试点结束后 12 个月，之后删除，或只保留无法识别个人的统计结果。"
+    "text": "问卷和结果会保存到你主动删除为止。后续联系资料和联系方式会在你撤回或删除后清除。做研究分析时，我们会先去掉能直接识别你的信息；这类记录最多保留到试点结束后 12 个月，之后删除，或只保留无法识别个人的统计结果。"
   },
   {
     "surface": "shared/content/ui-copy.js",
@@ -23237,7 +23217,7 @@
   {
     "surface": "shared/content/ui-copy.js",
     "key": "privacy.rights",
-    "text": "你可以查看和修改自己的回答，也可以随时撤回后续联系的授权，或删除问卷、结果和参与资料。"
+    "text": "你可以查看和修改自己的回答，也可以随时撤回后续联系的授权，或删除问卷、结果和后续联系资料。"
   },
   {
     "surface": "shared/content/ui-copy.js",

@@ -92,11 +92,11 @@
 
 <view wx:if="{{loaded && completed}}" class="page v3-complete-page">
     <view class="page-header v3-complete-header">
-    <view class="page-title">这次答题完成了</view>
-    <view class="page-desc">你的回答已经保存。这还是测试版本，目前不会根据这些回答生成正式结论。</view>
+    <view class="page-title">{{completionTitle}}</view>
+    <view class="page-desc">{{completionNote}}</view>
   </view>
   <view class="v3-complete-rule"></view>
-  <view class="v3-complete-note">如果你之后愿意参加一对一访谈或线下交流，我们会先说明具体安排，再由你决定。</view>
+  <view class="v3-complete-note">{{completionFollowup}}</view>
   <view class="v3-complete-actions action-bar--static">
     <button class="dl-button" bind:tap="exitPilot">返回首页</button>
   </view>

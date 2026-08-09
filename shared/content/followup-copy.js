@@ -23,14 +23,14 @@ module.exports = Object.freeze({
     manageProfile: '修改联系资料',
     fillProfile: '填写联系资料',
     deleteTitle: '不再参加后续活动？',
-    deleteBody: '删除后，我们会删除用于后续联系的授权、联系方式、参与资料和相关访谈记录。你的问卷和结果不会受影响。',
+    deleteBody: '删除后，我们会删除用于后续联系的授权、联系方式、后续联系资料和相关访谈记录。你的问卷和结果不会受影响。',
     deleteConfirm: '确认删除',
     deleteCancel: '取消',
-    deleteAction: '删除后续参与资料'
+    deleteAction: '删除后续联系资料'
   }),
   scopes: Object.freeze({
     interview_contact: Object.freeze({ title: '可以联系我做一对一访谈', description: '如果有合适的访谈，可以通过你留下的联系方式邀请你。打开这一项后才需要填写联系方式。' }),
-    research_use: Object.freeze({ title: '可以用我去掉身份信息后的回答改进这套题', description: '分析时会先去掉能直接识别你的信息，用来看看哪些题和结果还需要修改。不需要留下联系方式。' }),
+    research_use: Object.freeze({ title: '可以用不含身份信息的回答改进这套题', description: '分析时会先去掉能直接识别你的信息，用来看看哪些题和结果还需要修改。不需要留下联系方式。' }),
     offline_invitation: Object.freeze({ title: '可以联系我参加线下活动', description: '如果之后在大连有合适的交流活动，可以给你发邀请。每次要不要参加，都由你自己决定。' })
   }),
   profile: Object.freeze({

@@ -155,7 +155,10 @@ Page({
     canPrevious: false,
     canContinue: false,
     canSkip: true,
-    skipLabel: '暂时跳过未填写项',
+    skipLabel: publicLanguage.ui.v3Pilot.skipDisplay,
+    completionTitle: publicLanguage.ui.v3Pilot.completion,
+    completionNote: publicLanguage.ui.v3Pilot.completionNote,
+    completionFollowup: publicLanguage.ui.v3Pilot.completionFollowup,
     error: '',
     skipNotice: '',
     motionClass: 'v3-pilot-content--enter-forward'
@@ -210,7 +213,7 @@ Page({
       canPrevious: current.currentParentIndex > 0,
       canContinue: accounted,
       canSkip: !accounted,
-      skipLabel: accounted ? '本题已完成' : '暂时跳过未填写项',
+      skipLabel: accounted ? '本题已完成' : publicLanguage.ui.v3Pilot.skipDisplay,
       error: direction ? '' : this.data.error,
       skipNotice: direction ? '' : this.data.skipNotice,
       motionClass: direction ? `v3-pilot-content--enter-${direction}` : ''

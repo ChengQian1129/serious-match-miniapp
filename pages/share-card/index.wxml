@@ -1,5 +1,5 @@
 <view class="page share-page">
-  <view class="page-kicker">只分享由你确认的内容</view><view class="share-title">我的相处名片</view><view class="share-desc">从“我比较看重、我通常能提供、认识我时”中选择最多四条。风险提示、原始答案、联系方式和未核对结论不会进入名片。</view>
+  <view class="page-kicker">只分享由你确认的内容</view><view class="share-title">我的相处名片</view><view class="share-desc">从“我比较看重、我通常会怎么做、认识我时”中选择最多四条。风险提示、原始答案、联系方式和未核对结论不会进入名片。</view>
   <view wx:if="{{available.length}}" class="share-options">
     <button wx:for="{{available}}" wx:key="id" class="share-option {{item.selected ? 'share-option--selected' : ''}}" data-id="{{item.id}}" bind:tap="toggleClaim"><text class="share-option__check">{{item.selected ? '✓' : ''}}</text><view><text class="share-option__category">{{item.category.label}}</text><text>{{item.shareFragment}}</text></view></button>
   </view>

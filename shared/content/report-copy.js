@@ -7,8 +7,8 @@ module.exports = Object.freeze({
     { id: 'overall', title: '现在的你' },
     { id: 'interaction', title: '关系有变化时' },
     { id: 'resource', title: '你希望怎样相处' },
-    { id: 'provide', title: '你通常能给出的' },
-    { id: 'tension', title: '值得再想一想的地方' }
+    { id: 'provide', title: '你通常会怎么做' },
+    { id: 'tension', title: '还有几件事，可以再想想' }
   ]),
   heroIntro: '这是根据你这次回答整理出的结果。先看最明显的几件事。',
   topFindingsTitle: '先看这 3 点',

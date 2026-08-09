@@ -200,7 +200,8 @@ function main() {
       pageTitle: ui.v3Pilot.pageTitle,
       skipDisplay: ui.v3Pilot.skipDisplay,
       completion: ui.v3Pilot.completion,
-      completionNote: ui.v3Pilot.completionNote
+      completionNote: ui.v3Pilot.completionNote,
+      completionFollowup: ui.v3Pilot.completionFollowup
     }
   }
   const value = {

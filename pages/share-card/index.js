@@ -14,7 +14,7 @@ function wrapText(context, text, maxWidth) {
 }
 
 function categoryForClaim(claim) {
-  if (claim.section === 'provide') return { id: 'provide', label: '我通常能提供' }
+  if (claim.section === 'provide') return { id: 'provide', label: '我通常会怎么做' }
   if (claim.section === 'observation') return { id: 'observe', label: '认识我时' }
   return { id: 'value', label: '我比较看重' }
 }
