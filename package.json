@@ -1,7 +1,7 @@
 {
   "name": "serious-match-miniapp",
   "version": "2.1.0-pilot-interview",
-  "description": "原生微信小程序：个人关系评估、可核对的关系说明书，以及自愿参加的后续访谈与研究入口。",
+  "description": "原生微信小程序：恋爱和相处答题，以及自愿参加的一对一访谈与线下交流。",
   "main": "app.js",
   "scripts": {
     "postinstall": "node scripts/patch-tdesign.js",
@@ -10,9 +10,10 @@
     "sync:cloud-services": "node scripts/sync-cloud-services.js",
     "deploy:cloud": "npm.cmd run sync:assessment && node scripts/deploy-cloud-functions.js",
     "sync:assessment-v3-pilot": "node scripts/sync-assessment-v3-pilot.js",
+    "sync:public-language": "node scripts/sync-public-language.js",
     "test:v3-pilot": "node scripts/check-assessment-v3-pilot.js && node tests/assessment-v3-pilot-runtime.test.js && node tests/assessment-v3-pilot-session.test.js && node tests/assessment-v3-pilot-page.test.js",
     "check:public-copy": "node scripts/check-public-copy.js",
-    "test": "node scripts/check-project.js && node scripts/check-public-boundary.js && npm run check:public-copy && node scripts/check-assessment-schema.js && node scripts/check-cloud-services.js && node scripts/check-v21-dod.js && node tests/navigation.test.js && node tests/storage-profile.test.js && node tests/consent-events.test.js && node tests/followup-flow.test.js && node tests/contact-form.test.js && node tests/assessment-v2.test.js && node tests/assessment-schema-sync.test.js && node tests/report-evidence.test.js && node tests/report-confidence.test.js && node tests/feedback-events.test.js && node tests/quality-engine.test.js && node tests/interview-preparation.test.js && node tests/assessment-v2-flow.test.js && node tests/questionnaire-page.test.js && node tests/questionnaire-draft-retry.test.js && node tests/reality-page.test.js && node tests/chapter-insight-page.test.js && node tests/return-paths.test.js && node tests/questionnaire-result-sync.test.js && node tests/content-experience.test.js && node tests/content-sprint-2-regression.test.js && node tests/cloud-profile-v2.test.js && node tests/cloud-assessment-v2.test.js && node tests/cloud-service-boundary.test.js && node tests/public-boundary.test.js && npm run test:v3-pilot"
+    "test": "node scripts/check-project.js && node scripts/check-public-boundary.js && npm run check:public-copy && node scripts/check-public-language.js && node scripts/check-assessment-schema.js && node scripts/check-cloud-services.js && node scripts/check-v21-dod.js && node tests/navigation.test.js && node tests/storage-profile.test.js && node tests/consent-events.test.js && node tests/followup-flow.test.js && node tests/contact-form.test.js && node tests/assessment-v2.test.js && node tests/assessment-schema-sync.test.js && node tests/report-evidence.test.js && node tests/report-confidence.test.js && node tests/feedback-events.test.js && node tests/quality-engine.test.js && node tests/interview-preparation.test.js && node tests/assessment-v2-flow.test.js && node tests/questionnaire-page.test.js && node tests/questionnaire-draft-retry.test.js && node tests/reality-page.test.js && node tests/chapter-insight-page.test.js && node tests/return-paths.test.js && node tests/questionnaire-result-sync.test.js && node tests/content-experience.test.js && node tests/content-sprint-2-regression.test.js && node tests/cloud-profile-v2.test.js && node tests/cloud-assessment-v2.test.js && node tests/cloud-service-boundary.test.js && node tests/public-boundary.test.js && npm run test:v3-pilot"
   },
   "keywords": [],
   "author": "",

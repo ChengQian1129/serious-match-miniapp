@@ -1,0 +1,291 @@
+schemaVersion: serious-match.public-ui-copy-rewrite.v1.0
+generatedAt: '2026-08-09'
+principles:
+- 公开页面不创造新的产品概念名词；能直接说功能，就直接说功能。
+- 内部研究、测量、运行时、评分、分支、置信度术语不向用户展示。
+- 能说具体行为，就不说抽象心理概念。
+- 能删掉的解释，不通过“润色”继续保留。
+- 普通页面用日常中文；方法和隐私页面允许更正式，但必须一遍读懂。
+- 用户错误提示只来自白名单，禁止显示原始服务端/开发错误。
+- 小程序保留后续访谈和线下交流入口；不增加“人工相亲匹配”软件内勾选项。
+navigation:
+  globalFallback: 恋爱和相处
+  welcome: 恋爱和相处
+  home: 恋爱和相处
+  questionnaire: 答题
+  chapterInsight: 这一部分完成
+  result: 你的结果
+  relationshipMapRouteVisibleTitle: 你在意什么
+  claimEvidence: 为什么这么说
+  followupIntro: 继续聊聊
+  followupSettings: 后续联系
+  profile: 联系资料
+  privacy: 隐私说明
+  v3Pilot: 答题 · 测试版
+welcome:
+  kicker:
+    action: DELETE
+  title:
+    replaceWith: 先看看自己谈恋爱时会怎么想、怎么做。
+  intro:
+    replaceWith: 比如：
+  questions:
+  - 对方突然比以前冷一点，你真正介意的是什么？
+  - 两个人越来越亲近以后，你还需要多少自己的空间？
+  - 吵起来的时候，你更想马上说清楚，还是先停一会儿？
+  boundary:
+    replaceWith: 这里不会给你分人格类型。
+  closing:
+    action: DELETE
+  meta:
+    replaceWith: 大约需要几分钟，可以随时停下来。
+    implementationNote: 不要把固定题数和估算时长硬编码在 copy 文件中；从当前 instrument publicMeta/真实 telemetry 读取。
+  action:
+    replaceWith: 开始答题
+  methodAction:
+    replaceWith: 这些问题怎么来的？
+home:
+  kicker:
+    action: DELETE
+  titleFirstTime:
+    replaceWith: 开始答题
+  titleResume:
+    replaceWith: 继续答题
+  description:
+    replaceWith: 这些题问的都是实际可能遇到的情况。按你平时最可能的反应回答就行。
+  exampleLabel:
+    replaceWith: 比如
+  example:
+    replaceWith: 对方回复突然比以前慢很多。你更在意的是回得慢，还是他变了，却没告诉你为什么？
+  action:
+    replaceWith: 开始答题
+  guideAction:
+    replaceWith: 这些问题怎么来的？
+  progressTitle:
+    replaceWith: 上次答到这里
+  completedTitle:
+    replaceWith: 已经做完了
+  completedDescription:
+    replaceWith: 可以重新看结果，也可以改之前的回答。
+  topicsTitle:
+    replaceWith: 会问到这些
+  topics:
+  - 你现在想不想谈恋爱
+  - 对方态度变了，你通常会怎样
+  - 关系越来越亲近以后，你需要多少自己的空间
+  - 难受或吵架时，你希望两个人怎么处理
+  followupHint:
+    replaceWith: 做完以后，如果你愿意，还可以了解一对一访谈或大连的线下交流。
+methodGuide:
+  title:
+    replaceWith: 这些问题从哪里来？
+  body:
+    replaceWith: 这些问题参考了成人依恋、关系投入、伴侣回应和冲突处理等研究。现在这套题还在试用和调整，不是心理诊断，也不是标准化心理量表。
+  focus:
+    replaceWith: 我们会继续看哪些问题真正有用、哪些地方需要改。
+  detailAction:
+    replaceWith: 查看方法说明
+  closeAction:
+    replaceWith: 知道了
+chapters:
+  C1:
+    eyebrow: 第一部分
+    title: 你现在想不想谈恋爱
+    body: 先不管年龄、家里和朋友怎么想，也先不管现在有没有具体的人。只看你自己：如果最近真的遇到一个不错的人，你愿不愿意认真认识他？
+    hint: 按你现在的状态回答。
+  C2:
+    eyebrow: 第二部分
+    title: 你现在有没有时间和精力
+    body: 想谈恋爱是一回事，真有时间和精力持续认识一个人是另一回事。这里主要问你最近的生活状态。
+    hint: 按最近一个月的真实情况回答。
+  C3:
+    eyebrow: 第三部分
+    title: 对方态度变了，你通常会怎样
+    body: 想一个你真的在意过的人。如果他突然回得慢了、变冷了，或者一直不把关系说清楚，你通常会怎么反应？
+    hint: 没有类似经历的题，可以选“暂时说不好”。
+  C4:
+    eyebrow: 第四部分
+    title: 关系越来越亲近以后
+    body: 两个人越来越亲近以后，有些人会觉得很舒服，有些时候也会想多留一点自己的时间。这里问的是你真实相处时的感受。
+    hint: 按你实际会怎样回答，不按你觉得自己应该怎样。
+  C5:
+    eyebrow: 第五部分
+    title: 你希望对方怎么支持你
+    body: 你难受的时候希望对方怎么做？轮到对方难受时，你平时又会怎么做？这里把两件事分开问。
+    hint: 按你真实需要和真实做法回答。
+  C6:
+    eyebrow: 最后一部分
+    title: 吵架以后，你通常怎么处理
+    body: 两个人都很生气的时候，你会继续谈、先停一会儿，还是先躲开？冷静以后，你还会不会回来把事情说完？
+    hint: 按过去比较常见的情况回答。
+  doNotRenderFromLegacyFields:
+  - lead
+  - reflection
+  - impact-as-separate-block
+chapterInsight:
+  headerPattern: 第 {n} 部分完成
+  publicShape:
+  - headline
+  - summary
+  - evidenceToggle
+  evidenceToggle: 为什么这么说
+  evidenceIntro: 主要参考了这些回答
+  answerPrefix: 你的回答：
+  removeFromPrimaryUI:
+  - lead
+  - reflection
+  - impact
+  - boundary
+  - chapterFeedback
+  - measurement confidence
+  - construct/dimension identifiers
+  fallback:
+    headline: 这一部分现在还看不出明确结论
+    summary: 这几道题的回答不太一致，现在先不下结论。
+result:
+  pageTitle: 你的结果
+  heroIntro: 这是根据你这次回答整理出的结果。先看最明显的几件事。
+  topFindingsTitle: 先看这 3 点
+  chapterResultsTitle: 再分开看看
+  chapterResultsDescription:
+    action: DELETE
+  detailsTitle: 更多结果
+  detailsDescription:
+    action: DELETE
+  detailsAction: 展开更多
+  detailsCollapseAction: 收起
+  unknownTitle: 还有几件事，现在看不出来
+  unknownDescription: 这些题的回答还不够一致，现在先不下结论。
+  observationTitle: 你平时可能会这样做
+  boundary: 这些结果只根据你这次的回答整理，不是心理诊断，也不能预测一段关系会不会成功。
+  reviseTitle: 修改回答
+  dataTitle: 数据和隐私
+  dataDelete: 删除这次结果
+  deleteDialogTitle: 删除这次结果？
+  deleteDialogContent: 问卷、结果和本机保存的副本都会删除。删除后不能恢复。
+  mapAction: 继续看看你在意什么
+  followupTitle: 如果你愿意，可以再聊聊
+  followupBody: 有些事靠选择题问不清。我们会邀请一部分人做一对一访谈，也可能组织大连的线下交流。要不要参加都由你自己决定。
+  followupAction: 了解一下
+  claimAction: 为什么这么说
+relationshipMap:
+  note: 路由和内部对象名可以保留 relationship-map，但用户端不再出现“关系决策地图”这个概念。
+  kicker:
+    action: DELETE
+  title: 你在意什么
+  description:
+    action: DELETE
+  preferredFutureSections:
+  - 你希望两个人怎么相处
+  - 你找对象时比较在意什么
+  - 你对以后有什么打算
+  claimsTitle: 你比较在意的事
+  claimsDescription: 点开可以看看相关回答，或者回去修改。
+  unknownTitle: 还有些事，你现在还没想清楚
+  unknownDescription: 这几项现在先不下结论。
+  historyTitle: 以前的结果
+  historyDescription: 以前的回答会单独保留，不会覆盖现在这次。
+  followupKicker:
+    action: DELETE
+  followupTitle: 如果你愿意，可以把一两件事聊得更具体
+  followupDescription: 一对一访谈和线下交流都会另外说明，再由你决定要不要参加。
+  followupAction: 了解一下
+  reportAction: 回到你的结果
+  reportDescription:
+    action: DELETE
+  claimBasis: 为什么这么说
+followup:
+  entry:
+    title: 如果你愿意，可以再聊聊。
+    body: 有些事靠选择题问不清。我们会邀请一部分人做一对一访谈，也可能组织大连的线下交流。要不要参加都由你自己决定。
+    action: 了解一下
+  intro:
+    kicker:
+      action: DELETE
+    title: 如果你愿意，我们可以继续聊。
+    body: 后面可能会邀请你做一对一访谈、聊聊这套题哪里难理解，或者参加大连的线下交流。这些都不是答题的一部分，不参加也不会影响你看结果。
+    safety: 你的资料不会自动给其他用户看。每一次邀请都会先说明是什么，再由你决定要不要参加。
+    primary: 看看有哪些选择
+    secondary: 先不用
+  settings:
+    kicker:
+      action: DELETE
+    title: 你愿意接受哪些后续联系？
+    description: 下面几件事分开选择，默认都不勾选，以后也可以改。
+    save: 保存
+    manageProfile: 修改联系资料
+    fillProfile: 填写联系资料
+    deleteTitle: 不再参加后续活动？
+    deleteBody: 删除后，我们会删除用于后续联系的授权、联系方式、参与资料和相关访谈记录。你的问卷和结果不会受影响。
+    deleteConfirm: 确认删除
+    deleteCancel: 取消
+    deleteAction: 删除后续参与资料
+  scopes:
+    interview_contact:
+      title: 可以联系我做一对一访谈
+      description: 如果有合适的访谈，可以通过你留下的联系方式邀请你。打开这一项后才需要填写联系方式。
+    research_use:
+      title: 可以用我去掉身份信息后的回答改进这套题
+      description: 分析时会先去掉能直接识别你的信息，用来看看哪些题和结果还需要修改。不需要留下联系方式。
+    offline_invitation:
+      title: 可以联系我参加线下活动
+      description: 如果之后在大连有合适的交流活动，可以给你发邀请。每次要不要参加，都由你自己决定。
+  doNotAdd:
+  - manual_matchmaking opt-in
+  - 匹配池
+  - 接受人工相亲匹配
+privacy:
+  operator: 运营者：钱程
+  contact: 联系运营者：通过小程序客服
+  contactRule: 如果客服入口尚未配置，隐藏这一行；绝不能显示“公开测试前需配置”之类开发备注。
+  retentionTitle: 保存多久
+  retention: 问卷和结果会保存到你主动删除为止。后续参与资料和联系方式会在你撤回或删除后清除。做研究分析时，我们会先去掉能直接识别你的信息；这类记录最多保留到试点结束后 12 个月，之后删除，或只保留无法识别个人的统计结果。
+  rightsTitle: 你可以做什么
+  rights: 你可以查看和修改自己的回答，也可以随时撤回后续联系的授权，或删除问卷、结果和参与资料。
+  internalOnly:
+  - 公开测试前检查
+  - 正式公开测试前，运营主体需要确认...
+  - 微信公众平台配置说明
+  - 云环境配置说明
+v3Pilot:
+  pageTitle: 答题 · 测试版
+  hide:
+  - Pilot
+  - P0
+  - P0.5
+  - P1
+  - 研究表单 A
+  - 研究表单 B
+  - 研究表单 C
+  - formKey
+  - pool
+  - branchPath
+  - USER_SKIPPED
+  - NOT_SHOWN_BY_DESIGN
+  - NOT_APPLICABLE
+  - TECHNICAL_MISSING
+  - constructId
+  - facet
+  - scoring model
+  - measurement confidence
+  skipDisplay: 已暂时跳过
+  completion: 这次答题完成了。
+  completionNote: 这还是测试版本，目前不会根据这些回答生成正式结论。
+errors:
+  policy: 公开 UI 只能使用这里的白名单错误。原始 cloud/server/runtime error 只写日志，不能直接 toast/modal 给用户。
+  saveFailed: 暂时保存失败，请检查网络后再试。
+  loadFailed: 暂时加载失败，请稍后再试。
+  submitFailed: 暂时提交失败，请稍后再试。
+  questionInvalid: 这道题出了点问题，请返回后再试。
+  incomplete: 还有题没答完。
+  network: 网络好像不太稳定，请稍后再试。
+  generic: 刚才出了点问题，请稍后再试。
+  neverExposeExamples:
+  - 请先配置微信云开发环境 ID
+  - 云数据库集合尚未建立
+  - 云开发环境配置不匹配
+  - itemId
+  - instrumentVersion
+  - assessmentType
+  - server error.message
+  - stack trace

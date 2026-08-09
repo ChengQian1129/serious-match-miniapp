@@ -221,6 +221,44 @@ function getTask(taskId) {
   return BUNDLE.tasks[taskId] || null
 }
 
+function publicOptionLabels(responseSpec, itemId, parentTaskId) {
+  const format = resolveFormat(responseSpec)
+  if (!format) return {}
+  const publicCopy = BUNDLE.publicCopy || {}
+  return Object.assign({},
+    (publicCopy.responseFormatOptions || {})[responseSpec.formatRef] || {},
+    (publicCopy.taskOptions || {})[itemId] || {},
+    (publicCopy.taskSpecificOptions || {})[parentTaskId] || {}
+  )
+}
+
+function resolvePublicFormat(responseSpec, itemId, parentTaskId) {
+  const format = resolveFormat(responseSpec)
+  if (!format) return null
+  const labels = publicOptionLabels(responseSpec, itemId, parentTaskId)
+  if (!Object.keys(labels).length) return format
+  return Object.assign({}, format, {
+    options: (format.options || []).map(option => Object.assign({}, option, labels[String(option.code)] ? { label: labels[String(option.code)] } : {}))
+  })
+}
+
+function getPublicTask(taskIdOrTask) {
+  const task = typeof taskIdOrTask === 'string' ? getTask(taskIdOrTask) : taskIdOrTask
+  if (!task) return null
+  const publicCopy = BUNDLE.publicCopy || {}
+  const taskId = task.taskId
+  const publicTask = Object.assign({}, task, {
+    prompt: (publicCopy.taskPrompts || {})[taskId] || task.prompt,
+    section: task.freezeMeta && task.freezeMeta.chapter && (publicCopy.chapterTitles || {})[task.freezeMeta.chapter] || ''
+  })
+  if (Array.isArray(task.children)) {
+    publicTask.children = task.children.map(child => Object.assign({}, child, {
+      prompt: (publicCopy.childPrompts || {})[child.itemId] || child.prompt
+    }))
+  }
+  return publicTask
+}
+
 function getDeferredBranches() {
   return BUNDLE.branches.deferred.slice()
 }
@@ -241,5 +279,7 @@ module.exports = {
   isParentComplete,
   progress,
   getTask,
+  getPublicTask,
+  resolvePublicFormat,
   getDeferredBranches
 }

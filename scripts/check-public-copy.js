@@ -8,7 +8,7 @@ const targets = app.pages.flatMap(route => [
   path.join(root, `${route}.json`)
 ]).concat(
   fs.readdirSync(path.join(root, 'shared', 'content'))
-    .filter(file => file.endsWith('.js'))
+    .filter(file => file.endsWith('.js') && file !== 'public-language.generated.js')
     .map(file => path.join(root, 'shared', 'content', file))
 )
 

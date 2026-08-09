@@ -6,6 +6,7 @@ const { acceptNavigationTap, getMotionClass, showQuestion } = require('../../uti
 const { navigateOnce, resetNavigation } = require('../../utils/navigation')
 const { recordEvent } = require('../../utils/storage')
 const { getChapterCopy, CONTENT_VERSION } = require('../../shared/content/chapter-copy')
+const { publicError, classifyError } = require('../../shared/content/public-errors')
 
 Page({
   data: { statusBarHeight: getStatusBarHeight(), contentVersion: CONTENT_VERSION, chapterNumber: 1, moduleTitle: '', moduleInstruction: '', chapterIntro: null, showChapterIntro: false, currentQuestion: 0, questionNumber: 1, questionCount: 8, progress: 0, item: null, responseOptions: [], specialOptions: [], selectedValue: '', canContinue: false, continueLabel: '继续', motionClass: '' },
@@ -33,7 +34,7 @@ Page({
     const item = getItem(this.chapter.itemIds[index])
     const options = optionsFor(item)
     const selectedValue = this.session.answers[item.id] === undefined ? '' : this.session.answers[item.id]
-    return { item, showChapterIntro: index === 0, questionNumber: index + 1, progress: (index + 1) / 8, responseOptions: options.filter(option => typeof option.value === 'number'), specialOptions: options.filter(option => typeof option.value !== 'number'), selectedValue, canContinue: selectedValue !== '', continueLabel: index === 7 ? '看这一组答出了什么' : '继续' }
+    return { item, showChapterIntro: index === 0, questionNumber: index + 1, progress: (index + 1) / 8, responseOptions: options.filter(option => typeof option.value === 'number'), specialOptions: options.filter(option => typeof option.value !== 'number'), selectedValue, canContinue: selectedValue !== '', continueLabel: index === 7 ? '完成这一部分' : '继续' }
   },
 
   chooseAnswer(event) { this.commitAnswer(event.currentTarget.dataset.value) },
@@ -91,6 +92,6 @@ Page({
       this.session = completedChapter
       if (shouldSyncAssessment() && isCloudReady()) this.queueCloudSync(completedChapter)
       navigateOnce(this, 'redirectTo', { url: `/pages/chapter-insight/index?chapter=${this.chapterId}` })
-    } catch (error) { wx.showToast({ title: error.message || '请完成这一章', icon: 'none' }) }
+    } catch (error) { wx.showToast({ title: classifyError(error, 'incomplete') || publicError('incomplete'), icon: 'none' }) }
   }
 })

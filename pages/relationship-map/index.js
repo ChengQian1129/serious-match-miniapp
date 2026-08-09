@@ -10,8 +10,8 @@ function reportGroups(report) {
     id,
     title: SECTION_LABELS[id],
     claims: report.claims.filter(claim => claim.section === id).map(claim => Object.assign({}, claim, {
-      mapLabel: '关系方向',
-      mapStatus: '来自你的回答'
+      mapLabel: '你比较在意',
+      mapStatus: '根据你的回答'
     }))
   })).filter(group => group.claims.length)
 }
@@ -22,7 +22,14 @@ function versionDate(value) {
   return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`
 }
 
-const SECTION_LABELS = { overall: '现在的你', interaction: '关系有变化时', resource: '你希望怎样相处', provide: '你通常能给出的', tension: '值得再想一想的地方', observation: '值得留意的行动' }
+const SECTION_LABELS = {
+  overall: '你希望两个人怎么相处',
+  interaction: '你找对象时比较在意什么',
+  resource: '你对以后有什么打算',
+  provide: '你平时可能会这样做',
+  tension: '还有些事可以再想想',
+  observation: '你平时可能会这样做'
+}
 
 Page({
   data: { report: null, claims: [], groups: [], unknowns: [], history: [], isViewingHistory: false, showFollowup: FEATURES.followupParticipation, copy: reportCopy.map },

@@ -2,7 +2,6 @@
   <view class="welcome-head">
     <view class="welcome-brand">
       <view class="welcome-brand__symbol"><view></view><view></view></view>
-      <text>{{welcome.kicker}}</text>
     </view>
   </view>
 
@@ -12,7 +11,7 @@
       <view class="welcome-body__intro">{{welcome.intro}}</view>
       <view wx:for="{{welcome.questions}}" wx:key="*this" class="welcome-question">{{item}}</view>
       <view class="welcome-body__boundary">{{welcome.boundary}}</view>
-      <view class="welcome-body__closing">{{welcome.closing}}</view>
+      <view wx:if="{{welcome.closing}}" class="welcome-body__closing">{{welcome.closing}}</view>
     </view>
     <view class="welcome-meta">{{welcome.meta}}</view>
   </view>

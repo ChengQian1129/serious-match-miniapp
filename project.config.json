@@ -1,5 +1,5 @@
 {
-  "description": "关系说明书试点版",
+  "description": "恋爱和相处小程序",
   "cloudfunctionRoot": "cloudfunctions/",
   "packOptions": {
     "ignore": [

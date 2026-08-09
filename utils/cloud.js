@@ -7,6 +7,7 @@ try {
 }
 
 let initialized = false
+const { publicError } = require('../shared/content/public-errors')
 const ASSESSMENT_ACTIONS = new Set(['assessmentSaveDraft', 'assessmentComplete', 'assessmentGet', 'assessmentHistory', 'assessmentDelete', 'assessmentFeedbackAppend', 'assessmentShareSettings'])
 const PARTICIPANT_ACTIONS = new Set(['consentGrant', 'consentRevoke', 'consentList', 'participantUpsert', 'participantGet', 'participantDelete'])
 
@@ -117,21 +118,12 @@ function getParticipant(callbacks) { return callProfile('participantGet', {}, ca
 function deleteParticipant(callbacks) { return callProfile('participantDelete', {}, callbacks) }
 
 function cloudErrorMessage(error) {
-  if (error && error.code === 'CLOUD_NOT_READY') return error.message
-  if (error && error.code === 'INVALID_PROFILE') return error.message
-  if (error && error.code === 'INVALID_FEEDBACK') return error.message
-  if (error && error.code === 'INVALID_QUESTIONNAIRE') return error.message
-  if (error && error.code === 'INVALID_ASSESSMENT') return error.message
-  if (error && ['INVALID_CONSENT', 'CONSENT_CONFLICT', 'CONSENT_REQUIRED', 'INVALID_PARTICIPANT', 'INVALID_SCHEMA', 'STALE_WRITE'].includes(error.code)) return error.message
-  if (error && ['UNAUTHORIZED_OPERATOR', 'PARTICIPANT_NOT_FOUND', 'CASE_NOT_FOUND', 'INVALID_CASE', 'INVALID_VALIDATION', 'VALIDATION_CONFLICT', 'CONSENT_REVOKED', 'BLIND_PHASE_CLOSED', 'BLIND_REVEAL_REQUIRED'].includes(error.code)) return error.message
-  if (error && error.code === 'ASSESSMENT_CONFLICT') return error.message
-  if (error && error.code === 'INVITE_EXPIRED') return error.message
-  if (error && error.code === 'INVALID_INVITE') return error.message
   const detail = String(error && (error.errMsg || error.message) || '')
-  if (/collection.*(not exist|does not exist|not found)|collection.*不存在/i.test(detail)) return '云数据库集合尚未建立，请检查评估、反馈、授权和参与者相关集合'
-  if (/env.*(invalid|not found)|environment.*(invalid|not found)/i.test(detail)) return '云开发环境配置不匹配'
-  if (/permission|not authorized|unauthorized/i.test(detail)) return '当前小程序没有云环境访问权限'
-  return '云端连接失败，请检查网络后重试'
+  if (/permission|not authorized|unauthorized|env.*(invalid|not found)|environment.*(invalid|not found)/i.test(detail)) return publicError('generic')
+  if (/collection.*(not exist|does not exist|not found)|collection.*不存在/i.test(detail)) return publicError('loadFailed')
+  if (error && ['INVALID_PROFILE', 'INVALID_FEEDBACK', 'INVALID_QUESTIONNAIRE', 'INVALID_ASSESSMENT', 'INVALID_CONSENT', 'CONSENT_CONFLICT', 'CONSENT_REQUIRED', 'INVALID_PARTICIPANT', 'INVALID_SCHEMA', 'STALE_WRITE', 'ASSESSMENT_CONFLICT'].includes(error.code)) return publicError('saveFailed')
+  if (error && ['PARTICIPANT_NOT_FOUND', 'CASE_NOT_FOUND', 'INVALID_CASE', 'INVALID_VALIDATION', 'VALIDATION_CONFLICT', 'CONSENT_REVOKED', 'BLIND_PHASE_CLOSED', 'BLIND_REVEAL_REQUIRED', 'INVITE_EXPIRED', 'INVALID_INVITE'].includes(error.code)) return publicError('loadFailed')
+  return publicError('network')
 }
 
 module.exports = {

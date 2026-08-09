@@ -1,8 +1,7 @@
 <view class="page home-page" style="padding-top: {{statusBarHeight}}px;">
   <view class="home-hero">
-    <view class="home-wordmark"><view class="home-mark"><view></view><view></view></view><text>关系说明书</text></view>
+    <view class="home-wordmark"><view class="home-mark"><view></view><view></view></view></view>
     <view class="home-copy">
-      <view class="page-kicker">关系说明书</view>
       <view class="home-title">{{heroTitle}}</view>
       <view class="home-desc">{{heroDesc}}</view>
       <view wx:if="{{progressText}}" class="home-note">{{progressText}}</view>

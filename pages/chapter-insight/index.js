@@ -5,6 +5,7 @@ const { getStatusBarHeight } = require('../../utils/window')
 const { navigateOnce, resetNavigation } = require('../../utils/navigation')
 const { recordEvent } = require('../../utils/storage')
 const evidenceCopy = require('../../shared/content/evidence-copy')
+const { classifyError } = require('../../shared/content/public-errors')
 
 Page({
   data: {
@@ -48,11 +49,11 @@ Page({
       if (this.data.nextChapter && !(session.revisionPending && allAnswered)) {
         return navigateOnce(this, 'redirectTo', { url: `/pages/questionnaire/index?chapter=${this.data.nextChapter.id}&question=0` })
       }
-      if (!allAnswered) throw new Error('关系说明书还有未完成的题目')
+      if (!allAnswered) throw new Error('还有题没答完。')
       completeAssessment()
       navigateOnce(this, 'redirectTo', { url: '/pages/questionnaire-result/index' })
     } catch (error) {
-      wx.showToast({ title: error.message || '请完成全部章节', icon: 'none' })
+      wx.showToast({ title: classifyError(error, 'incomplete'), icon: 'none' })
     }
   },
 

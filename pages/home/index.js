@@ -32,10 +32,10 @@ Page({
     const report = getReport()
     const session = getSession()
     if (report && !session.revisionPending) {
-      this.setData({ actionText: '打开说明书', heroTitle: home.completedTitle, heroDesc: home.completedDescription, progressText: '这份说明书可以随时修改' })
+      this.setData({ actionText: '查看结果', heroTitle: home.completedTitle, heroDesc: home.completedDescription, progressText: '' })
     } else if (hasSession() && Object.keys(session.answers).length) {
       const chapterIndex = Math.max(0, CHAPTERS.findIndex(chapter => chapter.id === session.currentChapterId))
-      this.setData({ actionText: '继续', heroTitle: home.progressTitle, heroDesc: `第 ${chapterIndex + 1} 组 / 6。之前的回答都还在，接着答就行。`, progressText: `${Object.keys(session.answers).length} / 48` })
+      this.setData({ actionText: '继续答题', heroTitle: home.progressTitle, heroDesc: `第 ${chapterIndex + 1} 部分 / 6。之前的回答都还在，接着答就行。`, progressText: `${Object.keys(session.answers).length} / 48` })
     }
     if (isCloudReady() && shouldSyncAssessment() && !this._restoreAttempted) {
       this._restoreAttempted = true

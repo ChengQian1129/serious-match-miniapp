@@ -3,7 +3,7 @@
   <view class="compare-title">两个人怎样靠近，不该只看一个分数。</view>
   <view class="compare-desc">对照只使用双方主动核对过的分享线索和高层次关系状态，不展示原始答案、手机号或完整风险结论。</view>
 
-  <view wx:if="{{mode === 'create'}}" class="compare-panel"><view class="compare-panel__title">邀请一位朋友</view><view class="compare-panel__text">创建邀请会把你的关系说明书保存到私密云端。对方也完成说明书并主动加入后，双方都能看到对照。</view><button class="dl-button" loading="{{isLoading}}" disabled="{{isLoading}}" bind:tap="createInvite">创建对照邀请</button></view>
+  <view wx:if="{{mode === 'create'}}" class="compare-panel"><view class="compare-panel__title">邀请一位朋友</view><view class="compare-panel__text">创建邀请会把你的结果保存到私密云端。对方也完成答题并主动加入后，双方都能看到对照。</view><button class="dl-button" loading="{{isLoading}}" disabled="{{isLoading}}" bind:tap="createInvite">创建对照邀请</button></view>
 
   <view wx:if="{{mode === 'invite'}}" class="compare-panel"><view class="compare-code-label">对照邀请码</view><view class="compare-code">{{code}}</view><view class="compare-panel__text">{{expiresText}}。等待对方加入后可以回来查看。</view><button class="dl-button" open-type="share">发送邀请</button><button class="dl-button dl-button--outline compare-secondary" loading="{{isLoading}}" bind:tap="refreshComparison">查看是否已加入</button></view>
 
@@ -17,5 +17,5 @@
   </view>
 
   <view wx:if="{{error}}" class="field-error compare-error">{{error}}</view>
-  <button class="compare-back" bind:tap="backReport">返回关系说明书</button>
+  <button class="compare-back" bind:tap="backReport">返回你的结果</button>
 </view>

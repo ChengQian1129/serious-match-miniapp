@@ -1,7 +1,7 @@
 <view wx:if="{{claim}}" class="page page--with-action claim-page claim-enter">
   <view class="claim-header">
-    <button class="claim-back" bind:tap="returnReport"><text>‹</text>回到说明书</button>
-    <view class="page-kicker">结论依据</view>
+    <button class="claim-back" bind:tap="returnReport"><text>‹</text>回到你的结果</button>
+    <view class="page-kicker">为什么这么说</view>
     <view class="claim-title">{{claim.title}}</view>
     <view class="claim-text">{{claim.text}}</view>
     <view wx:if="{{claim.boundary}}" class="claim-boundary">{{claim.boundary}}</view>
@@ -9,7 +9,7 @@
 
   <view class="claim-section">
     <button class="claim-evidence-toggle" bind:tap="toggleEvidence">
-      {{evidenceExpanded ? '收起回答依据' : evidenceCopy.toggle}}<text class="dl-chevron">{{evidenceExpanded ? '⌃' : '›'}}</text>
+      {{evidenceExpanded ? '收起' : evidenceCopy.toggle}}<text class="dl-chevron">{{evidenceExpanded ? '⌃' : '›'}}</text>
     </button>
     <view wx:if="{{evidenceExpanded}}" class="claim-evidence-panel">
       <view wx:for="{{evidenceGroups}}" wx:for-item="group" wx:key="id" class="claim-evidence-group">
@@ -25,5 +25,5 @@
 
 <view wx:if="{{claim}}" class="action-bar claim-actions">
   <button class="dl-button" bind:tap="reviseAnswer">修改相关回答</button>
-  <button class="claim-back-action" bind:tap="returnReport">回到说明书</button>
+  <button class="claim-back-action" bind:tap="returnReport">回到你的结果</button>
 </view>

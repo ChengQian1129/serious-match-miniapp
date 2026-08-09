@@ -1,14 +1,14 @@
 <view wx:if="{{chapter && insight}}" class="page page--with-action chapter-insight-page" style="padding-top: {{statusBarHeight}}px;">
   <view class="chapter-insight">
-    <button class="chapter-insight__back" bind:tap="reviewChapter"><text>‹</text>回看本章</button>
-    <view class="page-kicker">第 {{chapterNumber}} 章完成</view>
+    <button class="chapter-insight__back" bind:tap="reviewChapter"><text>‹</text>修改这一部分</button>
+    <view class="page-kicker">第 {{chapterNumber}} 部分完成</view>
     <view class="chapter-insight__chapter">{{chapter.title}}</view>
     <view class="chapter-insight__headline">{{insight.headline}}</view>
     <view class="chapter-insight__summary">{{insight.summary}}</view>
 
     <view wx:if="{{insight.evidence.length}}" class="chapter-insight__evidence">
       <button class="chapter-insight__evidence-toggle" bind:tap="toggleEvidence">
-        {{evidenceExpanded ? '收起依据' : evidenceCopy.toggle}}<text class="dl-chevron">{{evidenceExpanded ? '⌃' : '›'}}</text>
+        {{evidenceExpanded ? '收起' : evidenceCopy.toggle}}<text class="dl-chevron">{{evidenceExpanded ? '⌃' : '›'}}</text>
       </button>
       <view wx:if="{{evidenceExpanded}}" class="chapter-insight__evidence-list">
         <view class="chapter-insight__evidence-label">{{evidenceCopy.stageEvidence}}</view>
@@ -21,7 +21,7 @@
   </view>
 
   <view class="action-bar chapter-insight__actions">
-    <button class="dl-button" bind:tap="continueNext">{{nextChapter ? '继续下一章' : '查看完整说明书'}}</button>
+    <button class="dl-button" bind:tap="continueNext">{{nextChapter ? '继续下一部分' : '查看全部结果'}}</button>
     <button class="chapter-insight__later" bind:tap="backHome">稍后继续</button>
   </view>
 </view>

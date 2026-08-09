@@ -2,6 +2,7 @@ const fs = require('node:fs')
 const path = require('node:path')
 const crypto = require('node:crypto')
 const YAML = require('yaml')
+const PUBLIC_LANGUAGE = require('../shared/content/public-language.generated')
 
 const ROOT = path.resolve(__dirname, '..')
 const SOURCE_ROOT = path.join(ROOT, 'research', 'v3')
@@ -172,6 +173,10 @@ function validateSources() {
     reportCore: { parentTaskCount: 266, orderedParentTaskIds: core.orderedParentTaskIds },
     constructIds: [...constructIds].sort()
   }
+  bundle.publicCopy = Object.assign({}, PUBLIC_LANGUAGE.v3, {
+    chapterTitles: PUBLIC_LANGUAGE.v2.chapterTitles,
+    pageTitle: PUBLIC_LANGUAGE.ui.v3Pilot.pageTitle
+  })
   const manifestOutput = {
     schemaVersion: 'relationship-feature-model-v3.runtime-manifest.v0.1',
     generatedAt: '2026-08-09',

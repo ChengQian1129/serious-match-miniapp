@@ -1,0 +1,356 @@
+schemaVersion: serious-match.public-language.v3-narrative-override.v1.0
+generatedAt: '2026-08-09'
+rules:
+- Only headline and summary are public by default.
+- Internal labels, relationshipMeaning, possibleFriction, usefulConditions, caveat, evidence status and calibration notes
+  must not render unless separately human-edited and explicitly approved.
+- Never render dimension IDs, state codes, construct IDs, form arms or measurement terminology.
+dimensions:
+  relationship_readiness:
+    VERY_LOW:
+      headline: 你现在不太想开始一段认真关系
+      summary: 至少现在，你更想把生活留给自己，或者还没觉得谈恋爱是眼前要做的事。
+    LOW:
+      headline: 你不排斥谈恋爱，但现在还不太着急
+      summary: 遇到合适的人你可能愿意认识，不过要不要真的进入稳定关系，你会想慢一点。
+    MID:
+      headline: 你想不想开始，很看遇到谁、现在是什么情况
+      summary: 你既不是很着急，也不是完全没准备。遇到合适的人、生活也允许时，你的想法可能会更明确。
+    HIGH:
+      headline: 你现在已经比较愿意认真开始一段关系
+      summary: 如果遇到合适的人，你愿意花时间了解，也能接受关系慢慢进入自己的生活。
+    VERY_HIGH:
+      headline: 你现在很明确地想认真谈一段关系
+      summary: 这件事对你已经不是“有也行”，而是近期确实想推进的事。
+  initiation_motivation:
+    AUTONOMOUS_DOMINANT:
+      headline: 你想谈恋爱，主要是因为自己真的想要
+      summary: 比起家人催、年龄压力或别人都在谈，你更在意的是自己确实想和一个人建立长期关系。
+    AUTONOMOUS_PLUS_PRESSURE:
+      headline: 你自己想谈，时间和周围的压力也在推着你
+      summary: 你确实想开始一段关系，但年龄、家里或身边人的进度，也会让你觉得这件事有点着急。
+    PRESSURE_DOMINANT:
+      headline: 现在更像是“该谈了”，而不是“我特别想谈”
+      summary: 家里、年龄、身边人的进度，或者你给自己的时间表，现在对你的推动比较明显。
+    LOW_MOTIVATION:
+      headline: 现在没有很强的东西在推着你谈恋爱
+      summary: 你既没有特别强的恋爱冲动，也没有很强的外部压力。至少现阶段，这件事并不是生活里的重点。
+    MIXED:
+      headline: 你想谈恋爱的原因不止一种
+      summary: 自己确实想要、年龄和家里的压力、怕错过，以及现实考虑，可能都占一点。
+  available_capacity:
+    LOW:
+      headline: 你现在可能真的有点忙不过来
+      summary: 时间、工作、家庭或精力已经占了很多。如果现在开始认识一个人，稳定见面和联系可能会有压力。
+    MID:
+      headline: 你有一些时间和精力，但不总是稳定
+      summary: 平时大体能留出空间，不过忙起来、事情变多或者状态差的时候，关系很容易被挤到后面。
+    HIGH:
+      headline: 你现在比较有时间和精力认真认识一个人
+      summary: 目前的生活安排比较稳定，不太需要靠长期压缩睡眠、休息或其他重要事情来维持一段关系。
+  relational_follow_through:
+    VERY_LOW:
+      headline: 你答应下来的事，有时比较容易没了下文
+      summary: 临时有变化、忘了回来、取消后没重新安排，这些情况可能比较常见。
+    LOW:
+      headline: 你通常是想做到的，但有时会断在后面
+      summary: 你大多不是故意失约，只是忙起来或事情一变，原本说好的事有时就没继续接上。
+    MID:
+      headline: 你能不能做到，很看当时忙不忙、事情重不重要
+      summary: 有些事你会一直记得并处理好，有些时候又可能因为忙、累或觉得没那么重要而断掉。
+    HIGH:
+      headline: 答应别人的事，你通常会有个交代
+      summary: 能做到的时候你会尽量做到；如果做不到，也比较会提前说一声或者重新约。
+    VERY_HIGH:
+      headline: 你很少让重要的约定无声无息地断掉
+      summary: 答应、变更、重新安排这些事，你通常都会主动说清楚。
+  uncertainty_activation:
+    VERY_LOW:
+      headline: 对方有点变化时，你通常不会马上多想
+      summary: 回复慢一点、态度有点不一样，通常不会让你立刻觉得关系出了问题。
+    LOW:
+      headline: 你会注意到变化，但一般能先等等看
+      summary: 你能感觉到对方和以前不太一样，不过在知道更多之前，你通常不会急着下结论。
+    MID:
+      headline: 你会不会不安，很看这段关系有多重要、变化有多明显
+      summary: 小变化你未必在意；如果已经很投入，或者几个变化一起出现，你会明显更放不下。
+    HIGH:
+      headline: 对方态度一变，你会比较快被影响
+      summary: 回复、投入或者两个人的关系一变得不清楚，你会很快注意到，也可能一直想着这件事。
+    VERY_HIGH:
+      headline: 关系一不清楚，你很容易一直想着这件事
+      summary: 只要感觉对方可能在退后，你的注意力很容易被拉过去，而且会很想尽快知道到底怎么了。
+  uncertainty_regulation:
+    CLARIFYING:
+      headline: 你更愿意直接问清楚
+      summary: 觉得对方不太对劲时，你通常更愿意找机会问一问，而不是一直自己猜。
+    OBSERVING:
+      headline: 你通常会先看看对方接下来怎么做
+      summary: 你不会因为一次变化马上追问，更愿意先观察几天，看这是不是持续发生。
+    REASSURANCE_ORIENTED:
+      headline: 你会比较需要对方明确告诉你他的想法
+      summary: 关系不清楚时，一句明确的解释或确认，会让你更容易放下心。
+    MONITORING_ORIENTED:
+      headline: 你容易去看其他线索
+      summary: 如果对方没有直接说清楚，你可能会留意他的线上状态、社交动态或其他变化。
+    RUMINATIVE:
+      headline: 没有新消息时，你也会在脑子里反复想
+      summary: 你可能会不断回想聊天、见面和一些细节，试着弄明白到底哪里变了。
+    TESTING_PROTEST:
+      headline: 你有时会故意少主动一点，看对方会不会来找你
+      summary: 当你不确定对方在不在意时，你可能不会直接问，而是先收一点，看他的反应。
+    TOLERANT_WAITING:
+      headline: 你可以先不急着下结论
+      summary: 信息还不够时，你能允许自己先不知道答案，等后面发生更多事情再判断。
+    WITHDRAWING:
+      headline: 如果一直说不清，你会慢慢把自己收回来
+      summary: 一段关系如果长期让你猜，你更可能减少投入，甚至最后不想再继续。
+    MIXED:
+      headline: 你没有固定一种做法
+      summary: 有时你会问，有时会等，有时会多想或者退开。怎么做很看对方是谁、事情有多重要。
+  intimacy_dependence_comfort:
+    VERY_LOW:
+      headline: 真的依靠另一个人，对你有点难
+      summary: 关系越深，越要示弱、求助或者接受照顾时，你越容易想自己扛。
+    LOW:
+      headline: 你可以亲近，但真正依靠对方会比较慢
+      summary: 你不是不愿意亲近，只是把脆弱的一面给别人看、把重要的事交给别人，需要更多信任。
+    MID:
+      headline: 你能不能放下防备，很看这个人值不值得信任
+      summary: 关系够安全时你可以靠近，但不是和谁在一起都能很自然地依靠对方。
+    HIGH:
+      headline: 信任以后，你通常能比较自然地依靠对方
+      summary: 难受时说出来、接受照顾、让对方参与重要的事，对你来说通常不算太难。
+    VERY_HIGH:
+      headline: 被照顾、示弱、依靠伴侣，对你通常不太难
+      summary: 关系足够信任以后，你比较能接受两个人真的互相需要、互相帮忙。
+  personal_space_need:
+    LOW:
+      headline: 你不太需要很多自己的时间
+      summary: 只要相处舒服，长时间待在一起通常不会很快让你觉得累或者被占满。
+    MID:
+      headline: 你喜欢一起待着，也需要一点自己的时间
+      summary: 你既能享受两个人一起生活，也希望偶尔各做各的，具体多少很看当时的状态。
+    HIGH:
+      headline: 关系再好，你也需要不少自己的时间
+      summary: 你希望一直保留自己的兴趣、朋友和独处时间，不想两个人的生活完全叠在一起。
+  support_need:
+    LISTEN_VALIDATE:
+      headline: 你难受时，更希望对方先听你说
+      summary: 比起马上分析和给建议，你通常更需要先把事情说完，让对方真的明白你为什么难受。
+    CLARITY_REASSURANCE:
+      headline: 如果不安和关系有关，你最需要的是对方把话说清楚
+      summary: 这时候普通安慰未必够，你更想知道对方到底怎么想、两个人现在是什么状态。
+    PROBLEM_SOLVING:
+      headline: 遇到能解决的问题，你更希望两个人一起想办法
+      summary: 单纯安慰对你不一定够。有人和你一起拆问题、想下一步，你会更觉得是在帮你。
+    PRACTICAL_HELP:
+      headline: 事情太多时，实际帮你分担最有用
+      summary: 如果你已经忙不过来，比起说很多安慰的话，帮你做掉一两件具体的事可能更有用。
+    PRESENCE:
+      headline: 有时候有人陪着你，就已经很有用
+      summary: 你不一定非要把事情分析清楚。一起待着、散步、吃饭，或者安静陪一会儿也能让你好一些。
+    SPACE:
+      headline: 压力太大时，你可能更需要先自己待一会儿
+      summary: 你有时想先安静一下、自己消化，不代表不想要对方，只是不想一直被追问。
+    CONTEXTUAL_MIXED:
+      headline: 你需要什么支持，很看发生了什么
+      summary: 有时你想被听，有时想一起解决，有时只想有人陪着，或者先自己待一会儿。
+  support_signaling:
+    LOW:
+      headline: 你难受时，不一定会把自己真正需要什么说出来
+      summary: 你可能会让对方知道自己状态不好，但不一定会直接说“我想让你听一会儿”“帮我想办法”或者“先让我自己待会儿”。
+    MID:
+      headline: 你有时说得很清楚，有时会憋着
+      summary: 关系安全、状态还行时你可能说得出来；压力大、怕麻烦别人时，你又容易收回去。
+    HIGH:
+      headline: 你通常能直接告诉对方自己需要什么
+      summary: 你不只会说自己难受，也比较能讲清楚现在想让对方怎么陪你或帮你。
+  responsiveness_capability:
+    LOW:
+      headline: 从这些情境题看，你有时会太快按自己的方式帮人
+      summary: 比如对方只想先说一会儿，你可能已经开始给建议。现实里是不是也这样，还要看真正相处时的情况。
+    MID:
+      headline: 你会看对方需要什么，但不总是能及时调整
+      summary: 有些时候你会先听、先问；有些时候还是会很快回到自己最习惯的帮助方式。
+    HIGH:
+      headline: 从这些情境题看，你比较会先看对方需要什么
+      summary: 你通常不会只按自己的习惯帮人，而是会先分辨对方是想被听、想一起解决，还是想先安静一会儿。
+  conflict_activation:
+    VERY_LOW:
+      headline: 吵起来时，你通常还能比较冷静地听和说
+      summary: 就算意见很不一样，你一般也还能听进去对方在说什么，并把自己的话想清楚。
+    LOW:
+      headline: 大多数争执不会很快让你乱掉
+      summary: 你会生气、会受影响，但通常还能继续听、继续说，不至于一下子谈不下去。
+    MID:
+      headline: 有些争执你能处理，有些点会很容易把你带进去
+      summary: 普通分歧还好，但如果被误解、被提高音量或者一直被追问，你的情绪可能会明显上来。
+    HIGH:
+      headline: 吵得厉害时，你会比较难继续把话说清楚
+      summary: 情绪一上来，你可能更难听进对方的话，也更难把自己真正想说的东西整理好。
+    VERY_HIGH:
+      headline: 冲突一升级，你很容易先进入“现在谈不下去”的状态
+      summary: 继续硬谈往往只会让你更乱。你可能更需要先把情绪降下来，再回来处理。
+  conflict_pacing_need:
+    IMMEDIATE:
+      headline: 你更希望有问题尽量当场说清楚
+      summary: 事情悬着不谈会让你更难受，所以你通常不喜欢把重要问题拖太久。
+    SHORT_PAUSE:
+      headline: 你更适合先停一会儿，再回来谈
+      summary: 吵得比较厉害时，几十分钟到几小时的暂停，可能比硬撑着继续说更适合你。
+    LONGER_PAUSE:
+      headline: 你通常需要更久一点才能重新谈
+      summary: 有些重要冲突以后，你可能要到晚些时候甚至第二天，才比较能把话重新说清楚。
+    FLEXIBLE:
+      headline: 你要不要暂停，很看这次吵到什么程度
+      summary: 有些事可以当场说完，有些事最好先停一下。你没有一个每次都固定的节奏。
+  repair_reengagement:
+    LOW:
+      headline: 停下来以后，重新把没解决的问题接回来对你比较难
+      summary: 情绪过去后，你可能很快恢复正常相处，但真正没解决的那件事有时就不再提了。
+    MID:
+      headline: 你有时会回来处理，有时就慢慢算了
+      summary: 有些问题你会主动收尾；有些可能因为忙、尴尬或者觉得没必要，再也没真正谈完。
+    HIGH:
+      headline: 就算先停下来，你通常还是愿意回来把事情处理完
+      summary: 你比较能把“现在谈不了”和“这件事不管了”分开。冷静以后，你通常愿意再回来。
+chapters:
+  C1:
+    label: 你现在想不想谈恋爱
+    READY_SELF_DRIVEN:
+    - 你是真的想谈，而且主要是自己想要
+    - 如果遇到合适的人，你现在愿意认真了解，也愿意让一段关系慢慢进入自己的生活。
+    READY_WITH_PRESSURE:
+    - 你自己想谈，但也有点被时间推着走
+    - 你确实想开始一段关系，不过年龄、家里或自己的时间表，也会让你比原本更着急。
+    WANT_BUT_NOT_READY:
+    - 你想谈恋爱，但现在还没完全准备好
+    - 愿望是有的，只是现实生活或当下状态还没有完全跟上。认识人可以继续，节奏不用太快。
+    PRESSURED_NOT_READY:
+    - 现在推着你往前的，更多是“该谈了”的压力
+    - 家里、年龄或周围人的进度很明显，但你自己还没有那么准备好。
+    LOW_INITIATION:
+    - 现阶段，谈恋爱不是你最想推进的事
+    - 你并不一定排斥关系，只是至少现在，这件事没有那么靠前。
+  C2:
+    label: 你现在有没有时间和精力
+    HIGH_HIGH: 你现在有时间和精力，答应下来的事也通常能做到。
+    HIGH_MID: 时间和精力还可以，但忙起来时有些安排未必一直稳定。
+    HIGH_LOW: 你不太缺时间，真正要注意的是约好的事能不能一直有下文。
+    MID_HIGH: 你的生活有时会很忙，但只要答应下来，你通常比较会有个交代。
+    MID_MID: 你现在的时间、精力和联系节奏都比较看阶段，需要边走边调整。
+    MID_LOW: 生活一忙，约好的事也比较容易断掉，这可能会让对方摸不准你的节奏。
+    LOW_HIGH: 你做事很有交代，但现在确实没有太多时间和精力开始一段新关系。
+    LOW_MID: 你不是不愿意投入，只是现在的生活很容易把关系挤到后面。
+    LOW_LOW: 现在最明显的问题是时间和精力都比较紧，约好的事也容易因此没了下文。
+  C3:
+    label: 对方态度变了，你通常会怎样
+    CLARIFYING: 你更愿意直接问清楚。
+    OBSERVING: 你通常会先看看对方接下来怎么做。
+    REASSURANCE_ORIENTED: 你会比较需要对方明确告诉你他的想法。
+    MONITORING_ORIENTED: 你容易去看线上状态、社交动态等其他线索。
+    RUMINATIVE: 没有新消息时，你也容易在脑子里反复想。
+    TESTING_PROTEST: 你有时会故意少主动一点，看对方会不会来找你。
+    TOLERANT_WAITING: 你可以先不急着下结论，等更多信息。
+    WITHDRAWING: 如果一直说不清，你会慢慢把自己收回来。
+    MIXED: 你没有固定一种做法，很看对方是谁、事情有多重要。
+  C4:
+    label: 关系越来越亲近以后
+    HIGH_HIGH: 你喜欢亲近，也需要自己的时间。关系再好，你也不想两个人什么都绑在一起。
+    HIGH_MID: 你对亲近和互相依靠比较自在，同时也希望各自保留一点自己的生活。
+    HIGH_LOW: 你比较喜欢两个人一起待着，对很多独处时间没有特别强的要求。
+    MID_HIGH: 你可以和人靠近，但也很需要自己的空间。信任和相处节奏对你很重要。
+    MID_MID: 你需要多亲近、多少自己的时间，很看具体的人和当时的生活状态。
+    MID_LOW: 你不太需要很多独处时间，但真正把重要的事交给对方，还是要看信任够不够。
+    LOW_HIGH: 你需要不少自己的空间，也不太容易真正依靠另一个人。
+    LOW_MID: 你对依靠别人比较谨慎，但并不代表你总想一个人待着。
+    LOW_LOW: 你不太需要很多独处时间，不过真正求助、示弱或者依靠对方，对你还是有点难。
+  C5:
+    label: 你希望对方怎么支持你
+    NEED_CLEAR_SIGNAL_LOW: 你其实知道什么会让自己好受一点，但不一定会直接告诉对方。
+    NEED_CONTEXTUAL: 你需要什么帮助，很看发生了什么。固定一种安慰方式不一定适合你。
+    SIGNAL_HIGH_RESPONSE_LOW: 你比较会说自己需要什么，但轮到照顾对方时，有时会太快按自己的习惯来。
+    SIGNAL_LOW_RESPONSE_HIGH: 你可能比较会照顾别人，但轮到自己难受时，反而不太会开口。
+    REASSURANCE_HIGH_SIGNAL_LOW: 关系不安时你很想听到明确说法，但又不一定会直接告诉对方自己在等什么。
+    SPACE_NEED_SIGNAL_HIGH: 压力大时你会想先自己待一会儿，而且通常能把这件事说清楚。
+    PROBLEM_SOLVING_MISMATCH_RISK: 遇到能解决的问题时，你更希望两个人一起想办法。只有安慰可能会让你觉得还不够。
+    VALIDATION_MISMATCH_RISK: 你难受时更想先被听懂。如果对方一上来就给建议，你可能会觉得他没真正听进去。
+    BALANCED: 你大致知道自己需要什么，也比较能说出来；从情境题看，你也会留意对方需要什么。
+    PROVISIONAL: 从情境题只能先看到一个大概。你现实里怎么回应别人，还要看真正相处时的情况。
+  C6:
+    label: 吵架以后，你通常怎么处理
+    HIGH_SHORT_HIGH: 吵起来时你的情绪会比较强，但停一会儿以后，你通常还是愿意回来把事情说完。
+    HIGH_LONG_HIGH: 你吵完后需要比较久才能缓过来，不过只要给你时间，你通常还是愿意回来处理。
+    HIGH_ANY_LOW: 你不只是在吵的时候容易被带进去，停下来以后也比较容易让问题一直搁着。
+    MID_FLEX_HIGH: 你会不会很激动、要不要暂停都看情况，不过大多数时候你还是愿意回来把事情收尾。
+    LOW_IMMEDIATE_HIGH: 你吵架时通常还能继续谈，也比较愿意尽快把问题处理完。
+    LOW_ANY_LOW: 你不一定会吵得很激烈，但有些问题会因为后来不再提而一直留着。
+    PAUSE_WITHOUT_SIGNAL: 你可能确实需要暂停，但如果不说什么时候回来，对方很容易以为你不想管了。
+    RETURN_WITHOUT_ISSUE: 你比较容易恢复正常相处，但恢复正常不等于那件事真的解决了。
+    REPAIR_STRONG: 吵架本身不是重点。更重要的是，你通常愿意在冷静后回来把事情接上。
+    PACING_MISMATCH_SENSITIVE: 你对“什么时候继续谈”比较在意。如果两个人在这件事上差太多，吵架会更难处理。
+crossChapterPatterns:
+  READINESS_CAPACITY_GAP:
+    headline: 你想谈，但现在可能真的有点忙不过来
+    summary: 你对开始一段关系有愿望，但时间、精力或其他责任比较紧。真遇到合适的人，也需要看看自己能不能稳定留出空间。
+  PRESSURE_CAPACITY_GAP:
+    headline: 你一边觉得不能再拖，一边又真的很忙
+    summary: 时间压力和现实忙碌同时存在时，很容易越着急找人，越没有精力好好了解一个人。
+  HIGH_READINESS_LOW_FOLLOWTHROUGH:
+    headline: 你很想认真开始，但有些约定容易没了下文
+    summary: 意愿很明确，不过联系、安排和临时变化后的交代，还不一定同样稳定。
+  HIGH_ACTIVATION_LOW_SIGNAL:
+    headline: 对方一变，你会很在意，但不一定会直接说自己需要什么
+    summary: 你可能很快开始多想，却没有马上告诉对方自己在担心什么、希望他说明什么。
+  HIGH_ACTIVATION_REASSURANCE:
+    headline: 对你来说，把话说清楚很重要
+    summary: 关系一旦不明确，你会比较受影响。对方能不能清楚表达自己的想法，对你会很重要。
+  INTIMACY_HIGH_SPACE_HIGH:
+    headline: 你喜欢亲近，也需要自己的空间
+    summary: 你可以和一个人很亲密，但还是希望一直保留自己的时间、兴趣和活动。
+  INTIMACY_LOW_SUPPORT_SIGNAL_LOW:
+    headline: 越是难受的时候，你可能越想自己扛
+    summary: 你本来就不太容易依靠别人，需要支持时又不一定说出口，所以别人可能看不出你其实需要什么。
+  SUPPORT_NEED_SIGNAL_GAP:
+    headline: 你知道什么对自己有帮助，但别人未必知道
+    summary: 你对自己需要怎样的支持其实有感觉，只是不一定会直接告诉对方。
+  RESPONSIVE_SELF_SILENT:
+    headline: 你可能比较会照顾别人，却不太会让别人照顾你
+    summary: 从情境题看，你会留意对方需要什么；轮到自己难受时，你却不一定说得清楚。
+  CONFLICT_HIGH_REPAIR_HIGH:
+    headline: 你吵架时会很激动，但通常还能回来
+    summary: 情绪上来时你可能很难继续谈，不过冷静以后，你大多愿意把事情重新接上。
+  CONFLICT_LOW_REPAIR_LOW:
+    headline: 不怎么吵，不代表问题都解决了
+    summary: 你未必会把冲突搞得很激烈，但有些问题可能因为后来不再谈而一直留下来。
+  SPACE_PACING_SHARED:
+    headline: 你平时需要自己的时间，吵架后也需要一点缓冲
+    summary: 对你来说，先有一点自己的空间，常常能让你更容易整理好再回来。
+  FOLLOWTHROUGH_REPAIR_LINK:
+    headline: “晚点再说”以后真的回来，可能是你比较容易卡住的地方
+    summary: 不只是一般约定，吵架暂停后的事情也有可能拖着拖着就没了下文。
+  FOLLOWTHROUGH_REPAIR_DIVERGENCE:
+    headline: 平时你做事很有交代，但吵架后回来处理问题更难
+    summary: 一般的安排你通常能做到，不过一旦夹着情绪，重新开口会明显更难。
+  CAPACITY_SPACE_DISTINCT:
+    headline: 你既是真的忙，也确实需要自己的时间
+    summary: “没空”和“想自己待着”对你可能同时存在，但它们不是一回事。
+  AUTONOMOUS_READINESS_CONSTRAINT:
+    headline: 你很想开始，也还是有些事不能勉强
+    summary: 就算你现在很想谈恋爱，要不要孩子、以后住哪里等重要问题，还是需要单独看。
+reportTitles:
+  cover: 你的结果
+  summary: 先看这 3 点
+  C1: 你现在想不想谈恋爱
+  C2: 你现在有没有时间和精力
+  C3: 对方态度变了，你通常会怎样
+  C4: 关系越来越亲近以后
+  C5: 你希望对方怎么支持你
+  C6: 吵架以后，你通常怎么处理
+  how_to_get_along: 你希望两个人怎么相处
+  partner_preferences: 你找对象时比较在意什么
+  future_plans: 你对以后有什么打算
+  unknowns: 还有几件事，问卷看不出来
+  interview: 如果之后聊一聊，可以重点聊这些
+  method: 这些结果怎么来的

@@ -3,38 +3,38 @@ const { CONTENT_VERSION } = require('./version')
 module.exports = Object.freeze({
   CONTENT_VERSION,
   entry: Object.freeze({
-    title: '如果你愿意，我们还可以聊得更具体一点。',
-    body: '问卷能看见一些规律。\n\n但很多东西只有讲到真实经历时，才会真的变清楚。\n\n我们会邀请一部分用户做一对一访谈，也可能组织一些大连的线下交流。\n\n要不要参加，完全由你决定。',
+    title: '如果你愿意，可以再聊聊。',
+    body: '有些事靠选择题问不清。我们会邀请一部分人做一对一访谈，也可能组织大连的线下交流。要不要参加都由你自己决定。',
     action: '了解一下'
   }),
   intro: Object.freeze({
-    kicker: '可选',
+    kicker: '',
     title: '如果你愿意，我们可以继续聊。',
-    body: '后续可能会邀请你参加一对一深度访谈、问卷理解测试、模型研究或者大连的线下交流。\n\n这些都不是问卷的一部分。\n\n不参加，也不会影响你的报告。',
-    safety: '你的资料不会自动给其他用户看。\n\n具体邀请是什么，我们都会先说明，再由你决定要不要参加。',
+    body: '后面可能会邀请你做一对一访谈、聊聊这套题哪里难理解，或者参加大连的线下交流。这些都不是答题的一部分，不参加也不会影响你看结果。',
+    safety: '你的资料不会自动给其他用户看。每一次邀请都会先说明是什么，再由你决定要不要参加。',
     primary: '看看有哪些选择',
     secondary: '先不用'
   }),
   settings: Object.freeze({
-    kicker: '可选参与',
-    title: '你愿意参与到哪一步？',
-    description: '三件事分开决定。默认都关闭，以后也可以随时改。',
-    save: '保存我的选择',
+    kicker: '',
+    title: '你愿意接受哪些后续联系？',
+    description: '下面几件事分开选择，默认都不勾选，以后也可以改。',
+    save: '保存',
     manageProfile: '修改联系资料',
     fillProfile: '填写联系资料',
-    deleteTitle: '不再参加后续项目？',
-    deleteBody: '删除后，我们会删除用于后续联系的授权、联系方式、参与资料和相关访谈记录。你的问卷和关系说明书不会受影响。',
+    deleteTitle: '不再参加后续活动？',
+    deleteBody: '删除后，我们会删除用于后续联系的授权、联系方式、参与资料和相关访谈记录。你的问卷和结果不会受影响。',
     deleteConfirm: '确认删除',
     deleteCancel: '取消',
-    deleteAction: '删除参与登记'
+    deleteAction: '删除后续参与资料'
   }),
   scopes: Object.freeze({
-    interview_contact: Object.freeze({ title: '可以联系我做一对一访谈', description: '如果有合适的访谈，我们可以通过你留下的联系方式邀请你。开启后才需要填写联系方式。' }),
-    research_use: Object.freeze({ title: '可以用我的匿名回答改进这份工具', description: '去掉直接身份信息后，用于分析哪些题目和报告还需要修改。不需要留下联系方式。' }),
-    offline_invitation: Object.freeze({ title: '可以联系我参加线下活动', description: '如果之后在大连有合适的交流活动，可以向你发邀请。每一次是否参加，仍然由你自己决定。' })
+    interview_contact: Object.freeze({ title: '可以联系我做一对一访谈', description: '如果有合适的访谈，可以通过你留下的联系方式邀请你。打开这一项后才需要填写联系方式。' }),
+    research_use: Object.freeze({ title: '可以用我去掉身份信息后的回答改进这套题', description: '分析时会先去掉能直接识别你的信息，用来看看哪些题和结果还需要修改。不需要留下联系方式。' }),
+    offline_invitation: Object.freeze({ title: '可以联系我参加线下活动', description: '如果之后在大连有合适的交流活动，可以给你发邀请。每次要不要参加，都由你自己决定。' })
   }),
   profile: Object.freeze({
-    kicker: '可选参与 · 联系资料',
+    kicker: '联系资料',
     title: '怎么联系你？',
     description: '只留真正联系需要的信息。\n\n不用填写择偶条件，也不会自动公开给别人。',
     displayName: '称呼',

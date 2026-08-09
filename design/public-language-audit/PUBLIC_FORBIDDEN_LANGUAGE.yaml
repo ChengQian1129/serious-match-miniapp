@@ -1,0 +1,83 @@
+schemaVersion: serious-match.public-language-lint.v1.0
+generatedAt: '2026-08-09'
+scope:
+  hardBlock: normal user-facing UI/copy only
+  allowedInternal:
+  - research/
+  - tests/
+  - telemetry
+  - database fields
+  - developer logs
+  methodPrivacyException: 必要的法律/方法术语可以出现，但必须使用普通中文解释；内部运行时术语仍禁止。
+hardBlockExactOrPattern:
+- 关系说明书
+- 关系决策地图
+- 关系快照
+- 关系画像
+- 关系倾向
+- 关系运行
+- 关系资源
+- \bPilot\b
+- \bP0(?:\.5)?\b
+- \bP1\b
+- \bLevel\s*[1-5]\b
+- 研究表单 A
+- 研究表单 B
+- 研究表单 C
+- USER_SKIPPED
+- NOT_SHOWN_BY_DESIGN
+- NOT_APPLICABLE
+- TECHNICAL_MISSING
+- constructId
+- measurement confidence
+- scoring model
+- validation-only
+- planned missing
+- onboarding
+- provisional
+- dyadic
+- signaling
+- ambiguity window
+- 内部激活
+- 认知交流
+- 事业导向
+- 家庭导向
+- 代理信号
+- soft filter
+- hard constraint
+- 系统把他/她作为候选
+styleWarning:
+- 这并不意味着
+- 真正重要的是
+- 值得注意的是
+- 从你的回答来看
+- 这说明
+- 这可能意味着
+- 在某种程度上
+- 还有一种可能
+- 更准确地说
+- 换句话说
+- 自评
+- 线索
+- 机制
+- 资源
+- 承载
+- 调节
+- 适配
+- 闭环
+- 赋能
+- 维度
+- 构念
+- 路径
+- 策略
+- 框架
+- 默认规则
+- 可协商
+- 互惠
+- 个人边界
+styleRules:
+- styleWarning 不是机械禁词；每次出现都必须人工确认它是否真的是普通人会说的话。
+- 连续两句使用“不是……而是…… / 这并不意味着…… / 真正重要的是……”视为失败。
+- 一个公开名词如果必须另外解释“它是什么意思”，优先删除这个名词。
+- 用户结果优先描述行为和具体场景，不用抽象心理标签。
+- 一句话朗读出来明显像报告、论文、咨询顾问或 ChatGPT，就不能上线。

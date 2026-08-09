@@ -1,7 +1,6 @@
 <view wx:if="{{report}}" class="page report-page" style="padding-top: {{statusBarHeight}}px;">
   <view class="report-header">
-    <view class="page-kicker">关系说明书</view>
-    <view class="report-title">你的关系说明书</view>
+    <view class="report-title">你的结果</view>
     <view class="report-intro">{{heroIntro}}</view>
   </view>
 
@@ -35,7 +34,7 @@
 
     <view class="report-details">
       <button class="report-details__toggle" bind:tap="toggleDetails">
-        <view><view class="report-details__title">{{detailsTitle}}</view><view class="report-details__description">{{showDetails ? detailsCollapseAction : detailsAction}} · {{detailsDescription}}</view></view>
+        <view><view class="report-details__title">{{detailsTitle}}</view><view wx:if="{{showDetails}}" class="report-details__description">{{detailsCollapseAction}}</view><view wx:else class="report-details__description">{{detailsAction}}</view></view>
         <text class="dl-chevron">{{showDetails ? '⌃' : '›'}}</text>
       </button>
 
@@ -88,4 +87,4 @@
     <t-dialog visible="{{showDeleteDialog}}" title="{{deleteDialogTitle}}" content="{{deleteDialogContent}}" confirm-btn="{{deleteConfirmButton}}" cancel-btn="{{deleteDialogCancel}}" bind:confirm="confirmDeleteReport" bind:cancel="cancelDeleteReport" bind:close="cancelDeleteReport" />
   </view>
 </view>
-<view wx:else class="page result-empty"><view class="page-kicker">关系说明书</view><view class="page-title">还没有完成这次探索</view><button class="dl-button result-empty__button" bind:tap="revise">继续回答</button></view>
+<view wx:else class="page result-empty"><view class="page-title">还没有完成这次答题</view><button class="dl-button result-empty__button" bind:tap="revise">继续答题</button></view>

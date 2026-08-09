@@ -10,12 +10,14 @@ const {
 } = require('../../utils/assessment-v3-pilot/session-store')
 
 const {
-  getTask,
-  resolveFormat,
+  getPublicTask,
+  resolvePublicFormat,
   expectedItemIdsForParent
 } = require('../../shared/assessment-v3-pilot/runtime-engine')
 const { FEATURES } = require('../../utils/features')
 const { navigateOnce, resetNavigation } = require('../../utils/navigation')
+const { publicError, classifyError } = require('../../shared/content/public-errors')
+const publicLanguage = require('../../shared/content/public-language.generated')
 
 function hasOwn(value, key) {
   return Object.prototype.hasOwnProperty.call(value, key)
@@ -61,8 +63,8 @@ function optionView(option, selectedValue, missing) {
   }
 }
 
-function responseView(itemId, response, answers, missingness) {
-  const format = resolveFormat(response)
+function responseView(itemId, response, answers, missingness, parentTaskId) {
+  const format = resolvePublicFormat(response, itemId, parentTaskId)
   const selectedValue = answers[itemId]
   const missing = missingness[itemId] || null
   const value = selectedValue === undefined || selectedValue === null ? '' : selectedValue
@@ -90,12 +92,12 @@ function buildTaskView(task, session) {
     ? task.children.map(child => ({
       itemId: child.itemId,
       prompt: child.prompt,
-      response: responseView(child.itemId, child.response, answers, missingness)
+      response: responseView(child.itemId, child.response, answers, missingness, task.taskId)
     }))
     : [{
       itemId: task.taskId,
       prompt: '',
-      response: responseView(task.taskId, task.response, answers, missingness)
+      response: responseView(task.taskId, task.response, answers, missingness, task.taskId)
     }]
   const expected = expectedItemIdsForParent(task.taskId)
   const accounted = expected.filter(itemId => hasOwn(answers, itemId) || hasOwn(missingness, itemId)).length
@@ -109,9 +111,9 @@ function buildTaskView(task, session) {
     itemCount: items.length,
     accounted,
     expectedCount: expected.length,
-    section: meta.chapter ? `第 ${String(meta.chapter).replace(/^C/, '')} 章` : '关系探索',
-    constructId: task.constructId || '',
-    responseContext: task.responseContext || 'CURRENT_OR_RELEVANT_CONTEXT'
+    section: task.section || '',
+    constructId: '',
+    responseContext: ''
   }
 }
 
@@ -128,7 +130,7 @@ function errorMessage(error) {
   if (message.includes('ITEM_NOT_ASSIGNED') || message.includes('不在当前')) return '这道题当前不可用，请返回上一题再试。'
   if (message.includes('仍有')) return '请先完成这道题，或选择“暂时跳过”。'
   if (message.includes('无效')) return '请检查这道题的填写内容。'
-  return message || '刚才没有保存成功，请再试一次。'
+  return publicError('generic')
 }
 
 function recordErrorEvent(itemId, error) {
@@ -179,9 +181,9 @@ Page({
       return
     }
     const taskId = currentParentTaskId(session)
-    const task = getTask(taskId)
+    const task = getPublicTask(taskId)
     if (!task) {
-      this.setData({ loaded: true, completed: false, task: null, error: '暂时没有可显示的题目，请返回首页。' })
+      this.setData({ loaded: true, completed: false, task: null, error: publicError('loadFailed') })
       return
     }
     if (taskId !== this._lastShownTaskId) {
@@ -202,7 +204,7 @@ Page({
       completed: false,
       status: current.status,
       task: buildTaskView(task, current),
-      formLabel: '关系探索',
+      formLabel: '答题',
       progressText: `${progressState.completedParents} / ${progressState.assignedParents}`,
       progressRatio: progressState.ratio,
       canPrevious: current.currentParentIndex > 0,
@@ -222,7 +224,7 @@ Page({
       if (!options.silent) this.refresh()
       return next
     } catch (error) {
-      if (!options.silent) this.setData({ error: errorMessage(error), skipNotice: '' })
+      if (!options.silent) this.setData({ error: classifyError(error, 'questionInvalid'), skipNotice: '' })
       throw error
     }
   },
@@ -248,7 +250,7 @@ Page({
       this.refresh()
     } catch (error) {
       recordErrorEvent(itemId, error)
-      this.setData({ error: errorMessage(error), skipNotice: '' })
+      this.setData({ error: classifyError(error, 'questionInvalid'), skipNotice: '' })
     }
   },
 
@@ -268,7 +270,7 @@ Page({
       this.setData({ error: '' })
     } catch (error) {
       recordErrorEvent(itemId, error)
-      this.setData({ error: errorMessage(error) })
+      this.setData({ error: classifyError(error, 'questionInvalid') })
     }
   },
 
@@ -293,11 +295,11 @@ Page({
       expectedItemIdsForParent(taskId).forEach(itemId => {
         if (!isAccounted(latest, itemId)) markMissing(itemId, 'USER_SKIPPED')
       })
-      this.setData({ error: '', skipNotice: '已记录为暂时跳过，之后仍可以返回修改。' })
+      this.setData({ error: '', skipNotice: publicLanguage.ui.v3Pilot.skipDisplay })
       this.refresh()
     } catch (error) {
       recordErrorEvent(null, error)
-      this.setData({ error: errorMessage(error), skipNotice: '' })
+      this.setData({ error: classifyError(error, 'questionInvalid'), skipNotice: '' })
     }
   },
 
@@ -307,7 +309,7 @@ Page({
 
   handlePrevious() {
     if (this._isRouting) return
-    try { this.commitDrafts() } catch (error) { this.setData({ error: errorMessage(error) }) }
+    try { this.commitDrafts() } catch (error) { this.setData({ error: classifyError(error, 'questionInvalid') }) }
     const session = getSession()
     if (session.currentParentIndex <= 0) {
       return navigateOnce(this, 'navigateBack', { fail: () => navigateOnce(this, 'reLaunch', { url: '/pages/home/index' }) })
@@ -334,7 +336,7 @@ Page({
       this.refresh('forward')
     } catch (error) {
       recordErrorEvent(null, error)
-      this.setData({ error: errorMessage(error), skipNotice: '' })
+      this.setData({ error: classifyError(error, 'questionInvalid'), skipNotice: '' })
     }
   },
 

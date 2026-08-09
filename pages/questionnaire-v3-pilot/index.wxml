@@ -1,14 +1,14 @@
 <view wx:if="{{loaded && !completed && task}}" class="question-page v3-pilot-page">
   <view class="question-top v3-pilot-top">
     <view class="question-top__row">
-      <button class="question-back" aria-label="{{canPrevious ? '返回上一题' : '退出研究版'}}" bind:tap="handlePrevious">
+      <button class="question-back" aria-label="{{canPrevious ? '返回上一题' : '退出答题'}}" bind:tap="handlePrevious">
         <text class="question-back__icon">‹</text>{{canPrevious ? '返回上一题' : '退出'}}
       </button>
-      <view class="question-top__title">关系说明书 · 研究版</view>
+      <view class="question-top__title">答题 · 测试版</view>
       <view class="question-top__count">{{progressText}}</view>
     </view>
     <view class="question-progress-row">
-      <view class="question-progress" aria-label="已完成 {{progressText}} 个任务">
+      <view class="question-progress" aria-label="已完成 {{progressText}}">
         <view class="question-progress__bar" style="transform: scaleX({{progressRatio}});"></view>
       </view>
     </view>
@@ -16,12 +16,12 @@
 
   <view class="v3-pilot-content {{motionClass}}">
     <view class="v3-pilot-meta">
-      <text class="v3-pilot-eyebrow">关系探索</text>
-      <text class="v3-pilot-task-count">{{task.accounted}} / {{task.expectedCount}} 项</text>
+      <text class="v3-pilot-eyebrow">{{formLabel}}</text>
+      <text class="v3-pilot-task-count">已答 {{task.accounted}} / {{task.expectedCount}}</text>
     </view>
     <view class="v3-pilot-section">{{task.section}}</view>
     <view class="v3-pilot-title">{{task.prompt}}</view>
-    <view wx:if="{{task.isCompound}}" class="v3-pilot-context">这是一个情境题，请分别回答下面的每一项。</view>
+    <view wx:if="{{task.isCompound}}" class="v3-pilot-context">请分别回答下面的每一项。</view>
 
     <view class="v3-response-list">
       <view wx:for="{{task.items}}" wx:key="itemId" wx:for-item="responseItem" class="v3-response">
@@ -85,19 +85,18 @@
   <view class="action-bar v3-action-bar">
     <view class="v3-action-row">
       <button class="v3-secondary-action" disabled="{{!canSkip}}" bind:tap="skipCurrent">{{skipLabel}}</button>
-      <button class="dl-button v3-continue-action" disabled="{{!canContinue}}" bind:tap="handleContinue">{{task.accounted === task.expectedCount ? '继续' : '完成本题后继续'}}</button>
+      <button class="dl-button v3-continue-action" disabled="{{!canContinue}}" bind:tap="handleContinue">{{task.accounted === task.expectedCount ? '继续' : '完成后继续'}}</button>
     </view>
   </view>
 </view>
 
 <view wx:if="{{loaded && completed}}" class="page v3-complete-page">
     <view class="page-header v3-complete-header">
-    <view class="page-kicker">关系说明书 · 研究版</view>
-    <view class="page-title">这次记录完成了</view>
-    <view class="page-desc">你的回答已经保存。这一版会先整理题目体验和回答过程，不在这里给出关系结论。</view>
+    <view class="page-title">这次答题完成了</view>
+    <view class="page-desc">你的回答已经保存。这还是测试版本，目前不会根据这些回答生成正式结论。</view>
   </view>
   <view class="v3-complete-rule"></view>
-  <view class="v3-complete-note">如果你之后另行同意参与访谈或补充研究，我们会按照对应的参与说明与你联系。感谢你把真实想法交给这次探索。</view>
+  <view class="v3-complete-note">如果你之后愿意参加一对一访谈或线下交流，我们会先说明具体安排，再由你决定。</view>
   <view class="v3-complete-actions action-bar--static">
     <button class="dl-button" bind:tap="exitPilot">返回首页</button>
   </view>

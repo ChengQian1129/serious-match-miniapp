@@ -1,25 +1,24 @@
 <view class="page privacy-page">
   <view class="page-header">
-    <view class="page-kicker">测试版 · 关系说明书</view>
     <view class="page-title">隐私说明</view>
-    <view class="page-desc">填写中的草稿会先保存在当前设备，并自动同步到你的私密云端空间；网络中断时，恢复连接后会继续同步。</view>
+    <view class="page-desc">问卷回答会默认保存在云端，方便你换设备后继续，也方便你随时修改或删除。</view>
   </view>
 
   <view class="section-title section-title--first">信息处理</view>
   <view class="dl-list privacy-list">
-    <view class="dl-list-row privacy-row"><view class="privacy-index">01</view><view class="dl-list-row__body"><view class="dl-list-row__title">保存的信息</view><view class="dl-list-row__desc">包括问卷回答、回答时间、章节结果、关系说明书和本人修改记录。评估本身不要求手机号。</view></view></view>
-    <view class="dl-list-row privacy-row"><view class="privacy-index">02</view><view class="dl-list-row__body"><view class="dl-list-row__title">如何使用</view><view class="dl-list-row__desc">仅用于生成、保存和维护你的个人关系说明书，不公开展示。</view></view></view>
+    <view class="dl-list-row privacy-row"><view class="privacy-index">01</view><view class="dl-list-row__body"><view class="dl-list-row__title">保存的信息</view><view class="dl-list-row__desc">包括问卷回答、回答时间、每部分结果和修改记录。不填写联系方式也能完成答题。</view></view></view>
+    <view class="dl-list-row privacy-row"><view class="privacy-index">02</view><view class="dl-list-row__body"><view class="dl-list-row__title">怎么使用</view><view class="dl-list-row__desc">只用于生成、保存和维护你的结果，不公开展示。</view></view></view>
     <view class="dl-list-row privacy-row"><view class="privacy-index">03</view><view class="dl-list-row__body"><view class="dl-list-row__title">{{privacy.retentionTitle}}</view><view class="dl-list-row__desc">{{privacy.retention}}</view></view></view>
-    <view class="dl-list-row privacy-row"><view class="privacy-index">04</view><view class="dl-list-row__body"><view class="dl-list-row__title">你可以做什么</view><view class="dl-list-row__desc">{{privacy.rights}}</view></view></view>
+    <view class="dl-list-row privacy-row"><view class="privacy-index">04</view><view class="dl-list-row__body"><view class="dl-list-row__title">{{privacy.rightsTitle}}</view><view class="dl-list-row__desc">{{privacy.rights}}</view></view></view>
   </view>
 
-  <view class="section-title">后续参与与授权</view>
+  <view class="section-title">后续联系</view>
   <view class="dl-list privacy-list">
-    <view class="dl-list-row privacy-row"><view class="privacy-index">05</view><view class="dl-list-row__body"><view class="dl-list-row__title">与报告相互独立</view><view class="dl-list-row__desc">不提供联系方式也能获得完整报告。后续访谈联系、去标识化研究使用和线下活动邀请分别授权，默认均不勾选。</view></view></view>
-    <view class="dl-list-row privacy-row"><view class="privacy-index">06</view><view class="dl-list-row__body"><view class="dl-list-row__title">联系方式隔离保存</view><view class="dl-list-row__desc">参与资料、评估报告和联系方式分开保存。分析人员不能读取原始联系方式，访谈人员只能查看被分配案例所需的信息。</view></view></view>
-    <view class="dl-list-row privacy-row"><view class="privacy-index">07</view><view class="dl-list-row__body"><view class="dl-list-row__title">随时撤回或删除</view><view class="dl-list-row__desc">撤回后不再进入新的联系名单；删除参与登记会删除授权、参与资料、联系方式及关联访谈与验证记录，但不会删除问卷和关系说明书。删除问卷时，依赖该问卷形成的访谈与验证记录也会删除。</view></view></view>
+    <view class="dl-list-row privacy-row"><view class="privacy-index">05</view><view class="dl-list-row__body"><view class="dl-list-row__title">分开选择</view><view class="dl-list-row__desc">不提供联系方式也能获得结果。一对一访谈、用去掉能直接识别你的信息后的回答改进这套题、线下活动邀请，分别选择，默认都不勾选。</view></view></view>
+    <view class="dl-list-row privacy-row"><view class="privacy-index">06</view><view class="dl-list-row__body"><view class="dl-list-row__title">联系方式单独保存</view><view class="dl-list-row__desc">联系方式会和问卷回答分开保存。分析人员不会看到原始联系方式。</view></view></view>
+    <view class="dl-list-row privacy-row"><view class="privacy-index">07</view><view class="dl-list-row__body"><view class="dl-list-row__title">随时撤回或删除</view><view class="dl-list-row__desc">你可以随时取消后续联系，也可以删除联系方式和参与资料。删除问卷和结果时，本次答题相关的记录也会一起删除。</view></view></view>
   </view>
 
   <view class="section-title">{{privacy.operator}}</view>
-  <view class="privacy-callout"><view class="dl-list-row__title">{{privacy.contact}}</view><view class="dl-list-row__desc">{{privacy.release}}</view></view>
+  <view class="privacy-callout"><view class="dl-list-row__title">{{privacy.contact}}</view></view>
 </view>

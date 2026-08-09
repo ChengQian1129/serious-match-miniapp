@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "关系说明书",
+  "navigationBarTitleText": "你的结果",
   "usingComponents": {
     "t-dialog": "tdesign-miniprogram/dialog/dialog"
   }

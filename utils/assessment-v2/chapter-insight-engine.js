@@ -2,6 +2,7 @@ const { getChapter, getItem, optionsFor } = require('./questionnaire-definitions
 const { evaluateAssessment, scored, missing } = require('./scoring-engine')
 const { buildReport } = require('./report-engine')
 const { getChapterCopy, CONTENT_VERSION } = require('../../shared/content/chapter-copy')
+const publicLanguage = require('../../shared/content/public-language.generated')
 
 const PRESENT = new Set(['strong_present', 'lean_present'])
 const LESS = new Set(['strong_less', 'lean_less'])
@@ -127,17 +128,43 @@ function buildChapterInsight(chapterId, answers, options = {}) {
   const sourceSet = new Set(chapter.itemIds)
   const relevant = report.allClaimCandidates.filter(claim => [].concat(claim.supportingItemIds || [], claim.contradictingItemIds || [], claim.qualifyingItemIds || []).some(id => sourceSet.has(id))).slice(0, 3)
   const narrative = chapterNarrative(chapterId, evaluation)
+  const publicNarrative = publicChapterNarrative(chapterId, evaluation)
   const copy = getChapterCopy(chapterId)
   return Object.assign({
     chapterId,
     chapterTitle: chapter.title,
-    headline: narrative.title,
-    summary: [narrative.text, narrative.impact].filter(Boolean).join('\n\n'),
+    headline: publicNarrative.headline,
+    summary: publicNarrative.summary,
     contentVersion: CONTENT_VERSION,
     boundary: '这是根据你此刻的自述形成的阶段判断，不是固定人格，也不是心理诊断。',
     evidence: answerEvidence(chapter, answers),
     claims: relevant
   }, copy, narrative)
+}
+
+function publicChapterNarrative(chapterId, evaluation) {
+  const dimensions = evaluation.dimensions
+  const publicCopy = publicLanguage.v2.chapterNarrativePublic || {}
+  const state = (chapter, key) => publicCopy[chapter] && publicCopy[chapter][key]
+  if (chapterId === 'C1') {
+    const willingness = PRESENT.has(dimensions.readiness_intent.state)
+    const selfDirected = PRESENT.has(dimensions.autonomous_motivation.state)
+    const key = willingness && selfDirected ? 'willing_self_directed' : willingness ? 'willing_with_pressure' : LESS.has(dimensions.readiness_intent.state) ? 'hesitant' : 'mixed'
+    return state('C1', key) || { headline: '这一部分现在还看不出明确结论', summary: '这几道题的回答不太一致，现在先不下结论。' }
+  }
+  if (chapterId === 'C2') {
+    const key = PRESENT.has(dimensions.available_capacity.state) ? 'capacity_present' : LESS.has(dimensions.available_capacity.state) ? 'capacity_low' : 'capacity_mixed'
+    return state('C2', key) || { headline: '这一部分现在还看不出明确结论', summary: '这几道题的回答不太一致，现在先不下结论。' }
+  }
+  if (chapterId === 'C3') {
+    const key = PRESENT.has(dimensions.uncertainty_sensitivity.state) ? 'sensitivity_present' : LESS.has(dimensions.uncertainty_sensitivity.state) ? 'sensitivity_low' : 'sensitivity_mixed'
+    return state('C3', key) || { headline: '这一部分现在还看不出明确结论', summary: '这几道题的回答不太一致，现在先不下结论。' }
+  }
+  if (chapterId === 'C4') {
+    const key = PRESENT.has(dimensions.closeness_discomfort.state) ? 'closeness_discomfort_present' : LESS.has(dimensions.closeness_discomfort.state) ? 'closeness_discomfort_low' : 'closeness_discomfort_mixed'
+    return state('C4', key) || { headline: '这一部分现在还看不出明确结论', summary: '这几道题的回答不太一致，现在先不下结论。' }
+  }
+  return publicCopy[chapterId] && publicCopy[chapterId].default || { headline: '这一部分现在还看不出明确结论', summary: '这几道题的回答不太一致，现在先不下结论。' }
 }
 
 module.exports = { buildChapterInsight }
