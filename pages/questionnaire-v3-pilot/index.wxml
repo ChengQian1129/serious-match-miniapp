@@ -1,10 +1,10 @@
 <view wx:if="{{loaded && !completed && task}}" class="question-page v3-pilot-page">
   <view class="question-top v3-pilot-top">
     <view class="question-top__row">
-      <button class="question-back" aria-label="{{canPrevious ? '返回上一题' : '退出研究 Pilot'}}" bind:tap="handlePrevious">
+      <button class="question-back" aria-label="{{canPrevious ? '返回上一题' : '退出研究版'}}" bind:tap="handlePrevious">
         <text class="question-back__icon">‹</text>{{canPrevious ? '返回上一题' : '退出'}}
       </button>
-      <view class="question-top__title">关系说明书 · 研究 Pilot</view>
+      <view class="question-top__title">关系说明书 · 研究版</view>
       <view class="question-top__count">{{progressText}}</view>
     </view>
     <view class="question-progress-row">
@@ -16,7 +16,7 @@
 
   <view class="v3-pilot-content {{motionClass}}">
     <view class="v3-pilot-meta">
-      <text class="v3-pilot-eyebrow">{{formLabel}}</text>
+      <text class="v3-pilot-eyebrow">关系探索</text>
       <text class="v3-pilot-task-count">{{task.accounted}} / {{task.expectedCount}} 项</text>
     </view>
     <view class="v3-pilot-section">{{task.section}}</view>
@@ -74,7 +74,7 @@
           </view>
         </view>
 
-        <view wx:if="{{responseItem.response.missing}}" class="v3-response__missing">已暂时跳过（{{responseItem.response.missingCode}}）</view>
+        <view wx:if="{{responseItem.response.missing}}" class="v3-response__missing">已暂时跳过</view>
       </view>
     </view>
 
@@ -91,13 +91,13 @@
 </view>
 
 <view wx:if="{{loaded && completed}}" class="page v3-complete-page">
-  <view class="page-header v3-complete-header">
-    <view class="page-kicker">关系说明书 · 研究 Pilot</view>
+    <view class="page-header v3-complete-header">
+    <view class="page-kicker">关系说明书 · 研究版</view>
     <view class="page-title">这次记录完成了</view>
-    <view class="page-desc">你参与的是技术研究 Pilot。我们已经保存原始回答，用于验证题目和流程；这一版不会生成关系评分、匹配结果或正式报告。</view>
+    <view class="page-desc">你的回答已经保存。这一版会先整理题目体验和回答过程，不在这里给出关系结论。</view>
   </view>
   <view class="v3-complete-rule"></view>
-  <view class="v3-complete-note">之后如果需要参与访谈或补充说明，会由研究人员另行联系。感谢你把这些真实想法交给这次研究。</view>
+  <view class="v3-complete-note">如果你之后另行同意参与访谈或补充研究，我们会按照对应的参与说明与你联系。感谢你把真实想法交给这次探索。</view>
   <view class="v3-complete-actions action-bar--static">
     <button class="dl-button" bind:tap="exitPilot">返回首页</button>
   </view>

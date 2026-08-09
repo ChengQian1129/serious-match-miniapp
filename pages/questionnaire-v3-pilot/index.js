@@ -109,7 +109,7 @@ function buildTaskView(task, session) {
     itemCount: items.length,
     accounted,
     expectedCount: expected.length,
-    section: meta.chapter ? `C${meta.chapter.replace(/^C/, '')}` : '关系底图',
+    section: meta.chapter ? `第 ${String(meta.chapter).replace(/^C/, '')} 章` : '关系探索',
     constructId: task.constructId || '',
     responseContext: task.responseContext || 'CURRENT_OR_RELEVANT_CONTEXT'
   }
@@ -202,7 +202,7 @@ Page({
       completed: false,
       status: current.status,
       task: buildTaskView(task, current),
-      formLabel: `研究表单 ${current.assignment.formKey}`,
+      formLabel: '关系探索',
       progressText: `${progressState.completedParents} / ${progressState.assignedParents}`,
       progressRatio: progressState.ratio,
       canPrevious: current.currentParentIndex > 0,

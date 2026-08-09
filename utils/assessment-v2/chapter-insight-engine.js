@@ -119,17 +119,20 @@ function chapterNarrative(chapterId, evaluation) {
   }
 }
 
-function buildChapterInsight(chapterId, answers) {
+function buildChapterInsight(chapterId, answers, options = {}) {
   const chapter = getChapter(chapterId)
   if (!chapter) throw new Error(`未知章节 ${chapterId}`)
   const evaluation = evaluateAssessment(answers)
-  const report = buildReport(answers)
+  const report = options.report && Array.isArray(options.report.allClaimCandidates) ? options.report : buildReport(answers)
   const sourceSet = new Set(chapter.itemIds)
   const relevant = report.allClaimCandidates.filter(claim => [].concat(claim.supportingItemIds || [], claim.contradictingItemIds || [], claim.qualifyingItemIds || []).some(id => sourceSet.has(id))).slice(0, 3)
   const narrative = chapterNarrative(chapterId, evaluation)
   const copy = getChapterCopy(chapterId)
   return Object.assign({
     chapterId,
+    chapterTitle: chapter.title,
+    headline: narrative.title,
+    summary: [narrative.text, narrative.impact].filter(Boolean).join('\n\n'),
     contentVersion: CONTENT_VERSION,
     boundary: '这是根据你此刻的自述形成的阶段判断，不是固定人格，也不是心理诊断。',
     evidence: answerEvidence(chapter, answers),

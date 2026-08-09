@@ -1,50 +1,29 @@
 <view wx:if="{{claim}}" class="page page--with-action claim-page claim-enter">
   <view class="claim-header">
-    <view class="page-kicker">{{claim.label}}</view>
+    <button class="claim-back" bind:tap="returnReport"><text>‹</text>回到说明书</button>
+    <view class="page-kicker">结论依据</view>
     <view class="claim-title">{{claim.title}}</view>
     <view class="claim-text">{{claim.text}}</view>
-    <view class="claim-boundary"><view class="claim-boundary__label">这句话不一定适用于所有时候</view><view>{{claim.boundary}}</view></view>
+    <view wx:if="{{claim.boundary}}" class="claim-boundary">{{claim.boundary}}</view>
   </view>
 
   <view class="claim-section">
-    <view class="claim-section__title">{{evidenceCopy.supporting}}</view>
-    <view class="claim-section__intro">主要是这几道回答放在了一起</view>
-    <view class="claim-evidence-list">
-      <view wx:for="{{claim.evidence.supporting}}" wx:key="itemId" class="claim-evidence">
-        <view class="claim-evidence__question">{{item.question}}</view>
-        <view class="claim-evidence__answer">{{evidenceCopy.answerPrefix}}{{item.answer}}</view>
+    <button class="claim-evidence-toggle" bind:tap="toggleEvidence">
+      {{evidenceExpanded ? '收起回答依据' : evidenceCopy.toggle}}<text class="dl-chevron">{{evidenceExpanded ? '⌃' : '›'}}</text>
+    </button>
+    <view wx:if="{{evidenceExpanded}}" class="claim-evidence-panel">
+      <view wx:for="{{evidenceGroups}}" wx:for-item="group" wx:key="id" class="claim-evidence-group">
+        <view class="claim-evidence-group__title">{{group.label}}</view>
+        <view wx:for="{{group.items}}" wx:for-item="evidence" wx:key="itemId" class="claim-evidence">
+          <view class="claim-evidence__question">{{evidence.question}}</view>
+          <view class="claim-evidence__answer">{{evidenceCopy.answerPrefix}}{{evidence.answer}}</view>
+        </view>
       </view>
     </view>
-    <view wx:if="{{claim.evidence.contradicting.length}}" class="claim-evidence-list claim-evidence-list--secondary"><view class="claim-section__title">{{evidenceCopy.contradicting}}</view><view wx:for="{{claim.evidence.contradicting}}" wx:key="itemId" class="claim-evidence"><view class="claim-evidence__question">{{item.question}}</view><view class="claim-evidence__answer">{{evidenceCopy.answerPrefix}}{{item.answer}}</view></view></view>
-    <view wx:if="{{claim.evidence.qualifying.length}}" class="claim-evidence-list claim-evidence-list--secondary"><view class="claim-section__title">{{evidenceCopy.qualifying}}</view><view wx:for="{{claim.evidence.qualifying}}" wx:key="itemId" class="claim-evidence"><view class="claim-evidence__question">{{item.question}}</view><view class="claim-evidence__answer">{{evidenceCopy.answerPrefix}}{{item.answer}}</view></view></view>
-    <view wx:if="{{claim.alternativeExplanations.length}}" class="claim-evidence-list claim-evidence-list--secondary"><view class="claim-section__title">{{evidenceCopy.alternatives}}</view><view wx:for="{{claim.alternativeExplanations}}" wx:key="*this" class="claim-evidence"><view class="claim-evidence__question">{{item}}</view></view></view>
-    <view wx:if="{{claim.verificationQuestions.length}}" class="claim-evidence-list claim-evidence-list--secondary"><view class="claim-section__title">{{evidenceCopy.verification}}</view><view wx:for="{{claim.verificationQuestions}}" wx:key="*this" class="claim-evidence"><view class="claim-evidence__question">{{item}}</view></view></view>
-    <view class="claim-method">
-      <button class="claim-method__toggle" bind:tap="toggleTechnical">{{technicalExpanded ? '收起' : evidenceCopy.method}}</button>
-      <view wx:if="{{technicalExpanded}}" class="claim-method__details">
-        <view>规则编号：{{claim.id}}</view>
-        <view>报告规则版本：{{claim.reportRuleVersion}}</view>
-        <view>内容版本：{{claim.contentVersion}}</view>
-        <view>支持 {{claim.evidence.supporting.length}} 条；矛盾 {{claim.evidence.contradicting.length}} 条；限定 {{claim.evidence.qualifying.length}} 条。</view>
-      </view>
-    </view>
-  </view>
-
-  <view class="claim-section claim-section--feedback">
-    <view class="claim-section__title">{{evidenceCopy.feedbackTitle}}</view>
-    <view class="claim-section__desc">你的反馈会单独保存，不会修改当时的原始回答。</view>
-    <view class="choice-list claim-feedback-list">
-      <button wx:for="{{feedbackOptions}}" wx:key="value" class="choice-option {{selectedFeedback === item.value ? 'choice-option--selected' : ''}}" data-value="{{item.value}}" bind:tap="chooseFeedback">
-        <text>{{item.label}}</text>
-        <text wx:if="{{selectedFeedback === item.value}}" class="choice-option__check">✓</text>
-      </button>
-    </view>
-    <view class="claim-note-label">{{evidenceCopy.feedbackPrompt}}</view>
-    <textarea class="claim-note" value="{{feedbackNote}}" maxlength="200" auto-height placeholder="写下你想到的那次经历" bind:input="inputNote" />
-    <view wx:if="{{cloudError}}" class="field-error claim-error">{{cloudError}}</view>
   </view>
 </view>
 
-<view wx:if="{{claim}}" class="action-bar">
-  <button class="dl-button" loading="{{isSaving}}" disabled="{{!canSave || isSaving}}" bind:tap="handleSave">{{isSaving ? '正在保存' : '保存我的反馈'}}</button>
+<view wx:if="{{claim}}" class="action-bar claim-actions">
+  <button class="dl-button" bind:tap="reviseAnswer">修改相关回答</button>
+  <button class="claim-back-action" bind:tap="returnReport">回到说明书</button>
 </view>

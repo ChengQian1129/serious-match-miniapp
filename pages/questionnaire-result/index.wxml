@@ -1,43 +1,76 @@
 <view wx:if="{{report}}" class="page report-page" style="padding-top: {{statusBarHeight}}px;">
   <view class="report-header">
-    <view class="page-kicker">你的关系说明书</view>
-    <view wx:if="{{heroClaim}}" class="report-hero">
-      <view class="report-title">{{heroClaim.title}}</view>
-      <view class="report-hero__text">{{heroClaim.text}}</view>
-    </view>
+    <view class="page-kicker">关系说明书</view>
+    <view class="report-title">你的关系说明书</view>
     <view class="report-intro">{{heroIntro}}</view>
   </view>
 
   <view class="report-body">
-    <view wx:for="{{sections}}" wx:key="id" class="report-section">
-      <view class="report-section__title">{{item.title}}</view>
-      <view wx:for="{{item.claims}}" wx:key="id" class="report-claim" data-id="{{item.id}}" bind:tap="openClaim">
-        <view class="report-claim__title">{{item.title}}</view>
-        <view class="report-claim__text">{{item.text}}</view>
-        <view class="report-claim__meta">{{item.confirmationLabel || claimAction}} <text class="dl-chevron">›</text></view>
+    <view class="report-findings">
+      <view class="report-section__title">{{topFindingsTitle}}</view>
+      <view wx:for="{{topFindings}}" wx:key="number" wx:for-item="finding" class="report-finding" data-id="{{finding.claimId}}" bind:tap="openClaim">
+        <view class="report-finding__number">{{finding.number}}</view>
+        <view class="report-finding__body">
+          <view class="report-finding__title">{{finding.title}}</view>
+          <view class="report-finding__text">{{finding.text}}</view>
+          <view wx:if="{{finding.claimId}}" class="report-finding__meta">{{claimAction}} <text class="dl-chevron">›</text></view>
+        </view>
       </view>
     </view>
 
-    <view wx:if="{{observations.length}}" class="report-section report-observation">
-      <view class="report-section__title">{{observationTitle}}</view>
-      <view wx:for="{{observations}}" wx:key="id" class="report-claim" data-id="{{item.id}}" bind:tap="openClaim">
-        <view class="report-claim__title">{{item.title}}</view>
-        <view class="report-claim__text">{{item.text}}</view>
-        <view class="report-claim__meta">{{claimAction}} <text class="dl-chevron">›</text></view>
+    <view class="report-chapters-block">
+      <view class="report-section__title">{{chapterResultsTitle}}</view>
+      <view class="report-section__desc">{{chapterResultsDescription}}</view>
+      <view class="report-chapter-results">
+        <view wx:for="{{chapterResults}}" wx:key="id" wx:for-item="chapter" class="report-chapter-result">
+          <view class="report-chapter-result__number">{{chapter.number}}</view>
+          <view class="report-chapter-result__body">
+            <view class="report-chapter-result__title">{{chapter.title}}</view>
+            <view class="report-chapter-result__headline">{{chapter.headline}}</view>
+            <view class="report-chapter-result__summary">{{chapter.summary}}</view>
+          </view>
+        </view>
       </view>
     </view>
 
-    <view wx:if="{{unknowns.length}}" class="report-unknowns">
-      <view class="report-section__title">{{unknownTitle}}</view>
-      <view class="report-unknowns__description">{{unknownDescription}}</view>
-      <view wx:for="{{unknowns}}" wx:key="id" class="report-unknown"><view class="report-unknown__title">{{item.title}}</view><view>{{item.text}}</view></view>
+    <view class="report-details">
+      <button class="report-details__toggle" bind:tap="toggleDetails">
+        <view><view class="report-details__title">{{detailsTitle}}</view><view class="report-details__description">{{showDetails ? detailsCollapseAction : detailsAction}} · {{detailsDescription}}</view></view>
+        <text class="dl-chevron">{{showDetails ? '⌃' : '›'}}</text>
+      </button>
+
+      <view wx:if="{{showDetails}}" class="report-details__content">
+        <view wx:for="{{sections}}" wx:key="id" wx:for-item="section" class="report-section report-section--details">
+          <view class="report-section__title">{{section.title}}</view>
+          <view wx:for="{{section.claims}}" wx:key="id" wx:for-item="claim" class="report-claim" data-id="{{claim.id}}" bind:tap="openClaim">
+            <view class="report-claim__title">{{claim.title}}</view>
+            <view class="report-claim__text">{{claim.text}}</view>
+            <view class="report-claim__meta">{{claimAction}} <text class="dl-chevron">›</text></view>
+          </view>
+        </view>
+
+        <view wx:if="{{observations.length}}" class="report-section report-observation">
+          <view class="report-section__title">{{observationTitle}}</view>
+          <view wx:for="{{observations}}" wx:key="id" wx:for-item="observation" class="report-claim" data-id="{{observation.id}}" bind:tap="openClaim">
+            <view class="report-claim__title">{{observation.title}}</view>
+            <view class="report-claim__text">{{observation.text}}</view>
+            <view class="report-claim__meta">{{claimAction}} <text class="dl-chevron">›</text></view>
+          </view>
+        </view>
+
+        <view wx:if="{{unknowns.length}}" class="report-unknowns">
+          <view class="report-section__title">{{unknownTitle}}</view>
+          <view class="report-unknowns__description">{{unknownDescription}}</view>
+          <view wx:for="{{unknowns}}" wx:key="id" wx:for-item="unknown" class="report-unknown"><view class="report-unknown__title">{{unknown.title}}</view><view>{{unknown.text}}</view></view>
+        </view>
+      </view>
     </view>
 
     <view class="report-boundary">{{boundaryCopy}}</view>
 
     <view class="report-revise-block">
       <view class="report-section__title">{{reviseTitle}}</view>
-      <view class="report-chapters"><button wx:for="{{chapters}}" wx:key="id" class="report-chapter" data-chapter="{{item.id}}" bind:tap="reviseChapter"><text>{{item.id}}</text><text>{{item.title}}</text></button></view>
+      <view class="report-chapters"><button wx:for="{{chapters}}" wx:key="id" class="report-chapter" data-chapter="{{item.id}}" bind:tap="reviseChapter"><text>{{item.number}}</text><text>{{item.title}}</text></button></view>
     </view>
 
     <view wx:if="{{showFollowup}}" class="report-followup">

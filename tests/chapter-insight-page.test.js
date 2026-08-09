@@ -13,7 +13,6 @@ global.wx = {
 }
 
 const { ITEMS, CHAPTERS } = require('../utils/assessment-v2/questionnaire-definitions')
-const { CONTENT_VERSION } = require('../shared/content/version')
 const store = require('../utils/assessment-v2/session-store')
 CHAPTERS.forEach(chapter => {
   chapter.itemIds.forEach((itemId, index) => {
@@ -33,12 +32,11 @@ const page = Object.assign({}, definition, {
 
 page.onLoad({ chapter: 'C6' })
 assert.equal(page.data.nextChapter, null)
-page.chooseFeedback({ currentTarget: { dataset: { value: 'fits' } } })
-assert.equal(store.getSession().chapterFeedback.C6.value, 'fits')
-assert.equal(store.getSession().chapterFeedback.C6.contentVersion, CONTENT_VERSION)
+assert.equal(typeof page.chooseFeedback, 'undefined')
+assert.deepEqual(store.getSession().chapterFeedback, {})
 page.continueNext()
 assert.equal(redirectedTo, '/pages/questionnaire-result/index')
 assert.ok(store.getReport())
 assert.equal(store.getReport().reportVersion, 1)
 
-console.log('Chapter insight page OK: C6 feedback precedes report generation')
+console.log('Chapter insight page OK: C6 completes without public model-rating feedback')

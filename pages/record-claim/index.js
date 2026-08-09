@@ -1,38 +1,66 @@
-const { getReport, shouldSyncAssessment, saveClaimFeedback, markFeedbackEventSynced } = require('../../utils/assessment-v2/session-store')
-const { isCloudReady, appendAssessmentFeedbackToCloud } = require('../../utils/cloud')
+const { getReport } = require('../../utils/assessment-v2/session-store')
+const { CHAPTERS } = require('../../utils/assessment-v2/questionnaire-definitions')
 const { navigateOnce, resetNavigation } = require('../../utils/navigation')
 const { recordEvent } = require('../../utils/storage')
 const evidenceCopy = require('../../shared/content/evidence-copy')
 
+function relatedItemIds(claim) {
+  return [].concat(claim.supportingItemIds || [], claim.contradictingItemIds || [], claim.qualifyingItemIds || [])
+}
+
+function revisionUrl(claim) {
+  const itemId = relatedItemIds(claim)[0]
+  const chapter = CHAPTERS.find(candidate => candidate.itemIds.includes(itemId)) || CHAPTERS[0]
+  const question = Math.max(0, chapter.itemIds.indexOf(itemId))
+  return `/pages/questionnaire/index?chapter=${chapter.id}&question=${question}&revise=1`
+}
+
+function evidenceGroups(claim) {
+  const evidence = claim.evidence || {}
+  return [
+    { id: 'supporting', label: '这个结论主要参考了这些回答', items: evidence.supporting || [] },
+    { id: 'contradicting', label: '还有这些回答需要一起看', items: evidence.contradicting || [] },
+    { id: 'qualifying', label: '这些回答让结论保留一点空间', items: evidence.qualifying || [] }
+  ].filter(group => group.items.length)
+}
+
 Page({
-  data: { claim: null, selectedFeedback: '', feedbackNote: '', feedbackOptions: evidenceCopy.feedbackOptions, evidenceCopy, technicalExpanded: false, canSave: false, isSaving: false, cloudError: '' },
+  data: {
+    claim: null,
+    evidenceExpanded: false,
+    evidenceGroups: [],
+    evidenceCopy,
+    reviseUrl: '/pages/questionnaire/index?chapter=C1&question=0&revise=1'
+  },
+
   onLoad(query) { this.claimId = decodeURIComponent(query.id || '') },
+
   onShow() {
     resetNavigation(this)
     const report = getReport()
     const claim = report && report.claims.find(item => item.id === this.claimId)
     if (!claim) return navigateOnce(this, 'reLaunch', { url: '/pages/questionnaire-result/index' })
-    const confirmation = report.userConfirmations && report.userConfirmations[this.claimId]
-    const decoratedClaim = Object.assign({}, claim, { label: evidenceCopy.why, statusLabel: '' })
-    this.setData({ claim: decoratedClaim, selectedFeedback: confirmation ? confirmation.value : '', feedbackNote: confirmation ? confirmation.note || '' : '', technicalExpanded: false, canSave: false, isSaving: false, cloudError: '' })
+    this.setData({
+      claim,
+      evidenceExpanded: false,
+      evidenceGroups: evidenceGroups(claim),
+      reviseUrl: revisionUrl(claim)
+    })
     recordEvent('report_claim_open', { claimId: this.claimId })
   },
-  chooseFeedback(event) { this.setData({ selectedFeedback: event.currentTarget.dataset.value, canSave: true }) },
-  inputNote(event) { this.setData({ feedbackNote: String(event.detail.value || '').slice(0, 200), canSave: Boolean(this.data.selectedFeedback) }) },
-  toggleTechnical() { this.setData({ technicalExpanded: !this.data.technicalExpanded }) },
-  handleSave() {
-    if (!this.data.canSave || this.data.isSaving) return
-    this.setData({ isSaving: true, cloudError: '' })
-    const feedbackEvent = saveClaimFeedback(this.claimId, this.data.selectedFeedback, this.data.feedbackNote, '')
-    const report = getReport()
-    const finish = () => {
-      this.setData({ isSaving: false })
-      wx.showToast({ title: '已记录你的核对', icon: 'success' })
-      navigateOnce(this, 'navigateBack', { fail: () => navigateOnce(this, 'reLaunch', { url: '/pages/questionnaire-result/index' }) })
-    }
-    if (shouldSyncAssessment() && isCloudReady() && report && report._id) {
-      return appendAssessmentFeedbackToCloud(report._id, feedbackEvent, { success: data => { markFeedbackEventSynced(feedbackEvent.eventId, data.feedbackEvent); finish() }, fail: () => this.setData({ isSaving: false, cloudError: '云端暂时没有记住这次核对，请保持网络后重试。' }) })
-    }
-    finish()
+
+  toggleEvidence() {
+    this.setData({ evidenceExpanded: !this.data.evidenceExpanded })
+  },
+
+  reviseAnswer() {
+    recordEvent('report_revise', { claimId: this.claimId })
+    navigateOnce(this, 'redirectTo', { url: this.data.reviseUrl })
+  },
+
+  returnReport() {
+    navigateOnce(this, 'navigateBack', { fail: () => navigateOnce(this, 'reLaunch', { url: '/pages/questionnaire-result/index' }) })
   }
 })
+
+module.exports = { evidenceGroups, revisionUrl }

@@ -7,7 +7,7 @@
 
   <view class="section-title section-title--first">信息处理</view>
   <view class="dl-list privacy-list">
-    <view class="dl-list-row privacy-row"><view class="privacy-index">01</view><view class="dl-list-row__body"><view class="dl-list-row__title">保存的信息</view><view class="dl-list-row__desc">包括问卷回答、回答时间、阶段核对记录、关系说明书和本人修正。评估本身不要求手机号。</view></view></view>
+    <view class="dl-list-row privacy-row"><view class="privacy-index">01</view><view class="dl-list-row__body"><view class="dl-list-row__title">保存的信息</view><view class="dl-list-row__desc">包括问卷回答、回答时间、章节结果、关系说明书和本人修改记录。评估本身不要求手机号。</view></view></view>
     <view class="dl-list-row privacy-row"><view class="privacy-index">02</view><view class="dl-list-row__body"><view class="dl-list-row__title">如何使用</view><view class="dl-list-row__desc">仅用于生成、保存和维护你的个人关系说明书，不公开展示。</view></view></view>
     <view class="dl-list-row privacy-row"><view class="privacy-index">03</view><view class="dl-list-row__body"><view class="dl-list-row__title">{{privacy.retentionTitle}}</view><view class="dl-list-row__desc">{{privacy.retention}}</view></view></view>
     <view class="dl-list-row privacy-row"><view class="privacy-index">04</view><view class="dl-list-row__body"><view class="dl-list-row__title">你可以做什么</view><view class="dl-list-row__desc">{{privacy.rights}}</view></view></view>

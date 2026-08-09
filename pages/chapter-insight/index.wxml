@@ -1,28 +1,25 @@
-<view class="page page--with-action chapter-insight-page" style="padding-top: {{statusBarHeight}}px;">
-  <view wx:if="{{chapter && insight}}" class="chapter-insight">
-    <button class="chapter-insight__back" bind:tap="reviewChapter"><text>‹</text>回看这一组</button>
-    <view class="page-kicker">{{chapter.id}} · 这一组答完了</view>
+<view wx:if="{{chapter && insight}}" class="page page--with-action chapter-insight-page" style="padding-top: {{statusBarHeight}}px;">
+  <view class="chapter-insight">
+    <button class="chapter-insight__back" bind:tap="reviewChapter"><text>‹</text>回看本章</button>
+    <view class="page-kicker">第 {{chapterNumber}} 章完成</view>
     <view class="chapter-insight__chapter">{{chapter.title}}</view>
-    <view class="chapter-insight__lead">{{insight.lead}}</view>
-    <view class="chapter-insight__title">{{insight.title}}</view>
-    <view class="chapter-insight__text">{{insight.text}}</view>
-    <view class="chapter-insight__nuance">
-      <view class="chapter-insight__nuance-text">{{insight.impact}}</view>
-    </view>
-    <view class="chapter-insight__reflection">{{insight.reflection}}</view>
+    <view class="chapter-insight__headline">{{insight.headline}}</view>
+    <view class="chapter-insight__summary">{{insight.summary}}</view>
+
     <view wx:if="{{insight.evidence.length}}" class="chapter-insight__evidence">
-      <button class="chapter-insight__evidence-toggle" bind:tap="toggleEvidence">{{evidenceExpanded ? '收起' : evidenceCopy.why}}</button>
+      <button class="chapter-insight__evidence-toggle" bind:tap="toggleEvidence">
+        {{evidenceExpanded ? '收起依据' : evidenceCopy.toggle}}<text class="dl-chevron">{{evidenceExpanded ? '⌃' : '›'}}</text>
+      </button>
       <view wx:if="{{evidenceExpanded}}" class="chapter-insight__evidence-list">
         <view class="chapter-insight__evidence-label">{{evidenceCopy.stageEvidence}}</view>
-        <view wx:for="{{insight.evidence}}" wx:key="itemId" class="chapter-insight__evidence-item"><view>{{item.question}}</view><view class="chapter-insight__evidence-answer">{{evidenceCopy.answerPrefix}}{{item.answer}}</view></view>
-        <view class="chapter-insight__evidence-boundary">{{evidenceCopy.stageBoundary}}</view>
+        <view wx:for="{{insight.evidence}}" wx:key="itemId" class="chapter-insight__evidence-item">
+          <view class="chapter-insight__evidence-question">{{item.question}}</view>
+          <view class="chapter-insight__evidence-answer">{{evidenceCopy.answerPrefix}}{{item.answer}}</view>
+        </view>
       </view>
     </view>
-    <view class="chapter-insight__feedback-label">{{evidenceCopy.feedbackTitle}}</view>
-    <view class="chapter-insight__feedback">
-      <button wx:for="{{feedbackOptions}}" wx:key="value" class="chapter-insight__feedback-option {{selectedFeedback === item.value ? 'chapter-insight__feedback-option--selected' : ''}}" data-value="{{item.value}}" bind:tap="chooseFeedback">{{item.label}}</button>
-    </view>
   </view>
+
   <view class="action-bar chapter-insight__actions">
     <button class="dl-button" bind:tap="continueNext">{{nextChapter ? '继续下一章' : '查看完整说明书'}}</button>
     <button class="chapter-insight__later" bind:tap="backHome">稍后继续</button>
