@@ -60,6 +60,23 @@ function wxmlStrings(file) {
   return result
 }
 
+function jsStrings(file) {
+  const source = fs.readFileSync(file, 'utf8')
+  const relative = path.relative(root, file).split(path.sep).join('/')
+  const result = []
+  const pattern = /(['"`])((?:\\.|(?!\1)[^\\\r\n])*)\1/g
+  let match
+  let index = 0
+  while ((match = pattern.exec(source))) {
+    const text = match[2]
+    if (/[\u4e00-\u9fff]/u.test(text)) {
+      result.push(normalizedSnapshotEntry(relative, `literal.${index}`, text))
+      index += 1
+    }
+  }
+  return result
+}
+
 function collectPublicStrings() {
   const entries = []
   app.pages.forEach(route => {
@@ -70,6 +87,8 @@ function collectPublicStrings() {
       if (json.navigationBarTitleText) entries.push(normalizedSnapshotEntry(`${route}.json`, 'navigationBarTitleText', json.navigationBarTitleText))
     }
     if (fs.existsSync(wxmlPath)) entries.push(...wxmlStrings(wxmlPath))
+    const jsPath = path.join(root, `${route}.js`)
+    if (fs.existsSync(jsPath)) entries.push(...jsStrings(jsPath))
   })
 
   const publicModules = [

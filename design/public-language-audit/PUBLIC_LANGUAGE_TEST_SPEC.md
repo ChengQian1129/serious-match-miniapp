@@ -20,6 +20,7 @@ and include it in the normal regression suite.
 app.json
 pages/**/*.json
 pages/**/*.wxml
+registered pages/**/*.js user-facing string literals
 shared/content/**/*.js
 shared/assessment/schema.js
 reviewed V2 public copy registry
@@ -36,6 +37,10 @@ setData({ error })
 setData({ message })
 setData({ notice })
 ```
+
+Report and chapter engines are source-locked: they may only return registry copy
+and must contain no inline Chinese string literals. Page-script literals are
+included in the reviewed snapshot so a new or changed string cannot bypass review.
 
 Raw runtime/server errors must never be displayed.
 

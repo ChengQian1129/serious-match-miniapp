@@ -645,6 +645,11 @@
     "text": "重要的话题，你通常不会让它突然没了下文。"
   },
   {
+    "surface": "pages/chapter-insight/index.js",
+    "key": "literal.0",
+    "text": "还有题没答完。"
+  },
+  {
     "surface": "pages/chapter-insight/index.json",
     "key": "navigationBarTitleText",
     "text": "这一部分完成"
@@ -680,9 +685,29 @@
     "text": "联系资料"
   },
   {
+    "surface": "pages/followup-settings/index.js",
+    "key": "literal.0",
+    "text": "已保存"
+  },
+  {
     "surface": "pages/followup-settings/index.json",
     "key": "navigationBarTitleText",
     "text": "后续联系"
+  },
+  {
+    "surface": "pages/home/index.js",
+    "key": "literal.0",
+    "text": "查看结果"
+  },
+  {
+    "surface": "pages/home/index.js",
+    "key": "literal.1",
+    "text": "继续答题"
+  },
+  {
+    "surface": "pages/home/index.js",
+    "key": "literal.2",
+    "text": "第 ${chapterIndex + 1} 部分 / 6。之前的回答都还在，接着答就行。"
   },
   {
     "surface": "pages/privacy/index.json",
@@ -795,6 +820,11 @@
     "text": "信息处理"
   },
   {
+    "surface": "pages/questionnaire-result/index.js",
+    "key": "literal.0",
+    "text": "删除"
+  },
+  {
     "surface": "pages/questionnaire-result/index.json",
     "key": "navigationBarTitleText",
     "text": "你的结果"
@@ -828,6 +858,136 @@
     "surface": "pages/questionnaire-result/index.wxml",
     "key": "text.77",
     "text": "›"
+  },
+  {
+    "surface": "pages/questionnaire-v3-pilot/index.js",
+    "key": "literal.0",
+    "text": "请选择 ${validation.minSelections}–${validation.maxSelections} 项"
+  },
+  {
+    "surface": "pages/questionnaire-v3-pilot/index.js",
+    "key": "literal.10",
+    "text": "请输入不大于 ${message.split('NUMBER_MAX_')[1]} 的数字。"
+  },
+  {
+    "surface": "pages/questionnaire-v3-pilot/index.js",
+    "key": "literal.11",
+    "text": "回答不能超过 ${message.split('TEXT_MAX_')[1]} 字。"
+  },
+  {
+    "surface": "pages/questionnaire-v3-pilot/index.js",
+    "key": "literal.12",
+    "text": "请写下你的回答，或者先返回上一题。"
+  },
+  {
+    "surface": "pages/questionnaire-v3-pilot/index.js",
+    "key": "literal.13",
+    "text": "最多选择"
+  },
+  {
+    "surface": "pages/questionnaire-v3-pilot/index.js",
+    "key": "literal.14",
+    "text": "至少选择"
+  },
+  {
+    "surface": "pages/questionnaire-v3-pilot/index.js",
+    "key": "literal.15",
+    "text": "不在当前"
+  },
+  {
+    "surface": "pages/questionnaire-v3-pilot/index.js",
+    "key": "literal.16",
+    "text": "这道题当前不可用，请返回上一题再试。"
+  },
+  {
+    "surface": "pages/questionnaire-v3-pilot/index.js",
+    "key": "literal.17",
+    "text": "仍有"
+  },
+  {
+    "surface": "pages/questionnaire-v3-pilot/index.js",
+    "key": "literal.18",
+    "text": "请先完成这道题，或选择“暂时跳过”。"
+  },
+  {
+    "surface": "pages/questionnaire-v3-pilot/index.js",
+    "key": "literal.19",
+    "text": "无效"
+  },
+  {
+    "surface": "pages/questionnaire-v3-pilot/index.js",
+    "key": "literal.1",
+    "text": "至少选择 ${validation.minSelections} 项"
+  },
+  {
+    "surface": "pages/questionnaire-v3-pilot/index.js",
+    "key": "literal.20",
+    "text": "请检查这道题的填写内容。"
+  },
+  {
+    "surface": "pages/questionnaire-v3-pilot/index.js",
+    "key": "literal.21",
+    "text": "暂时跳过未填写项"
+  },
+  {
+    "surface": "pages/questionnaire-v3-pilot/index.js",
+    "key": "literal.22",
+    "text": "答题"
+  },
+  {
+    "surface": "pages/questionnaire-v3-pilot/index.js",
+    "key": "literal.23",
+    "text": "本题已完成"
+  },
+  {
+    "surface": "pages/questionnaire-v3-pilot/index.js",
+    "key": "literal.24",
+    "text": "暂时跳过未填写项"
+  },
+  {
+    "surface": "pages/questionnaire-v3-pilot/index.js",
+    "key": "literal.25",
+    "text": "当前题目仍有未完成的回答"
+  },
+  {
+    "surface": "pages/questionnaire-v3-pilot/index.js",
+    "key": "literal.2",
+    "text": "最多选择 ${validation.maxSelections} 项"
+  },
+  {
+    "surface": "pages/questionnaire-v3-pilot/index.js",
+    "key": "literal.3",
+    "text": "，也可以留空"
+  },
+  {
+    "surface": "pages/questionnaire-v3-pilot/index.js",
+    "key": "literal.4",
+    "text": "最多 ${format.maxChars || 300} 字"
+  },
+  {
+    "surface": "pages/questionnaire-v3-pilot/index.js",
+    "key": "literal.5",
+    "text": "输入数字"
+  },
+  {
+    "surface": "pages/questionnaire-v3-pilot/index.js",
+    "key": "literal.6",
+    "text": "写下你的回答"
+  },
+  {
+    "surface": "pages/questionnaire-v3-pilot/index.js",
+    "key": "literal.7",
+    "text": "最多选择 ${message.split('MAX_SELECTIONS_')[1]} 项。"
+  },
+  {
+    "surface": "pages/questionnaire-v3-pilot/index.js",
+    "key": "literal.8",
+    "text": "至少选择 ${message.split('MIN_SELECTIONS_')[1]} 项。"
+  },
+  {
+    "surface": "pages/questionnaire-v3-pilot/index.js",
+    "key": "literal.9",
+    "text": "请输入不小于 ${message.split('NUMBER_MIN_')[1]} 的数字。"
   },
   {
     "surface": "pages/questionnaire-v3-pilot/index.json",
@@ -890,6 +1050,21 @@
     "text": "返回首页"
   },
   {
+    "surface": "pages/questionnaire/index.js",
+    "key": "literal.0",
+    "text": "继续"
+  },
+  {
+    "surface": "pages/questionnaire/index.js",
+    "key": "literal.1",
+    "text": "完成这一部分"
+  },
+  {
+    "surface": "pages/questionnaire/index.js",
+    "key": "literal.2",
+    "text": "继续"
+  },
+  {
     "surface": "pages/questionnaire/index.json",
     "key": "navigationBarTitleText",
     "text": "答题"
@@ -938,6 +1113,51 @@
     "surface": "pages/record-claim/index.wxml",
     "key": "text.5",
     "text": "为什么这么说"
+  },
+  {
+    "surface": "pages/relationship-map/index.js",
+    "key": "literal.0",
+    "text": "你比较在意"
+  },
+  {
+    "surface": "pages/relationship-map/index.js",
+    "key": "literal.1",
+    "text": "根据你的回答"
+  },
+  {
+    "surface": "pages/relationship-map/index.js",
+    "key": "literal.2",
+    "text": "你希望两个人怎么相处"
+  },
+  {
+    "surface": "pages/relationship-map/index.js",
+    "key": "literal.3",
+    "text": "你找对象时比较在意什么"
+  },
+  {
+    "surface": "pages/relationship-map/index.js",
+    "key": "literal.4",
+    "text": "你对以后有什么打算"
+  },
+  {
+    "surface": "pages/relationship-map/index.js",
+    "key": "literal.5",
+    "text": "你平时可能会这样做"
+  },
+  {
+    "surface": "pages/relationship-map/index.js",
+    "key": "literal.6",
+    "text": "还有些事可以再想想"
+  },
+  {
+    "surface": "pages/relationship-map/index.js",
+    "key": "literal.7",
+    "text": "你平时可能会这样做"
+  },
+  {
+    "surface": "pages/relationship-map/index.js",
+    "key": "literal.8",
+    "text": "历史版本仅供查看"
   },
   {
     "surface": "pages/relationship-map/index.json",
