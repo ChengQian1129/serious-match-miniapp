@@ -23,10 +23,10 @@ module.exports = Object.freeze({
     manageProfile: '修改联系资料',
     fillProfile: '填写联系资料',
     deleteTitle: '不再参加后续活动？',
-    deleteBody: '删除后，我们会删除用于后续联系的授权、联系方式、后续联系资料和相关访谈记录。你的问卷和结果不会受影响。',
+    deleteBody: '删除后，我们会删除后续联系的授权、联系方式和相关访谈记录。你的问卷和结果不会受影响。',
     deleteConfirm: '确认删除',
     deleteCancel: '取消',
-    deleteAction: '删除后续联系资料'
+    deleteAction: '删除联系信息'
   }),
   scopes: Object.freeze({
     interview_contact: Object.freeze({ title: '可以联系我做一对一访谈', description: '如果有合适的访谈，可以通过你留下的联系方式邀请你。打开这一项后才需要填写联系方式。' }),

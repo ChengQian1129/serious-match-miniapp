@@ -3,7 +3,7 @@ module.exports = {
   "schemaVersion": "serious-match.public-language.registry.v1.0",
   "generatedAt": "2026-08-09",
   "sourceDigests": {
-    "PUBLIC_UI_COPY_REWRITE.yaml": "d20dd9698a40ae8f0a0d94d127f90e641ff3f4611f67de70f64e135e99d7b801",
+    "PUBLIC_UI_COPY_REWRITE.yaml": "cd1d15e17672b65a24a137141618c4a980edd05a8818d5bc90f67f4d6a284832",
     "V2_PUBLIC_COPY_REWRITE.yaml": "aa49d69eb91f4820bea1160ec4699289b31da033b6b383f7af8dc243bb409db1",
     "V3_ALL_USER_FACING_STRINGS_AUDIT.csv": "82fc5e9a1df6fc74701994d3b4670bca132d199ea81e0c717900923942310413",
     "V3_PUBLIC_NARRATIVE_OVERRIDE.yaml": "a1b4d0330e51914b4948dea8e837e08f1c8d897d6c3f2e4decdce2e75d4c2d31",
@@ -60,7 +60,7 @@ module.exports = {
     },
     "methodGuide": {
       "title": "这些问题从哪里来？",
-      "body": "这些问题参考了成人依恋、关系投入、伴侣回应和冲突处理等研究。现在这套题还在试用和调整，不是心理诊断，也不是标准化心理量表。",
+      "body": "这些问题参考了一些关于恋爱关系、相处方式和冲突处理的研究。现在这套题还在试用和调整，不是心理诊断，也不是专业机构使用的标准测试。",
       "focus": "我们会继续看哪些问题真正有用、哪些地方需要改。",
       "detailAction": "查看方法说明",
       "closeAction": "知道了"
@@ -178,10 +178,10 @@ module.exports = {
         "manageProfile": "修改联系资料",
         "fillProfile": "填写联系资料",
         "deleteTitle": "不再参加后续活动？",
-        "deleteBody": "删除后，我们会删除用于后续联系的授权、联系方式、后续联系资料和相关访谈记录。你的问卷和结果不会受影响。",
+        "deleteBody": "删除后，我们会删除后续联系的授权、联系方式和相关访谈记录。你的问卷和结果不会受影响。",
         "deleteConfirm": "确认删除",
         "deleteCancel": "取消",
-        "deleteAction": "删除后续联系资料"
+        "deleteAction": "删除联系信息"
       },
       "scopes": {
         "interview_contact": {
@@ -202,9 +202,9 @@ module.exports = {
       "operator": "运营者：钱程",
       "contact": "联系运营者：通过小程序客服",
       "retentionTitle": "保存多久",
-      "retention": "问卷和结果会保存到你主动删除为止。后续联系资料和联系方式会在你撤回或删除后清除。做研究分析时，我们会先去掉能直接识别你的信息；这类记录最多保留到试点结束后 12 个月，之后删除，或只保留无法识别个人的统计结果。",
+      "retention": "问卷和结果会保存到你主动删除为止。你留下的联系信息会在你撤回或删除后清除。做研究分析时，我们会先去掉能直接识别你的信息；这类记录最多保留到试点结束后 12 个月，之后删除，或只保留无法识别个人的统计结果。",
       "rightsTitle": "你可以做什么",
-      "rights": "你可以查看和修改自己的回答，也可以随时撤回后续联系的授权，或删除问卷、结果和后续联系资料。"
+      "rights": "你可以查看和修改自己的回答，也可以随时撤回后续联系的授权，或删除问卷、结果和联系信息。"
     },
     "v3Pilot": {
       "pageTitle": "答题 · 测试版",
