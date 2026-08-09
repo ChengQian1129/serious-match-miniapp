@@ -3,11 +3,11 @@ module.exports = {
   "schemaVersion": "serious-match.public-language.registry.v1.0",
   "generatedAt": "2026-08-09",
   "sourceDigests": {
-    "PUBLIC_UI_COPY_REWRITE.yaml": "7af9339ed1d14a5cecbf66beac257249dd2c421e304f050e99a3c7aae85f13f6",
-    "V2_PUBLIC_COPY_REWRITE.yaml": "438d14203f2f1d7203ebac14e9e9e1ad2d61ea22591b66c7f46e8d38bfce91f7",
+    "PUBLIC_UI_COPY_REWRITE.yaml": "358deafacfe3c6d2c0c235c7bca7edf8cab727650006c7f3392dfdac34af180e",
+    "V2_PUBLIC_COPY_REWRITE.yaml": "aa49d69eb91f4820bea1160ec4699289b31da033b6b383f7af8dc243bb409db1",
     "V3_ALL_USER_FACING_STRINGS_AUDIT.csv": "82fc5e9a1df6fc74701994d3b4670bca132d199ea81e0c717900923942310413",
     "V3_PUBLIC_NARRATIVE_OVERRIDE.yaml": "a1b4d0330e51914b4948dea8e837e08f1c8d897d6c3f2e4decdce2e75d4c2d31",
-    "PUBLIC_FORBIDDEN_LANGUAGE.yaml": "7b9fbb5ef6c0a1289cef18624ae4397be42855e517c99191223ffef782747907"
+    "PUBLIC_FORBIDDEN_LANGUAGE.yaml": "58a52e6589929b11ade6fb79cf0378dd2478d0f329046b74595143dfbeb96add"
   },
   "ui": {
     "navigation": {
@@ -107,10 +107,13 @@ module.exports = {
       "headerPattern": "第 {n} 部分完成",
       "evidenceToggle": "为什么这么说",
       "evidenceIntro": "主要参考了这些回答",
+      "supporting": "主要参考了这些回答",
+      "contradicting": "还有这些回答需要一起看",
+      "qualifying": "还有几道回答不太一样",
       "answerPrefix": "你的回答：",
       "fallback": {
         "headline": "这一部分现在还看不出明确结论",
-        "summary": "这几道题的回答不太一致，现在先不下结论。"
+        "summary": "这一部分现在还看不出明确结论。"
       }
     },
     "result": {
@@ -347,58 +350,125 @@ module.exports = {
       "OBS_REG01": {
         "title": "不确定时，你可能会多确认几次。",
         "text": "关系不清楚时，你可能会多发消息、追问或者反复确认，想尽快知道答案。",
-        "boundary": "这样做合不合适，要看当时的情况和沟通方式。"
+        "boundary": "这样做合不合适，要看当时的情况和沟通方式。",
+        "alternativeExplanations": [
+          "这种做法可能只在关系不清楚或压力较大时出现。"
+        ],
+        "verificationQuestions": [
+          "最近一次你反复确认时，发生了什么？"
+        ]
       },
       "OBS_REG02": {
         "title": "压力变大时，你可能会先不谈。",
         "text": "关系里有压力时，你可能会少回复、先把话题放下，或者自己退开一会儿。",
-        "boundary": "暂时离开不等于不想继续，关键是有没有说清楚、之后会不会回来。"
+        "boundary": "暂时离开不等于不想继续，关键是有没有说清楚、之后会不会回来。",
+        "alternativeExplanations": [
+          "先不谈可能是当时压力太大，也可能是你还没想好怎么开口。"
+        ],
+        "verificationQuestions": [
+          "最近一次你先不谈时，后来发生了什么？"
+        ]
       },
       "OBS_REG03": {
         "title": "你比较能直接说出自己在担心什么。",
         "text": "你会尝试把自己的不安和需要说出来，而不是只靠猜或者试探。",
-        "boundary": "情绪特别强的时候，你未必每次都做得到。"
+        "boundary": "情绪特别强的时候，你未必每次都做得到。",
+        "shareFragment": "我会尽量直接说出自己的不安和需要",
+        "alternativeExplanations": [
+          "能说出来不代表每次情绪很强时都容易。"
+        ],
+        "verificationQuestions": [
+          "最近一次你直接说出不安时，对方怎么回应？"
+        ]
       },
       "OBS_REG04": {
         "title": "你需要暂停时，通常会说一声，也会再回来。",
         "text": "你想先停一下时，通常愿意告诉对方原因，也会大概说什么时候继续。",
-        "boundary": "真正吵起来时是不是一直做得到，还要看具体情况。"
+        "boundary": "真正吵起来时是不是一直做得到，还要看具体情况。",
+        "shareFragment": "需要暂停时，我会说明，并回来继续谈",
+        "alternativeExplanations": [
+          "愿意暂停并回来，需要双方都记得约定。"
+        ],
+        "verificationQuestions": [
+          "最近一次暂停后回来继续谈时，发生了什么？"
+        ]
       },
       "PROVIDE_response_predictability": {
         "title": "重要的话题，你通常不会让它突然没了下文。",
         "text": "当下没法回复时，你一般会说明一下，之后也会回来把原来的话题接上。",
-        "boundary": "特别忙或者情绪很差的时候，还是可能做不到。"
+        "boundary": "特别忙或者情绪很差的时候，还是可能做不到。",
+        "shareFragment": "重要的话题，我通常会说明并回来继续"
       },
       "PROVIDE_emotional_support": {
         "title": "别人难受时，你通常会先听，再看他需要什么。",
         "text": "你比较愿意先听对方把话说完，再问他是想被陪着，还是想一起想办法。",
-        "boundary": "对方实际觉得有没有被理解，还得听他的感受。"
+        "boundary": "对方实际觉得有没有被理解，还得听他的感受。",
+        "shareFragment": "对方需要时，我通常先听，再一起处理"
       },
       "PROVIDE_autonomy_space": {
         "title": "你通常愿意让彼此都有自己的空间。",
         "text": "你能接受对方有自己的朋友、兴趣、独处时间和个人安排。",
-        "boundary": "如果正在吵架或者关系不稳定，这件事可能会更难。"
+        "boundary": "如果正在吵架或者关系不稳定，这件事可能会更难。",
+        "shareFragment": "我愿意给彼此保留各自的空间"
       },
       "PROVIDE_conflict_pause": {
         "title": "你想暂停时，通常会把这件事说清楚。",
         "text": "吵得太厉害时，你比较能直接说想先停一下，也会大概说明什么时候再聊。",
-        "boundary": "真正有帮助的是停下来以后还会回来，而不是一直拖着。"
+        "boundary": "真正有帮助的是停下来以后还会回来，而不是一直拖着。",
+        "shareFragment": "需要暂停时，我会说明，并回来继续谈"
       },
       "PROVIDE_repair_reengagement": {
         "title": "冷静以后，你通常愿意回来把事情处理完。",
         "text": "你比较愿意重新谈没解决的问题，也会尝试听懂对方为什么难受，并承认自己哪里伤到了他。",
-        "boundary": "如果涉及威胁、控制或其他严重问题，普通的和好方式并不够。"
+        "boundary": "如果涉及威胁、控制或其他严重问题，普通的和好方式并不够。",
+        "shareFragment": "冷静之后，我愿意回来把问题说清楚"
       }
     },
     "chapterInsightFallback": {
       "title": "这一部分现在还看不出明确结论",
-      "text": "这几道题的回答不太一致，现在先不下结论。"
+      "text": "这一部分现在还看不出明确结论。"
     },
     "reportFallback": {
       "title": "你的结果",
       "subtitle": "下面这些内容只根据你这次的回答整理。",
+      "unknownTitle": "还有几件事，现在看不出来",
       "unknownText": "这部分现在还看不出来。",
+      "answerUnavailable": "暂未判断",
       "shareTitle": "我的结果"
+    },
+    "claimDefaults": {
+      "alternativeExplanations": [
+        "这项表现可能只在特定关系阶段、对象或压力情境中出现。"
+      ],
+      "verificationQuestions": [
+        "最近一次出现类似情况时，你实际做了什么？"
+      ]
+    },
+    "fallbackClaims": {
+      "strong_present": {
+        "title": "这些回答大体说的是一件事",
+        "text": "这些回答大多在说同一件事。"
+      },
+      "lean_present": {
+        "title": "这些回答大多指向同一个方向",
+        "text": "这些回答大多指向同一个方向。"
+      },
+      "strong_less": {
+        "title": "这些回答大多没有指向这个方向",
+        "text": "这些回答大多没有指向这个方向。"
+      },
+      "lean_less": {
+        "title": "这个方向暂时不太明显",
+        "text": "这些回答暂时不太支持这个方向。"
+      },
+      "mixed": {
+        "title": "还有几道回答不太一样",
+        "text": "还有几道回答不太一样。"
+      },
+      "default": {
+        "title": "这一部分现在还看不出明确结论",
+        "text": "这一部分现在还看不出明确结论。"
+      }
     },
     "chapterNarrativePublic": {
       "C1": {

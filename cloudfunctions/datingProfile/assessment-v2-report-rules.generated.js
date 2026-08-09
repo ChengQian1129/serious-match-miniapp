@@ -54,6 +54,6 @@ const rules = [
   ['COMB_REGULATION_01', 'tension', [['observations.REG01', 'eq', 'active'], ['observations.REG02', 'eq', 'active']]],
   ['COMB_RESOURCE_01', 'resource', [['observations.REG03', 'eq', 'active'], ['observations.REG04', 'eq', 'active'], ['repair_reengagement.provideState', 'eq', 'provide_stable']]],
   ['COMB_CAPACITY_01', 'tension', [['available_capacity.state', 'in', ['lean_less', 'strong_less']], ['response_predictability.provideState', 'in', ['provide_variable', 'provide_constrained']]]]
-].map(([id, section, conditions]) => Object.assign({ id, section, copyKey: id, conditions, applicableContexts: [], alternativeExplanations: ['这项表现可能只在特定关系阶段、对象或压力情境中出现。'], verificationQuestions: ['最近一次出现类似情况时，你实际做了什么？'] }, selectorsFor(conditions)))
+].map(([id, section, conditions]) => Object.assign({ id, section, copyKey: id, conditions, applicableContexts: [] }, selectorsFor(conditions)))
 
 module.exports = { REPORT_RULE_VERSION, rules }

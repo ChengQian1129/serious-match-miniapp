@@ -118,7 +118,7 @@ function projectChapters(source) {
 }
 
 function projectChapterInsight(source) {
-  return pickPublic(source, ['headerPattern', 'evidenceToggle', 'evidenceIntro', 'answerPrefix', 'fallback'])
+  return pickPublic(source, ['headerPattern', 'evidenceToggle', 'evidenceIntro', 'supporting', 'contradicting', 'qualifying', 'answerPrefix', 'fallback'])
 }
 
 function projectResult(source) {
@@ -157,7 +157,9 @@ function projectV2Copy(source) {
     itemTextOverrides: source.itemTextOverrides,
     claimCopyOverrides: source.claimCopyOverrides,
     chapterInsightFallback: pickPublic(source.chapterInsightFallback, ['title', 'text']),
-    reportFallback: pickPublic(source.reportFallback, ['title', 'subtitle', 'unknownText', 'shareTitle']),
+    reportFallback: pickPublic(source.reportFallback, ['title', 'subtitle', 'unknownTitle', 'unknownText', 'answerUnavailable', 'shareTitle']),
+    claimDefaults: pickPublic(source.claimDefaults, ['alternativeExplanations', 'verificationQuestions']),
+    fallbackClaims: publicValue(source.fallbackClaims),
     chapterNarrativePublic
   }
 }

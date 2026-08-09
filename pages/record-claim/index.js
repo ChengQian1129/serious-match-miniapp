@@ -18,9 +18,9 @@ function revisionUrl(claim) {
 function evidenceGroups(claim) {
   const evidence = claim.evidence || {}
   return [
-    { id: 'supporting', label: '主要参考了这些回答', items: evidence.supporting || [] },
-    { id: 'contradicting', label: '还有这些回答需要一起看', items: evidence.contradicting || [] },
-    { id: 'qualifying', label: '这些回答让结论保留一点空间', items: evidence.qualifying || [] }
+    { id: 'supporting', label: evidenceCopy.supporting, items: evidence.supporting || [] },
+    { id: 'contradicting', label: evidenceCopy.contradicting, items: evidence.contradicting || [] },
+    { id: 'qualifying', label: evidenceCopy.qualifying, items: evidence.qualifying || [] }
   ].filter(group => group.items.length)
 }
 

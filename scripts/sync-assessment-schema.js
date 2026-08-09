@@ -25,7 +25,7 @@ const interviewRules = fs.readFileSync(path.join(root, 'shared/assessment/interv
 const contentVersions = require(path.join(root, 'shared/content/version.js'))
 const publicLanguage = require(path.join(root, 'shared/content/public-language.generated.js'))
 const cloudContentVersion = `const CONTENT_VERSION = ${JSON.stringify(contentVersions.CONTENT_VERSION)}\nconst REPORT_COPY_VERSION = ${JSON.stringify(contentVersions.REPORT_COPY_VERSION)}`
-const cloudPublicLanguage = `const publicLanguage = { v2: { reportFallback: { unknownText: ${JSON.stringify(publicLanguage.v2.reportFallback.unknownText)} } } }`
+const cloudPublicLanguage = `const publicLanguage = { v2: ${JSON.stringify({ reportFallback: publicLanguage.v2.reportFallback, claimDefaults: publicLanguage.v2.claimDefaults, fallbackClaims: publicLanguage.v2.fallbackClaims })} }`
 const ruleTargets = [
   [path.join(root, 'utils/assessment-v2/generated/report-rules.js'), reportRules],
   [path.join(root, 'cloudfunctions/datingProfile/assessment-v2-report-rules.generated.js'), reportRules]

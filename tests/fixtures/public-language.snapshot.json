@@ -436,6 +436,11 @@
   },
   {
     "surface": "design/public-language-audit/V2_PUBLIC_COPY_REWRITE.yaml",
+    "key": "claim.OBS_REG01.alternativeExplanations[0]",
+    "text": "这种做法可能只在关系不清楚或压力较大时出现。"
+  },
+  {
+    "surface": "design/public-language-audit/V2_PUBLIC_COPY_REWRITE.yaml",
     "key": "claim.OBS_REG01.boundary",
     "text": "这样做合不合适，要看当时的情况和沟通方式。"
   },
@@ -448,6 +453,16 @@
     "surface": "design/public-language-audit/V2_PUBLIC_COPY_REWRITE.yaml",
     "key": "claim.OBS_REG01.title",
     "text": "不确定时，你可能会多确认几次。"
+  },
+  {
+    "surface": "design/public-language-audit/V2_PUBLIC_COPY_REWRITE.yaml",
+    "key": "claim.OBS_REG01.verificationQuestions[0]",
+    "text": "最近一次你反复确认时，发生了什么？"
+  },
+  {
+    "surface": "design/public-language-audit/V2_PUBLIC_COPY_REWRITE.yaml",
+    "key": "claim.OBS_REG02.alternativeExplanations[0]",
+    "text": "先不谈可能是当时压力太大，也可能是你还没想好怎么开口。"
   },
   {
     "surface": "design/public-language-audit/V2_PUBLIC_COPY_REWRITE.yaml",
@@ -466,8 +481,23 @@
   },
   {
     "surface": "design/public-language-audit/V2_PUBLIC_COPY_REWRITE.yaml",
+    "key": "claim.OBS_REG02.verificationQuestions[0]",
+    "text": "最近一次你先不谈时，后来发生了什么？"
+  },
+  {
+    "surface": "design/public-language-audit/V2_PUBLIC_COPY_REWRITE.yaml",
+    "key": "claim.OBS_REG03.alternativeExplanations[0]",
+    "text": "能说出来不代表每次情绪很强时都容易。"
+  },
+  {
+    "surface": "design/public-language-audit/V2_PUBLIC_COPY_REWRITE.yaml",
     "key": "claim.OBS_REG03.boundary",
     "text": "情绪特别强的时候，你未必每次都做得到。"
+  },
+  {
+    "surface": "design/public-language-audit/V2_PUBLIC_COPY_REWRITE.yaml",
+    "key": "claim.OBS_REG03.shareFragment",
+    "text": "我会尽量直接说出自己的不安和需要"
   },
   {
     "surface": "design/public-language-audit/V2_PUBLIC_COPY_REWRITE.yaml",
@@ -481,8 +511,23 @@
   },
   {
     "surface": "design/public-language-audit/V2_PUBLIC_COPY_REWRITE.yaml",
+    "key": "claim.OBS_REG03.verificationQuestions[0]",
+    "text": "最近一次你直接说出不安时，对方怎么回应？"
+  },
+  {
+    "surface": "design/public-language-audit/V2_PUBLIC_COPY_REWRITE.yaml",
+    "key": "claim.OBS_REG04.alternativeExplanations[0]",
+    "text": "愿意暂停并回来，需要双方都记得约定。"
+  },
+  {
+    "surface": "design/public-language-audit/V2_PUBLIC_COPY_REWRITE.yaml",
     "key": "claim.OBS_REG04.boundary",
     "text": "真正吵起来时是不是一直做得到，还要看具体情况。"
+  },
+  {
+    "surface": "design/public-language-audit/V2_PUBLIC_COPY_REWRITE.yaml",
+    "key": "claim.OBS_REG04.shareFragment",
+    "text": "需要暂停时，我会说明，并回来继续谈"
   },
   {
     "surface": "design/public-language-audit/V2_PUBLIC_COPY_REWRITE.yaml",
@@ -496,8 +541,18 @@
   },
   {
     "surface": "design/public-language-audit/V2_PUBLIC_COPY_REWRITE.yaml",
+    "key": "claim.OBS_REG04.verificationQuestions[0]",
+    "text": "最近一次暂停后回来继续谈时，发生了什么？"
+  },
+  {
+    "surface": "design/public-language-audit/V2_PUBLIC_COPY_REWRITE.yaml",
     "key": "claim.PROVIDE_autonomy_space.boundary",
     "text": "如果正在吵架或者关系不稳定，这件事可能会更难。"
+  },
+  {
+    "surface": "design/public-language-audit/V2_PUBLIC_COPY_REWRITE.yaml",
+    "key": "claim.PROVIDE_autonomy_space.shareFragment",
+    "text": "我愿意给彼此保留各自的空间"
   },
   {
     "surface": "design/public-language-audit/V2_PUBLIC_COPY_REWRITE.yaml",
@@ -516,6 +571,11 @@
   },
   {
     "surface": "design/public-language-audit/V2_PUBLIC_COPY_REWRITE.yaml",
+    "key": "claim.PROVIDE_conflict_pause.shareFragment",
+    "text": "需要暂停时，我会说明，并回来继续谈"
+  },
+  {
+    "surface": "design/public-language-audit/V2_PUBLIC_COPY_REWRITE.yaml",
     "key": "claim.PROVIDE_conflict_pause.text",
     "text": "吵得太厉害时，你比较能直接说想先停一下，也会大概说明什么时候再聊。"
   },
@@ -528,6 +588,11 @@
     "surface": "design/public-language-audit/V2_PUBLIC_COPY_REWRITE.yaml",
     "key": "claim.PROVIDE_emotional_support.boundary",
     "text": "对方实际觉得有没有被理解，还得听他的感受。"
+  },
+  {
+    "surface": "design/public-language-audit/V2_PUBLIC_COPY_REWRITE.yaml",
+    "key": "claim.PROVIDE_emotional_support.shareFragment",
+    "text": "对方需要时，我通常先听，再一起处理"
   },
   {
     "surface": "design/public-language-audit/V2_PUBLIC_COPY_REWRITE.yaml",
@@ -546,6 +611,11 @@
   },
   {
     "surface": "design/public-language-audit/V2_PUBLIC_COPY_REWRITE.yaml",
+    "key": "claim.PROVIDE_repair_reengagement.shareFragment",
+    "text": "冷静之后，我愿意回来把问题说清楚"
+  },
+  {
+    "surface": "design/public-language-audit/V2_PUBLIC_COPY_REWRITE.yaml",
     "key": "claim.PROVIDE_repair_reengagement.text",
     "text": "你比较愿意重新谈没解决的问题，也会尝试听懂对方为什么难受，并承认自己哪里伤到了他。"
   },
@@ -558,6 +628,11 @@
     "surface": "design/public-language-audit/V2_PUBLIC_COPY_REWRITE.yaml",
     "key": "claim.PROVIDE_response_predictability.boundary",
     "text": "特别忙或者情绪很差的时候，还是可能做不到。"
+  },
+  {
+    "surface": "design/public-language-audit/V2_PUBLIC_COPY_REWRITE.yaml",
+    "key": "claim.PROVIDE_response_predictability.shareFragment",
+    "text": "重要的话题，我通常会说明并回来继续"
   },
   {
     "surface": "design/public-language-audit/V2_PUBLIC_COPY_REWRITE.yaml",
@@ -677,7 +752,7 @@
   {
     "surface": "pages/privacy/index.wxml",
     "key": "text.32",
-    "text": "不提供联系方式也能获得结果。一对一访谈、用去掉能直接识别你的信息后的回答改进这套题、线下活动邀请，分别选择，默认都不勾选。"
+    "text": "不提供联系方式也能获得结果。一对一访谈、用不含身份信息的回答改进题目、线下活动邀请，这三件事分开选择，默认都不勾选。"
   },
   {
     "surface": "pages/privacy/index.wxml",
@@ -19621,16 +19696,6 @@
   },
   {
     "surface": "shared/content/chapter-copy.js",
-    "key": "CHAPTER_COPY.C1.lead",
-    "text": "这一部分完成了。"
-  },
-  {
-    "surface": "shared/content/chapter-copy.js",
-    "key": "CHAPTER_COPY.C1.reflection",
-    "text": "可以回想一个最近的例子。"
-  },
-  {
-    "surface": "shared/content/chapter-copy.js",
     "key": "CHAPTER_COPY.C1.title",
     "text": "你现在想不想谈恋爱"
   },
@@ -19648,16 +19713,6 @@
     "surface": "shared/content/chapter-copy.js",
     "key": "CHAPTER_COPY.C2.hint",
     "text": "按最近一个月的真实情况回答。"
-  },
-  {
-    "surface": "shared/content/chapter-copy.js",
-    "key": "CHAPTER_COPY.C2.lead",
-    "text": "这一部分完成了。"
-  },
-  {
-    "surface": "shared/content/chapter-copy.js",
-    "key": "CHAPTER_COPY.C2.reflection",
-    "text": "可以回想一个最近的例子。"
   },
   {
     "surface": "shared/content/chapter-copy.js",
@@ -19681,16 +19736,6 @@
   },
   {
     "surface": "shared/content/chapter-copy.js",
-    "key": "CHAPTER_COPY.C3.lead",
-    "text": "这一部分完成了。"
-  },
-  {
-    "surface": "shared/content/chapter-copy.js",
-    "key": "CHAPTER_COPY.C3.reflection",
-    "text": "可以回想一个最近的例子。"
-  },
-  {
-    "surface": "shared/content/chapter-copy.js",
     "key": "CHAPTER_COPY.C3.title",
     "text": "对方态度变了，你通常会怎样"
   },
@@ -19708,16 +19753,6 @@
     "surface": "shared/content/chapter-copy.js",
     "key": "CHAPTER_COPY.C4.hint",
     "text": "按你实际会怎样回答，不按你觉得自己应该怎样。"
-  },
-  {
-    "surface": "shared/content/chapter-copy.js",
-    "key": "CHAPTER_COPY.C4.lead",
-    "text": "这一部分完成了。"
-  },
-  {
-    "surface": "shared/content/chapter-copy.js",
-    "key": "CHAPTER_COPY.C4.reflection",
-    "text": "可以回想一个最近的例子。"
   },
   {
     "surface": "shared/content/chapter-copy.js",
@@ -19741,16 +19776,6 @@
   },
   {
     "surface": "shared/content/chapter-copy.js",
-    "key": "CHAPTER_COPY.C5.lead",
-    "text": "这一部分完成了。"
-  },
-  {
-    "surface": "shared/content/chapter-copy.js",
-    "key": "CHAPTER_COPY.C5.reflection",
-    "text": "可以回想一个最近的例子。"
-  },
-  {
-    "surface": "shared/content/chapter-copy.js",
     "key": "CHAPTER_COPY.C5.title",
     "text": "你希望对方怎么支持你"
   },
@@ -19768,16 +19793,6 @@
     "surface": "shared/content/chapter-copy.js",
     "key": "CHAPTER_COPY.C6.hint",
     "text": "按过去比较常见的情况回答。"
-  },
-  {
-    "surface": "shared/content/chapter-copy.js",
-    "key": "CHAPTER_COPY.C6.lead",
-    "text": "这一部分完成了。"
-  },
-  {
-    "surface": "shared/content/chapter-copy.js",
-    "key": "CHAPTER_COPY.C6.reflection",
-    "text": "可以回想一个最近的例子。"
   },
   {
     "surface": "shared/content/chapter-copy.js",
@@ -20076,6 +20091,11 @@
   },
   {
     "surface": "shared/content/claim-copy.js",
+    "key": "CLAIM_COPY.OBS_REG01.alternativeExplanations[0]",
+    "text": "这种做法可能只在关系不清楚或压力较大时出现。"
+  },
+  {
+    "surface": "shared/content/claim-copy.js",
     "key": "CLAIM_COPY.OBS_REG01.boundary",
     "text": "这样做合不合适，要看当时的情况和沟通方式。"
   },
@@ -20088,6 +20108,16 @@
     "surface": "shared/content/claim-copy.js",
     "key": "CLAIM_COPY.OBS_REG01.title",
     "text": "不确定时，你可能会多确认几次。"
+  },
+  {
+    "surface": "shared/content/claim-copy.js",
+    "key": "CLAIM_COPY.OBS_REG01.verificationQuestions[0]",
+    "text": "最近一次你反复确认时，发生了什么？"
+  },
+  {
+    "surface": "shared/content/claim-copy.js",
+    "key": "CLAIM_COPY.OBS_REG02.alternativeExplanations[0]",
+    "text": "先不谈可能是当时压力太大，也可能是你还没想好怎么开口。"
   },
   {
     "surface": "shared/content/claim-copy.js",
@@ -20106,8 +20136,23 @@
   },
   {
     "surface": "shared/content/claim-copy.js",
+    "key": "CLAIM_COPY.OBS_REG02.verificationQuestions[0]",
+    "text": "最近一次你先不谈时，后来发生了什么？"
+  },
+  {
+    "surface": "shared/content/claim-copy.js",
+    "key": "CLAIM_COPY.OBS_REG03.alternativeExplanations[0]",
+    "text": "能说出来不代表每次情绪很强时都容易。"
+  },
+  {
+    "surface": "shared/content/claim-copy.js",
     "key": "CLAIM_COPY.OBS_REG03.boundary",
     "text": "情绪特别强的时候，你未必每次都做得到。"
+  },
+  {
+    "surface": "shared/content/claim-copy.js",
+    "key": "CLAIM_COPY.OBS_REG03.shareFragment",
+    "text": "我会尽量直接说出自己的不安和需要"
   },
   {
     "surface": "shared/content/claim-copy.js",
@@ -20121,8 +20166,23 @@
   },
   {
     "surface": "shared/content/claim-copy.js",
+    "key": "CLAIM_COPY.OBS_REG03.verificationQuestions[0]",
+    "text": "最近一次你直接说出不安时，对方怎么回应？"
+  },
+  {
+    "surface": "shared/content/claim-copy.js",
+    "key": "CLAIM_COPY.OBS_REG04.alternativeExplanations[0]",
+    "text": "愿意暂停并回来，需要双方都记得约定。"
+  },
+  {
+    "surface": "shared/content/claim-copy.js",
     "key": "CLAIM_COPY.OBS_REG04.boundary",
     "text": "真正吵起来时是不是一直做得到，还要看具体情况。"
+  },
+  {
+    "surface": "shared/content/claim-copy.js",
+    "key": "CLAIM_COPY.OBS_REG04.shareFragment",
+    "text": "需要暂停时，我会说明，并回来继续谈"
   },
   {
     "surface": "shared/content/claim-copy.js",
@@ -20136,8 +20196,18 @@
   },
   {
     "surface": "shared/content/claim-copy.js",
+    "key": "CLAIM_COPY.OBS_REG04.verificationQuestions[0]",
+    "text": "最近一次暂停后回来继续谈时，发生了什么？"
+  },
+  {
+    "surface": "shared/content/claim-copy.js",
     "key": "CLAIM_COPY.PROVIDE_autonomy_space.boundary",
     "text": "如果正在吵架或者关系不稳定，这件事可能会更难。"
+  },
+  {
+    "surface": "shared/content/claim-copy.js",
+    "key": "CLAIM_COPY.PROVIDE_autonomy_space.shareFragment",
+    "text": "我愿意给彼此保留各自的空间"
   },
   {
     "surface": "shared/content/claim-copy.js",
@@ -20156,6 +20226,11 @@
   },
   {
     "surface": "shared/content/claim-copy.js",
+    "key": "CLAIM_COPY.PROVIDE_conflict_pause.shareFragment",
+    "text": "需要暂停时，我会说明，并回来继续谈"
+  },
+  {
+    "surface": "shared/content/claim-copy.js",
     "key": "CLAIM_COPY.PROVIDE_conflict_pause.text",
     "text": "吵得太厉害时，你比较能直接说想先停一下，也会大概说明什么时候再聊。"
   },
@@ -20168,6 +20243,11 @@
     "surface": "shared/content/claim-copy.js",
     "key": "CLAIM_COPY.PROVIDE_emotional_support.boundary",
     "text": "对方实际觉得有没有被理解，还得听他的感受。"
+  },
+  {
+    "surface": "shared/content/claim-copy.js",
+    "key": "CLAIM_COPY.PROVIDE_emotional_support.shareFragment",
+    "text": "对方需要时，我通常先听，再一起处理"
   },
   {
     "surface": "shared/content/claim-copy.js",
@@ -20186,6 +20266,11 @@
   },
   {
     "surface": "shared/content/claim-copy.js",
+    "key": "CLAIM_COPY.PROVIDE_repair_reengagement.shareFragment",
+    "text": "冷静之后，我愿意回来把问题说清楚"
+  },
+  {
+    "surface": "shared/content/claim-copy.js",
     "key": "CLAIM_COPY.PROVIDE_repair_reengagement.text",
     "text": "你比较愿意重新谈没解决的问题，也会尝试听懂对方为什么难受，并承认自己哪里伤到了他。"
   },
@@ -20198,6 +20283,11 @@
     "surface": "shared/content/claim-copy.js",
     "key": "CLAIM_COPY.PROVIDE_response_predictability.boundary",
     "text": "特别忙或者情绪很差的时候，还是可能做不到。"
+  },
+  {
+    "surface": "shared/content/claim-copy.js",
+    "key": "CLAIM_COPY.PROVIDE_response_predictability.shareFragment",
+    "text": "重要的话题，我通常会说明并回来继续"
   },
   {
     "surface": "shared/content/claim-copy.js",
@@ -20216,8 +20306,18 @@
   },
   {
     "surface": "shared/content/evidence-copy.js",
+    "key": "contradicting",
+    "text": "还有这些回答需要一起看"
+  },
+  {
+    "surface": "shared/content/evidence-copy.js",
     "key": "method",
-    "text": "方法说明"
+    "text": "查看方法说明"
+  },
+  {
+    "surface": "shared/content/evidence-copy.js",
+    "key": "qualifying",
+    "text": "还有几道回答不太一样"
   },
   {
     "surface": "shared/content/evidence-copy.js",
@@ -20611,6 +20711,11 @@
   },
   {
     "surface": "shared/content/public-language.generated.js",
+    "key": "ui.chapterInsight.contradicting",
+    "text": "还有这些回答需要一起看"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
     "key": "ui.chapterInsight.evidenceIntro",
     "text": "主要参考了这些回答"
   },
@@ -20627,12 +20732,22 @@
   {
     "surface": "shared/content/public-language.generated.js",
     "key": "ui.chapterInsight.fallback.summary",
-    "text": "这几道题的回答不太一致，现在先不下结论。"
+    "text": "这一部分现在还看不出明确结论。"
   },
   {
     "surface": "shared/content/public-language.generated.js",
     "key": "ui.chapterInsight.headerPattern",
     "text": "第 {n} 部分完成"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.chapterInsight.qualifying",
+    "text": "还有几道回答不太一样"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.chapterInsight.supporting",
+    "text": "主要参考了这些回答"
   },
   {
     "surface": "shared/content/public-language.generated.js",
@@ -21322,7 +21437,7 @@
   {
     "surface": "shared/content/public-language.generated.js",
     "key": "v2.chapterInsightFallback.text",
-    "text": "这几道题的回答不太一致，现在先不下结论。"
+    "text": "这一部分现在还看不出明确结论。"
   },
   {
     "surface": "shared/content/public-language.generated.js",
@@ -21358,6 +21473,76 @@
     "surface": "shared/content/public-language.generated.js",
     "key": "v2.chapterTitles.C6",
     "text": "吵架以后，你通常怎么处理"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v2.claimDefaults.alternativeExplanations[0]",
+    "text": "这项表现可能只在特定关系阶段、对象或压力情境中出现。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v2.claimDefaults.verificationQuestions[0]",
+    "text": "最近一次出现类似情况时，你实际做了什么？"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v2.fallbackClaims.default.text",
+    "text": "这一部分现在还看不出明确结论。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v2.fallbackClaims.default.title",
+    "text": "这一部分现在还看不出明确结论"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v2.fallbackClaims.lean_less.text",
+    "text": "这些回答暂时不太支持这个方向。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v2.fallbackClaims.lean_less.title",
+    "text": "这个方向暂时不太明显"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v2.fallbackClaims.lean_present.text",
+    "text": "这些回答大多指向同一个方向。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v2.fallbackClaims.lean_present.title",
+    "text": "这些回答大多指向同一个方向"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v2.fallbackClaims.mixed.text",
+    "text": "还有几道回答不太一样。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v2.fallbackClaims.mixed.title",
+    "text": "还有几道回答不太一样"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v2.fallbackClaims.strong_less.text",
+    "text": "这些回答大多没有指向这个方向。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v2.fallbackClaims.strong_less.title",
+    "text": "这些回答大多没有指向这个方向"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v2.fallbackClaims.strong_present.text",
+    "text": "这些回答大多在说同一件事。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v2.fallbackClaims.strong_present.title",
+    "text": "这些回答大体说的是一件事"
   },
   {
     "surface": "shared/content/public-language.generated.js",
@@ -21451,6 +21636,11 @@
   },
   {
     "surface": "shared/content/public-language.generated.js",
+    "key": "v2.reportFallback.answerUnavailable",
+    "text": "暂未判断"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
     "key": "v2.reportFallback.shareTitle",
     "text": "我的结果"
   },
@@ -21468,6 +21658,11 @@
     "surface": "shared/content/public-language.generated.js",
     "key": "v2.reportFallback.unknownText",
     "text": "这部分现在还看不出来。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v2.reportFallback.unknownTitle",
+    "text": "还有几件事，现在看不出来"
   },
   {
     "surface": "shared/content/public-language.generated.js",

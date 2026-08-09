@@ -46,6 +46,7 @@ hardBlockExactOrPattern:
 - soft filter
 - hard constraint
 - 系统把他/她作为候选
+- 保留一点空间
 styleWarning:
 - 这并不意味着
 - 真正重要的是

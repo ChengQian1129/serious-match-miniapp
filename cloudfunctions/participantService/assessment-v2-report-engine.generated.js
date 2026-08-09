@@ -4,7 +4,10 @@ const { rules, REPORT_RULE_VERSION } = require('./assessment-v2-report-rules')
 const CONTENT_VERSION = "relationship-manual-copy-1.2.0"
 const REPORT_COPY_VERSION = "relationship-manual-report-copy-1.2.0"
 const { resolveClaimCopy } = require('./assessment-v2-claim-copy.generated')
-const publicLanguage = { v2: { reportFallback: { unknownText: "这部分现在还看不出来。" } } }
+const publicLanguage = { v2: {"reportFallback":{"title":"你的结果","subtitle":"下面这些内容只根据你这次的回答整理。","unknownTitle":"还有几件事，现在看不出来","unknownText":"这部分现在还看不出来。","answerUnavailable":"暂未判断","shareTitle":"我的结果"},"claimDefaults":{"alternativeExplanations":["这项表现可能只在特定关系阶段、对象或压力情境中出现。"],"verificationQuestions":["最近一次出现类似情况时，你实际做了什么？"]},"fallbackClaims":{"strong_present":{"title":"这些回答大体说的是一件事","text":"这些回答大多在说同一件事。"},"lean_present":{"title":"这些回答大多指向同一个方向","text":"这些回答大多指向同一个方向。"},"strong_less":{"title":"这些回答大多没有指向这个方向","text":"这些回答大多没有指向这个方向。"},"lean_less":{"title":"这个方向暂时不太明显","text":"这些回答暂时不太支持这个方向。"},"mixed":{"title":"还有几道回答不太一样","text":"还有几道回答不太一样。"},"default":{"title":"这一部分现在还看不出明确结论","text":"这一部分现在还看不出明确结论。"}}} }
+
+const publicV2Copy = publicLanguage.v2 || {}
+const reportFallbackCopy = publicV2Copy.reportFallback || {}
 
 function readPath(evaluation, path) {
   const parts = path.split('.')
@@ -63,7 +66,7 @@ function itemEvidence(ids, answers, kind) {
       question: item.publicText || item.text,
       rawValue: raw === undefined ? null : raw,
       scoredValue: missing(raw) ? null : scored(item, raw),
-      answer: option ? option.label : '暂未判断',
+      answer: option ? option.label : reportFallbackCopy.answerUnavailable,
       kind
     }
   }).filter(Boolean)
@@ -85,7 +88,8 @@ function confidenceFor(supporting, contradicting, qualifying, qualityStatus) {
 }
 
 function claimFromSelectors(definition, answers, options = {}) {
-  const source = Object.assign({}, definition, resolveClaimCopy(definition))
+  const fallbackCopy = publicV2Copy.fallbackClaims && publicV2Copy.fallbackClaims.default || {}
+  const source = Object.assign({}, fallbackCopy, definition, publicV2Copy.claimDefaults || {}, resolveClaimCopy(definition))
   const selectors = source.selectors || {}
   const supportIds = [...new Set((selectors.supportSelectors || []).flatMap(selector => selectItemIds(selector, answers)))]
   const contradictionIds = [...new Set((selectors.contradictionSelectors || []).flatMap(selector => selectItemIds(selector, answers)))]
@@ -127,57 +131,46 @@ function reflectiveSelectors(dimension, state) {
 }
 
 function fallbackClaims(evaluation, answers, options) {
-  const stateCopy = {
-    strong_present: '这几道题的回答比较一致，可以先这样理解。',
-    lean_present: '这几道题的回答大多指向这个方向。',
-    strong_less: '这几道题的回答大多指向另一个方向。',
-    lean_less: '这几道题的回答暂时不太支持这个方向。',
-    mixed: '不同情境下的回答不完全一样，先保留一点空间。'
-  }
-  return Object.values(evaluation.dimensions).filter(dimension => dimension.kind === 'reflective' && stateCopy[dimension.state]).map(dimension => claimFromSelectors({
-    id: 'DIM_' + dimension.id,
-    section: dimension.id === 'readiness_intent' || dimension.id === 'available_capacity' ? 'overall' : 'interaction',
-    title: '这一部分现在还看不出明确结论',
-    text: stateCopy[dimension.state],
-    boundary: '',
-    shareFragment: '',
-    selectors: reflectiveSelectors(dimension.id, dimension.state),
-    alternativeExplanations: ['不同关系阶段或现实压力可能改变这项表现。'],
-    verificationQuestions: ['最近一次出现这类情况时，具体发生了什么？']
-  }, answers, options))
+  const stateCopy = publicV2Copy.fallbackClaims || {}
+  return Object.values(evaluation.dimensions).filter(dimension => dimension.kind === 'reflective' && (stateCopy[dimension.state] || stateCopy.default)).map(dimension => {
+    const copy = stateCopy[dimension.state] || stateCopy.default
+    return claimFromSelectors(Object.assign({
+      id: 'DIM_' + dimension.id,
+      section: dimension.id === 'readiness_intent' || dimension.id === 'available_capacity' ? 'overall' : 'interaction',
+      boundary: '',
+      shareFragment: '',
+      selectors: reflectiveSelectors(dimension.id, dimension.state)
+    }, copy), answers, options)
+  })
 }
 
 function observationClaims(evaluation, answers, options) {
   const definitions = {
-    REG01: { copyKey: 'OBS_REG01', shareFragment: '' },
-    REG02: { copyKey: 'OBS_REG02', shareFragment: '' },
-    REG03: { copyKey: 'OBS_REG03', shareFragment: '我会尽量直接说出自己的不安和需要' },
-    REG04: { copyKey: 'OBS_REG04', shareFragment: '需要暂停时，我会说明，并回来继续谈' }
+    REG01: { copyKey: 'OBS_REG01' },
+    REG02: { copyKey: 'OBS_REG02' },
+    REG03: { copyKey: 'OBS_REG03' },
+    REG04: { copyKey: 'OBS_REG04' }
   }
   const priority = ['REG03', 'REG04', 'REG01', 'REG02']
   return Object.entries(definitions).filter(([id]) => evaluation.observations[id] === 'active').sort(([left], [right]) => priority.indexOf(left) - priority.indexOf(right)).map(([id, definition]) => claimFromSelectors(Object.assign({}, definition, {
     id: 'OBS_' + id,
     section: 'observation',
-    selectors: { supportSelectors: [{ itemIds: [id], raw: 'high' }], contradictionSelectors: [{ itemIds: [id], raw: 'low' }], qualificationSelectors: [] },
-    alternativeExplanations: ['这项行为可能依赖具体对象和当时的压力程度。'],
-    verificationQuestions: ['最近一次使用或没有使用这项做法时，发生了什么？']
+    selectors: { supportSelectors: [{ itemIds: [id], raw: 'high' }], contradictionSelectors: [{ itemIds: [id], raw: 'low' }], qualificationSelectors: [] }
   }), answers, Object.assign({}, options, { qualityStatus: options.qualityStatus })))
 }
 
 function provisionClaims(evaluation, answers, options) {
   const definitions = {
-    response_predictability: { copyKey: 'PROVIDE_response_predictability', shareFragment: '重要的话题，我通常会说明并回来继续' },
-    emotional_support: { copyKey: 'PROVIDE_emotional_support', shareFragment: '对方需要时，我通常先听，再一起处理' },
-    autonomy_space: { copyKey: 'PROVIDE_autonomy_space', shareFragment: '我愿意给彼此保留各自的空间' },
-    conflict_pause: { copyKey: 'PROVIDE_conflict_pause', shareFragment: '需要暂停时，我会说明，并回来继续谈' },
-    repair_reengagement: { copyKey: 'PROVIDE_repair_reengagement', shareFragment: '冷静之后，我愿意回来把问题说清楚' }
+    response_predictability: { copyKey: 'PROVIDE_response_predictability' },
+    emotional_support: { copyKey: 'PROVIDE_emotional_support' },
+    autonomy_space: { copyKey: 'PROVIDE_autonomy_space' },
+    conflict_pause: { copyKey: 'PROVIDE_conflict_pause' },
+    repair_reengagement: { copyKey: 'PROVIDE_repair_reengagement' }
   }
   return Object.entries(definitions).filter(([id]) => evaluation.dimensions[id].provideState === 'provide_stable').map(([id, definition]) => claimFromSelectors(Object.assign({}, definition, {
     id: 'PROVIDE_' + id,
     section: 'provide',
-    selectors: { supportSelectors: [{ dimension: id, side: 'provide', scored: 'high' }], contradictionSelectors: [{ dimension: id, side: 'provide', scored: 'low' }], qualificationSelectors: [{ dimension: id, side: 'provide', scored: 'mid' }] },
-    alternativeExplanations: ['这是通常能做到的行为，不代表在每种压力下都能保持。'],
-    verificationQuestions: ['最近一次对方需要这项支持时，你是怎样回应的？']
+    selectors: { supportSelectors: [{ dimension: id, side: 'provide', scored: 'high' }], contradictionSelectors: [{ dimension: id, side: 'provide', scored: 'low' }], qualificationSelectors: [{ dimension: id, side: 'provide', scored: 'mid' }] }
   }), answers, options))
 }
 
@@ -191,8 +184,8 @@ function buildReport(rawAnswers, options = {}) {
   const visible = []
   Object.keys(limits).forEach(section => visible.push(...candidates.filter(item => item.section === section).slice(0, limits[section])))
   const visibleClaimIds = visible.map(claim => claim.id)
-  const unknownText = publicLanguage.v2.reportFallback.unknownText
-  const unknowns = Object.values(evaluation.dimensions).filter(dimension => dimension.state === 'insufficient' || dimension.needState === 'need_insufficient').slice(0, 3).map(dimension => ({ id: dimension.id, title: '还有几件事，现在看不出来', text: unknownText }))
+  const unknownText = reportFallbackCopy.unknownText
+  const unknowns = Object.values(evaluation.dimensions).filter(dimension => dimension.state === 'insufficient' || dimension.needState === 'need_insufficient').slice(0, 3).map(dimension => ({ id: dimension.id, title: reportFallbackCopy.unknownTitle, text: unknownText }))
   const shareFragments = visible.filter(claim => claim.shareFragment).slice(0, 2).map(claim => claim.shareFragment)
   return {
     assessmentId: 'relationship_manual_v2',
@@ -203,8 +196,8 @@ function buildReport(rawAnswers, options = {}) {
     reportCopyVersion: REPORT_COPY_VERSION,
     reportVersion: Number(options.reportVersion) || 1,
     generatedAt: Number(options.generatedAt) || Date.now(),
-    title: '你的结果',
-    subtitle: '下面这些内容只根据你这次的回答整理。',
+    title: reportFallbackCopy.title,
+    subtitle: reportFallbackCopy.subtitle,
     claims: visible,
     allClaimCandidates: candidates,
     visibleClaimIds,
@@ -213,7 +206,7 @@ function buildReport(rawAnswers, options = {}) {
     userConfirmations: {},
     evaluation,
     responseQuality: options.responseQuality || null,
-    shareCard: { title: '我的结果', fragments: shareFragments }
+    shareCard: { title: reportFallbackCopy.shareTitle, fragments: shareFragments }
   }
 }
 

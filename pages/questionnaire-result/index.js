@@ -28,8 +28,8 @@ function chapterResults(answers, report) {
       id: chapter.id,
       number: String(index + 1).padStart(2, '0'),
       title: chapter.title,
-      headline: insight.headline || insight.title,
-      summary: insight.summary || [insight.text, insight.impact].filter(Boolean).join('\n\n')
+      headline: insight.headline,
+      summary: insight.summary
     }
   })
 }

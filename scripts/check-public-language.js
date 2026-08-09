@@ -100,7 +100,7 @@ function collectPublicStrings() {
     flattenStrings(copy).forEach(entry => entries.push(normalizedSnapshotEntry('design/public-language-audit/V2_PUBLIC_COPY_REWRITE.yaml', `claim.${id}.${entry.key}`, entry.text)))
   })
   flattenStrings(registry.ui || {}).forEach(entry => entries.push(normalizedSnapshotEntry('shared/content/public-language.generated.js', `ui.${entry.key}`, entry.text)))
-  ;['scaleOverrides', 'chapterTitles', 'itemTextOverrides', 'chapterInsightFallback', 'reportFallback'].forEach(key => {
+  ;['scaleOverrides', 'chapterTitles', 'itemTextOverrides', 'chapterInsightFallback', 'reportFallback', 'claimDefaults', 'fallbackClaims'].forEach(key => {
     flattenStrings(registry.v2[key] || {}).forEach(entry => entries.push(normalizedSnapshotEntry('shared/content/public-language.generated.js', `v2.${key}.${entry.key}`, entry.text)))
   })
   Object.entries(registry.v2.chapterNarrativePublic || {}).forEach(([chapterId, states]) => {
@@ -160,13 +160,56 @@ function checkRawErrorDisplays() {
   return violations
 }
 
+function stringLiteralBodies(source) {
+  const literals = []
+  const pattern = /(['"`])((?:\\.|(?!\1)[^\\\r\n])*)\1/g
+  let match
+  while ((match = pattern.exec(source))) literals.push(match[2])
+  return literals
+}
+
+function checkSourceLanguageLeaks() {
+  const violations = []
+  const guardedFiles = [
+    path.join(root, 'pages/record-claim/index.js'),
+    path.join(root, 'shared/assessment/report-engine.js'),
+    path.join(root, 'shared/assessment/report-rules.js'),
+    path.join(root, 'utils/assessment-v2/chapter-insight-engine.js')
+  ]
+  guardedFiles.forEach(file => {
+    const source = fs.readFileSync(file, 'utf8')
+    const relative = path.relative(root, file).split(path.sep).join('/')
+    stringLiteralBodies(source).filter(text => /[\u4e00-\u9fff]/u.test(text)).forEach(text => {
+      violations.push(`${relative} defines inline user copy: ${text}`)
+    })
+  })
+
+  const pageFiles = app.pages.map(route => path.join(root, `${route}.js`)).filter(fs.existsSync)
+  const recurringLeakPatterns = [
+    '保留一点空间',
+    '比较一致，可以先这样理解',
+    '回答大多指向这个方向',
+    '回答不完全一样'
+  ]
+  pageFiles.forEach(file => {
+    const source = fs.readFileSync(file, 'utf8')
+    const relative = path.relative(root, file).split(path.sep).join('/')
+    recurringLeakPatterns.forEach(pattern => {
+      if (source.includes(pattern)) violations.push(`${relative} contains unreviewed public copy: ${pattern}`)
+    })
+  })
+  return violations
+}
+
 function main() {
   Object.entries(registry.sourceDigests || {}).forEach(([name, digest]) => assert.equal(sourceDigest(name), digest, `Public language registry is stale for ${name}; run npm run sync:public-language`))
   const entries = collectPublicStrings()
   const hardBlocks = checkHardBlocks(entries)
   const rawErrors = checkRawErrorDisplays()
+  const sourceLeaks = checkSourceLanguageLeaks()
   assert.equal(hardBlocks.length, 0, `Public language hard-block findings:\n${hardBlocks.join('\n')}`)
   assert.equal(rawErrors.length, 0, `Raw technical error display findings:\n${rawErrors.join('\n')}`)
+  assert.equal(sourceLeaks.length, 0, `Inline public language findings:\n${sourceLeaks.join('\n')}`)
   if (!fs.existsSync(snapshotPath)) throw new Error(`Missing reviewed public-language snapshot: ${path.relative(root, snapshotPath)}; run node scripts/check-public-language.js --write-snapshot after review`)
   const expected = JSON.parse(fs.readFileSync(snapshotPath, 'utf8'))
   assert.deepEqual(entries, expected, 'Public language snapshot changed; review the new/changed strings and regenerate the fixture')
@@ -181,4 +224,4 @@ if (process.argv.includes('--write-snapshot')) {
   main()
 }
 
-module.exports = { collectPublicStrings, checkHardBlocks, checkRawErrorDisplays, snapshotPath }
+module.exports = { collectPublicStrings, checkHardBlocks, checkRawErrorDisplays, checkSourceLanguageLeaks, snapshotPath }

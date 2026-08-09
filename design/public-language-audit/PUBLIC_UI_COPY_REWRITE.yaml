@@ -130,6 +130,9 @@ chapterInsight:
   - evidenceToggle
   evidenceToggle: 为什么这么说
   evidenceIntro: 主要参考了这些回答
+  supporting: 主要参考了这些回答
+  contradicting: 还有这些回答需要一起看
+  qualifying: 还有几道回答不太一样
   answerPrefix: 你的回答：
   removeFromPrimaryUI:
   - lead
@@ -141,7 +144,7 @@ chapterInsight:
   - construct/dimension identifiers
   fallback:
     headline: 这一部分现在还看不出明确结论
-    summary: 这几道题的回答不太一致，现在先不下结论。
+    summary: 这一部分现在还看不出明确结论。
 result:
   pageTitle: 你的结果
   heroIntro: 这是根据你这次回答整理出的结果。先看最明显的几件事。

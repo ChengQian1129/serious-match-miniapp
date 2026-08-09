@@ -14,7 +14,7 @@
 
   <view class="section-title">后续联系</view>
   <view class="dl-list privacy-list">
-    <view class="dl-list-row privacy-row"><view class="privacy-index">05</view><view class="dl-list-row__body"><view class="dl-list-row__title">分开选择</view><view class="dl-list-row__desc">不提供联系方式也能获得结果。一对一访谈、用去掉能直接识别你的信息后的回答改进这套题、线下活动邀请，分别选择，默认都不勾选。</view></view></view>
+    <view class="dl-list-row privacy-row"><view class="privacy-index">05</view><view class="dl-list-row__body"><view class="dl-list-row__title">分开选择</view><view class="dl-list-row__desc">不提供联系方式也能获得结果。一对一访谈、用不含身份信息的回答改进题目、线下活动邀请，这三件事分开选择，默认都不勾选。</view></view></view>
     <view class="dl-list-row privacy-row"><view class="privacy-index">06</view><view class="dl-list-row__body"><view class="dl-list-row__title">联系方式单独保存</view><view class="dl-list-row__desc">联系方式会和问卷回答分开保存。分析人员不会看到原始联系方式。</view></view></view>
     <view class="dl-list-row privacy-row"><view class="privacy-index">07</view><view class="dl-list-row__body"><view class="dl-list-row__title">随时撤回或删除</view><view class="dl-list-row__desc">你可以随时取消后续联系，也可以删除联系方式和参与资料。删除问卷和结果时，本次答题相关的记录也会一起删除。</view></view></view>
   </view>
