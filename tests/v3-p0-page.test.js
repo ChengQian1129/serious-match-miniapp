@@ -19,6 +19,10 @@ const codingPage = require('../pages/v3-p0-coding/index.js')
 const engine = require('../shared/assessment-v3-p0/runtime-engine')
 const store = require('../utils/assessment-v3-p0/session-store')
 assert.equal(definitions.length, 2)
+assert.equal(typeof definitions[0].continueResearch, 'function')
+assert.equal(typeof definitions[0].abandonResearch, 'function')
+assert.equal(typeof definitions[0].startNextInterview, 'function')
+assert.equal(typeof definitions[1].startNextInterview, 'function')
 
 const session = store.emptySession({
   waveId: 'wave1',

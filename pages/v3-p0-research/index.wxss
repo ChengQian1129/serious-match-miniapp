@@ -38,6 +38,13 @@
   margin-top: 64rpx;
 }
 
+.p0-resume-card {
+  max-width: 720rpx;
+  margin-top: 64rpx;
+  padding-top: 28rpx;
+  border-top: 2rpx solid var(--dl-black);
+}
+
 .p0-label {
   margin-top: 28rpx;
   color: var(--dl-black);

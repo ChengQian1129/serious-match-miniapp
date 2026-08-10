@@ -27,6 +27,18 @@ const active = store.getSession()
 active.assignment.assignedParentTaskIds.forEach(parentTaskId => {
   engine.expectedItemIdsForParent(parentTaskId).forEach(itemId => store.markMissing(itemId, 'USER_SKIPPED'))
 })
+const coding = {
+  comprehension: 'correct',
+  retrievalBasis: 'recent_real_event',
+  responseMapping: 'easy',
+  socialDesirability: 'none',
+  emotionalSensitivity: 'low',
+  constructContamination: { suspected: [] },
+  recommendedAction: 'keep'
+}
+active.assignment.assignedParentTaskIds.forEach(parentTaskId => {
+  engine.expectedItemIdsForParent(parentTaskId).forEach(itemId => store.saveItemCoding(itemId, coding))
+})
 store.saveWaveDebrief({
   hardestItemIds: ['IDC-S01.a'],
   repetitiveItemIds: ['IDC03', 'IDC06'],
@@ -39,12 +51,14 @@ store.saveWaveDebrief({
 const completed = store.completeSession()
 assert.equal(completed.status, 'completed_no_scoring')
 
-const entry = archive.appendCompletedSession(completed)
+const entry = archive.completeAndArchiveSession(completed)
 assert.equal(entry.waveId, 'wave2')
+assert.equal(store.getSession(), null)
 assert.equal(archive.listCompletedSessions().length, 1)
 assert.equal(archive.listCompletedSessions({ waveId: 'wave2' }).length, 1)
 assert.equal(archive.listCompletedSessions({ waveId: 'wave1' }).length, 0)
-assert.throws(() => archive.appendCompletedSession(completed), /ARCHIVE_SESSION_EXISTS|PARTICIPANT_STUDY_ID_EXISTS/)
+assert.deepEqual(archive.appendCompletedSession(completed), entry)
+assert.equal(archive.listCompletedSessions().length, 1)
 
 const firstExport = archive.exportArchiveJson()
 const secondExport = archive.exportArchiveJson()

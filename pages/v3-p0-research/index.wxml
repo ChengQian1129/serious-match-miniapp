@@ -5,7 +5,17 @@
     <view class="p0-description">Choose one iterative wave and enter a pseudonymous study ID.</view>
   </view>
 
-  <view class="p0-form">
+  <view wx:if="{{resumeRequired}}" class="p0-resume-card">
+    <view class="p0-title">{{resumeTitle}}</view>
+    <view class="p0-description">{{resumeDescription}}</view>
+    <view class="p0-description">{{resumeWaveId}} · {{resumeParticipantStudyId}}</view>
+    <view class="p0-actions p0-actions--static">
+      <button class="p0-primary" bind:tap="continueResearch">{{resumeContinueButton}}</button>
+      <button class="p0-secondary" bind:tap="abandonResearch">{{resumeAbandonButton}}</button>
+    </view>
+  </view>
+
+  <view wx:if="{{!resumeRequired}}" class="p0-form">
     <view class="p0-label">Wave</view>
     <view class="p0-wave-list">
       <button wx:for="{{waveOptions}}" wx:key="value" class="p0-wave {{waveId === item.value ? 'p0-wave--selected' : ''}}" data-wave-id="{{item.value}}" bind:tap="chooseWave">{{item.label}}</button>
@@ -27,7 +37,7 @@
 
 <view wx:if="{{loaded && enabled && active && !completed && task}}" class="p0-page p0-research-page">
   <view class="p0-topbar">
-      <button class="p0-back" bind:tap="handlePrevious" aria-label="Previous">Back</button>
+      <button class="p0-back" bind:tap="handlePrevious" aria-label="{{backLabel}}">{{backLabel}}</button>
     <view class="p0-topbar-title">{{pageTitle}}</view>
     <view class="p0-count">{{progressText}}</view>
   </view>
@@ -35,7 +45,7 @@
 
   <view class="p0-content {{motionClass}}">
     <view class="p0-question">{{task.prompt}}</view>
-    <view wx:if="{{task.isCompound}}" class="p0-context-note">Answer each part before continuing.</view>
+    <view wx:if="{{task.isCompound}}" class="p0-context-note">{{compoundInstruction}}</view>
     <view class="p0-response-list">
       <view wx:for="{{task.items}}" wx:key="itemId" wx:for-item="responseItem" class="p0-response">
         <view wx:if="{{task.isCompound}}" class="p0-response-prompt">{{responseItem.prompt}}</view>
@@ -56,19 +66,20 @@
   </view>
 
   <view class="p0-actions">
-    <button class="p0-secondary" disabled="{{!canSkip}}" bind:tap="skipCurrent">Skip task</button>
-    <button class="p0-primary" disabled="{{!canContinue}}" bind:tap="handleContinue">{{isLast ? 'Finish responses' : 'Continue'}}</button>
+    <button class="p0-secondary" disabled="{{!canSkip}}" bind:tap="skipCurrent">{{skipButton}}</button>
+    <button class="p0-primary" disabled="{{!canContinue}}" bind:tap="handleContinue">{{isLast ? finishButton : continueButton}}</button>
   </view>
-  <button wx:if="{{readyForCoding}}" class="p0-primary p0-coding-link" bind:tap="openCoding">Continue</button>
+  <button wx:if="{{readyForCoding}}" class="p0-primary p0-coding-link" bind:tap="openCoding">{{codingButton}}</button>
 </view>
 
 <view wx:if="{{loaded && enabled && completed}}" class="p0-page p0-complete">
   <view class="p0-header">
-    <view class="p0-title">{{completionTitle}}</view>
-    <view class="p0-description">{{completionNote}}</view>
+    <view class="p0-title">{{archiveTitle}}</view>
+    <view class="p0-description">{{archiveDescription}}</view>
     <view class="p0-description">{{completionFollowup}}</view>
   </view>
   <view class="p0-actions p0-actions--static">
-    <button class="p0-primary" bind:tap="exitResearch">Exit research mode</button>
+    <button class="p0-primary" bind:tap="startNextInterview">{{startNextButton}}</button>
+    <button class="p0-secondary" bind:tap="exitResearch">{{exitButton}}</button>
   </view>
 </view>

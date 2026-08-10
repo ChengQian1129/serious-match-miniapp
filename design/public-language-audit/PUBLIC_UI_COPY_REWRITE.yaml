@@ -275,6 +275,40 @@ v3Pilot:
   completion: 这次答题完成了
   completionNote: 这是测试版，这次不会生成结果。
   completionFollowup: 如果你之后愿意参加一对一访谈或线下交流，我们会先说明具体安排，再由你决定。
+v3P0Research:
+  pageTitle: 答题
+  backLabel: 返回
+  compoundInstruction: 请把下面每一项都选完，再继续。
+  skipButton: 暂时跳过
+  continueButton: 继续
+  finishButton: 答完这部分
+  codingButton: 进入记录
+  exitButton: 退出
+  startNextButton: 开始下一位
+  resumeTitle: 还有一场访谈没有结束
+  resumeDescription: 这场访谈还没有完成。你可以继续记录，或放弃后开始下一位。
+  resumeContinueButton: 继续当前访谈
+  resumeAbandonButton: 放弃并开始下一位
+  archiveTitle: 访谈已归档
+  archiveDescription: 这位参与者的记录已经保存，可以开始下一位。
+  missingStatus:
+    answered: 已回答
+    unanswered: 未回答
+    coded: 已记录
+    needsCoding: 待记录
+    NOT_SHOWN_BY_DESIGN: 未展示
+    NOT_APPLICABLE: 不适用
+    USER_SKIPPED: 已跳过
+    TECHNICAL_MISSING: 暂时没有记录
+    WITHDRAWN: 已撤回
+    UNKNOWN: 不清楚 / 无法判断
+  errors:
+    codingRequired: 还有 {count} 道题没有完成访谈记录。
+    maxSelections: 最多选 {count} 项
+    minSelections: 至少选 {count} 项
+    numberMin: 请输入不小于 {count} 的数字
+    numberMax: 请输入不大于 {count} 的数字
+    textMax: 最多输入 {count} 个字
 errors:
   policy: 公开 UI 只能使用这里的白名单错误。原始 cloud/server/runtime error 只写日志，不能直接 toast/modal 给用户。
   saveFailed: 暂时保存失败，请检查网络后再试。

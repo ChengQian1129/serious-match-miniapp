@@ -14,7 +14,7 @@
     "sync:assessment-v3-pilot": "node scripts/sync-assessment-v3-pilot.js",
     "sync:public-language": "node scripts/sync-public-language.js",
     "test:v3-pilot": "node scripts/check-assessment-v3-pilot.js && node tests/assessment-v3-pilot-runtime.test.js && node tests/assessment-v3-pilot-session.test.js && node tests/assessment-v3-pilot-page.test.js && node tests/v3-wechat-deterministic-rng.test.js",
-    "test:v3-p0": "node scripts/check-assessment-v3-p0.js && node tests/v3-p0-compiler.test.js && node tests/v3-p0-session.test.js && node tests/v3-p0-wave-routing.test.js && node tests/v3-p0-coding.test.js && node tests/v3-p0-archive.test.js && node tests/v3-p0-page.test.js",
+    "test:v3-p0": "node scripts/check-assessment-v3-p0.js && node tests/v3-p0-compiler.test.js && node tests/v3-p0-session.test.js && node tests/v3-p0-wave-routing.test.js && node tests/v3-p0-coding.test.js && node tests/v3-p0-archive.test.js && node tests/v3-p0-page.test.js && node tests/v3-p0-runtime-final-fix.test.js",
     "check:v3-product": "node scripts/check-assessment-v3-product.js",
     "test:v3-product": "node scripts/check-assessment-v3-product.js && node tests/v3-product-report-renderer.test.js && node tests/v3-product-c3-synthesis.test.js && node tests/v3-product-pattern-eligibility.test.js && node tests/v3-product-cross-chapter-selection.test.js && node tests/v3-product-public-copy.test.js && node tests/v3-product-preview-personas.test.js && node tests/v3-product-pages.test.js && node tests/v3-report-contract-validation.test.js",
     "check:public-copy": "node scripts/check-public-copy.js",

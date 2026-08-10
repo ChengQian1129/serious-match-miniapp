@@ -3,7 +3,7 @@ module.exports = {
   "schemaVersion": "serious-match.public-language.registry.v1.0",
   "generatedAt": "2026-08-09",
   "sourceDigests": {
-    "PUBLIC_UI_COPY_REWRITE.yaml": "cd1d15e17672b65a24a137141618c4a980edd05a8818d5bc90f67f4d6a284832",
+    "PUBLIC_UI_COPY_REWRITE.yaml": "07da66d55585850eb16d18b5bc5e1f06d7dae9adb33dbfbe467132425c748722",
     "V2_PUBLIC_COPY_REWRITE.yaml": "aa49d69eb91f4820bea1160ec4699289b31da033b6b383f7af8dc243bb409db1",
     "V3_ALL_USER_FACING_STRINGS_AUDIT.csv": "82fc5e9a1df6fc74701994d3b4670bca132d199ea81e0c717900923942310413",
     "V3_PUBLIC_NARRATIVE_OVERRIDE.yaml": "5f72e3b7c2b9d9b9003e5b28c331e8c937e187e73e1edd2711f85573210363b5",
@@ -213,6 +213,43 @@ module.exports = {
       "completion": "这次答题完成了",
       "completionNote": "这是测试版，这次不会生成结果。",
       "completionFollowup": "如果你之后愿意参加一对一访谈或线下交流，我们会先说明具体安排，再由你决定。"
+    },
+    "v3P0Research": {
+      "pageTitle": "答题",
+      "backLabel": "返回",
+      "compoundInstruction": "请把下面每一项都选完，再继续。",
+      "skipButton": "暂时跳过",
+      "continueButton": "继续",
+      "finishButton": "答完这部分",
+      "codingButton": "进入记录",
+      "exitButton": "退出",
+      "startNextButton": "开始下一位",
+      "resumeTitle": "还有一场访谈没有结束",
+      "resumeDescription": "这场访谈还没有完成。你可以继续记录，或放弃后开始下一位。",
+      "resumeContinueButton": "继续当前访谈",
+      "resumeAbandonButton": "放弃并开始下一位",
+      "archiveTitle": "访谈已归档",
+      "archiveDescription": "这位参与者的记录已经保存，可以开始下一位。",
+      "missingStatus": {
+        "answered": "已回答",
+        "unanswered": "未回答",
+        "coded": "已记录",
+        "needsCoding": "待记录",
+        "NOT_SHOWN_BY_DESIGN": "未展示",
+        "NOT_APPLICABLE": "不适用",
+        "USER_SKIPPED": "已跳过",
+        "TECHNICAL_MISSING": "暂时没有记录",
+        "WITHDRAWN": "已撤回",
+        "UNKNOWN": "不清楚 / 无法判断"
+      },
+      "errors": {
+        "codingRequired": "还有 {count} 道题没有完成访谈记录。",
+        "maxSelections": "最多选 {count} 项",
+        "minSelections": "至少选 {count} 项",
+        "numberMin": "请输入不小于 {count} 的数字",
+        "numberMax": "请输入不大于 {count} 的数字",
+        "textMax": "最多输入 {count} 个字"
+      }
     }
   },
   "v2": {

@@ -4,6 +4,7 @@ const archive = require('../../utils/assessment-v3-p0/research-archive')
 const { FEATURES } = require('../../utils/features')
 const { navigateOnce, resetNavigation } = require('../../utils/navigation')
 const publicLanguage = require('../../shared/content/public-language.generated')
+const p0Copy = publicLanguage.ui.v3P0Research
 
 function hasOwn(value, key) {
   return Object.prototype.hasOwnProperty.call(value, key)
@@ -64,12 +65,15 @@ function decodeOption(value) {
 
 function errorCopy(error) {
   const message = error && error.message ? error.message : String(error || '')
-  if (message.includes('MAX_SELECTIONS_')) return `Maximum selections: ${message.split('MAX_SELECTIONS_')[1]}`
-  if (message.includes('MIN_SELECTIONS_')) return `Minimum selections: ${message.split('MIN_SELECTIONS_')[1]}`
-  if (message.includes('NUMBER_MIN_')) return `Minimum value: ${message.split('NUMBER_MIN_')[1]}`
-  if (message.includes('NUMBER_MAX_')) return `Maximum value: ${message.split('NUMBER_MAX_')[1]}`
-  if (message.includes('TEXT_MAX_')) return `Maximum characters: ${message.split('TEXT_MAX_')[1]}`
+  const fill = (template, count) => String(template || '').replace('{count}', String(count))
+  if (message.includes('MAX_SELECTIONS_')) return fill(p0Copy.errors.maxSelections, message.split('MAX_SELECTIONS_')[1])
+  if (message.includes('MIN_SELECTIONS_')) return fill(p0Copy.errors.minSelections, message.split('MIN_SELECTIONS_')[1])
+  if (message.includes('NUMBER_MIN_')) return fill(p0Copy.errors.numberMin, message.split('NUMBER_MIN_')[1])
+  if (message.includes('NUMBER_MAX_')) return fill(p0Copy.errors.numberMax, message.split('NUMBER_MAX_')[1])
+  if (message.includes('TEXT_MAX_')) return fill(p0Copy.errors.textMax, message.split('TEXT_MAX_')[1])
   if (message.includes('CURRENT_TASK_INCOMPLETE')) return publicLanguage.publicErrors.incomplete
+  if (message.startsWith('P0_UNFINISHED_SESSION_EXISTS:')) return p0Copy.resumeDescription
+  if (message.startsWith('P0_COMPLETED_SESSION_PENDING_ARCHIVE:')) return p0Copy.archiveDescription
   return publicLanguage.publicErrors.questionInvalid
 }
 
@@ -78,14 +82,31 @@ Page({
     loaded: false,
     enabled: false,
     setup: true,
+    resumeRequired: false,
+    resumeParticipantStudyId: '',
+    resumeWaveId: '',
     active: false,
     completed: false,
     readyForCoding: false,
-    pageTitle: publicLanguage.ui.v3Pilot.pageTitle,
+    pageTitle: p0Copy.pageTitle,
     completionTitle: publicLanguage.ui.v3Pilot.completion,
     completionNote: publicLanguage.ui.v3Pilot.completionNote,
     completionFollowup: publicLanguage.ui.v3Pilot.completionFollowup,
     skipLabel: publicLanguage.ui.v3Pilot.skipDisplay,
+    backLabel: p0Copy.backLabel,
+    compoundInstruction: p0Copy.compoundInstruction,
+    skipButton: p0Copy.skipButton,
+    continueButton: p0Copy.continueButton,
+    finishButton: p0Copy.finishButton,
+    codingButton: p0Copy.codingButton,
+    exitButton: p0Copy.exitButton,
+    startNextButton: p0Copy.startNextButton,
+    resumeTitle: p0Copy.resumeTitle,
+    resumeDescription: p0Copy.resumeDescription,
+    resumeContinueButton: p0Copy.resumeContinueButton,
+    resumeAbandonButton: p0Copy.resumeAbandonButton,
+    archiveTitle: p0Copy.archiveTitle,
+    archiveDescription: p0Copy.archiveDescription,
     waveOptions: engine.WAVE_IDS.map(waveId => ({ value: waveId, label: waveId })),
     waveId: 'wave1',
     participantStudyId: '',
@@ -112,6 +133,7 @@ Page({
     this._loaded = true
     this._draftValues = {}
     this._lastShownTaskId = null
+    this._showCompletion = false
     const session = store.getSession()
     const initial = {
       loaded: true,
@@ -123,7 +145,8 @@ Page({
       responseContextForRelationshipItems: decodeOption(options.responseContextForRelationshipItems) || this.data.responseContextForRelationshipItems
     }
     this.setData(initial)
-    if (session) this.refresh('forward')
+    this._resumeDecision = null
+    this.refresh()
   },
 
   onShow() {
@@ -153,6 +176,8 @@ Page({
           responseContextForRelationshipItems: this.data.responseContextForRelationshipItems
         }
       })
+      this._resumeDecision = 'continue'
+      this._showCompletion = false
       this._lastShownTaskId = null
       this._draftValues = {}
       this.setData({ error: '', notice: '', active: true, setup: false, completed: false, readyForCoding: false })
@@ -167,11 +192,36 @@ Page({
   refresh(direction) {
     const session = store.getSession()
     if (!session) {
-      this.setData({ loaded: true, active: false, setup: true, completed: false, readyForCoding: false, task: null })
+      if (this._showCompletion) {
+        this.setData({ loaded: true, active: false, setup: false, resumeRequired: false, completed: true, readyForCoding: false, task: null })
+        return
+      }
+      this.setData({ loaded: true, active: false, setup: true, resumeRequired: false, completed: false, readyForCoding: false, task: null })
+      return
+    }
+    if (session.status === 'in_progress' && this._resumeDecision !== 'continue') {
+      this.setData({
+        loaded: true,
+        active: false,
+        setup: true,
+        resumeRequired: true,
+        resumeParticipantStudyId: session.participantStudyId,
+        resumeWaveId: session.waveId,
+        completed: false,
+        readyForCoding: false,
+        task: null,
+        error: '',
+        notice: ''
+      })
       return
     }
     if (session.status === 'completed_no_scoring') {
-      this.setData({ loaded: true, active: false, setup: false, completed: true, readyForCoding: false, task: null, error: '', motionClass: '' })
+      try { archive.completeAndArchiveSession(session) } catch (error) {
+        this.setData({ loaded: true, active: false, setup: false, completed: true, readyForCoding: false, task: null, error: errorCopy(error), motionClass: '' })
+        return
+      }
+      this._showCompletion = true
+      this.setData({ loaded: true, active: false, setup: false, resumeRequired: false, completed: true, readyForCoding: false, task: null, error: '', motionClass: '' })
       return
     }
     const taskId = store.currentTaskId(session)
@@ -194,6 +244,7 @@ Page({
       loaded: true,
       active: true,
       setup: false,
+      resumeRequired: false,
       completed: false,
       readyForCoding,
       task: buildTaskView(task, current),
@@ -316,10 +367,42 @@ Page({
     navigateOnce(this, 'reLaunch', { url: '/pages/home/index' })
   },
 
+  continueResearch() {
+    try {
+      store.continueSession()
+      this._resumeDecision = 'continue'
+      this._showCompletion = false
+      this.refresh('forward')
+    } catch (error) {
+      this.setData({ error: errorCopy(error), notice: '' })
+    }
+  },
+
+  abandonResearch() {
+    try {
+      store.abandonActiveSession()
+      this._resumeDecision = null
+      this._showCompletion = false
+      this.setData({ participantStudyId: '', error: '', notice: '' })
+      this.refresh()
+    } catch (error) {
+      this.setData({ error: errorCopy(error), notice: '' })
+    }
+  },
+
+  startNextInterview() {
+    const session = store.getSession()
+    if (session && session.status === 'completed_no_scoring') {
+      try { archive.completeAndArchiveSession(session) } catch (error) { this.setData({ error: errorCopy(error) }); return }
+    }
+    this._showCompletion = false
+    navigateOnce(this, 'reLaunch', { url: '/pages/v3-p0-research/index' })
+  },
+
   archiveCompleted() {
     const session = store.getSession()
     if (!session || session.status !== 'completed_no_scoring') return
-    try { archive.appendCompletedSession(session); this.setData({ notice: 'Archived.' }) } catch (error) { this.setData({ error: errorCopy(error) }) }
+    try { archive.completeAndArchiveSession(session); this._showCompletion = true; this.setData({ notice: p0Copy.archiveDescription, completed: true, setup: false }) } catch (error) { this.setData({ error: errorCopy(error) }) }
   }
 })
 

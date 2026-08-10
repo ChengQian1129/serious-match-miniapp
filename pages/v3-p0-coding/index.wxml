@@ -10,7 +10,7 @@
       <button wx:for="{{items}}" wx:key="itemId" wx:for-item="item" class="coding-item {{currentItemId === item.itemId ? 'coding-item--selected' : ''}}" data-item-id="{{item.itemId}}" bind:tap="selectItem">
         <view class="coding-item-id">{{item.itemId}}</view>
         <view class="coding-item-prompt">{{item.prompt}}</view>
-        <view class="coding-item-status">{{item.answered ? 'answered' : 'missing'}} · {{item.coded ? 'coded' : 'needs coding'}}</view>
+        <view class="coding-item-status">{{item.responseStatus}} · {{item.codingStatus}}</view>
       </button>
     </scroll-view>
 
@@ -81,9 +81,10 @@
 </view>
 
 <view wx:if="{{loaded && enabled && completed}}" class="coding-page coding-complete">
-  <view class="coding-title">Interview archived</view>
-  <view class="coding-meta">The completed session is stored in the local research archive.</view>
+  <view class="coding-title">{{archiveTitle}}</view>
+  <view class="coding-meta">{{archiveDescription}}</view>
   <button class="coding-primary" bind:tap="exportArchive">Prepare versioned export</button>
   <textarea wx:if="{{exportReady}}" class="coding-export-output" value="{{exportJson}}" maxlength="1000000"></textarea>
+  <button class="coding-primary" bind:tap="startNextInterview">{{startNextButton}}</button>
   <button class="coding-secondary" bind:tap="exitResearch">Exit</button>
 </view>

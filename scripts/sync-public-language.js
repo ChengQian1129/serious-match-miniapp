@@ -210,7 +210,8 @@ function main() {
       completion: ui.v3Pilot.completion,
       completionNote: ui.v3Pilot.completionNote,
       completionFollowup: ui.v3Pilot.completionFollowup
-    }
+    },
+    v3P0Research: publicValue(ui.v3P0Research || {})
   }
   const value = {
     schemaVersion: 'serious-match.public-language.registry.v1.0',

@@ -1206,22 +1206,12 @@
   },
   {
     "surface": "pages/v3-p0-coding/index.wxml",
-    "key": "text.111",
-    "text": "Interview archived"
-  },
-  {
-    "surface": "pages/v3-p0-coding/index.wxml",
-    "key": "text.113",
-    "text": "The completed session is stored in the local research archive."
-  },
-  {
-    "surface": "pages/v3-p0-coding/index.wxml",
     "key": "text.115",
     "text": "Prepare versioned export"
   },
   {
     "surface": "pages/v3-p0-coding/index.wxml",
-    "key": "text.118",
+    "key": "text.120",
     "text": "Exit"
   },
   {
@@ -1352,7 +1342,7 @@
   {
     "surface": "pages/v3-p0-research/index.json",
     "key": "navigationBarTitleText",
-    "text": "Research runtime"
+    "text": "答题"
   },
   {
     "surface": "pages/v3-p0-research/index.wxml",
@@ -1371,33 +1361,8 @@
   },
   {
     "surface": "pages/v3-p0-research/index.wxml",
-    "key": "attr.3",
-    "text": "Previous"
-  },
-  {
-    "surface": "pages/v3-p0-research/index.wxml",
-    "key": "text.10",
+    "key": "text.24",
     "text": "Wave"
-  },
-  {
-    "surface": "pages/v3-p0-research/index.wxml",
-    "key": "text.16",
-    "text": "Participant study ID"
-  },
-  {
-    "surface": "pages/v3-p0-research/index.wxml",
-    "key": "text.19",
-    "text": "Relationship history category"
-  },
-  {
-    "surface": "pages/v3-p0-research/index.wxml",
-    "key": "text.22",
-    "text": "Current dating status"
-  },
-  {
-    "surface": "pages/v3-p0-research/index.wxml",
-    "key": "text.25",
-    "text": "Response context for relationship items"
   },
   {
     "surface": "pages/v3-p0-research/index.wxml",
@@ -1406,13 +1371,28 @@
   },
   {
     "surface": "pages/v3-p0-research/index.wxml",
+    "key": "text.30",
+    "text": "Participant study ID"
+  },
+  {
+    "surface": "pages/v3-p0-research/index.wxml",
     "key": "text.33",
-    "text": "Start interview"
+    "text": "Relationship history category"
+  },
+  {
+    "surface": "pages/v3-p0-research/index.wxml",
+    "key": "text.36",
+    "text": "Current dating status"
   },
   {
     "surface": "pages/v3-p0-research/index.wxml",
     "key": "text.39",
-    "text": "Back"
+    "text": "Response context for relationship items"
+  },
+  {
+    "surface": "pages/v3-p0-research/index.wxml",
+    "key": "text.47",
+    "text": "Start interview"
   },
   {
     "surface": "pages/v3-p0-research/index.wxml",
@@ -1421,28 +1401,8 @@
   },
   {
     "surface": "pages/v3-p0-research/index.wxml",
-    "key": "text.50",
-    "text": "Answer each part before continuing."
-  },
-  {
-    "surface": "pages/v3-p0-research/index.wxml",
     "key": "text.6",
     "text": "Choose one iterative wave and enter a pseudonymous study ID."
-  },
-  {
-    "surface": "pages/v3-p0-research/index.wxml",
-    "key": "text.77",
-    "text": "Skip task"
-  },
-  {
-    "surface": "pages/v3-p0-research/index.wxml",
-    "key": "text.82",
-    "text": "Continue"
-  },
-  {
-    "surface": "pages/v3-p0-research/index.wxml",
-    "key": "text.95",
-    "text": "Exit research mode"
   },
   {
     "surface": "pages/v3-result/index.wxml",
@@ -21838,6 +21798,161 @@
     "surface": "shared/content/public-language.generated.js",
     "key": "ui.result.unknownTitle",
     "text": "还有几件事，现在看不出来"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3P0Research.archiveDescription",
+    "text": "这位参与者的记录已经保存，可以开始下一位。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3P0Research.archiveTitle",
+    "text": "访谈已归档"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3P0Research.backLabel",
+    "text": "返回"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3P0Research.codingButton",
+    "text": "进入记录"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3P0Research.compoundInstruction",
+    "text": "请把下面每一项都选完，再继续。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3P0Research.continueButton",
+    "text": "继续"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3P0Research.errors.codingRequired",
+    "text": "还有 {count} 道题没有完成访谈记录。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3P0Research.errors.maxSelections",
+    "text": "最多选 {count} 项"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3P0Research.errors.minSelections",
+    "text": "至少选 {count} 项"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3P0Research.errors.numberMax",
+    "text": "请输入不大于 {count} 的数字"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3P0Research.errors.numberMin",
+    "text": "请输入不小于 {count} 的数字"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3P0Research.errors.textMax",
+    "text": "最多输入 {count} 个字"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3P0Research.exitButton",
+    "text": "退出"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3P0Research.finishButton",
+    "text": "答完这部分"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3P0Research.missingStatus.answered",
+    "text": "已回答"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3P0Research.missingStatus.coded",
+    "text": "已记录"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3P0Research.missingStatus.needsCoding",
+    "text": "待记录"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3P0Research.missingStatus.NOT_APPLICABLE",
+    "text": "不适用"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3P0Research.missingStatus.NOT_SHOWN_BY_DESIGN",
+    "text": "未展示"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3P0Research.missingStatus.TECHNICAL_MISSING",
+    "text": "暂时没有记录"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3P0Research.missingStatus.unanswered",
+    "text": "未回答"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3P0Research.missingStatus.UNKNOWN",
+    "text": "不清楚 / 无法判断"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3P0Research.missingStatus.USER_SKIPPED",
+    "text": "已跳过"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3P0Research.missingStatus.WITHDRAWN",
+    "text": "已撤回"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3P0Research.pageTitle",
+    "text": "答题"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3P0Research.resumeAbandonButton",
+    "text": "放弃并开始下一位"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3P0Research.resumeContinueButton",
+    "text": "继续当前访谈"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3P0Research.resumeDescription",
+    "text": "这场访谈还没有完成。你可以继续记录，或放弃后开始下一位。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3P0Research.resumeTitle",
+    "text": "还有一场访谈没有结束"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3P0Research.skipButton",
+    "text": "暂时跳过"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3P0Research.startNextButton",
+    "text": "开始下一位"
   },
   {
     "surface": "shared/content/public-language.generated.js",

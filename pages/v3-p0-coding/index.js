@@ -3,6 +3,8 @@ const store = require('../../utils/assessment-v3-p0/session-store')
 const archive = require('../../utils/assessment-v3-p0/research-archive')
 const { FEATURES } = require('../../utils/features')
 const { navigateOnce, resetNavigation } = require('../../utils/navigation')
+const publicLanguage = require('../../shared/content/public-language.generated')
+const p0Copy = publicLanguage.ui.v3P0Research
 
 function asString(value) {
   return value === null || value === undefined ? '' : String(value)
@@ -32,7 +34,15 @@ function buildItemList(session) {
       probeFocus: task.probeFocus || [],
       answered: Object.prototype.hasOwnProperty.call(session.latestAnswers, itemId),
       missing: session.missingness[itemId] || null,
-      coded: Boolean(session.interviewerCodingByItem[itemId])
+      coded: Boolean(session.interviewerCodingByItem[itemId]),
+      responseStatus: Object.prototype.hasOwnProperty.call(session.latestAnswers, itemId)
+        ? p0Copy.missingStatus.answered
+        : session.missingness[itemId]
+          ? (p0Copy.missingStatus[session.missingness[itemId].code] || p0Copy.missingStatus.unanswered)
+          : p0Copy.missingStatus.unanswered,
+      codingStatus: session.interviewerCodingByItem[itemId]
+        ? p0Copy.missingStatus.coded
+        : p0Copy.missingStatus.needsCoding
     }))
   })
   return result
@@ -70,7 +80,8 @@ function debriefView(session) {
 
 function errorCopy(error) {
   const message = error && error.message ? error.message : String(error || '')
-  if (message.startsWith('CODING_REQUIRED:')) return `Coding required: ${message.slice('CODING_REQUIRED:'.length)}`
+  const fill = (template, count) => String(template || '').replace('{count}', String(count))
+  if (message.startsWith('CODING_REQUIRED:')) return fill(p0Copy.errors.codingRequired, message.slice('CODING_REQUIRED:'.length).split(',').filter(Boolean).length)
   if (message === 'DEBRIEF_REQUIRED') return 'Save the wave debrief before completing.'
   if (message === 'DEBRIEF_INCOMPLETE') return 'Choose the item that felt most like it had a correct answer.'
   if (message.includes('INVALID_CODING:')) return `Invalid coding field: ${message.split('INVALID_CODING:')[1]}`
@@ -101,7 +112,10 @@ Page({
     error: '',
     notice: '',
     exportReady: false,
-    exportJson: ''
+    exportJson: '',
+    startNextButton: p0Copy.startNextButton,
+    archiveTitle: p0Copy.archiveTitle,
+    archiveDescription: p0Copy.archiveDescription
   },
 
   onLoad(options = {}) {
@@ -122,12 +136,16 @@ Page({
   refresh() {
     const session = store.getSession()
     if (!session) {
+      if (this.data.completed) {
+        this.setData({ loaded: true, enabled: true, blocked: false, completed: true })
+        return
+      }
       this.setData({ loaded: true, enabled: true, blocked: true, error: 'No active P0 session.' })
       return
     }
     const items = buildItemList(session)
     const requested = this._requestedItemId && items.some(item => item.itemId === this._requestedItemId) ? this._requestedItemId : ''
-    const firstUncoded = items.find(item => item.answered && !item.coded)
+    const firstUncoded = items.find(item => (item.answered || item.missing) && !item.coded)
     const currentItemId = requested || this.data.currentItemId || (firstUncoded ? firstUncoded.itemId : '') || (items.length ? items[0].itemId : '')
     const currentItem = items.find(item => item.itemId === currentItemId) || null
     this.setData({
@@ -221,9 +239,8 @@ Page({
     if (!this.saveDebrief()) return
     try {
       const completed = store.completeSession()
-      archive.appendCompletedSession(completed)
-      this.setData({ completed: true, notice: 'Completed and archived.', error: '' })
-      this.refresh()
+      archive.completeAndArchiveSession(completed)
+      this.setData({ completed: true, blocked: false, notice: 'Completed and archived.', error: '' })
     } catch (error) {
       this.setData({ error: errorCopy(error), notice: '' })
     }
@@ -245,6 +262,10 @@ Page({
 
   exitResearch() {
     navigateOnce(this, 'reLaunch', { url: '/pages/home/index' })
+  },
+
+  startNextInterview() {
+    navigateOnce(this, 'reLaunch', { url: '/pages/v3-p0-research/index' })
   }
 })
 

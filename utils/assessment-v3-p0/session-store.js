@@ -123,10 +123,11 @@ function normalizeSession(value) {
 }
 
 function assertAnswerEventsAppendOnly(previous, next) {
-  if (!previous) return
-  if (next.answerEvents.length < previous.answerEvents.length) throw new Error('ANSWER_EVENTS_APPEND_ONLY')
-  for (let index = 0; index < previous.answerEvents.length; index += 1) {
-    if (JSON.stringify(previous.answerEvents[index]) !== JSON.stringify(next.answerEvents[index])) throw new Error('ANSWER_EVENTS_APPEND_ONLY')
+  if (previous && previous.sessionId === next.sessionId) {
+    if (next.answerEvents.length < previous.answerEvents.length) throw new Error('ANSWER_EVENTS_APPEND_ONLY')
+    for (let index = 0; index < previous.answerEvents.length; index += 1) {
+      if (JSON.stringify(previous.answerEvents[index]) !== JSON.stringify(next.answerEvents[index])) throw new Error('ANSWER_EVENTS_APPEND_ONLY')
+    }
   }
   const eventIds = new Set()
   const latestByItem = {}
@@ -153,13 +154,34 @@ function saveSession(session) {
 }
 
 function startSession(options) {
+  const existing = getSession()
+  if (existing) {
+    if (existing.status === 'in_progress') throw new Error(`P0_UNFINISHED_SESSION_EXISTS:${existing.sessionId}`)
+    if (existing.status === 'completed_no_scoring') throw new Error(`P0_COMPLETED_SESSION_PENDING_ARCHIVE:${existing.sessionId}`)
+  }
   const session = emptySession(options)
   return saveSession(session)
 }
 
-function resetSession() {
+function clearActiveSession() {
   storageRemove(SESSION_KEY)
   return null
+}
+
+function abandonActiveSession() {
+  const session = getSession()
+  if (!session) return null
+  if (session.status !== 'in_progress') throw new Error('P0_SESSION_NOT_ACTIVE')
+  clearActiveSession()
+  return clone(session)
+}
+
+function continueSession() {
+  return requireActiveSession()
+}
+
+function resetSession() {
+  return clearActiveSession()
 }
 
 function requireSession() {
@@ -441,7 +463,8 @@ function completeSession() {
   if (incomplete.length) throw new Error(`INCOMPLETE_TASKS:${incomplete.join(',')}`)
   if (!session.waveDebrief) throw new Error('DEBRIEF_REQUIRED')
   if (!session.waveDebrief.correctAnswerFeelingItemId) throw new Error('DEBRIEF_INCOMPLETE')
-  const codingMissing = Object.keys(session.latestAnswers).filter(itemId => !session.interviewerCodingByItem[itemId])
+  const accountedItemIds = allAssignedItemIds(session).filter(itemId => isItemAccounted(session, itemId))
+  const codingMissing = accountedItemIds.filter(itemId => !session.interviewerCodingByItem[itemId])
   if (codingMissing.length) throw new Error(`CODING_REQUIRED:${codingMissing.join(',')}`)
   const completedAt = now()
   return saveSession(Object.assign({}, session, {
@@ -461,6 +484,9 @@ module.exports = {
   validSession,
   getSession,
   saveSession,
+  clearActiveSession,
+  abandonActiveSession,
+  continueSession,
   resetSession,
   currentTaskId,
   setTaskIndex,

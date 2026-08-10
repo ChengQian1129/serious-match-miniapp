@@ -64,11 +64,29 @@ function appendCompletedSession(session = store.getSession()) {
   if (!session) throw new Error('NO_P0_SESSION')
   const entry = archiveEntry(session)
   const entries = readArchive()
-  if (entries.some(existing => existing.sessionId === entry.sessionId)) throw new Error('ARCHIVE_SESSION_EXISTS')
+  const existingBySession = entries.find(existing => existing.sessionId === entry.sessionId)
+  if (existingBySession) {
+    if (JSON.stringify(sortKeys(existingBySession)) !== JSON.stringify(sortKeys(entry))) throw new Error('ARCHIVE_SESSION_CONFLICT')
+    return clone(existingBySession)
+  }
   if (entries.some(existing => existing.participantStudyId === entry.participantStudyId)) throw new Error('PARTICIPANT_STUDY_ID_EXISTS')
   entries.push(entry)
   entries.sort((left, right) => left.sessionId.localeCompare(right.sessionId))
   writeArchive(entries)
+  return clone(entry)
+}
+
+function completeAndArchiveSession(session = store.getSession()) {
+  if (!session) throw new Error('NO_P0_SESSION')
+  let completed = session
+  const active = store.getSession()
+  if (completed.status === 'in_progress') {
+    if (!active || active.sessionId !== completed.sessionId) throw new Error('P0_ACTIVE_SESSION_MISMATCH')
+    completed = store.completeSession()
+  }
+  const entry = appendCompletedSession(completed)
+  const current = store.getSession()
+  if (current && current.sessionId === completed.sessionId && current.status === 'completed_no_scoring') store.clearActiveSession()
   return clone(entry)
 }
 
@@ -135,6 +153,7 @@ module.exports = {
   archiveEntry,
   appendCompletedSession,
   appendSession: appendCompletedSession,
+  completeAndArchiveSession,
   listCompletedSessions,
   listSessions: listCompletedSessions,
   filterCompletedSessions: listCompletedSessions,
