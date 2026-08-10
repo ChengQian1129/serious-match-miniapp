@@ -4,6 +4,8 @@
     "pages/home/index",
     "pages/questionnaire/index",
     "pages/questionnaire-v3-pilot/index",
+    "pages/v3-p0-research/index",
+    "pages/v3-p0-coding/index",
     "pages/v3-product-preview/index",
     "pages/v3-checkpoint/index",
     "pages/v3-result/index",

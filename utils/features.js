@@ -6,6 +6,7 @@ const FEATURES = Object.freeze({
   followupParticipation: true,
   interviewResearchConsent: true,
   v3Pilot: false,
+  v3P0Research: false,
   v3ProductPreview: true,
   v3CalibratedProduction: false
 })

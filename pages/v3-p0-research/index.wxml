@@ -1,0 +1,74 @@
+<view wx:if="{{loaded && enabled && setup}}" class="p0-page p0-setup">
+  <view class="p0-header">
+    <view class="p0-kicker">Internal research runtime</view>
+    <view class="p0-title">Cognitive interview</view>
+    <view class="p0-description">Choose one iterative wave and enter a pseudonymous study ID.</view>
+  </view>
+
+  <view class="p0-form">
+    <view class="p0-label">Wave</view>
+    <view class="p0-wave-list">
+      <button wx:for="{{waveOptions}}" wx:key="value" class="p0-wave {{waveId === item.value ? 'p0-wave--selected' : ''}}" data-wave-id="{{item.value}}" bind:tap="chooseWave">{{item.label}}</button>
+    </view>
+    <view class="p0-label">Participant study ID</view>
+    <input class="p0-input" value="{{participantStudyId}}" data-field="participantStudyId" placeholder="Example: STUDY-001" bind:input="inputSetup" />
+    <view class="p0-label">Relationship history category</view>
+    <input class="p0-input" value="{{relationshipHistoryCategory}}" data-field="relationshipHistoryCategory" placeholder="Researcher entry" bind:input="inputSetup" />
+    <view class="p0-label">Current dating status</view>
+    <input class="p0-input" value="{{currentDatingStatus}}" data-field="currentDatingStatus" placeholder="Researcher entry" bind:input="inputSetup" />
+    <view class="p0-label">Response context for relationship items</view>
+    <view class="p0-context-list">
+      <button wx:for="{{contextBasisOptions}}" wx:key="value" class="p0-context {{responseContextForRelationshipItems === item.value ? 'p0-context--selected' : ''}}" data-field="responseContextForRelationshipItems" data-value="{{item.value}}" bind:tap="inputSetup">{{item.label}}</button>
+    </view>
+    <view wx:if="{{error}}" class="p0-error" role="alert">{{error}}</view>
+    <button class="p0-primary" bind:tap="startResearch">Start interview</button>
+  </view>
+</view>
+
+<view wx:if="{{loaded && enabled && active && !completed && task}}" class="p0-page p0-research-page">
+  <view class="p0-topbar">
+      <button class="p0-back" bind:tap="handlePrevious" aria-label="Previous">Back</button>
+    <view class="p0-topbar-title">{{pageTitle}}</view>
+    <view class="p0-count">{{progressText}}</view>
+  </view>
+  <view class="p0-progress"><view class="p0-progress__bar" style="transform: scaleX({{progressRatio}});"></view></view>
+
+  <view class="p0-content {{motionClass}}">
+    <view class="p0-question">{{task.prompt}}</view>
+    <view wx:if="{{task.isCompound}}" class="p0-context-note">Answer each part before continuing.</view>
+    <view class="p0-response-list">
+      <view wx:for="{{task.items}}" wx:key="itemId" wx:for-item="responseItem" class="p0-response">
+        <view wx:if="{{task.isCompound}}" class="p0-response-prompt">{{responseItem.prompt}}</view>
+        <view wx:if="{{responseItem.response.type === 'single_select' || responseItem.response.type === 'multi_select'}}" class="p0-options">
+          <button wx:for="{{responseItem.response.options}}" wx:key="code" wx:for-item="option" class="p0-option {{option.selected ? 'p0-option--selected' : ''}} {{option.isMissing ? 'p0-option--missing' : ''}}" data-item-id="{{responseItem.itemId}}" data-code="{{option.code}}" data-missing-code="{{option.missingCode}}" bind:tap="chooseOption">
+            <text class="p0-option-marker">{{option.selected ? 'x' : 'o'}}</text><text class="p0-option-label">{{option.label}}</text>
+          </button>
+        </view>
+        <view wx:elif="{{responseItem.response.type === 'number' || responseItem.response.type === 'free_text'}}" class="p0-field">
+          <input wx:if="{{responseItem.response.type === 'number'}}" class="p0-input" type="number" value="{{responseItem.response.value}}" data-item-id="{{responseItem.itemId}}" bind:input="inputValue" bind:blur="commitInput" />
+          <textarea wx:else class="p0-textarea" value="{{responseItem.response.value}}" maxlength="{{responseItem.response.maxChars}}" data-item-id="{{responseItem.itemId}}" bind:input="inputValue" bind:blur="commitInput"></textarea>
+        </view>
+        <view wx:if="{{responseItem.response.missing}}" class="p0-missing-note">{{skipLabel}}</view>
+      </view>
+    </view>
+    <view wx:if="{{error}}" class="p0-error" role="alert">{{error}}</view>
+    <view wx:if="{{notice}}" class="p0-notice">{{notice}}</view>
+  </view>
+
+  <view class="p0-actions">
+    <button class="p0-secondary" disabled="{{!canSkip}}" bind:tap="skipCurrent">Skip task</button>
+    <button class="p0-primary" disabled="{{!canContinue}}" bind:tap="handleContinue">{{isLast ? 'Finish responses' : 'Continue'}}</button>
+  </view>
+  <button wx:if="{{readyForCoding}}" class="p0-primary p0-coding-link" bind:tap="openCoding">Continue</button>
+</view>
+
+<view wx:if="{{loaded && enabled && completed}}" class="p0-page p0-complete">
+  <view class="p0-header">
+    <view class="p0-title">{{completionTitle}}</view>
+    <view class="p0-description">{{completionNote}}</view>
+    <view class="p0-description">{{completionFollowup}}</view>
+  </view>
+  <view class="p0-actions p0-actions--static">
+    <button class="p0-primary" bind:tap="exitResearch">Exit research mode</button>
+  </view>
+</view>

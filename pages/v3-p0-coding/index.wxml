@@ -1,0 +1,89 @@
+<view wx:if="{{loaded && enabled && !blocked && !completed}}" class="coding-page">
+  <view class="coding-header">
+    <view class="coding-kicker">Internal interviewer workspace</view>
+    <view class="coding-title">{{waveId}} coding</view>
+    <view class="coding-meta">Pseudonymous ID: {{participantStudyId}}</view>
+  </view>
+
+  <view class="coding-layout">
+    <scroll-view scroll-y class="coding-item-list">
+      <button wx:for="{{items}}" wx:key="itemId" wx:for-item="item" class="coding-item {{currentItemId === item.itemId ? 'coding-item--selected' : ''}}" data-item-id="{{item.itemId}}" bind:tap="selectItem">
+        <view class="coding-item-id">{{item.itemId}}</view>
+        <view class="coding-item-prompt">{{item.prompt}}</view>
+        <view class="coding-item-status">{{item.answered ? 'answered' : 'missing'}} · {{item.coded ? 'coded' : 'needs coding'}}</view>
+      </button>
+    </scroll-view>
+
+    <view wx:if="{{currentItem}}" class="coding-panel">
+      <view class="coding-section-title">Item probe</view>
+      <view class="coding-prompt">{{currentItem.prompt}}</view>
+      <view class="coding-internal">Research field: {{currentItem.fieldCode}}</view>
+      <view class="coding-internal">Probe focus: {{currentItem.probeFocus}}</view>
+
+      <view wx:for="{{codingFields}}" wx:key="key" wx:for-item="field" class="coding-field">
+        <view class="coding-label">{{field.key}}</view>
+        <view class="coding-options">
+          <button wx:for="{{field.options}}" wx:key="value" wx:for-item="option" class="coding-option" data-field="{{field.key}}" data-value="{{option.value}}" bind:tap="chooseCoding">{{option.label}}</button>
+        </view>
+      </view>
+
+      <view class="coding-label">Suspected contamination terms</view>
+      <textarea class="coding-textarea" value="{{coding.contaminationText}}" data-field="contaminationText" placeholder="Comma-separated terms" bind:input="inputCoding"></textarea>
+      <view class="coding-label">Interviewer note</view>
+      <textarea class="coding-textarea" value="{{coding.interviewerNote}}" data-field="interviewerNote" bind:input="inputCoding"></textarea>
+      <view class="coding-label">Missing-option note</view>
+      <textarea class="coding-textarea" value="{{coding.missingOptionNote}}" data-field="missingOptionNote" bind:input="inputCoding"></textarea>
+      <view class="coding-label">Paraphrase or term note</view>
+      <textarea class="coding-textarea" value="{{coding.paraphraseNote}}" data-field="paraphraseNote" bind:input="inputCoding"></textarea>
+      <view class="coding-actions">
+        <button class="coding-primary" bind:tap="saveCoding">Save coding</button>
+        <button class="coding-secondary" bind:tap="saveProbeNotes">Save notes</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="debrief-section">
+    <view class="coding-section-title">Wave debrief</view>
+    <view class="coding-label">Three hardest item IDs</view>
+    <input class="coding-input" value="{{debrief.hardestItemIds}}" data-field="hardestItemIds" bind:input="inputDebrief" />
+    <view class="coding-label">Three most repetitive item IDs</view>
+    <input class="coding-input" value="{{debrief.repetitiveItemIds}}" data-field="repetitiveItemIds" bind:input="inputDebrief" />
+    <view class="coding-label">Strongest correct-answer feeling item ID</view>
+    <input class="coding-input" value="{{debrief.correctAnswerFeelingItemId}}" data-field="correctAnswerFeelingItemId" bind:input="inputDebrief" />
+    <view class="coding-label">Important thing not asked</view>
+    <textarea class="coding-textarea" value="{{debrief.importantUnaskedNote}}" data-field="importantUnaskedNote" bind:input="inputDebrief"></textarea>
+    <view class="coding-label">Item asked too early</view>
+    <input class="coding-input" value="{{debrief.askedTooEarlyItemId}}" data-field="askedTooEarlyItemId" bind:input="inputDebrief" />
+    <view class="coding-label">Privacy-sensitive but answerable item</view>
+    <input class="coding-input" value="{{debrief.privacySensitiveItemId}}" data-field="privacySensitiveItemId" bind:input="inputDebrief" />
+    <view class="coding-label">Private interview note</view>
+    <textarea class="coding-textarea" value="{{debrief.privateInterviewNote}}" data-field="privateInterviewNote" bind:input="inputDebrief"></textarea>
+    <view wx:if="{{error}}" class="coding-error" role="alert">{{error}}</view>
+    <view wx:if="{{notice}}" class="coding-notice">{{notice}}</view>
+    <view class="coding-actions">
+      <button class="coding-secondary" bind:tap="saveDebrief">Save debrief</button>
+      <button class="coding-primary" bind:tap="completeInterview">Complete and archive</button>
+    </view>
+    <button class="coding-secondary coding-export" bind:tap="exportArchive">Prepare versioned export</button>
+    <textarea wx:if="{{exportReady}}" class="coding-export-output" value="{{exportJson}}" maxlength="1000000"></textarea>
+  </view>
+
+  <view class="coding-footer">
+    <button class="coding-secondary" bind:tap="backToResearch">Back to participant flow</button>
+    <button class="coding-secondary" bind:tap="exitResearch">Exit research mode</button>
+  </view>
+</view>
+
+<view wx:if="{{loaded && enabled && blocked}}" class="coding-page coding-blocked">
+  <view class="coding-title">Research runtime is unavailable</view>
+  <view class="coding-meta">{{error}}</view>
+  <button class="coding-primary" bind:tap="exitResearch">Exit</button>
+</view>
+
+<view wx:if="{{loaded && enabled && completed}}" class="coding-page coding-complete">
+  <view class="coding-title">Interview archived</view>
+  <view class="coding-meta">The completed session is stored in the local research archive.</view>
+  <button class="coding-primary" bind:tap="exportArchive">Prepare versioned export</button>
+  <textarea wx:if="{{exportReady}}" class="coding-export-output" value="{{exportJson}}" maxlength="1000000"></textarea>
+  <button class="coding-secondary" bind:tap="exitResearch">Exit</button>
+</view>

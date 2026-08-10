@@ -1185,6 +1185,266 @@
     "text": "›"
   },
   {
+    "surface": "pages/v3-p0-coding/index.json",
+    "key": "navigationBarTitleText",
+    "text": "Research coding"
+  },
+  {
+    "surface": "pages/v3-p0-coding/index.wxml",
+    "key": "attr.0",
+    "text": "Comma-separated terms"
+  },
+  {
+    "surface": "pages/v3-p0-coding/index.wxml",
+    "key": "text.103",
+    "text": "Research runtime is unavailable"
+  },
+  {
+    "surface": "pages/v3-p0-coding/index.wxml",
+    "key": "text.107",
+    "text": "Exit"
+  },
+  {
+    "surface": "pages/v3-p0-coding/index.wxml",
+    "key": "text.111",
+    "text": "Interview archived"
+  },
+  {
+    "surface": "pages/v3-p0-coding/index.wxml",
+    "key": "text.113",
+    "text": "The completed session is stored in the local research archive."
+  },
+  {
+    "surface": "pages/v3-p0-coding/index.wxml",
+    "key": "text.115",
+    "text": "Prepare versioned export"
+  },
+  {
+    "surface": "pages/v3-p0-coding/index.wxml",
+    "key": "text.118",
+    "text": "Exit"
+  },
+  {
+    "surface": "pages/v3-p0-coding/index.wxml",
+    "key": "text.21",
+    "text": "Item probe"
+  },
+  {
+    "surface": "pages/v3-p0-coding/index.wxml",
+    "key": "text.25",
+    "text": "Research field: {{currentItem.fieldCode}}"
+  },
+  {
+    "surface": "pages/v3-p0-coding/index.wxml",
+    "key": "text.27",
+    "text": "Probe focus: {{currentItem.probeFocus}}"
+  },
+  {
+    "surface": "pages/v3-p0-coding/index.wxml",
+    "key": "text.2",
+    "text": "Internal interviewer workspace"
+  },
+  {
+    "surface": "pages/v3-p0-coding/index.wxml",
+    "key": "text.37",
+    "text": "Suspected contamination terms"
+  },
+  {
+    "surface": "pages/v3-p0-coding/index.wxml",
+    "key": "text.4",
+    "text": "{{waveId}} coding"
+  },
+  {
+    "surface": "pages/v3-p0-coding/index.wxml",
+    "key": "text.40",
+    "text": "Interviewer note"
+  },
+  {
+    "surface": "pages/v3-p0-coding/index.wxml",
+    "key": "text.43",
+    "text": "Missing-option note"
+  },
+  {
+    "surface": "pages/v3-p0-coding/index.wxml",
+    "key": "text.46",
+    "text": "Paraphrase or term note"
+  },
+  {
+    "surface": "pages/v3-p0-coding/index.wxml",
+    "key": "text.50",
+    "text": "Save coding"
+  },
+  {
+    "surface": "pages/v3-p0-coding/index.wxml",
+    "key": "text.52",
+    "text": "Save notes"
+  },
+  {
+    "surface": "pages/v3-p0-coding/index.wxml",
+    "key": "text.58",
+    "text": "Wave debrief"
+  },
+  {
+    "surface": "pages/v3-p0-coding/index.wxml",
+    "key": "text.60",
+    "text": "Three hardest item IDs"
+  },
+  {
+    "surface": "pages/v3-p0-coding/index.wxml",
+    "key": "text.63",
+    "text": "Three most repetitive item IDs"
+  },
+  {
+    "surface": "pages/v3-p0-coding/index.wxml",
+    "key": "text.66",
+    "text": "Strongest correct-answer feeling item ID"
+  },
+  {
+    "surface": "pages/v3-p0-coding/index.wxml",
+    "key": "text.69",
+    "text": "Important thing not asked"
+  },
+  {
+    "surface": "pages/v3-p0-coding/index.wxml",
+    "key": "text.6",
+    "text": "Pseudonymous ID: {{participantStudyId}}"
+  },
+  {
+    "surface": "pages/v3-p0-coding/index.wxml",
+    "key": "text.72",
+    "text": "Item asked too early"
+  },
+  {
+    "surface": "pages/v3-p0-coding/index.wxml",
+    "key": "text.75",
+    "text": "Privacy-sensitive but answerable item"
+  },
+  {
+    "surface": "pages/v3-p0-coding/index.wxml",
+    "key": "text.78",
+    "text": "Private interview note"
+  },
+  {
+    "surface": "pages/v3-p0-coding/index.wxml",
+    "key": "text.86",
+    "text": "Save debrief"
+  },
+  {
+    "surface": "pages/v3-p0-coding/index.wxml",
+    "key": "text.88",
+    "text": "Complete and archive"
+  },
+  {
+    "surface": "pages/v3-p0-coding/index.wxml",
+    "key": "text.91",
+    "text": "Prepare versioned export"
+  },
+  {
+    "surface": "pages/v3-p0-coding/index.wxml",
+    "key": "text.96",
+    "text": "Back to participant flow"
+  },
+  {
+    "surface": "pages/v3-p0-coding/index.wxml",
+    "key": "text.98",
+    "text": "Exit research mode"
+  },
+  {
+    "surface": "pages/v3-p0-research/index.json",
+    "key": "navigationBarTitleText",
+    "text": "Research runtime"
+  },
+  {
+    "surface": "pages/v3-p0-research/index.wxml",
+    "key": "attr.0",
+    "text": "Example: STUDY-001"
+  },
+  {
+    "surface": "pages/v3-p0-research/index.wxml",
+    "key": "attr.1",
+    "text": "Researcher entry"
+  },
+  {
+    "surface": "pages/v3-p0-research/index.wxml",
+    "key": "attr.2",
+    "text": "Researcher entry"
+  },
+  {
+    "surface": "pages/v3-p0-research/index.wxml",
+    "key": "attr.3",
+    "text": "Previous"
+  },
+  {
+    "surface": "pages/v3-p0-research/index.wxml",
+    "key": "text.10",
+    "text": "Wave"
+  },
+  {
+    "surface": "pages/v3-p0-research/index.wxml",
+    "key": "text.16",
+    "text": "Participant study ID"
+  },
+  {
+    "surface": "pages/v3-p0-research/index.wxml",
+    "key": "text.19",
+    "text": "Relationship history category"
+  },
+  {
+    "surface": "pages/v3-p0-research/index.wxml",
+    "key": "text.22",
+    "text": "Current dating status"
+  },
+  {
+    "surface": "pages/v3-p0-research/index.wxml",
+    "key": "text.25",
+    "text": "Response context for relationship items"
+  },
+  {
+    "surface": "pages/v3-p0-research/index.wxml",
+    "key": "text.2",
+    "text": "Internal research runtime"
+  },
+  {
+    "surface": "pages/v3-p0-research/index.wxml",
+    "key": "text.33",
+    "text": "Start interview"
+  },
+  {
+    "surface": "pages/v3-p0-research/index.wxml",
+    "key": "text.39",
+    "text": "Back"
+  },
+  {
+    "surface": "pages/v3-p0-research/index.wxml",
+    "key": "text.4",
+    "text": "Cognitive interview"
+  },
+  {
+    "surface": "pages/v3-p0-research/index.wxml",
+    "key": "text.50",
+    "text": "Answer each part before continuing."
+  },
+  {
+    "surface": "pages/v3-p0-research/index.wxml",
+    "key": "text.6",
+    "text": "Choose one iterative wave and enter a pseudonymous study ID."
+  },
+  {
+    "surface": "pages/v3-p0-research/index.wxml",
+    "key": "text.77",
+    "text": "Skip task"
+  },
+  {
+    "surface": "pages/v3-p0-research/index.wxml",
+    "key": "text.82",
+    "text": "Continue"
+  },
+  {
+    "surface": "pages/v3-p0-research/index.wxml",
+    "key": "text.95",
+    "text": "Exit research mode"
+  },
+  {
     "surface": "pages/v3-result/index.wxml",
     "key": "text.38",
     "text": "›"
