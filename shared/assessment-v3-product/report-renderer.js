@@ -23,6 +23,12 @@ function confidencePrefix(result) {
 }
 
 function narrativeForDimension(dimensionId, result) {
+  if (!result || result.resultStatus === 'INSUFFICIENT') {
+    return {
+      headline: PRODUCT_COPY.fallback.insufficientDimensionHeadline || PRODUCT_COPY.fallback.dimensionHeadline,
+      summary: PRODUCT_COPY.fallback.insufficientDimensionSummary || PRODUCT_COPY.fallback.dimensionSummary
+    }
+  }
   const narrative = NARRATIVES.dimensions[dimensionId] && NARRATIVES.dimensions[dimensionId][result.state]
   if (narrative && narrative.headline) return narrative
   return { headline: PRODUCT_COPY.fallback.dimensionHeadline, summary: PRODUCT_COPY.fallback.dimensionSummary }
@@ -46,6 +52,14 @@ function evidenceLabel(role) {
 }
 
 function publicResponseForEvidence(entry) {
+  if (entry && entry.question && entry.answer) {
+    return {
+      question: entry.question,
+      answer: entry.answer,
+      label: evidenceLabel(entry.role),
+      source: PRODUCT_COPY.evidence.sourceNote
+    }
+  }
   const task = runtime.getPublicTask(entry.taskId)
   if (!task) return null
   const item = entry.itemId && task.children
@@ -75,6 +89,7 @@ function dimensionCard(profile, dimensionId) {
     summary: narrative.summary,
     evidence,
     evidenceAvailable: evidence.length > 0,
+    resultStatus: result.resultStatus || 'ESTIMATED',
     evidenceStatus: result.evidenceStatus || 'MEASURED'
   }
 }
@@ -176,7 +191,7 @@ function buildReport(profileInput) {
     contractVersion: 'v3.product-report.v1.0',
     source: profile.source,
     isSynthetic: profile.isSynthetic,
-    personaId: profile.persona.id,
+    personaId: profile.persona && profile.persona.id ? profile.persona.id : (profile.assessmentMeta && profile.assessmentMeta.assessmentId) || '',
     assessmentMeta: clone(profile.assessmentMeta),
     title: NARRATIVES.reportTitles.cover,
     notice: PRODUCT_COPY.preview.reportNotice,

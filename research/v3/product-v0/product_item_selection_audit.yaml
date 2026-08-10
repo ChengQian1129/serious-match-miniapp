@@ -1,0 +1,2132 @@
+schemaVersion: serious-match.v3.product-v0.selection-audit.v1.0
+sourceParentTaskCount: 266
+selectedParentTaskCount: 266
+decisions:
+  - taskId: RR01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for relationship_readiness.
+    constructId: relationship_readiness
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: RR02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for relationship_readiness.
+    constructId: relationship_readiness
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: RR03
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for relationship_readiness.
+    constructId: relationship_readiness
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: RR04
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for relationship_readiness.
+    constructId: relationship_readiness
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: RR05
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for relationship_readiness.
+    constructId: relationship_readiness
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: RR06
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for relationship_readiness.
+    constructId: relationship_readiness
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: RR07
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for relationship_readiness.
+    constructId: relationship_readiness
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: RR08
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for relationship_readiness.
+    constructId: relationship_readiness
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: RR09
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for relationship_readiness.
+    constructId: relationship_readiness
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: RR10
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for relationship_readiness.
+    constructId: relationship_readiness
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: IM-IN01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for initiation_motivation.
+    constructId: initiation_motivation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: IM-IN02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for initiation_motivation.
+    constructId: initiation_motivation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: IM-ID01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for initiation_motivation.
+    constructId: initiation_motivation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: IM-ID02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for initiation_motivation.
+    constructId: initiation_motivation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: IM-PI01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for initiation_motivation.
+    constructId: initiation_motivation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: IM-PI02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for initiation_motivation.
+    constructId: initiation_motivation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: IM-NI01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for initiation_motivation.
+    constructId: initiation_motivation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: IM-NI02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for initiation_motivation.
+    constructId: initiation_motivation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: IM-EX01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for initiation_motivation.
+    constructId: initiation_motivation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: IM-EX02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for initiation_motivation.
+    constructId: initiation_motivation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: IM-AM01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for initiation_motivation.
+    constructId: initiation_motivation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: IM-AM02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for initiation_motivation.
+    constructId: initiation_motivation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CAP01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for available_capacity.
+    constructId: available_capacity
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: CAP02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: available_capacity
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: CAP03
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: available_capacity
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: CAP04
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: available_capacity
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: CAP05
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: available_capacity
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: CAP06
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for available_capacity.
+    constructId: available_capacity
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: CAP07
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: available_capacity
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: CAP08
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: available_capacity
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: CAP10
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: available_capacity
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: CAP12
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: available_capacity
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: CAP13
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: available_capacity
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: CAP14
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: available_capacity
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: FT01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for relational_follow_through.
+    constructId: relational_follow_through
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: FT02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for relational_follow_through.
+    constructId: relational_follow_through
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: FT03
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for relational_follow_through.
+    constructId: relational_follow_through
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: FT04
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for relational_follow_through.
+    constructId: relational_follow_through
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: FT05
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for relational_follow_through.
+    constructId: relational_follow_through
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: FT06
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for relational_follow_through.
+    constructId: relational_follow_through
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: FT07
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for relational_follow_through.
+    constructId: relational_follow_through
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: FT08
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for relational_follow_through.
+    constructId: relational_follow_through
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: FT09
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for relational_follow_through.
+    constructId: relational_follow_through
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: FT10
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for relational_follow_through.
+    constructId: relational_follow_through
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: FT-S01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for relational_follow_through.
+    constructId: relational_follow_through
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: FT-S02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for relational_follow_through.
+    constructId: relational_follow_through
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: FT-S03
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for relational_follow_through.
+    constructId: relational_follow_through
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: UA01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for uncertainty_activation.
+    constructId: uncertainty_activation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: UA02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for uncertainty_activation.
+    constructId: uncertainty_activation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: UA03
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for uncertainty_activation.
+    constructId: uncertainty_activation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: UA04
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for uncertainty_activation.
+    constructId: uncertainty_activation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: UA05
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for uncertainty_activation.
+    constructId: uncertainty_activation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: UA06
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for uncertainty_activation.
+    constructId: uncertainty_activation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: UA07
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for uncertainty_activation.
+    constructId: uncertainty_activation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: UA08
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for uncertainty_activation.
+    constructId: uncertainty_activation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: UA09
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for uncertainty_activation.
+    constructId: uncertainty_activation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: UA10
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for uncertainty_activation.
+    constructId: uncertainty_activation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: UA11
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for uncertainty_activation.
+    constructId: uncertainty_activation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: UA12
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for uncertainty_activation.
+    constructId: uncertainty_activation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: UA-S01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for uncertainty_activation.
+    constructId: uncertainty_activation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: UA-S04
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: uncertainty_activation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: UR-DC01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for uncertainty_regulation.
+    constructId: uncertainty_regulation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: UR-DC02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: uncertainty_regulation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: UR-DC03
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: uncertainty_regulation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: UR-RS01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: uncertainty_regulation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: UR-RS02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: uncertainty_regulation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: UR-RS03
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: uncertainty_regulation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: UR-PO01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: uncertainty_regulation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: UR-PO02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: uncertainty_regulation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: UR-MO01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: uncertainty_regulation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: UR-MO02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: uncertainty_regulation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: UR-RU01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for uncertainty_regulation.
+    constructId: uncertainty_regulation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: UR-RU02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: uncertainty_regulation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: UR-TP01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: uncertainty_regulation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: UR-TP02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: uncertainty_regulation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: UR-TW01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for uncertainty_regulation.
+    constructId: uncertainty_regulation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: UR-TW03
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: uncertainty_regulation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: UR-WD01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: uncertainty_regulation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: UR-WD02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: uncertainty_regulation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: IDC01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for intimacy_dependence_comfort.
+    constructId: intimacy_dependence_comfort
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: IDC02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for intimacy_dependence_comfort.
+    constructId: intimacy_dependence_comfort
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: IDC03
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for intimacy_dependence_comfort.
+    constructId: intimacy_dependence_comfort
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: IDC04
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for intimacy_dependence_comfort.
+    constructId: intimacy_dependence_comfort
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: IDC05
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for intimacy_dependence_comfort.
+    constructId: intimacy_dependence_comfort
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: IDC06
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for intimacy_dependence_comfort.
+    constructId: intimacy_dependence_comfort
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: IDC07
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for intimacy_dependence_comfort.
+    constructId: intimacy_dependence_comfort
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: IDC08
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for intimacy_dependence_comfort.
+    constructId: intimacy_dependence_comfort
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: IDC09
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for intimacy_dependence_comfort.
+    constructId: intimacy_dependence_comfort
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: IDC10
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for intimacy_dependence_comfort.
+    constructId: intimacy_dependence_comfort
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: IDC11
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for intimacy_dependence_comfort.
+    constructId: intimacy_dependence_comfort
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: IDC12
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for intimacy_dependence_comfort.
+    constructId: intimacy_dependence_comfort
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: IDC13
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for intimacy_dependence_comfort.
+    constructId: intimacy_dependence_comfort
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: IDC14
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for intimacy_dependence_comfort.
+    constructId: intimacy_dependence_comfort
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: IDC15
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for intimacy_dependence_comfort.
+    constructId: intimacy_dependence_comfort
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: IDC16
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for intimacy_dependence_comfort.
+    constructId: intimacy_dependence_comfort
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: IDC-S01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for intimacy_dependence_comfort.
+    constructId: intimacy_dependence_comfort
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: IDC-S03
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: intimacy_dependence_comfort
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: PS01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for personal_space_need.
+    constructId: personal_space_need
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: PS02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for personal_space_need.
+    constructId: personal_space_need
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: PS03
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for personal_space_need.
+    constructId: personal_space_need
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: PS04
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for personal_space_need.
+    constructId: personal_space_need
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: PS05
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for personal_space_need.
+    constructId: personal_space_need
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: PS06
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for personal_space_need.
+    constructId: personal_space_need
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: PS07
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for personal_space_need.
+    constructId: personal_space_need
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: PS08
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for personal_space_need.
+    constructId: personal_space_need
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: PS-S01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for personal_space_need.
+    constructId: personal_space_need
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: PS-S02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for personal_space_need.
+    constructId: personal_space_need
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: SN-S01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for support_need.
+    constructId: support_need
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: SN-S02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for support_need.
+    constructId: support_need
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: SN-S03
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for support_need.
+    constructId: support_need
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: SN-S04
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for support_need.
+    constructId: support_need
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: SN-S05
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for support_need.
+    constructId: support_need
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: SN01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for support_need.
+    constructId: support_need
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: SN02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for support_need.
+    constructId: support_need
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: SN03
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for support_need.
+    constructId: support_need
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: SN04
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for support_need.
+    constructId: support_need
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: SN05
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for support_need.
+    constructId: support_need
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: SN06
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for support_need.
+    constructId: support_need
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: SN07
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for support_need.
+    constructId: support_need
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: SN08
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for support_need.
+    constructId: support_need
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: SS01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for support_signaling.
+    constructId: support_signaling
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: SS02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for support_signaling.
+    constructId: support_signaling
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: SS03
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for support_signaling.
+    constructId: support_signaling
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: SS04
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for support_signaling.
+    constructId: support_signaling
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: SS05
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for support_signaling.
+    constructId: support_signaling
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: SS06
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for support_signaling.
+    constructId: support_signaling
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: SS07
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for support_signaling.
+    constructId: support_signaling
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: SS08
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for support_signaling.
+    constructId: support_signaling
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: SS09
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for support_signaling.
+    constructId: support_signaling
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: SS10
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for support_signaling.
+    constructId: support_signaling
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: SS-S01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for support_signaling.
+    constructId: support_signaling
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: SS-S02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for support_signaling.
+    constructId: support_signaling
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: RC-S01A
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for responsiveness_capability.
+    constructId: responsiveness_capability
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: RC-S01B
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for responsiveness_capability.
+    constructId: responsiveness_capability
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: RC-S02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for responsiveness_capability.
+    constructId: responsiveness_capability
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: RC-S03
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for responsiveness_capability.
+    constructId: responsiveness_capability
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: RC-S04
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for responsiveness_capability.
+    constructId: responsiveness_capability
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: RC-S05
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for responsiveness_capability.
+    constructId: responsiveness_capability
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: RC-S06
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for responsiveness_capability.
+    constructId: responsiveness_capability
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: RC-S07
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for responsiveness_capability.
+    constructId: responsiveness_capability
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: RC01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for responsiveness_capability.
+    constructId: responsiveness_capability
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: RC02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for responsiveness_capability.
+    constructId: responsiveness_capability
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: RC03
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for responsiveness_capability.
+    constructId: responsiveness_capability
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: RC04
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for responsiveness_capability.
+    constructId: responsiveness_capability
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: RC05
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for responsiveness_capability.
+    constructId: responsiveness_capability
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: RC06
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for responsiveness_capability.
+    constructId: responsiveness_capability
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CA01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for conflict_activation.
+    constructId: conflict_activation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CA02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for conflict_activation.
+    constructId: conflict_activation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CA03
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for conflict_activation.
+    constructId: conflict_activation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CA04
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for conflict_activation.
+    constructId: conflict_activation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CA05
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for conflict_activation.
+    constructId: conflict_activation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: CA06
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for conflict_activation.
+    constructId: conflict_activation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CA07
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for conflict_activation.
+    constructId: conflict_activation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CA08
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for conflict_activation.
+    constructId: conflict_activation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CA09
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for conflict_activation.
+    constructId: conflict_activation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: CA10
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for conflict_activation.
+    constructId: conflict_activation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CA11
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for conflict_activation.
+    constructId: conflict_activation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CA12
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for conflict_activation.
+    constructId: conflict_activation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CA13
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for conflict_activation.
+    constructId: conflict_activation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CA14
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for conflict_activation.
+    constructId: conflict_activation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CA-S01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for conflict_activation.
+    constructId: conflict_activation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CA-S03
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for conflict_activation.
+    constructId: conflict_activation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CP01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for conflict_pacing_need.
+    constructId: conflict_pacing_need
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: CP02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for conflict_pacing_need.
+    constructId: conflict_pacing_need
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CP03
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for conflict_pacing_need.
+    constructId: conflict_pacing_need
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CP04
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for conflict_pacing_need.
+    constructId: conflict_pacing_need
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CP05
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for conflict_pacing_need.
+    constructId: conflict_pacing_need
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CP06
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for conflict_pacing_need.
+    constructId: conflict_pacing_need
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CR01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for repair_reengagement.
+    constructId: repair_reengagement
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: CR02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for repair_reengagement.
+    constructId: repair_reengagement
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CR03
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for repair_reengagement.
+    constructId: repair_reengagement
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CR04
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for repair_reengagement.
+    constructId: repair_reengagement
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CR05
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for repair_reengagement.
+    constructId: repair_reengagement
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CR06
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for repair_reengagement.
+    constructId: repair_reengagement
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: CR07
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for repair_reengagement.
+    constructId: repair_reengagement
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CR08
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for repair_reengagement.
+    constructId: repair_reengagement
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CR09
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for repair_reengagement.
+    constructId: repair_reengagement
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CR10
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for repair_reengagement.
+    constructId: repair_reengagement
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CR11
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for repair_reengagement.
+    constructId: repair_reengagement
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CR12
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for repair_reengagement.
+    constructId: repair_reengagement
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CR13
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for repair_reengagement.
+    constructId: repair_reengagement
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CR14
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for repair_reengagement.
+    constructId: repair_reengagement
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CR15
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for repair_reengagement.
+    constructId: repair_reengagement
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CR16
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for repair_reengagement.
+    constructId: repair_reengagement
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CR-S01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for repair_reengagement.
+    constructId: repair_reengagement
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CR-S02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for repair_reengagement.
+    constructId: repair_reengagement
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CR-S03
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for repair_reengagement.
+    constructId: repair_reengagement
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CR-S04
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for repair_reengagement.
+    constructId: repair_reengagement
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CR-S05
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for repair_reengagement.
+    constructId: repair_reengagement
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: FACT01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for core_facts.
+    constructId: core_facts
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: FACT02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for core_facts.
+    constructId: core_facts
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: FACT03
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for core_facts.
+    constructId: core_facts
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: FACT04
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for core_facts.
+    constructId: core_facts
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: FACT05
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for core_facts.
+    constructId: core_facts
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: FACT06
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for core_facts.
+    constructId: core_facts
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: FACT07
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for core_facts.
+    constructId: core_facts
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: FACT08
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for core_facts.
+    constructId: core_facts
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: FACT09
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: core_facts
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: L3-CT01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: contact_relationship_clarity
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: L3-CT02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for contact_relationship_clarity.
+    constructId: contact_relationship_clarity
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: L3-CT03
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for contact_relationship_clarity.
+    constructId: contact_relationship_clarity
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: L3-CT06
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for contact_relationship_clarity.
+    constructId: contact_relationship_clarity
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: L3-ST01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: shared_time_independence
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: L3-ST02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for shared_time_independence.
+    constructId: shared_time_independence
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: L3-ST06
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for shared_time_independence.
+    constructId: shared_time_independence
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: L3-SB01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for social_boundary.
+    constructId: social_boundary
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: L3-SB04
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for social_boundary.
+    constructId: social_boundary
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: L3-DP03
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for digital_privacy.
+    constructId: digital_privacy
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: L3-DP05
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for digital_privacy.
+    constructId: digital_privacy
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: L3-CF01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for conflict_process_standard.
+    constructId: conflict_process_standard
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: L3-CF02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: conflict_process_standard
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: L3-CF03
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: conflict_process_standard
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: L3-CF04
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: conflict_process_standard
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: L3-MG03
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for money_governance.
+    constructId: money_governance
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: L3-MG04
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for money_governance.
+    constructId: money_governance
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: L3-MG05
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for money_governance.
+    constructId: money_governance
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: L3-HH01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for household_operation.
+    constructId: household_operation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: L3-HH04
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for household_operation.
+    constructId: household_operation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: L3-CG01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for career_geography_governance.
+    constructId: career_geography_governance
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: L3-FO01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for family_of_origin_boundary.
+    constructId: family_of_origin_boundary
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: L3-FO06
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for family_of_origin_boundary.
+    constructId: family_of_origin_boundary
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: L3-SL01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for shared_leisure.
+    constructId: shared_leisure
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: L3-SL04
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for shared_leisure.
+    constructId: shared_leisure
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: L3-SX01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: sexual_exclusivity_agreement
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: CF-S01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for character_trustworthiness_floor.
+    constructId: character_trustworthiness_floor
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CF-S02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for character_trustworthiness_floor.
+    constructId: character_trustworthiness_floor
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: CF-S03
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for character_trustworthiness_floor.
+    constructId: character_trustworthiness_floor
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: CF-S04
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for character_trustworthiness_floor.
+    constructId: character_trustworthiness_floor
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: L4-PH01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for physical_preference.
+    constructId: physical_preference
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: L4-PH02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for physical_preference.
+    constructId: physical_preference
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: L4-RC01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for resources_life_competence.
+    constructId: resources_life_competence
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: L4-RC02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for resources_life_competence.
+    constructId: resources_life_competence
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: L4-IE01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for intellectual_engagement_preference.
+    constructId: intellectual_engagement_preference
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: L4-IE02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for intellectual_engagement_preference.
+    constructId: intellectual_engagement_preference
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: SE-P01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for partner_social_engagement_preference.
+    constructId: partner_social_engagement_preference
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: SE-P04
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for partner_social_engagement_preference.
+    constructId: partner_social_engagement_preference
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: EX-P01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for partner_experiential_exploration_preference.
+    constructId: partner_experiential_exploration_preference
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: EX-P02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for partner_experiential_exploration_preference.
+    constructId: partner_experiential_exploration_preference
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: L4-AM01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for partner_ambition_orientation.
+    constructId: partner_ambition_orientation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: L4-AM02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for partner_ambition_orientation.
+    constructId: partner_ambition_orientation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: L4-FA01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for partner_family_orientation.
+    constructId: partner_family_orientation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: L4-FA02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for partner_family_orientation.
+    constructId: partner_family_orientation
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: L4-WV01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: conditional_worldview_preference
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: L4-TR01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for preference_tradeoff.
+    constructId: preference_tradeoff
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: L4-TR02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for preference_tradeoff.
+    constructId: preference_tradeoff
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: L4-TR03
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for preference_tradeoff.
+    constructId: preference_tradeoff
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: L5-CH01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for parenthood_plan.
+    constructId: parenthood_plan
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: L5-CH02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for parenthood_plan.
+    constructId: parenthood_plan
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: L5-CH07
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for parenthood_plan.
+    constructId: parenthood_plan
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: L5-MR01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for marriage_plan.
+    constructId: marriage_plan
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: L5-MR02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for marriage_plan.
+    constructId: marriage_plan
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: L5-MR03
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for marriage_plan.
+    constructId: marriage_plan
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: L5-MR04
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for marriage_plan.
+    constructId: marriage_plan
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: L5-RS01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for relationship_structure.
+    constructId: relationship_structure
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: L5-RS02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: relationship_structure
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: L5-GEO01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: location_distance_plan
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: L5-GEO02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for location_distance_plan.
+    constructId: location_distance_plan
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: L5-GEO03
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for location_distance_plan.
+    constructId: location_distance_plan
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: L5-GEO04
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for location_distance_plan.
+    constructId: location_distance_plan
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: L5-GEO05
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for location_distance_plan.
+    constructId: location_distance_plan
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: L5-GEO06
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for location_distance_plan.
+    constructId: location_distance_plan
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: L5-SM01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained for complete strategy, scenario, or L3/L4/L5 coverage in the first vertical slice; later v0.x pruning must preserve the evidence role.
+    constructId: smoking_constraint
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: BRANCH_OR_RESERVE
+    scoringInput: true
+  - taskId: L5-SM02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for smoking_constraint.
+    constructId: smoking_constraint
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_COMMON
+    scoringInput: true
+  - taskId: L5-AL01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for alcohol_constraint.
+    constructId: alcohol_constraint
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: L5-AL02
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for alcohol_constraint.
+    constructId: alcohol_constraint
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true
+  - taskId: L5-AGE01
+    decision: KEEP_PRODUCT_V0
+    reason: Retained REPORT_CORE input for age_filter.
+    constructId: age_filter
+    facet: null
+    replacementOrRetainedSibling: null
+    sourceStatus: P1_ROTATING
+    scoringInput: true

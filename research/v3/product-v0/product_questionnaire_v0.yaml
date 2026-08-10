@@ -1,0 +1,5290 @@
+schemaVersion: serious-match.v3.product-questionnaire-v0.v1.0
+productVersion: 0.1.0
+status: THEORY_DRIVEN_PROVISIONAL
+source:
+  candidateFreezeVersion: relationship-feature-model-v3.questionnaire-candidate-freeze.v1.0
+  reportCoreVersion: relationship-feature-model-v3.report-core-questionnaire.v1.0
+  sourcePath: ../normative/report_core_candidate.yaml
+selectionMethod: RETAIN_REPORT_CORE_FOR_COMPLETE_VERTICAL_SLICE
+selectionNote: Product v0 retains the auditable REPORT_CORE parent universe for the first complete local vertical slice. Every candidate has an explicit audit disposition; later v0.x pruning can reduce burden without changing raw event semantics.
+counts:
+  parentTasks: 266
+  responseFields: 307
+  responseFieldsListHash: 4bf5a5697768ba898b4984f7b05c06da5929733ac4880e1a728d34f67961ef81
+orderedParentTaskIds:
+  - RR01
+  - RR02
+  - RR03
+  - RR04
+  - RR05
+  - RR06
+  - RR07
+  - RR08
+  - RR09
+  - RR10
+  - IM-IN01
+  - IM-IN02
+  - IM-ID01
+  - IM-ID02
+  - IM-PI01
+  - IM-PI02
+  - IM-NI01
+  - IM-NI02
+  - IM-EX01
+  - IM-EX02
+  - IM-AM01
+  - IM-AM02
+  - CAP01
+  - CAP02
+  - CAP03
+  - CAP04
+  - CAP05
+  - CAP06
+  - CAP07
+  - CAP08
+  - CAP10
+  - CAP12
+  - CAP13
+  - CAP14
+  - FT01
+  - FT02
+  - FT03
+  - FT04
+  - FT05
+  - FT06
+  - FT07
+  - FT08
+  - FT09
+  - FT10
+  - FT-S01
+  - FT-S02
+  - FT-S03
+  - UA01
+  - UA02
+  - UA03
+  - UA04
+  - UA05
+  - UA06
+  - UA07
+  - UA08
+  - UA09
+  - UA10
+  - UA11
+  - UA12
+  - UA-S01
+  - UA-S04
+  - UR-DC01
+  - UR-DC02
+  - UR-DC03
+  - UR-RS01
+  - UR-RS02
+  - UR-RS03
+  - UR-PO01
+  - UR-PO02
+  - UR-MO01
+  - UR-MO02
+  - UR-RU01
+  - UR-RU02
+  - UR-TP01
+  - UR-TP02
+  - UR-TW01
+  - UR-TW03
+  - UR-WD01
+  - UR-WD02
+  - IDC01
+  - IDC02
+  - IDC03
+  - IDC04
+  - IDC05
+  - IDC06
+  - IDC07
+  - IDC08
+  - IDC09
+  - IDC10
+  - IDC11
+  - IDC12
+  - IDC13
+  - IDC14
+  - IDC15
+  - IDC16
+  - IDC-S01
+  - IDC-S03
+  - PS01
+  - PS02
+  - PS03
+  - PS04
+  - PS05
+  - PS06
+  - PS07
+  - PS08
+  - PS-S01
+  - PS-S02
+  - SN-S01
+  - SN-S02
+  - SN-S03
+  - SN-S04
+  - SN-S05
+  - SN01
+  - SN02
+  - SN03
+  - SN04
+  - SN05
+  - SN06
+  - SN07
+  - SN08
+  - SS01
+  - SS02
+  - SS03
+  - SS04
+  - SS05
+  - SS06
+  - SS07
+  - SS08
+  - SS09
+  - SS10
+  - SS-S01
+  - SS-S02
+  - RC-S01A
+  - RC-S01B
+  - RC-S02
+  - RC-S03
+  - RC-S04
+  - RC-S05
+  - RC-S06
+  - RC-S07
+  - RC01
+  - RC02
+  - RC03
+  - RC04
+  - RC05
+  - RC06
+  - CA01
+  - CA02
+  - CA03
+  - CA04
+  - CA05
+  - CA06
+  - CA07
+  - CA08
+  - CA09
+  - CA10
+  - CA11
+  - CA12
+  - CA13
+  - CA14
+  - CA-S01
+  - CA-S03
+  - CP01
+  - CP02
+  - CP03
+  - CP04
+  - CP05
+  - CP06
+  - CR01
+  - CR02
+  - CR03
+  - CR04
+  - CR05
+  - CR06
+  - CR07
+  - CR08
+  - CR09
+  - CR10
+  - CR11
+  - CR12
+  - CR13
+  - CR14
+  - CR15
+  - CR16
+  - CR-S01
+  - CR-S02
+  - CR-S03
+  - CR-S04
+  - CR-S05
+  - FACT01
+  - FACT02
+  - FACT03
+  - FACT04
+  - FACT05
+  - FACT06
+  - FACT07
+  - FACT08
+  - FACT09
+  - L3-CT01
+  - L3-CT02
+  - L3-CT03
+  - L3-CT06
+  - L3-ST01
+  - L3-ST02
+  - L3-ST06
+  - L3-SB01
+  - L3-SB04
+  - L3-DP03
+  - L3-DP05
+  - L3-CF01
+  - L3-CF02
+  - L3-CF03
+  - L3-CF04
+  - L3-MG03
+  - L3-MG04
+  - L3-MG05
+  - L3-HH01
+  - L3-HH04
+  - L3-CG01
+  - L3-FO01
+  - L3-FO06
+  - L3-SL01
+  - L3-SL04
+  - L3-SX01
+  - CF-S01
+  - CF-S02
+  - CF-S03
+  - CF-S04
+  - L4-PH01
+  - L4-PH02
+  - L4-RC01
+  - L4-RC02
+  - L4-IE01
+  - L4-IE02
+  - SE-P01
+  - SE-P04
+  - EX-P01
+  - EX-P02
+  - L4-AM01
+  - L4-AM02
+  - L4-FA01
+  - L4-FA02
+  - L4-WV01
+  - L4-TR01
+  - L4-TR02
+  - L4-TR03
+  - L5-CH01
+  - L5-CH02
+  - L5-CH07
+  - L5-MR01
+  - L5-MR02
+  - L5-MR03
+  - L5-MR04
+  - L5-RS01
+  - L5-RS02
+  - L5-GEO01
+  - L5-GEO02
+  - L5-GEO03
+  - L5-GEO04
+  - L5-GEO05
+  - L5-GEO06
+  - L5-SM01
+  - L5-SM02
+  - L5-AL01
+  - L5-AL02
+  - L5-AGE01
+chapters:
+  C1:
+    dimensionTaskIds:
+      relationship_readiness:
+        - RR01
+        - RR02
+        - RR03
+        - RR04
+        - RR05
+        - RR06
+        - RR07
+        - RR08
+        - RR09
+        - RR10
+        - RR01
+        - RR02
+        - RR03
+        - RR04
+        - RR05
+        - RR06
+        - RR07
+        - RR08
+        - RR09
+        - RR10
+        - RR01
+        - RR02
+        - RR03
+        - RR04
+        - RR05
+        - RR06
+        - RR07
+        - RR08
+        - RR09
+        - RR10
+        - RR01
+        - RR02
+        - RR03
+        - RR04
+        - RR05
+        - RR06
+        - RR07
+        - RR08
+        - RR09
+        - RR10
+        - RR01
+        - RR02
+        - RR03
+        - RR04
+        - RR05
+        - RR06
+        - RR07
+        - RR08
+        - RR09
+        - RR10
+        - RR01
+        - RR02
+        - RR03
+        - RR04
+        - RR05
+        - RR06
+        - RR07
+        - RR08
+        - RR09
+        - RR10
+      initiation_motivation:
+        - IM-IN01
+        - IM-IN02
+        - IM-ID01
+        - IM-ID02
+        - IM-PI01
+        - IM-PI02
+        - IM-NI01
+        - IM-NI02
+        - IM-EX01
+        - IM-EX02
+        - IM-AM01
+        - IM-AM02
+        - IM-IN01
+        - IM-IN02
+        - IM-ID01
+        - IM-ID02
+        - IM-PI01
+        - IM-PI02
+        - IM-NI01
+        - IM-NI02
+        - IM-EX01
+        - IM-EX02
+        - IM-AM01
+        - IM-AM02
+        - IM-IN01
+        - IM-IN02
+        - IM-ID01
+        - IM-ID02
+        - IM-PI01
+        - IM-PI02
+        - IM-NI01
+        - IM-NI02
+        - IM-EX01
+        - IM-EX02
+        - IM-AM01
+        - IM-AM02
+        - IM-IN01
+        - IM-IN02
+        - IM-ID01
+        - IM-ID02
+        - IM-PI01
+        - IM-PI02
+        - IM-NI01
+        - IM-NI02
+        - IM-EX01
+        - IM-EX02
+        - IM-AM01
+        - IM-AM02
+        - IM-IN01
+        - IM-IN02
+        - IM-ID01
+        - IM-ID02
+        - IM-PI01
+        - IM-PI02
+        - IM-NI01
+        - IM-NI02
+        - IM-EX01
+        - IM-EX02
+        - IM-AM01
+        - IM-AM02
+        - IM-IN01
+        - IM-IN02
+        - IM-ID01
+        - IM-ID02
+        - IM-PI01
+        - IM-PI02
+        - IM-NI01
+        - IM-NI02
+        - IM-EX01
+        - IM-EX02
+        - IM-AM01
+        - IM-AM02
+  C2:
+    dimensionTaskIds:
+      available_capacity:
+        - CAP01
+        - CAP02
+        - CAP03
+        - CAP04
+        - CAP05
+        - CAP06
+        - CAP07
+        - CAP08
+        - CAP10
+        - CAP12
+        - CAP13
+        - CAP14
+        - CAP01
+        - CAP02
+        - CAP03
+        - CAP04
+        - CAP05
+        - CAP06
+        - CAP07
+        - CAP08
+        - CAP10
+        - CAP12
+        - CAP13
+        - CAP14
+        - CAP01
+        - CAP02
+        - CAP03
+        - CAP04
+        - CAP05
+        - CAP06
+        - CAP07
+        - CAP08
+        - CAP10
+        - CAP12
+        - CAP13
+        - CAP14
+        - CAP01
+        - CAP02
+        - CAP03
+        - CAP04
+        - CAP05
+        - CAP06
+        - CAP07
+        - CAP08
+        - CAP10
+        - CAP12
+        - CAP13
+        - CAP14
+        - CAP01
+        - CAP02
+        - CAP03
+        - CAP04
+        - CAP05
+        - CAP06
+        - CAP07
+        - CAP08
+        - CAP10
+        - CAP12
+        - CAP13
+        - CAP14
+        - CAP01
+        - CAP02
+        - CAP03
+        - CAP04
+        - CAP05
+        - CAP06
+        - CAP07
+        - CAP08
+        - CAP10
+        - CAP12
+        - CAP13
+        - CAP14
+      relational_follow_through:
+        - FT01
+        - FT02
+        - FT03
+        - FT04
+        - FT05
+        - FT06
+        - FT07
+        - FT08
+        - FT09
+        - FT10
+        - FT-S01
+        - FT-S02
+        - FT-S03
+        - FT01
+        - FT02
+        - FT03
+        - FT04
+        - FT05
+        - FT06
+        - FT07
+        - FT08
+        - FT09
+        - FT10
+        - FT-S01
+        - FT-S02
+        - FT-S03
+        - FT01
+        - FT02
+        - FT03
+        - FT04
+        - FT05
+        - FT06
+        - FT07
+        - FT08
+        - FT09
+        - FT10
+        - FT-S01
+        - FT-S02
+        - FT-S03
+        - FT01
+        - FT02
+        - FT03
+        - FT04
+        - FT05
+        - FT06
+        - FT07
+        - FT08
+        - FT09
+        - FT10
+        - FT-S01
+        - FT-S02
+        - FT-S03
+        - FT01
+        - FT02
+        - FT03
+        - FT04
+        - FT05
+        - FT06
+        - FT07
+        - FT08
+        - FT09
+        - FT10
+        - FT-S01
+        - FT-S02
+        - FT-S03
+        - FT01
+        - FT02
+        - FT03
+        - FT04
+        - FT05
+        - FT06
+        - FT07
+        - FT08
+        - FT09
+        - FT10
+        - FT-S01
+        - FT-S02
+        - FT-S03
+  C3:
+    dimensionTaskIds:
+      uncertainty_activation:
+        - UA01
+        - UA02
+        - UA03
+        - UA04
+        - UA05
+        - UA06
+        - UA07
+        - UA08
+        - UA09
+        - UA10
+        - UA11
+        - UA12
+        - UA-S01
+        - UA-S04
+        - UA01
+        - UA02
+        - UA03
+        - UA04
+        - UA05
+        - UA06
+        - UA07
+        - UA08
+        - UA09
+        - UA10
+        - UA11
+        - UA12
+        - UA-S01
+        - UA-S04
+        - UA01
+        - UA02
+        - UA03
+        - UA04
+        - UA05
+        - UA06
+        - UA07
+        - UA08
+        - UA09
+        - UA10
+        - UA11
+        - UA12
+        - UA-S01
+        - UA-S04
+        - UA01
+        - UA02
+        - UA03
+        - UA04
+        - UA05
+        - UA06
+        - UA07
+        - UA08
+        - UA09
+        - UA10
+        - UA11
+        - UA12
+        - UA-S01
+        - UA-S04
+        - UA01
+        - UA02
+        - UA03
+        - UA04
+        - UA05
+        - UA06
+        - UA07
+        - UA08
+        - UA09
+        - UA10
+        - UA11
+        - UA12
+        - UA-S01
+        - UA-S04
+        - UA01
+        - UA02
+        - UA03
+        - UA04
+        - UA05
+        - UA06
+        - UA07
+        - UA08
+        - UA09
+        - UA10
+        - UA11
+        - UA12
+        - UA-S01
+        - UA-S04
+      uncertainty_regulation:
+        - UR-DC01
+        - UR-DC02
+        - UR-DC03
+        - UR-RS01
+        - UR-RS02
+        - UR-RS03
+        - UR-PO01
+        - UR-PO02
+        - UR-MO01
+        - UR-MO02
+        - UR-RU01
+        - UR-RU02
+        - UR-TP01
+        - UR-TP02
+        - UR-TW01
+        - UR-TW03
+        - UR-WD01
+        - UR-WD02
+        - UR-DC01
+        - UR-DC02
+        - UR-DC03
+        - UR-RS01
+        - UR-RS02
+        - UR-RS03
+        - UR-PO01
+        - UR-PO02
+        - UR-MO01
+        - UR-MO02
+        - UR-RU01
+        - UR-RU02
+        - UR-TP01
+        - UR-TP02
+        - UR-TW01
+        - UR-TW03
+        - UR-WD01
+        - UR-WD02
+        - UR-DC01
+        - UR-DC02
+        - UR-DC03
+        - UR-RS01
+        - UR-RS02
+        - UR-RS03
+        - UR-PO01
+        - UR-PO02
+        - UR-MO01
+        - UR-MO02
+        - UR-RU01
+        - UR-RU02
+        - UR-TP01
+        - UR-TP02
+        - UR-TW01
+        - UR-TW03
+        - UR-WD01
+        - UR-WD02
+        - UR-DC01
+        - UR-DC02
+        - UR-DC03
+        - UR-RS01
+        - UR-RS02
+        - UR-RS03
+        - UR-PO01
+        - UR-PO02
+        - UR-MO01
+        - UR-MO02
+        - UR-RU01
+        - UR-RU02
+        - UR-TP01
+        - UR-TP02
+        - UR-TW01
+        - UR-TW03
+        - UR-WD01
+        - UR-WD02
+        - UR-DC01
+        - UR-DC02
+        - UR-DC03
+        - UR-RS01
+        - UR-RS02
+        - UR-RS03
+        - UR-PO01
+        - UR-PO02
+        - UR-MO01
+        - UR-MO02
+        - UR-RU01
+        - UR-RU02
+        - UR-TP01
+        - UR-TP02
+        - UR-TW01
+        - UR-TW03
+        - UR-WD01
+        - UR-WD02
+        - UR-DC01
+        - UR-DC02
+        - UR-DC03
+        - UR-RS01
+        - UR-RS02
+        - UR-RS03
+        - UR-PO01
+        - UR-PO02
+        - UR-MO01
+        - UR-MO02
+        - UR-RU01
+        - UR-RU02
+        - UR-TP01
+        - UR-TP02
+        - UR-TW01
+        - UR-TW03
+        - UR-WD01
+        - UR-WD02
+  C4:
+    dimensionTaskIds:
+      intimacy_dependence_comfort:
+        - IDC01
+        - IDC02
+        - IDC03
+        - IDC04
+        - IDC05
+        - IDC06
+        - IDC07
+        - IDC08
+        - IDC09
+        - IDC10
+        - IDC11
+        - IDC12
+        - IDC13
+        - IDC14
+        - IDC15
+        - IDC16
+        - IDC-S01
+        - IDC-S03
+        - IDC01
+        - IDC02
+        - IDC03
+        - IDC04
+        - IDC05
+        - IDC06
+        - IDC07
+        - IDC08
+        - IDC09
+        - IDC10
+        - IDC11
+        - IDC12
+        - IDC13
+        - IDC14
+        - IDC15
+        - IDC16
+        - IDC-S01
+        - IDC-S03
+        - IDC01
+        - IDC02
+        - IDC03
+        - IDC04
+        - IDC05
+        - IDC06
+        - IDC07
+        - IDC08
+        - IDC09
+        - IDC10
+        - IDC11
+        - IDC12
+        - IDC13
+        - IDC14
+        - IDC15
+        - IDC16
+        - IDC-S01
+        - IDC-S03
+        - IDC01
+        - IDC02
+        - IDC03
+        - IDC04
+        - IDC05
+        - IDC06
+        - IDC07
+        - IDC08
+        - IDC09
+        - IDC10
+        - IDC11
+        - IDC12
+        - IDC13
+        - IDC14
+        - IDC15
+        - IDC16
+        - IDC-S01
+        - IDC-S03
+        - IDC01
+        - IDC02
+        - IDC03
+        - IDC04
+        - IDC05
+        - IDC06
+        - IDC07
+        - IDC08
+        - IDC09
+        - IDC10
+        - IDC11
+        - IDC12
+        - IDC13
+        - IDC14
+        - IDC15
+        - IDC16
+        - IDC-S01
+        - IDC-S03
+        - IDC01
+        - IDC02
+        - IDC03
+        - IDC04
+        - IDC05
+        - IDC06
+        - IDC07
+        - IDC08
+        - IDC09
+        - IDC10
+        - IDC11
+        - IDC12
+        - IDC13
+        - IDC14
+        - IDC15
+        - IDC16
+        - IDC-S01
+        - IDC-S03
+      personal_space_need:
+        - PS01
+        - PS02
+        - PS03
+        - PS04
+        - PS05
+        - PS06
+        - PS07
+        - PS08
+        - PS-S01
+        - PS-S02
+        - PS01
+        - PS02
+        - PS03
+        - PS04
+        - PS05
+        - PS06
+        - PS07
+        - PS08
+        - PS-S01
+        - PS-S02
+        - PS01
+        - PS02
+        - PS03
+        - PS04
+        - PS05
+        - PS06
+        - PS07
+        - PS08
+        - PS-S01
+        - PS-S02
+        - PS01
+        - PS02
+        - PS03
+        - PS04
+        - PS05
+        - PS06
+        - PS07
+        - PS08
+        - PS-S01
+        - PS-S02
+        - PS01
+        - PS02
+        - PS03
+        - PS04
+        - PS05
+        - PS06
+        - PS07
+        - PS08
+        - PS-S01
+        - PS-S02
+        - PS01
+        - PS02
+        - PS03
+        - PS04
+        - PS05
+        - PS06
+        - PS07
+        - PS08
+        - PS-S01
+        - PS-S02
+  C5:
+    dimensionTaskIds:
+      support_need:
+        - SN-S01
+        - SN-S02
+        - SN-S03
+        - SN-S04
+        - SN-S05
+        - SN01
+        - SN02
+        - SN03
+        - SN04
+        - SN05
+        - SN06
+        - SN07
+        - SN08
+        - SN-S01
+        - SN-S02
+        - SN-S03
+        - SN-S04
+        - SN-S05
+        - SN01
+        - SN02
+        - SN03
+        - SN04
+        - SN05
+        - SN06
+        - SN07
+        - SN08
+        - SN-S01
+        - SN-S02
+        - SN-S03
+        - SN-S04
+        - SN-S05
+        - SN01
+        - SN02
+        - SN03
+        - SN04
+        - SN05
+        - SN06
+        - SN07
+        - SN08
+        - SN-S01
+        - SN-S02
+        - SN-S03
+        - SN-S04
+        - SN-S05
+        - SN01
+        - SN02
+        - SN03
+        - SN04
+        - SN05
+        - SN06
+        - SN07
+        - SN08
+        - SN-S01
+        - SN-S02
+        - SN-S03
+        - SN-S04
+        - SN-S05
+        - SN01
+        - SN02
+        - SN03
+        - SN04
+        - SN05
+        - SN06
+        - SN07
+        - SN08
+        - SN-S01
+        - SN-S02
+        - SN-S03
+        - SN-S04
+        - SN-S05
+        - SN01
+        - SN02
+        - SN03
+        - SN04
+        - SN05
+        - SN06
+        - SN07
+        - SN08
+      support_signaling:
+        - SS01
+        - SS02
+        - SS03
+        - SS04
+        - SS05
+        - SS06
+        - SS07
+        - SS08
+        - SS09
+        - SS10
+        - SS-S01
+        - SS-S02
+        - SS01
+        - SS02
+        - SS03
+        - SS04
+        - SS05
+        - SS06
+        - SS07
+        - SS08
+        - SS09
+        - SS10
+        - SS-S01
+        - SS-S02
+        - SS01
+        - SS02
+        - SS03
+        - SS04
+        - SS05
+        - SS06
+        - SS07
+        - SS08
+        - SS09
+        - SS10
+        - SS-S01
+        - SS-S02
+        - SS01
+        - SS02
+        - SS03
+        - SS04
+        - SS05
+        - SS06
+        - SS07
+        - SS08
+        - SS09
+        - SS10
+        - SS-S01
+        - SS-S02
+        - SS01
+        - SS02
+        - SS03
+        - SS04
+        - SS05
+        - SS06
+        - SS07
+        - SS08
+        - SS09
+        - SS10
+        - SS-S01
+        - SS-S02
+        - SS01
+        - SS02
+        - SS03
+        - SS04
+        - SS05
+        - SS06
+        - SS07
+        - SS08
+        - SS09
+        - SS10
+        - SS-S01
+        - SS-S02
+      responsiveness_capability:
+        - RC-S01A
+        - RC-S01B
+        - RC-S02
+        - RC-S03
+        - RC-S04
+        - RC-S05
+        - RC-S06
+        - RC-S07
+        - RC01
+        - RC02
+        - RC03
+        - RC04
+        - RC05
+        - RC06
+        - RC-S01A
+        - RC-S01B
+        - RC-S02
+        - RC-S03
+        - RC-S04
+        - RC-S05
+        - RC-S06
+        - RC-S07
+        - RC01
+        - RC02
+        - RC03
+        - RC04
+        - RC05
+        - RC06
+        - RC-S01A
+        - RC-S01B
+        - RC-S02
+        - RC-S03
+        - RC-S04
+        - RC-S05
+        - RC-S06
+        - RC-S07
+        - RC01
+        - RC02
+        - RC03
+        - RC04
+        - RC05
+        - RC06
+        - RC-S01A
+        - RC-S01B
+        - RC-S02
+        - RC-S03
+        - RC-S04
+        - RC-S05
+        - RC-S06
+        - RC-S07
+        - RC01
+        - RC02
+        - RC03
+        - RC04
+        - RC05
+        - RC06
+        - RC-S01A
+        - RC-S01B
+        - RC-S02
+        - RC-S03
+        - RC-S04
+        - RC-S05
+        - RC-S06
+        - RC-S07
+        - RC01
+        - RC02
+        - RC03
+        - RC04
+        - RC05
+        - RC06
+        - RC-S01A
+        - RC-S01B
+        - RC-S02
+        - RC-S03
+        - RC-S04
+        - RC-S05
+        - RC-S06
+        - RC-S07
+        - RC01
+        - RC02
+        - RC03
+        - RC04
+        - RC05
+        - RC06
+  C6:
+    dimensionTaskIds:
+      conflict_activation:
+        - CA01
+        - CA02
+        - CA03
+        - CA04
+        - CA05
+        - CA06
+        - CA07
+        - CA08
+        - CA09
+        - CA10
+        - CA11
+        - CA12
+        - CA13
+        - CA14
+        - CA-S01
+        - CA-S03
+        - CA01
+        - CA02
+        - CA03
+        - CA04
+        - CA05
+        - CA06
+        - CA07
+        - CA08
+        - CA09
+        - CA10
+        - CA11
+        - CA12
+        - CA13
+        - CA14
+        - CA-S01
+        - CA-S03
+        - CA01
+        - CA02
+        - CA03
+        - CA04
+        - CA05
+        - CA06
+        - CA07
+        - CA08
+        - CA09
+        - CA10
+        - CA11
+        - CA12
+        - CA13
+        - CA14
+        - CA-S01
+        - CA-S03
+        - CA01
+        - CA02
+        - CA03
+        - CA04
+        - CA05
+        - CA06
+        - CA07
+        - CA08
+        - CA09
+        - CA10
+        - CA11
+        - CA12
+        - CA13
+        - CA14
+        - CA-S01
+        - CA-S03
+        - CA01
+        - CA02
+        - CA03
+        - CA04
+        - CA05
+        - CA06
+        - CA07
+        - CA08
+        - CA09
+        - CA10
+        - CA11
+        - CA12
+        - CA13
+        - CA14
+        - CA-S01
+        - CA-S03
+        - CA01
+        - CA02
+        - CA03
+        - CA04
+        - CA05
+        - CA06
+        - CA07
+        - CA08
+        - CA09
+        - CA10
+        - CA11
+        - CA12
+        - CA13
+        - CA14
+        - CA-S01
+        - CA-S03
+      conflict_pacing_need:
+        - CP01
+        - CP02
+        - CP03
+        - CP04
+        - CP05
+        - CP06
+        - CP01
+        - CP02
+        - CP03
+        - CP04
+        - CP05
+        - CP06
+        - CP01
+        - CP02
+        - CP03
+        - CP04
+        - CP05
+        - CP06
+        - CP01
+        - CP02
+        - CP03
+        - CP04
+        - CP05
+        - CP06
+        - CP01
+        - CP02
+        - CP03
+        - CP04
+        - CP05
+        - CP06
+        - CP01
+        - CP02
+        - CP03
+        - CP04
+        - CP05
+        - CP06
+      repair_reengagement:
+        - CR01
+        - CR02
+        - CR03
+        - CR04
+        - CR05
+        - CR06
+        - CR07
+        - CR08
+        - CR09
+        - CR10
+        - CR11
+        - CR12
+        - CR13
+        - CR14
+        - CR15
+        - CR16
+        - CR-S01
+        - CR-S02
+        - CR-S03
+        - CR-S04
+        - CR-S05
+        - CR01
+        - CR02
+        - CR03
+        - CR04
+        - CR05
+        - CR06
+        - CR07
+        - CR08
+        - CR09
+        - CR10
+        - CR11
+        - CR12
+        - CR13
+        - CR14
+        - CR15
+        - CR16
+        - CR-S01
+        - CR-S02
+        - CR-S03
+        - CR-S04
+        - CR-S05
+        - CR01
+        - CR02
+        - CR03
+        - CR04
+        - CR05
+        - CR06
+        - CR07
+        - CR08
+        - CR09
+        - CR10
+        - CR11
+        - CR12
+        - CR13
+        - CR14
+        - CR15
+        - CR16
+        - CR-S01
+        - CR-S02
+        - CR-S03
+        - CR-S04
+        - CR-S05
+        - CR01
+        - CR02
+        - CR03
+        - CR04
+        - CR05
+        - CR06
+        - CR07
+        - CR08
+        - CR09
+        - CR10
+        - CR11
+        - CR12
+        - CR13
+        - CR14
+        - CR15
+        - CR16
+        - CR-S01
+        - CR-S02
+        - CR-S03
+        - CR-S04
+        - CR-S05
+        - CR01
+        - CR02
+        - CR03
+        - CR04
+        - CR05
+        - CR06
+        - CR07
+        - CR08
+        - CR09
+        - CR10
+        - CR11
+        - CR12
+        - CR13
+        - CR14
+        - CR15
+        - CR16
+        - CR-S01
+        - CR-S02
+        - CR-S03
+        - CR-S04
+        - CR-S05
+        - CR01
+        - CR02
+        - CR03
+        - CR04
+        - CR05
+        - CR06
+        - CR07
+        - CR08
+        - CR09
+        - CR10
+        - CR11
+        - CR12
+        - CR13
+        - CR14
+        - CR15
+        - CR16
+        - CR-S01
+        - CR-S02
+        - CR-S03
+        - CR-S04
+        - CR-S05
+partB:
+  facts:
+    - FACT01
+    - FACT02
+    - FACT03
+    - FACT04
+    - FACT05
+    - FACT06
+    - FACT07
+    - FACT08
+    - FACT09
+  l3:
+    - L3-CT01
+    - L3-CT02
+    - L3-CT03
+    - L3-CT06
+    - L3-ST01
+    - L3-ST02
+    - L3-ST06
+    - L3-SB01
+    - L3-SB04
+    - L3-DP03
+    - L3-DP05
+    - L3-CF01
+    - L3-CF02
+    - L3-CF03
+    - L3-CF04
+    - L3-MG03
+    - L3-MG04
+    - L3-MG05
+    - L3-HH01
+    - L3-HH04
+    - L3-CG01
+    - L3-FO01
+    - L3-FO06
+    - L3-SL01
+    - L3-SL04
+    - L3-SX01
+  l4:
+    - CF-S01
+    - CF-S02
+    - CF-S03
+    - CF-S04
+    - L4-PH01
+    - L4-PH02
+    - L4-RC01
+    - L4-RC02
+    - L4-IE01
+    - L4-IE02
+    - SE-P01
+    - SE-P04
+    - EX-P01
+    - EX-P02
+    - L4-AM01
+    - L4-AM02
+    - L4-FA01
+    - L4-FA02
+    - L4-WV01
+    - L4-TR01
+    - L4-TR02
+    - L4-TR03
+  l5:
+    - L5-CH01
+    - L5-CH02
+    - L5-CH07
+    - L5-MR01
+    - L5-MR02
+    - L5-MR03
+    - L5-MR04
+    - L5-RS01
+    - L5-RS02
+    - L5-GEO01
+    - L5-GEO02
+    - L5-GEO03
+    - L5-GEO04
+    - L5-GEO05
+    - L5-GEO06
+    - L5-SM01
+    - L5-SM02
+    - L5-AL01
+    - L5-AL02
+    - L5-AGE01
+tasks:
+  RR01:
+    sourceTaskId: RR01
+    constructId: relationship_readiness
+    chapter: C1
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for relationship_readiness
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.RR01
+  RR02:
+    sourceTaskId: RR02
+    constructId: relationship_readiness
+    chapter: C1
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for relationship_readiness
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.RR02
+  RR03:
+    sourceTaskId: RR03
+    constructId: relationship_readiness
+    chapter: C1
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for relationship_readiness
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.RR03
+  RR04:
+    sourceTaskId: RR04
+    constructId: relationship_readiness
+    chapter: C1
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for relationship_readiness
+    scoringInput: true
+    evidenceInput: true
+    direction: REVERSE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.RR04
+  RR05:
+    sourceTaskId: RR05
+    constructId: relationship_readiness
+    chapter: C1
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for relationship_readiness
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.RR05
+  RR06:
+    sourceTaskId: RR06
+    constructId: relationship_readiness
+    chapter: C1
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for relationship_readiness
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.RR06
+  RR07:
+    sourceTaskId: RR07
+    constructId: relationship_readiness
+    chapter: C1
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for relationship_readiness
+    scoringInput: true
+    evidenceInput: true
+    direction: REVERSE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.RR07
+  RR08:
+    sourceTaskId: RR08
+    constructId: relationship_readiness
+    chapter: C1
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for relationship_readiness
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.RR08
+  RR09:
+    sourceTaskId: RR09
+    constructId: relationship_readiness
+    chapter: C1
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for relationship_readiness
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.RR09
+  RR10:
+    sourceTaskId: RR10
+    constructId: relationship_readiness
+    chapter: C1
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for relationship_readiness
+    scoringInput: true
+    evidenceInput: true
+    direction: REVERSE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.RR10
+  IM-IN01:
+    sourceTaskId: IM-IN01
+    constructId: initiation_motivation
+    chapter: C1
+    part: PART_A_SELF_PROFILE
+    combineRole: MOTIVATION_FACET_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for initiation_motivation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: intrinsic
+    publicCopyRef: taskPrompts.IM-IN01
+  IM-IN02:
+    sourceTaskId: IM-IN02
+    constructId: initiation_motivation
+    chapter: C1
+    part: PART_A_SELF_PROFILE
+    combineRole: MOTIVATION_FACET_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for initiation_motivation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: intrinsic
+    publicCopyRef: taskPrompts.IM-IN02
+  IM-ID01:
+    sourceTaskId: IM-ID01
+    constructId: initiation_motivation
+    chapter: C1
+    part: PART_A_SELF_PROFILE
+    combineRole: MOTIVATION_FACET_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for initiation_motivation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: identified
+    publicCopyRef: taskPrompts.IM-ID01
+  IM-ID02:
+    sourceTaskId: IM-ID02
+    constructId: initiation_motivation
+    chapter: C1
+    part: PART_A_SELF_PROFILE
+    combineRole: MOTIVATION_FACET_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for initiation_motivation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: identified
+    publicCopyRef: taskPrompts.IM-ID02
+  IM-PI01:
+    sourceTaskId: IM-PI01
+    constructId: initiation_motivation
+    chapter: C1
+    part: PART_A_SELF_PROFILE
+    combineRole: MOTIVATION_FACET_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for initiation_motivation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: positiveIntrojected
+    publicCopyRef: taskPrompts.IM-PI01
+  IM-PI02:
+    sourceTaskId: IM-PI02
+    constructId: initiation_motivation
+    chapter: C1
+    part: PART_A_SELF_PROFILE
+    combineRole: MOTIVATION_FACET_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for initiation_motivation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: positiveIntrojected
+    publicCopyRef: taskPrompts.IM-PI02
+  IM-NI01:
+    sourceTaskId: IM-NI01
+    constructId: initiation_motivation
+    chapter: C1
+    part: PART_A_SELF_PROFILE
+    combineRole: MOTIVATION_FACET_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for initiation_motivation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: negativeIntrojected
+    publicCopyRef: taskPrompts.IM-NI01
+  IM-NI02:
+    sourceTaskId: IM-NI02
+    constructId: initiation_motivation
+    chapter: C1
+    part: PART_A_SELF_PROFILE
+    combineRole: MOTIVATION_FACET_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for initiation_motivation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: negativeIntrojected
+    publicCopyRef: taskPrompts.IM-NI02
+  IM-EX01:
+    sourceTaskId: IM-EX01
+    constructId: initiation_motivation
+    chapter: C1
+    part: PART_A_SELF_PROFILE
+    combineRole: MOTIVATION_FACET_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for initiation_motivation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: external
+    publicCopyRef: taskPrompts.IM-EX01
+  IM-EX02:
+    sourceTaskId: IM-EX02
+    constructId: initiation_motivation
+    chapter: C1
+    part: PART_A_SELF_PROFILE
+    combineRole: MOTIVATION_FACET_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for initiation_motivation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: external
+    publicCopyRef: taskPrompts.IM-EX02
+  IM-AM01:
+    sourceTaskId: IM-AM01
+    constructId: initiation_motivation
+    chapter: C1
+    part: PART_A_SELF_PROFILE
+    combineRole: MOTIVATION_FACET_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for initiation_motivation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: amotivation
+    publicCopyRef: taskPrompts.IM-AM01
+  IM-AM02:
+    sourceTaskId: IM-AM02
+    constructId: initiation_motivation
+    chapter: C1
+    part: PART_A_SELF_PROFILE
+    combineRole: MOTIVATION_FACET_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for initiation_motivation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: amotivation
+    publicCopyRef: taskPrompts.IM-AM02
+  CAP01:
+    sourceTaskId: CAP01
+    constructId: available_capacity
+    chapter: C2
+    part: PART_A_SELF_PROFILE
+    combineRole: CAPACITY_INVENTORY_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for available_capacity
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: timeAvailability
+    publicCopyRef: taskPrompts.CAP01
+  CAP02:
+    sourceTaskId: CAP02
+    constructId: available_capacity
+    chapter: C2
+    part: PART_A_SELF_PROFILE
+    combineRole: CAPACITY_INVENTORY_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for available_capacity
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: schedulePredictability
+    publicCopyRef: taskPrompts.CAP02
+  CAP03:
+    sourceTaskId: CAP03
+    constructId: available_capacity
+    chapter: C2
+    part: PART_A_SELF_PROFILE
+    combineRole: CAPACITY_INVENTORY_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for available_capacity
+    scoringInput: true
+    evidenceInput: true
+    direction: REVERSE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.CAP03
+  CAP04:
+    sourceTaskId: CAP04
+    constructId: available_capacity
+    chapter: C2
+    part: PART_A_SELF_PROFILE
+    combineRole: CAPACITY_INVENTORY_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for available_capacity
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: timeAvailability
+    publicCopyRef: taskPrompts.CAP04
+  CAP05:
+    sourceTaskId: CAP05
+    constructId: available_capacity
+    chapter: C2
+    part: PART_A_SELF_PROFILE
+    combineRole: CAPACITY_INVENTORY_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for available_capacity
+    scoringInput: true
+    evidenceInput: true
+    direction: REVERSE
+    requiredFacet: schedulePredictability
+    publicCopyRef: taskPrompts.CAP05
+  CAP06:
+    sourceTaskId: CAP06
+    constructId: available_capacity
+    chapter: C2
+    part: PART_A_SELF_PROFILE
+    combineRole: CAPACITY_INVENTORY_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for available_capacity
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: emotionalBandwidth
+    publicCopyRef: taskPrompts.CAP06
+  CAP07:
+    sourceTaskId: CAP07
+    constructId: available_capacity
+    chapter: C2
+    part: PART_A_SELF_PROFILE
+    combineRole: CAPACITY_INVENTORY_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for available_capacity
+    scoringInput: true
+    evidenceInput: true
+    direction: REVERSE
+    requiredFacet: emotionalBandwidth
+    publicCopyRef: taskPrompts.CAP07
+  CAP08:
+    sourceTaskId: CAP08
+    constructId: available_capacity
+    chapter: C2
+    part: PART_A_SELF_PROFILE
+    combineRole: CAPACITY_INVENTORY_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for available_capacity
+    scoringInput: true
+    evidenceInput: true
+    direction: REVERSE
+    requiredFacet: emotionalBandwidth
+    publicCopyRef: taskPrompts.CAP08
+  CAP10:
+    sourceTaskId: CAP10
+    constructId: available_capacity
+    chapter: C2
+    part: PART_A_SELF_PROFILE
+    combineRole: CAPACITY_INVENTORY_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for available_capacity
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: competingResponsibilities
+    publicCopyRef: taskPrompts.CAP10
+  CAP12:
+    sourceTaskId: CAP12
+    constructId: available_capacity
+    chapter: C2
+    part: PART_A_SELF_PROFILE
+    combineRole: CAPACITY_INVENTORY_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for available_capacity
+    scoringInput: true
+    evidenceInput: true
+    direction: REVERSE
+    requiredFacet: nearTermChange
+    publicCopyRef: taskPrompts.CAP12
+  CAP13:
+    sourceTaskId: CAP13
+    constructId: available_capacity
+    chapter: C2
+    part: PART_A_SELF_PROFILE
+    combineRole: CAPACITY_INVENTORY_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for available_capacity
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: timeAvailability
+    publicCopyRef: taskPrompts.CAP13
+  CAP14:
+    sourceTaskId: CAP14
+    constructId: available_capacity
+    chapter: C2
+    part: PART_A_SELF_PROFILE
+    combineRole: CAPACITY_INVENTORY_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for available_capacity
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: timeAvailability
+    publicCopyRef: taskPrompts.CAP14
+  FT01:
+    sourceTaskId: FT01
+    constructId: relational_follow_through
+    chapter: C2
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for relational_follow_through
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.FT01
+  FT02:
+    sourceTaskId: FT02
+    constructId: relational_follow_through
+    chapter: C2
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for relational_follow_through
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.FT02
+  FT03:
+    sourceTaskId: FT03
+    constructId: relational_follow_through
+    chapter: C2
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for relational_follow_through
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.FT03
+  FT04:
+    sourceTaskId: FT04
+    constructId: relational_follow_through
+    chapter: C2
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for relational_follow_through
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.FT04
+  FT05:
+    sourceTaskId: FT05
+    constructId: relational_follow_through
+    chapter: C2
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for relational_follow_through
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.FT05
+  FT06:
+    sourceTaskId: FT06
+    constructId: relational_follow_through
+    chapter: C2
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for relational_follow_through
+    scoringInput: true
+    evidenceInput: true
+    direction: REVERSE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.FT06
+  FT07:
+    sourceTaskId: FT07
+    constructId: relational_follow_through
+    chapter: C2
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for relational_follow_through
+    scoringInput: true
+    evidenceInput: true
+    direction: REVERSE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.FT07
+  FT08:
+    sourceTaskId: FT08
+    constructId: relational_follow_through
+    chapter: C2
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for relational_follow_through
+    scoringInput: true
+    evidenceInput: true
+    direction: REVERSE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.FT08
+  FT09:
+    sourceTaskId: FT09
+    constructId: relational_follow_through
+    chapter: C2
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for relational_follow_through
+    scoringInput: true
+    evidenceInput: true
+    direction: REVERSE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.FT09
+  FT10:
+    sourceTaskId: FT10
+    constructId: relational_follow_through
+    chapter: C2
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for relational_follow_through
+    scoringInput: true
+    evidenceInput: true
+    direction: REVERSE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.FT10
+  FT-S01:
+    sourceTaskId: FT-S01
+    constructId: relational_follow_through
+    chapter: C2
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for relational_follow_through
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.FT-S01
+  FT-S02:
+    sourceTaskId: FT-S02
+    constructId: relational_follow_through
+    chapter: C2
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for relational_follow_through
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.FT-S02
+  FT-S03:
+    sourceTaskId: FT-S03
+    constructId: relational_follow_through
+    chapter: C2
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for relational_follow_through
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.FT-S03
+  UA01:
+    sourceTaskId: UA01
+    constructId: uncertainty_activation
+    chapter: C3
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for uncertainty_activation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.UA01
+  UA02:
+    sourceTaskId: UA02
+    constructId: uncertainty_activation
+    chapter: C3
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for uncertainty_activation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.UA02
+  UA03:
+    sourceTaskId: UA03
+    constructId: uncertainty_activation
+    chapter: C3
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for uncertainty_activation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.UA03
+  UA04:
+    sourceTaskId: UA04
+    constructId: uncertainty_activation
+    chapter: C3
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for uncertainty_activation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.UA04
+  UA05:
+    sourceTaskId: UA05
+    constructId: uncertainty_activation
+    chapter: C3
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for uncertainty_activation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.UA05
+  UA06:
+    sourceTaskId: UA06
+    constructId: uncertainty_activation
+    chapter: C3
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for uncertainty_activation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.UA06
+  UA07:
+    sourceTaskId: UA07
+    constructId: uncertainty_activation
+    chapter: C3
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for uncertainty_activation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.UA07
+  UA08:
+    sourceTaskId: UA08
+    constructId: uncertainty_activation
+    chapter: C3
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for uncertainty_activation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.UA08
+  UA09:
+    sourceTaskId: UA09
+    constructId: uncertainty_activation
+    chapter: C3
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for uncertainty_activation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.UA09
+  UA10:
+    sourceTaskId: UA10
+    constructId: uncertainty_activation
+    chapter: C3
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for uncertainty_activation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.UA10
+  UA11:
+    sourceTaskId: UA11
+    constructId: uncertainty_activation
+    chapter: C3
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for uncertainty_activation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.UA11
+  UA12:
+    sourceTaskId: UA12
+    constructId: uncertainty_activation
+    chapter: C3
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for uncertainty_activation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.UA12
+  UA-S01:
+    sourceTaskId: UA-S01
+    constructId: uncertainty_activation
+    chapter: C3
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for uncertainty_activation
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.UA-S01
+  UA-S04:
+    sourceTaskId: UA-S04
+    constructId: uncertainty_activation
+    chapter: C3
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for uncertainty_activation
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.UA-S04
+  UR-DC01:
+    sourceTaskId: UR-DC01
+    constructId: uncertainty_regulation
+    chapter: C3
+    part: PART_A_SELF_PROFILE
+    combineRole: STRATEGY_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for uncertainty_regulation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.UR-DC01
+  UR-DC02:
+    sourceTaskId: UR-DC02
+    constructId: uncertainty_regulation
+    chapter: C3
+    part: PART_A_SELF_PROFILE
+    combineRole: STRATEGY_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for uncertainty_regulation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.UR-DC02
+  UR-DC03:
+    sourceTaskId: UR-DC03
+    constructId: uncertainty_regulation
+    chapter: C3
+    part: PART_A_SELF_PROFILE
+    combineRole: STRATEGY_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for uncertainty_regulation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.UR-DC03
+  UR-RS01:
+    sourceTaskId: UR-RS01
+    constructId: uncertainty_regulation
+    chapter: C3
+    part: PART_A_SELF_PROFILE
+    combineRole: STRATEGY_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for uncertainty_regulation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.UR-RS01
+  UR-RS02:
+    sourceTaskId: UR-RS02
+    constructId: uncertainty_regulation
+    chapter: C3
+    part: PART_A_SELF_PROFILE
+    combineRole: STRATEGY_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for uncertainty_regulation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.UR-RS02
+  UR-RS03:
+    sourceTaskId: UR-RS03
+    constructId: uncertainty_regulation
+    chapter: C3
+    part: PART_A_SELF_PROFILE
+    combineRole: STRATEGY_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for uncertainty_regulation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.UR-RS03
+  UR-PO01:
+    sourceTaskId: UR-PO01
+    constructId: uncertainty_regulation
+    chapter: C3
+    part: PART_A_SELF_PROFILE
+    combineRole: STRATEGY_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for uncertainty_regulation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.UR-PO01
+  UR-PO02:
+    sourceTaskId: UR-PO02
+    constructId: uncertainty_regulation
+    chapter: C3
+    part: PART_A_SELF_PROFILE
+    combineRole: STRATEGY_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for uncertainty_regulation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.UR-PO02
+  UR-MO01:
+    sourceTaskId: UR-MO01
+    constructId: uncertainty_regulation
+    chapter: C3
+    part: PART_A_SELF_PROFILE
+    combineRole: STRATEGY_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for uncertainty_regulation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.UR-MO01
+  UR-MO02:
+    sourceTaskId: UR-MO02
+    constructId: uncertainty_regulation
+    chapter: C3
+    part: PART_A_SELF_PROFILE
+    combineRole: STRATEGY_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for uncertainty_regulation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.UR-MO02
+  UR-RU01:
+    sourceTaskId: UR-RU01
+    constructId: uncertainty_regulation
+    chapter: C3
+    part: PART_A_SELF_PROFILE
+    combineRole: STRATEGY_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for uncertainty_regulation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.UR-RU01
+  UR-RU02:
+    sourceTaskId: UR-RU02
+    constructId: uncertainty_regulation
+    chapter: C3
+    part: PART_A_SELF_PROFILE
+    combineRole: STRATEGY_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for uncertainty_regulation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.UR-RU02
+  UR-TP01:
+    sourceTaskId: UR-TP01
+    constructId: uncertainty_regulation
+    chapter: C3
+    part: PART_A_SELF_PROFILE
+    combineRole: STRATEGY_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for uncertainty_regulation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.UR-TP01
+  UR-TP02:
+    sourceTaskId: UR-TP02
+    constructId: uncertainty_regulation
+    chapter: C3
+    part: PART_A_SELF_PROFILE
+    combineRole: STRATEGY_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for uncertainty_regulation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.UR-TP02
+  UR-TW01:
+    sourceTaskId: UR-TW01
+    constructId: uncertainty_regulation
+    chapter: C3
+    part: PART_A_SELF_PROFILE
+    combineRole: STRATEGY_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for uncertainty_regulation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.UR-TW01
+  UR-TW03:
+    sourceTaskId: UR-TW03
+    constructId: uncertainty_regulation
+    chapter: C3
+    part: PART_A_SELF_PROFILE
+    combineRole: STRATEGY_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for uncertainty_regulation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.UR-TW03
+  UR-WD01:
+    sourceTaskId: UR-WD01
+    constructId: uncertainty_regulation
+    chapter: C3
+    part: PART_A_SELF_PROFILE
+    combineRole: STRATEGY_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for uncertainty_regulation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.UR-WD01
+  UR-WD02:
+    sourceTaskId: UR-WD02
+    constructId: uncertainty_regulation
+    chapter: C3
+    part: PART_A_SELF_PROFILE
+    combineRole: STRATEGY_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for uncertainty_regulation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.UR-WD02
+  IDC01:
+    sourceTaskId: IDC01
+    constructId: intimacy_dependence_comfort
+    chapter: C4
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for intimacy_dependence_comfort
+    scoringInput: true
+    evidenceInput: true
+    direction: REVERSE
+    requiredFacet: emotionalCloseness
+    publicCopyRef: taskPrompts.IDC01
+  IDC02:
+    sourceTaskId: IDC02
+    constructId: intimacy_dependence_comfort
+    chapter: C4
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for intimacy_dependence_comfort
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: vulnerability
+    publicCopyRef: taskPrompts.IDC02
+  IDC03:
+    sourceTaskId: IDC03
+    constructId: intimacy_dependence_comfort
+    chapter: C4
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for intimacy_dependence_comfort
+    scoringInput: true
+    evidenceInput: true
+    direction: REVERSE
+    requiredFacet: reliance
+    publicCopyRef: taskPrompts.IDC03
+  IDC04:
+    sourceTaskId: IDC04
+    constructId: intimacy_dependence_comfort
+    chapter: C4
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for intimacy_dependence_comfort
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: receivingCare
+    publicCopyRef: taskPrompts.IDC04
+  IDC05:
+    sourceTaskId: IDC05
+    constructId: intimacy_dependence_comfort
+    chapter: C4
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for intimacy_dependence_comfort
+    scoringInput: true
+    evidenceInput: true
+    direction: REVERSE
+    requiredFacet: emotionalCloseness
+    publicCopyRef: taskPrompts.IDC05
+  IDC06:
+    sourceTaskId: IDC06
+    constructId: intimacy_dependence_comfort
+    chapter: C4
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for intimacy_dependence_comfort
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: vulnerability
+    publicCopyRef: taskPrompts.IDC06
+  IDC07:
+    sourceTaskId: IDC07
+    constructId: intimacy_dependence_comfort
+    chapter: C4
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for intimacy_dependence_comfort
+    scoringInput: true
+    evidenceInput: true
+    direction: REVERSE
+    requiredFacet: reliance
+    publicCopyRef: taskPrompts.IDC07
+  IDC08:
+    sourceTaskId: IDC08
+    constructId: intimacy_dependence_comfort
+    chapter: C4
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for intimacy_dependence_comfort
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: receivingCare
+    publicCopyRef: taskPrompts.IDC08
+  IDC09:
+    sourceTaskId: IDC09
+    constructId: intimacy_dependence_comfort
+    chapter: C4
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for intimacy_dependence_comfort
+    scoringInput: true
+    evidenceInput: true
+    direction: REVERSE
+    requiredFacet: emotionalCloseness
+    publicCopyRef: taskPrompts.IDC09
+  IDC10:
+    sourceTaskId: IDC10
+    constructId: intimacy_dependence_comfort
+    chapter: C4
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for intimacy_dependence_comfort
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.IDC10
+  IDC11:
+    sourceTaskId: IDC11
+    constructId: intimacy_dependence_comfort
+    chapter: C4
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for intimacy_dependence_comfort
+    scoringInput: true
+    evidenceInput: true
+    direction: REVERSE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.IDC11
+  IDC12:
+    sourceTaskId: IDC12
+    constructId: intimacy_dependence_comfort
+    chapter: C4
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for intimacy_dependence_comfort
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.IDC12
+  IDC13:
+    sourceTaskId: IDC13
+    constructId: intimacy_dependence_comfort
+    chapter: C4
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for intimacy_dependence_comfort
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.IDC13
+  IDC14:
+    sourceTaskId: IDC14
+    constructId: intimacy_dependence_comfort
+    chapter: C4
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for intimacy_dependence_comfort
+    scoringInput: true
+    evidenceInput: true
+    direction: REVERSE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.IDC14
+  IDC15:
+    sourceTaskId: IDC15
+    constructId: intimacy_dependence_comfort
+    chapter: C4
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for intimacy_dependence_comfort
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.IDC15
+  IDC16:
+    sourceTaskId: IDC16
+    constructId: intimacy_dependence_comfort
+    chapter: C4
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for intimacy_dependence_comfort
+    scoringInput: true
+    evidenceInput: true
+    direction: REVERSE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.IDC16
+  IDC-S01:
+    sourceTaskId: IDC-S01
+    constructId: intimacy_dependence_comfort
+    chapter: C4
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for intimacy_dependence_comfort
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.IDC-S01
+  IDC-S03:
+    sourceTaskId: IDC-S03
+    constructId: intimacy_dependence_comfort
+    chapter: C4
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for intimacy_dependence_comfort
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.IDC-S03
+  PS01:
+    sourceTaskId: PS01
+    constructId: personal_space_need
+    chapter: C4
+    part: PART_A_SELF_PROFILE
+    combineRole: NEED_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for personal_space_need
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: personalTimeNeed
+    publicCopyRef: taskPrompts.PS01
+  PS02:
+    sourceTaskId: PS02
+    constructId: personal_space_need
+    chapter: C4
+    part: PART_A_SELF_PROFILE
+    combineRole: NEED_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for personal_space_need
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: independentActivityNeed
+    publicCopyRef: taskPrompts.PS02
+  PS03:
+    sourceTaskId: PS03
+    constructId: personal_space_need
+    chapter: C4
+    part: PART_A_SELF_PROFILE
+    combineRole: NEED_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for personal_space_need
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: personalTimeNeed
+    publicCopyRef: taskPrompts.PS03
+  PS04:
+    sourceTaskId: PS04
+    constructId: personal_space_need
+    chapter: C4
+    part: PART_A_SELF_PROFILE
+    combineRole: NEED_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for personal_space_need
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: independentActivityNeed
+    publicCopyRef: taskPrompts.PS04
+  PS05:
+    sourceTaskId: PS05
+    constructId: personal_space_need
+    chapter: C4
+    part: PART_A_SELF_PROFILE
+    combineRole: NEED_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for personal_space_need
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: personalTimeNeed
+    publicCopyRef: taskPrompts.PS05
+  PS06:
+    sourceTaskId: PS06
+    constructId: personal_space_need
+    chapter: C4
+    part: PART_A_SELF_PROFILE
+    combineRole: NEED_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for personal_space_need
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: independentActivityNeed
+    publicCopyRef: taskPrompts.PS06
+  PS07:
+    sourceTaskId: PS07
+    constructId: personal_space_need
+    chapter: C4
+    part: PART_A_SELF_PROFILE
+    combineRole: NEED_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for personal_space_need
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: personalTimeNeed
+    publicCopyRef: taskPrompts.PS07
+  PS08:
+    sourceTaskId: PS08
+    constructId: personal_space_need
+    chapter: C4
+    part: PART_A_SELF_PROFILE
+    combineRole: NEED_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for personal_space_need
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: independentActivityNeed
+    publicCopyRef: taskPrompts.PS08
+  PS-S01:
+    sourceTaskId: PS-S01
+    constructId: personal_space_need
+    chapter: C4
+    part: PART_A_SELF_PROFILE
+    combineRole: NEED_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for personal_space_need
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.PS-S01
+  PS-S02:
+    sourceTaskId: PS-S02
+    constructId: personal_space_need
+    chapter: C4
+    part: PART_A_SELF_PROFILE
+    combineRole: NEED_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for personal_space_need
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.PS-S02
+  SN-S01:
+    sourceTaskId: SN-S01
+    constructId: support_need
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: NEED_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for support_need
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.SN-S01
+  SN-S02:
+    sourceTaskId: SN-S02
+    constructId: support_need
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: NEED_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for support_need
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.SN-S02
+  SN-S03:
+    sourceTaskId: SN-S03
+    constructId: support_need
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: NEED_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for support_need
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.SN-S03
+  SN-S04:
+    sourceTaskId: SN-S04
+    constructId: support_need
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: NEED_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for support_need
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.SN-S04
+  SN-S05:
+    sourceTaskId: SN-S05
+    constructId: support_need
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: NEED_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for support_need
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.SN-S05
+  SN01:
+    sourceTaskId: SN01
+    constructId: support_need
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: NEED_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for support_need
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.SN01
+  SN02:
+    sourceTaskId: SN02
+    constructId: support_need
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: NEED_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for support_need
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.SN02
+  SN03:
+    sourceTaskId: SN03
+    constructId: support_need
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: NEED_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for support_need
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.SN03
+  SN04:
+    sourceTaskId: SN04
+    constructId: support_need
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: NEED_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for support_need
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.SN04
+  SN05:
+    sourceTaskId: SN05
+    constructId: support_need
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: NEED_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for support_need
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.SN05
+  SN06:
+    sourceTaskId: SN06
+    constructId: support_need
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: NEED_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for support_need
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.SN06
+  SN07:
+    sourceTaskId: SN07
+    constructId: support_need
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: NEED_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for support_need
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.SN07
+  SN08:
+    sourceTaskId: SN08
+    constructId: support_need
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: NEED_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for support_need
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.SN08
+  SS01:
+    sourceTaskId: SS01
+    constructId: support_signaling
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for support_signaling
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: distressDisclosure
+    publicCopyRef: taskPrompts.SS01
+  SS02:
+    sourceTaskId: SS02
+    constructId: support_signaling
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for support_signaling
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: requestDirectness
+    publicCopyRef: taskPrompts.SS02
+  SS03:
+    sourceTaskId: SS03
+    constructId: support_signaling
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for support_signaling
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: distressDisclosure
+    publicCopyRef: taskPrompts.SS03
+  SS04:
+    sourceTaskId: SS04
+    constructId: support_signaling
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for support_signaling
+    scoringInput: true
+    evidenceInput: true
+    direction: REVERSE
+    requiredFacet: indirectSignaling
+    publicCopyRef: taskPrompts.SS04
+  SS05:
+    sourceTaskId: SS05
+    constructId: support_signaling
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for support_signaling
+    scoringInput: true
+    evidenceInput: true
+    direction: REVERSE
+    requiredFacet: concealment
+    publicCopyRef: taskPrompts.SS05
+  SS06:
+    sourceTaskId: SS06
+    constructId: support_signaling
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for support_signaling
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: requestDirectness
+    publicCopyRef: taskPrompts.SS06
+  SS07:
+    sourceTaskId: SS07
+    constructId: support_signaling
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for support_signaling
+    scoringInput: true
+    evidenceInput: true
+    direction: REVERSE
+    requiredFacet: concealment
+    publicCopyRef: taskPrompts.SS07
+  SS08:
+    sourceTaskId: SS08
+    constructId: support_signaling
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for support_signaling
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: requestDirectness
+    publicCopyRef: taskPrompts.SS08
+  SS09:
+    sourceTaskId: SS09
+    constructId: support_signaling
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for support_signaling
+    scoringInput: true
+    evidenceInput: true
+    direction: REVERSE
+    requiredFacet: indirectSignaling
+    publicCopyRef: taskPrompts.SS09
+  SS10:
+    sourceTaskId: SS10
+    constructId: support_signaling
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for support_signaling
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.SS10
+  SS-S01:
+    sourceTaskId: SS-S01
+    constructId: support_signaling
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for support_signaling
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.SS-S01
+  SS-S02:
+    sourceTaskId: SS-S02
+    constructId: support_signaling
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for support_signaling
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.SS-S02
+  RC-S01A:
+    sourceTaskId: RC-S01A
+    constructId: responsiveness_capability
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for responsiveness_capability
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: needUnderstanding
+    publicCopyRef: taskPrompts.RC-S01A
+  RC-S01B:
+    sourceTaskId: RC-S01B
+    constructId: responsiveness_capability
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for responsiveness_capability
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: needUnderstanding
+    publicCopyRef: taskPrompts.RC-S01B
+  RC-S02:
+    sourceTaskId: RC-S02
+    constructId: responsiveness_capability
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for responsiveness_capability
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: signalDetection
+    publicCopyRef: taskPrompts.RC-S02
+  RC-S03:
+    sourceTaskId: RC-S03
+    constructId: responsiveness_capability
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for responsiveness_capability
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: validation
+    publicCopyRef: taskPrompts.RC-S03
+  RC-S04:
+    sourceTaskId: RC-S04
+    constructId: responsiveness_capability
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for responsiveness_capability
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: responseCalibration
+    publicCopyRef: taskPrompts.RC-S04
+  RC-S05:
+    sourceTaskId: RC-S05
+    constructId: responsiveness_capability
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for responsiveness_capability
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: careEnactment
+    publicCopyRef: taskPrompts.RC-S05
+  RC-S06:
+    sourceTaskId: RC-S06
+    constructId: responsiveness_capability
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for responsiveness_capability
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: responseCalibration
+    publicCopyRef: taskPrompts.RC-S06
+  RC-S07:
+    sourceTaskId: RC-S07
+    constructId: responsiveness_capability
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for responsiveness_capability
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: responseCalibration
+    publicCopyRef: taskPrompts.RC-S07
+  RC01:
+    sourceTaskId: RC01
+    constructId: responsiveness_capability
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for responsiveness_capability
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: responseCalibration
+    publicCopyRef: taskPrompts.RC01
+  RC02:
+    sourceTaskId: RC02
+    constructId: responsiveness_capability
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for responsiveness_capability
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: needUnderstanding
+    publicCopyRef: taskPrompts.RC02
+  RC03:
+    sourceTaskId: RC03
+    constructId: responsiveness_capability
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for responsiveness_capability
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: signalDetection
+    publicCopyRef: taskPrompts.RC03
+  RC04:
+    sourceTaskId: RC04
+    constructId: responsiveness_capability
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for responsiveness_capability
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: needUnderstanding
+    publicCopyRef: taskPrompts.RC04
+  RC05:
+    sourceTaskId: RC05
+    constructId: responsiveness_capability
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for responsiveness_capability
+    scoringInput: true
+    evidenceInput: true
+    direction: REVERSE
+    requiredFacet: responseCalibration
+    publicCopyRef: taskPrompts.RC05
+  RC06:
+    sourceTaskId: RC06
+    constructId: responsiveness_capability
+    chapter: C5
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for responsiveness_capability
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: responseCalibration
+    publicCopyRef: taskPrompts.RC06
+  CA01:
+    sourceTaskId: CA01
+    constructId: conflict_activation
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for conflict_activation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: affectiveEscalation
+    publicCopyRef: taskPrompts.CA01
+  CA02:
+    sourceTaskId: CA02
+    constructId: conflict_activation
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for conflict_activation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: affectiveEscalation
+    publicCopyRef: taskPrompts.CA02
+  CA03:
+    sourceTaskId: CA03
+    constructId: conflict_activation
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for conflict_activation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: affectiveEscalation
+    publicCopyRef: taskPrompts.CA03
+  CA04:
+    sourceTaskId: CA04
+    constructId: conflict_activation
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for conflict_activation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: affectiveEscalation
+    publicCopyRef: taskPrompts.CA04
+  CA05:
+    sourceTaskId: CA05
+    constructId: conflict_activation
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for conflict_activation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: affectiveEscalation
+    publicCopyRef: taskPrompts.CA05
+  CA06:
+    sourceTaskId: CA06
+    constructId: conflict_activation
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for conflict_activation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: affectiveEscalation
+    publicCopyRef: taskPrompts.CA06
+  CA07:
+    sourceTaskId: CA07
+    constructId: conflict_activation
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for conflict_activation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: affectiveEscalation
+    publicCopyRef: taskPrompts.CA07
+  CA08:
+    sourceTaskId: CA08
+    constructId: conflict_activation
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for conflict_activation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: affectiveEscalation
+    publicCopyRef: taskPrompts.CA08
+  CA09:
+    sourceTaskId: CA09
+    constructId: conflict_activation
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for conflict_activation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: cognitiveNarrowing
+    publicCopyRef: taskPrompts.CA09
+  CA10:
+    sourceTaskId: CA10
+    constructId: conflict_activation
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for conflict_activation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: cognitiveNarrowing
+    publicCopyRef: taskPrompts.CA10
+  CA11:
+    sourceTaskId: CA11
+    constructId: conflict_activation
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for conflict_activation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: cognitiveNarrowing
+    publicCopyRef: taskPrompts.CA11
+  CA12:
+    sourceTaskId: CA12
+    constructId: conflict_activation
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for conflict_activation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: cognitiveNarrowing
+    publicCopyRef: taskPrompts.CA12
+  CA13:
+    sourceTaskId: CA13
+    constructId: conflict_activation
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for conflict_activation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: processingDifficulty
+    publicCopyRef: taskPrompts.CA13
+  CA14:
+    sourceTaskId: CA14
+    constructId: conflict_activation
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for conflict_activation
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: processingDifficulty
+    publicCopyRef: taskPrompts.CA14
+  CA-S01:
+    sourceTaskId: CA-S01
+    constructId: conflict_activation
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for conflict_activation
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: processingDifficulty
+    publicCopyRef: taskPrompts.CA-S01
+  CA-S03:
+    sourceTaskId: CA-S03
+    constructId: conflict_activation
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: CONSTRUCT_ESTIMATE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for conflict_activation
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: processingDifficulty
+    publicCopyRef: taskPrompts.CA-S03
+  CP01:
+    sourceTaskId: CP01
+    constructId: conflict_pacing_need
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: NEED_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for conflict_pacing_need
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.CP01
+  CP02:
+    sourceTaskId: CP02
+    constructId: conflict_pacing_need
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: NEED_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for conflict_pacing_need
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.CP02
+  CP03:
+    sourceTaskId: CP03
+    constructId: conflict_pacing_need
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: NEED_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for conflict_pacing_need
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.CP03
+  CP04:
+    sourceTaskId: CP04
+    constructId: conflict_pacing_need
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: NEED_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for conflict_pacing_need
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.CP04
+  CP05:
+    sourceTaskId: CP05
+    constructId: conflict_pacing_need
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: NEED_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for conflict_pacing_need
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.CP05
+  CP06:
+    sourceTaskId: CP06
+    constructId: conflict_pacing_need
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: NEED_PROFILE_INPUT
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for conflict_pacing_need
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.CP06
+  CR01:
+    sourceTaskId: CR01
+    constructId: repair_reengagement
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for repair_reengagement
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: pauseCommunication
+    publicCopyRef: taskPrompts.CR01
+  CR02:
+    sourceTaskId: CR02
+    constructId: repair_reengagement
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for repair_reengagement
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: pauseCommunication
+    publicCopyRef: taskPrompts.CR02
+  CR03:
+    sourceTaskId: CR03
+    constructId: repair_reengagement
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for repair_reengagement
+    scoringInput: true
+    evidenceInput: true
+    direction: REVERSE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.CR03
+  CR04:
+    sourceTaskId: CR04
+    constructId: repair_reengagement
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for repair_reengagement
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: returnIntention
+    publicCopyRef: taskPrompts.CR04
+  CR05:
+    sourceTaskId: CR05
+    constructId: repair_reengagement
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for repair_reengagement
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: returnIntention
+    publicCopyRef: taskPrompts.CR05
+  CR06:
+    sourceTaskId: CR06
+    constructId: repair_reengagement
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for repair_reengagement
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: returnExecution
+    publicCopyRef: taskPrompts.CR06
+  CR07:
+    sourceTaskId: CR07
+    constructId: repair_reengagement
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for repair_reengagement
+    scoringInput: true
+    evidenceInput: true
+    direction: REVERSE
+    requiredFacet: issueReengagement
+    publicCopyRef: taskPrompts.CR07
+  CR08:
+    sourceTaskId: CR08
+    constructId: repair_reengagement
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for repair_reengagement
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: returnExecution
+    publicCopyRef: taskPrompts.CR08
+  CR09:
+    sourceTaskId: CR09
+    constructId: repair_reengagement
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for repair_reengagement
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: reconnection
+    publicCopyRef: taskPrompts.CR09
+  CR10:
+    sourceTaskId: CR10
+    constructId: repair_reengagement
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for repair_reengagement
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.CR10
+  CR11:
+    sourceTaskId: CR11
+    constructId: repair_reengagement
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for repair_reengagement
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.CR11
+  CR12:
+    sourceTaskId: CR12
+    constructId: repair_reengagement
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for repair_reengagement
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.CR12
+  CR13:
+    sourceTaskId: CR13
+    constructId: repair_reengagement
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for repair_reengagement
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.CR13
+  CR14:
+    sourceTaskId: CR14
+    constructId: repair_reengagement
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for repair_reengagement
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.CR14
+  CR15:
+    sourceTaskId: CR15
+    constructId: repair_reengagement
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for repair_reengagement
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.CR15
+  CR16:
+    sourceTaskId: CR16
+    constructId: repair_reengagement
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for repair_reengagement
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.CR16
+  CR-S01:
+    sourceTaskId: CR-S01
+    constructId: repair_reengagement
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for repair_reengagement
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.CR-S01
+  CR-S02:
+    sourceTaskId: CR-S02
+    constructId: repair_reengagement
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for repair_reengagement
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.CR-S02
+  CR-S03:
+    sourceTaskId: CR-S03
+    constructId: repair_reengagement
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for repair_reengagement
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.CR-S03
+  CR-S04:
+    sourceTaskId: CR-S04
+    constructId: repair_reengagement
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for repair_reengagement
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.CR-S04
+  CR-S05:
+    sourceTaskId: CR-S05
+    constructId: repair_reengagement
+    chapter: C6
+    part: PART_A_SELF_PROFILE
+    combineRole: BEHAVIOR_CAPABILITY_EVIDENCE
+    productRole: DIMENSION_EVIDENCE
+    selectedBecause: REPORT_CORE coverage for repair_reengagement
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.CR-S05
+  FACT01:
+    sourceTaskId: FACT01
+    constructId: core_facts
+    chapter: null
+    part: ENTRY_FACTS
+    combineRole: FACT_INPUT
+    productRole: FACT
+    selectedBecause: REPORT_CORE coverage for core_facts
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.FACT01
+  FACT02:
+    sourceTaskId: FACT02
+    constructId: core_facts
+    chapter: null
+    part: ENTRY_FACTS
+    combineRole: FACT_INPUT
+    productRole: FACT
+    selectedBecause: REPORT_CORE coverage for core_facts
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.FACT02
+  FACT03:
+    sourceTaskId: FACT03
+    constructId: core_facts
+    chapter: null
+    part: ENTRY_FACTS
+    combineRole: FACT_INPUT
+    productRole: FACT
+    selectedBecause: REPORT_CORE coverage for core_facts
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.FACT03
+  FACT04:
+    sourceTaskId: FACT04
+    constructId: core_facts
+    chapter: null
+    part: ENTRY_FACTS
+    combineRole: FACT_INPUT
+    productRole: FACT
+    selectedBecause: REPORT_CORE coverage for core_facts
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.FACT04
+  FACT05:
+    sourceTaskId: FACT05
+    constructId: core_facts
+    chapter: null
+    part: ENTRY_FACTS
+    combineRole: FACT_INPUT
+    productRole: FACT
+    selectedBecause: REPORT_CORE coverage for core_facts
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.FACT05
+  FACT06:
+    sourceTaskId: FACT06
+    constructId: core_facts
+    chapter: null
+    part: ENTRY_FACTS
+    combineRole: FACT_INPUT
+    productRole: FACT
+    selectedBecause: REPORT_CORE coverage for core_facts
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.FACT06
+  FACT07:
+    sourceTaskId: FACT07
+    constructId: core_facts
+    chapter: null
+    part: ENTRY_FACTS
+    combineRole: FACT_INPUT
+    productRole: FACT
+    selectedBecause: REPORT_CORE coverage for core_facts
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.FACT07
+  FACT08:
+    sourceTaskId: FACT08
+    constructId: core_facts
+    chapter: null
+    part: ENTRY_FACTS
+    combineRole: FACT_INPUT
+    productRole: FACT
+    selectedBecause: REPORT_CORE coverage for core_facts
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.FACT08
+  FACT09:
+    sourceTaskId: FACT09
+    constructId: core_facts
+    chapter: null
+    part: ENTRY_FACTS
+    combineRole: FACT_INPUT
+    productRole: FACT
+    selectedBecause: REPORT_CORE coverage for core_facts
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.FACT09
+  L3-CT01:
+    sourceTaskId: L3-CT01
+    constructId: contact_relationship_clarity
+    chapter: null
+    part: PART_B_L3_OPERATING_MODEL
+    combineRole: OPERATING_STANDARD_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for contact_relationship_clarity
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L3-CT01
+  L3-CT02:
+    sourceTaskId: L3-CT02
+    constructId: contact_relationship_clarity
+    chapter: null
+    part: PART_B_L3_OPERATING_MODEL
+    combineRole: OPERATING_STANDARD_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for contact_relationship_clarity
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L3-CT02
+  L3-CT03:
+    sourceTaskId: L3-CT03
+    constructId: contact_relationship_clarity
+    chapter: null
+    part: PART_B_L3_OPERATING_MODEL
+    combineRole: OPERATING_STANDARD_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for contact_relationship_clarity
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L3-CT03
+  L3-CT06:
+    sourceTaskId: L3-CT06
+    constructId: contact_relationship_clarity
+    chapter: null
+    part: PART_B_L3_OPERATING_MODEL
+    combineRole: OPERATING_STANDARD_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for contact_relationship_clarity
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L3-CT06
+  L3-ST01:
+    sourceTaskId: L3-ST01
+    constructId: shared_time_independence
+    chapter: null
+    part: PART_B_L3_OPERATING_MODEL
+    combineRole: OPERATING_STANDARD_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for shared_time_independence
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L3-ST01
+  L3-ST02:
+    sourceTaskId: L3-ST02
+    constructId: shared_time_independence
+    chapter: null
+    part: PART_B_L3_OPERATING_MODEL
+    combineRole: OPERATING_STANDARD_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for shared_time_independence
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L3-ST02
+  L3-ST06:
+    sourceTaskId: L3-ST06
+    constructId: shared_time_independence
+    chapter: null
+    part: PART_B_L3_OPERATING_MODEL
+    combineRole: OPERATING_STANDARD_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for shared_time_independence
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L3-ST06
+  L3-SB01:
+    sourceTaskId: L3-SB01
+    constructId: social_boundary
+    chapter: null
+    part: PART_B_L3_OPERATING_MODEL
+    combineRole: OPERATING_STANDARD_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for social_boundary
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L3-SB01
+  L3-SB04:
+    sourceTaskId: L3-SB04
+    constructId: social_boundary
+    chapter: null
+    part: PART_B_L3_OPERATING_MODEL
+    combineRole: OPERATING_STANDARD_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for social_boundary
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L3-SB04
+  L3-DP03:
+    sourceTaskId: L3-DP03
+    constructId: digital_privacy
+    chapter: null
+    part: PART_B_L3_OPERATING_MODEL
+    combineRole: OPERATING_STANDARD_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for digital_privacy
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L3-DP03
+  L3-DP05:
+    sourceTaskId: L3-DP05
+    constructId: digital_privacy
+    chapter: null
+    part: PART_B_L3_OPERATING_MODEL
+    combineRole: OPERATING_STANDARD_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for digital_privacy
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L3-DP05
+  L3-CF01:
+    sourceTaskId: L3-CF01
+    constructId: conflict_process_standard
+    chapter: null
+    part: PART_B_L3_OPERATING_MODEL
+    combineRole: OPERATING_STANDARD_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for conflict_process_standard
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L3-CF01
+  L3-CF02:
+    sourceTaskId: L3-CF02
+    constructId: conflict_process_standard
+    chapter: null
+    part: PART_B_L3_OPERATING_MODEL
+    combineRole: OPERATING_STANDARD_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for conflict_process_standard
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L3-CF02
+  L3-CF03:
+    sourceTaskId: L3-CF03
+    constructId: conflict_process_standard
+    chapter: null
+    part: PART_B_L3_OPERATING_MODEL
+    combineRole: OPERATING_STANDARD_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for conflict_process_standard
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L3-CF03
+  L3-CF04:
+    sourceTaskId: L3-CF04
+    constructId: conflict_process_standard
+    chapter: null
+    part: PART_B_L3_OPERATING_MODEL
+    combineRole: OPERATING_STANDARD_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for conflict_process_standard
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L3-CF04
+  L3-MG03:
+    sourceTaskId: L3-MG03
+    constructId: money_governance
+    chapter: null
+    part: PART_B_L3_OPERATING_MODEL
+    combineRole: OPERATING_STANDARD_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for money_governance
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L3-MG03
+  L3-MG04:
+    sourceTaskId: L3-MG04
+    constructId: money_governance
+    chapter: null
+    part: PART_B_L3_OPERATING_MODEL
+    combineRole: OPERATING_STANDARD_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for money_governance
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L3-MG04
+  L3-MG05:
+    sourceTaskId: L3-MG05
+    constructId: money_governance
+    chapter: null
+    part: PART_B_L3_OPERATING_MODEL
+    combineRole: OPERATING_STANDARD_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for money_governance
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L3-MG05
+  L3-HH01:
+    sourceTaskId: L3-HH01
+    constructId: household_operation
+    chapter: null
+    part: PART_B_L3_OPERATING_MODEL
+    combineRole: OPERATING_STANDARD_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for household_operation
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L3-HH01
+  L3-HH04:
+    sourceTaskId: L3-HH04
+    constructId: household_operation
+    chapter: null
+    part: PART_B_L3_OPERATING_MODEL
+    combineRole: OPERATING_STANDARD_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for household_operation
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L3-HH04
+  L3-CG01:
+    sourceTaskId: L3-CG01
+    constructId: career_geography_governance
+    chapter: null
+    part: PART_B_L3_OPERATING_MODEL
+    combineRole: OPERATING_STANDARD_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for career_geography_governance
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L3-CG01
+  L3-FO01:
+    sourceTaskId: L3-FO01
+    constructId: family_of_origin_boundary
+    chapter: null
+    part: PART_B_L3_OPERATING_MODEL
+    combineRole: OPERATING_STANDARD_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for family_of_origin_boundary
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L3-FO01
+  L3-FO06:
+    sourceTaskId: L3-FO06
+    constructId: family_of_origin_boundary
+    chapter: null
+    part: PART_B_L3_OPERATING_MODEL
+    combineRole: OPERATING_STANDARD_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for family_of_origin_boundary
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L3-FO06
+  L3-SL01:
+    sourceTaskId: L3-SL01
+    constructId: shared_leisure
+    chapter: null
+    part: PART_B_L3_OPERATING_MODEL
+    combineRole: OPERATING_STANDARD_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for shared_leisure
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L3-SL01
+  L3-SL04:
+    sourceTaskId: L3-SL04
+    constructId: shared_leisure
+    chapter: null
+    part: PART_B_L3_OPERATING_MODEL
+    combineRole: OPERATING_STANDARD_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for shared_leisure
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L3-SL04
+  L3-SX01:
+    sourceTaskId: L3-SX01
+    constructId: sexual_exclusivity_agreement
+    chapter: null
+    part: PART_B_L3_OPERATING_MODEL
+    combineRole: OPERATING_STANDARD_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for sexual_exclusivity_agreement
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L3-SX01
+  CF-S01:
+    sourceTaskId: CF-S01
+    constructId: character_trustworthiness_floor
+    chapter: null
+    part: PART_B_L4_PARTNER_DECISION
+    combineRole: PREFERENCE_FUNCTION_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for character_trustworthiness_floor
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.CF-S01
+  CF-S02:
+    sourceTaskId: CF-S02
+    constructId: character_trustworthiness_floor
+    chapter: null
+    part: PART_B_L4_PARTNER_DECISION
+    combineRole: PREFERENCE_FUNCTION_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for character_trustworthiness_floor
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.CF-S02
+  CF-S03:
+    sourceTaskId: CF-S03
+    constructId: character_trustworthiness_floor
+    chapter: null
+    part: PART_B_L4_PARTNER_DECISION
+    combineRole: PREFERENCE_FUNCTION_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for character_trustworthiness_floor
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.CF-S03
+  CF-S04:
+    sourceTaskId: CF-S04
+    constructId: character_trustworthiness_floor
+    chapter: null
+    part: PART_B_L4_PARTNER_DECISION
+    combineRole: PREFERENCE_FUNCTION_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for character_trustworthiness_floor
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.CF-S04
+  L4-PH01:
+    sourceTaskId: L4-PH01
+    constructId: physical_preference
+    chapter: null
+    part: PART_B_L4_PARTNER_DECISION
+    combineRole: PREFERENCE_FUNCTION_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for physical_preference
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L4-PH01
+  L4-PH02:
+    sourceTaskId: L4-PH02
+    constructId: physical_preference
+    chapter: null
+    part: PART_B_L4_PARTNER_DECISION
+    combineRole: PREFERENCE_FUNCTION_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for physical_preference
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L4-PH02
+  L4-RC01:
+    sourceTaskId: L4-RC01
+    constructId: resources_life_competence
+    chapter: null
+    part: PART_B_L4_PARTNER_DECISION
+    combineRole: PREFERENCE_FUNCTION_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for resources_life_competence
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L4-RC01
+  L4-RC02:
+    sourceTaskId: L4-RC02
+    constructId: resources_life_competence
+    chapter: null
+    part: PART_B_L4_PARTNER_DECISION
+    combineRole: PREFERENCE_FUNCTION_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for resources_life_competence
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L4-RC02
+  L4-IE01:
+    sourceTaskId: L4-IE01
+    constructId: intellectual_engagement_preference
+    chapter: null
+    part: PART_B_L4_PARTNER_DECISION
+    combineRole: PREFERENCE_FUNCTION_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for intellectual_engagement_preference
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L4-IE01
+  L4-IE02:
+    sourceTaskId: L4-IE02
+    constructId: intellectual_engagement_preference
+    chapter: null
+    part: PART_B_L4_PARTNER_DECISION
+    combineRole: PREFERENCE_FUNCTION_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for intellectual_engagement_preference
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L4-IE02
+  SE-P01:
+    sourceTaskId: SE-P01
+    constructId: partner_social_engagement_preference
+    chapter: null
+    part: PART_B_L4_PARTNER_DECISION
+    combineRole: PREFERENCE_FUNCTION_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for partner_social_engagement_preference
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.SE-P01
+  SE-P04:
+    sourceTaskId: SE-P04
+    constructId: partner_social_engagement_preference
+    chapter: null
+    part: PART_B_L4_PARTNER_DECISION
+    combineRole: PREFERENCE_FUNCTION_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for partner_social_engagement_preference
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.SE-P04
+  EX-P01:
+    sourceTaskId: EX-P01
+    constructId: partner_experiential_exploration_preference
+    chapter: null
+    part: PART_B_L4_PARTNER_DECISION
+    combineRole: PREFERENCE_FUNCTION_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for partner_experiential_exploration_preference
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.EX-P01
+  EX-P02:
+    sourceTaskId: EX-P02
+    constructId: partner_experiential_exploration_preference
+    chapter: null
+    part: PART_B_L4_PARTNER_DECISION
+    combineRole: PREFERENCE_FUNCTION_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for partner_experiential_exploration_preference
+    scoringInput: true
+    evidenceInput: true
+    direction: POSITIVE
+    requiredFacet: null
+    publicCopyRef: taskPrompts.EX-P02
+  L4-AM01:
+    sourceTaskId: L4-AM01
+    constructId: partner_ambition_orientation
+    chapter: null
+    part: PART_B_L4_PARTNER_DECISION
+    combineRole: PREFERENCE_FUNCTION_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for partner_ambition_orientation
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L4-AM01
+  L4-AM02:
+    sourceTaskId: L4-AM02
+    constructId: partner_ambition_orientation
+    chapter: null
+    part: PART_B_L4_PARTNER_DECISION
+    combineRole: PREFERENCE_FUNCTION_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for partner_ambition_orientation
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L4-AM02
+  L4-FA01:
+    sourceTaskId: L4-FA01
+    constructId: partner_family_orientation
+    chapter: null
+    part: PART_B_L4_PARTNER_DECISION
+    combineRole: PREFERENCE_FUNCTION_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for partner_family_orientation
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L4-FA01
+  L4-FA02:
+    sourceTaskId: L4-FA02
+    constructId: partner_family_orientation
+    chapter: null
+    part: PART_B_L4_PARTNER_DECISION
+    combineRole: PREFERENCE_FUNCTION_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for partner_family_orientation
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L4-FA02
+  L4-WV01:
+    sourceTaskId: L4-WV01
+    constructId: conditional_worldview_preference
+    chapter: null
+    part: PART_B_L4_PARTNER_DECISION
+    combineRole: PREFERENCE_FUNCTION_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for conditional_worldview_preference
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L4-WV01
+  L4-TR01:
+    sourceTaskId: L4-TR01
+    constructId: preference_tradeoff
+    chapter: null
+    part: PART_B_L4_PARTNER_DECISION
+    combineRole: TRADEOFF_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for preference_tradeoff
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L4-TR01
+  L4-TR02:
+    sourceTaskId: L4-TR02
+    constructId: preference_tradeoff
+    chapter: null
+    part: PART_B_L4_PARTNER_DECISION
+    combineRole: TRADEOFF_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for preference_tradeoff
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L4-TR02
+  L4-TR03:
+    sourceTaskId: L4-TR03
+    constructId: preference_tradeoff
+    chapter: null
+    part: PART_B_L4_PARTNER_DECISION
+    combineRole: TRADEOFF_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for preference_tradeoff
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L4-TR03
+  L5-CH01:
+    sourceTaskId: L5-CH01
+    constructId: parenthood_plan
+    chapter: null
+    part: PART_B_L5_LIFE_PLAN
+    combineRole: LIFE_PLAN_CONSTRAINT_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for parenthood_plan
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L5-CH01
+  L5-CH02:
+    sourceTaskId: L5-CH02
+    constructId: parenthood_plan
+    chapter: null
+    part: PART_B_L5_LIFE_PLAN
+    combineRole: LIFE_PLAN_CONSTRAINT_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for parenthood_plan
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L5-CH02
+  L5-CH07:
+    sourceTaskId: L5-CH07
+    constructId: parenthood_plan
+    chapter: null
+    part: PART_B_L5_LIFE_PLAN
+    combineRole: LIFE_PLAN_CONSTRAINT_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for parenthood_plan
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L5-CH07
+  L5-MR01:
+    sourceTaskId: L5-MR01
+    constructId: marriage_plan
+    chapter: null
+    part: PART_B_L5_LIFE_PLAN
+    combineRole: LIFE_PLAN_CONSTRAINT_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for marriage_plan
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L5-MR01
+  L5-MR02:
+    sourceTaskId: L5-MR02
+    constructId: marriage_plan
+    chapter: null
+    part: PART_B_L5_LIFE_PLAN
+    combineRole: LIFE_PLAN_CONSTRAINT_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for marriage_plan
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L5-MR02
+  L5-MR03:
+    sourceTaskId: L5-MR03
+    constructId: marriage_plan
+    chapter: null
+    part: PART_B_L5_LIFE_PLAN
+    combineRole: LIFE_PLAN_CONSTRAINT_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for marriage_plan
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L5-MR03
+  L5-MR04:
+    sourceTaskId: L5-MR04
+    constructId: marriage_plan
+    chapter: null
+    part: PART_B_L5_LIFE_PLAN
+    combineRole: LIFE_PLAN_CONSTRAINT_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for marriage_plan
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L5-MR04
+  L5-RS01:
+    sourceTaskId: L5-RS01
+    constructId: relationship_structure
+    chapter: null
+    part: PART_B_L5_LIFE_PLAN
+    combineRole: LIFE_PLAN_CONSTRAINT_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for relationship_structure
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L5-RS01
+  L5-RS02:
+    sourceTaskId: L5-RS02
+    constructId: relationship_structure
+    chapter: null
+    part: PART_B_L5_LIFE_PLAN
+    combineRole: LIFE_PLAN_CONSTRAINT_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for relationship_structure
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L5-RS02
+  L5-GEO01:
+    sourceTaskId: L5-GEO01
+    constructId: location_distance_plan
+    chapter: null
+    part: PART_B_L5_LIFE_PLAN
+    combineRole: LIFE_PLAN_CONSTRAINT_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for location_distance_plan
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L5-GEO01
+  L5-GEO02:
+    sourceTaskId: L5-GEO02
+    constructId: location_distance_plan
+    chapter: null
+    part: PART_B_L5_LIFE_PLAN
+    combineRole: LIFE_PLAN_CONSTRAINT_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for location_distance_plan
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L5-GEO02
+  L5-GEO03:
+    sourceTaskId: L5-GEO03
+    constructId: location_distance_plan
+    chapter: null
+    part: PART_B_L5_LIFE_PLAN
+    combineRole: LIFE_PLAN_CONSTRAINT_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for location_distance_plan
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L5-GEO03
+  L5-GEO04:
+    sourceTaskId: L5-GEO04
+    constructId: location_distance_plan
+    chapter: null
+    part: PART_B_L5_LIFE_PLAN
+    combineRole: LIFE_PLAN_CONSTRAINT_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for location_distance_plan
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L5-GEO04
+  L5-GEO05:
+    sourceTaskId: L5-GEO05
+    constructId: location_distance_plan
+    chapter: null
+    part: PART_B_L5_LIFE_PLAN
+    combineRole: LIFE_PLAN_CONSTRAINT_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for location_distance_plan
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L5-GEO05
+  L5-GEO06:
+    sourceTaskId: L5-GEO06
+    constructId: location_distance_plan
+    chapter: null
+    part: PART_B_L5_LIFE_PLAN
+    combineRole: LIFE_PLAN_CONSTRAINT_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for location_distance_plan
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L5-GEO06
+  L5-SM01:
+    sourceTaskId: L5-SM01
+    constructId: smoking_constraint
+    chapter: null
+    part: PART_B_L5_LIFE_PLAN
+    combineRole: LIFE_PLAN_CONSTRAINT_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for smoking_constraint
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L5-SM01
+  L5-SM02:
+    sourceTaskId: L5-SM02
+    constructId: smoking_constraint
+    chapter: null
+    part: PART_B_L5_LIFE_PLAN
+    combineRole: LIFE_PLAN_CONSTRAINT_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for smoking_constraint
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L5-SM02
+  L5-AL01:
+    sourceTaskId: L5-AL01
+    constructId: alcohol_constraint
+    chapter: null
+    part: PART_B_L5_LIFE_PLAN
+    combineRole: LIFE_PLAN_CONSTRAINT_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for alcohol_constraint
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L5-AL01
+  L5-AL02:
+    sourceTaskId: L5-AL02
+    constructId: alcohol_constraint
+    chapter: null
+    part: PART_B_L5_LIFE_PLAN
+    combineRole: LIFE_PLAN_CONSTRAINT_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for alcohol_constraint
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L5-AL02
+  L5-AGE01:
+    sourceTaskId: L5-AGE01
+    constructId: age_filter
+    chapter: null
+    part: PART_B_L5_LIFE_PLAN
+    combineRole: LIFE_PLAN_CONSTRAINT_INPUT
+    productRole: DECISION_INPUT
+    selectedBecause: REPORT_CORE coverage for age_filter
+    scoringInput: true
+    evidenceInput: true
+    direction: DIRECT
+    requiredFacet: null
+    publicCopyRef: taskPrompts.L5-AGE01
+responseFieldIds:
+  - RR01
+  - RR02
+  - RR03
+  - RR04
+  - RR05
+  - RR06
+  - RR07
+  - RR08
+  - RR09
+  - RR10
+  - IM-IN01
+  - IM-IN02
+  - IM-ID01
+  - IM-ID02
+  - IM-PI01
+  - IM-PI02
+  - IM-NI01
+  - IM-NI02
+  - IM-EX01
+  - IM-EX02
+  - IM-AM01
+  - IM-AM02
+  - CAP01
+  - CAP02
+  - CAP03
+  - CAP04
+  - CAP05
+  - CAP06
+  - CAP07
+  - CAP08
+  - CAP10
+  - CAP12
+  - CAP13
+  - CAP14
+  - FT01
+  - FT02
+  - FT03
+  - FT04
+  - FT05
+  - FT06
+  - FT07
+  - FT08
+  - FT09
+  - FT10
+  - FT-S01
+  - FT-S02
+  - FT-S03
+  - UA01
+  - UA02
+  - UA03
+  - UA04
+  - UA05
+  - UA06
+  - UA07
+  - UA08
+  - UA09
+  - UA10
+  - UA11
+  - UA12
+  - UA-S01.a
+  - UA-S01.b
+  - UA-S01.c
+  - UA-S04.a
+  - UA-S04.b
+  - UA-S04.c
+  - UR-DC01
+  - UR-DC02
+  - UR-DC03
+  - UR-RS01
+  - UR-RS02
+  - UR-RS03
+  - UR-PO01
+  - UR-PO02
+  - UR-MO01
+  - UR-MO02
+  - UR-RU01
+  - UR-RU02
+  - UR-TP01
+  - UR-TP02
+  - UR-TW01
+  - UR-TW03
+  - UR-WD01
+  - UR-WD02
+  - IDC01
+  - IDC02
+  - IDC03
+  - IDC04
+  - IDC05
+  - IDC06
+  - IDC07
+  - IDC08
+  - IDC09
+  - IDC10
+  - IDC11
+  - IDC12
+  - IDC13
+  - IDC14
+  - IDC15
+  - IDC16
+  - IDC-S01.a
+  - IDC-S01.b
+  - IDC-S03.a
+  - IDC-S03.b
+  - PS01
+  - PS02
+  - PS03
+  - PS04
+  - PS05
+  - PS06
+  - PS07
+  - PS08
+  - PS-S01
+  - PS-S02
+  - SN-S01.a
+  - SN-S01.b
+  - SN-S02.a
+  - SN-S02.b
+  - SN-S03.a
+  - SN-S03.b
+  - SN-S04.a
+  - SN-S04.b
+  - SN-S05.a
+  - SN-S05.b
+  - SN01
+  - SN02
+  - SN03
+  - SN04
+  - SN05
+  - SN06
+  - SN07
+  - SN08
+  - SS01
+  - SS02
+  - SS03
+  - SS04
+  - SS05
+  - SS06
+  - SS07
+  - SS08
+  - SS09
+  - SS10
+  - SS-S01
+  - SS-S02
+  - RC-S01A
+  - RC-S01B
+  - RC-S02
+  - RC-S03
+  - RC-S04
+  - RC-S05
+  - RC-S06
+  - RC-S07
+  - RC01
+  - RC02
+  - RC03
+  - RC04
+  - RC05
+  - RC06
+  - CA01
+  - CA02
+  - CA03
+  - CA04
+  - CA05
+  - CA06
+  - CA07
+  - CA08
+  - CA09
+  - CA10
+  - CA11
+  - CA12
+  - CA13
+  - CA14
+  - CA-S01.a
+  - CA-S01.b
+  - CA-S01.c
+  - CA-S03.a
+  - CA-S03.b
+  - CP01
+  - CP02
+  - CP03
+  - CP04
+  - CP05
+  - CP06
+  - CR01
+  - CR02
+  - CR03
+  - CR04
+  - CR05
+  - CR06
+  - CR07
+  - CR08
+  - CR09
+  - CR10
+  - CR11
+  - CR12
+  - CR13
+  - CR14
+  - CR15
+  - CR16
+  - CR-S01
+  - CR-S02
+  - CR-S03
+  - CR-S04
+  - CR-S05
+  - FACT01
+  - FACT02
+  - FACT03
+  - FACT04
+  - FACT05
+  - FACT06
+  - FACT07
+  - FACT08
+  - FACT09
+  - L3-CT01.ideal
+  - L3-CT01.minimum
+  - L3-CT02
+  - L3-CT03
+  - L3-CT06.a
+  - L3-CT06.b
+  - L3-ST01
+  - L3-ST02
+  - L3-ST06.hobby
+  - L3-ST06.appearance
+  - L3-ST06.career
+  - L3-SB01
+  - L3-SB04
+  - L3-DP03
+  - L3-DP05
+  - L3-CF01.a
+  - L3-CF01.b
+  - L3-CF02
+  - L3-CF03
+  - L3-CF04
+  - L3-MG03.a
+  - L3-MG03.b
+  - L3-MG04
+  - L3-MG05.a
+  - L3-MG05.b
+  - L3-HH01.a
+  - L3-HH01.b
+  - L3-HH04
+  - L3-CG01
+  - L3-FO01
+  - L3-FO06
+  - L3-SL01
+  - L3-SL04
+  - L3-SX01
+  - CF-S01
+  - CF-S02
+  - CF-S03
+  - CF-S04
+  - L4-PH01.a
+  - L4-PH01.b
+  - L4-PH01.c
+  - L4-PH01.d
+  - L4-PH01.e
+  - L4-PH02
+  - L4-RC01
+  - L4-RC02.a
+  - L4-RC02.b
+  - L4-IE01.a
+  - L4-IE01.b
+  - L4-IE02
+  - SE-P01
+  - SE-P04
+  - EX-P01
+  - EX-P02
+  - L4-AM01.a
+  - L4-AM01.b
+  - L4-AM02.low
+  - L4-AM02.high
+  - L4-FA01.a
+  - L4-FA01.b
+  - L4-FA02.low
+  - L4-FA02.high
+  - L4-WV01
+  - L4-TR01
+  - L4-TR02
+  - L4-TR03
+  - L5-CH01
+  - L5-CH02
+  - L5-CH07
+  - L5-MR01
+  - L5-MR02
+  - L5-MR03
+  - L5-MR04.a
+  - L5-MR04.b
+  - L5-RS01
+  - L5-RS02
+  - L5-GEO01
+  - L5-GEO02.type
+  - L5-GEO02.text
+  - L5-GEO03
+  - L5-GEO04.a
+  - L5-GEO04.b
+  - L5-GEO04.c
+  - L5-GEO04.d
+  - L5-GEO05.a
+  - L5-GEO05.b
+  - L5-GEO06
+  - L5-SM01
+  - L5-SM02
+  - L5-AL01
+  - L5-AL02
+  - L5-AGE01.idealLower
+  - L5-AGE01.idealUpper
+  - L5-AGE01.acceptableLower
+  - L5-AGE01.acceptableUpper

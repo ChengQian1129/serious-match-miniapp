@@ -10,8 +10,8 @@
     "responseFormatVersion": "0.1"
   },
   "sourceFiles": {
-    "normative/NORMATIVE_MANIFEST.yaml": "474f13336fa6d65c9bc2ed50a0eabca4bc02f3d26879277bdf641cf4237da9c6",
-    "normative/SOURCE_OF_TRUTH_POLICY.md": "35a044d876882dc8aa40c3049abada0fc98e3816c13910c82aed9f3b5935256f",
+    "normative/NORMATIVE_MANIFEST.yaml": "7ed70d8ae5cf98209c3d978b61953f8b892a3db2d65825a75d3d04eead0803ee",
+    "normative/SOURCE_OF_TRUTH_POLICY.md": "845dc433da7f43e7b95bc7a9f379096156fe2cbecd6a01dbc8365d88c177110e",
     "normative/construct_registry.yaml": "1efcbb56dcdb472f6726a1a9f2853b2130b4fd3e6159afa1625c35687e0fdc58",
     "normative/data_dictionary.yaml": "21ffe1adb850bedc1fe12cb43100c7fd3d4c9c3710c5e88043e938cd71f1fa01",
     "normative/dimension_combine_conclusion.yaml": "c697b89a57c38cba70f8c19c4b62842d9011efd0d604289d0db142400e828238",
@@ -31,7 +31,16 @@
     "pilot/active_branch_rules.yaml": "0fb80f1854ba0e18df74a294ad9f069a3a62a47df97385b7a0aab7f1449bd2d6",
     "pilot/pilot_analysis_plan.md": "1cc8197c8ed547a398f86d7c853d1420eca0b36253b88859a8e67b6e592f5a31",
     "pilot/pilot_blueprint.md": "bd3611d73deab451a85bdc37ee8fd09e282ce7b5a812f1c5be7e707c7daa27f8",
-    "pilot/pilot_pruning_calibration.md": "198d8abf577b2dd4049fdf9e611e40207ee440df8a3b912c6fa208cf17c144f5"
+    "pilot/pilot_pruning_calibration.md": "198d8abf577b2dd4049fdf9e611e40207ee440df8a3b912c6fa208cf17c144f5",
+    "product-v0/PRODUCT_V0_CHANGELOG.md": "d96dc393716920d6128d981885275cc89fe579bef400d2f94ee9633ea18bbfd8",
+    "product-v0/PRODUCT_V0_MANIFEST.yaml": "1de3b71baa422b90967be4af9391815289b593006a328c46b40a0de0dfa54ed8",
+    "product-v0/PRODUCT_V0_POLICY.md": "a82881a84064335d13dd37189f70085148bc5875e36ed2d1e34791ed6ee8495b",
+    "product-v0/decision_map_v0.yaml": "933fa51f7d409b6187066c6cdbce839553353651556e9a00e037e9a61fc85d49",
+    "product-v0/product_coverage_audit.yaml": "b3c96e5b9576ad1ed751e4e397f19386c02cb38117aa83ac4cc18c6f142dd20e",
+    "product-v0/product_item_selection_audit.yaml": "45dd2a3eb50c489212ee2fc803a00ff376a5508f50a153bef8d0c70d6dda083b",
+    "product-v0/product_method_disclosure.md": "24d0e701127809b558c9ac9f304743175e4d5113ac0db70a3eb55778b937e6a6",
+    "product-v0/product_questionnaire_v0.yaml": "db020bfa61317d53953f4058e0a9cc40bb282b94423751000fad990af032874d",
+    "product-v0/provisional_scoring_v0.yaml": "9468f33fd819a618aae7d863f8ba253db7bb28863da59e9b6dfb655e9eba891a"
   },
   "counts": {
     "candidateParentTasks": 411,
@@ -41,5 +50,5 @@
     "childResponseFields": 119,
     "constructRegistryObjects": 60
   },
-  "runtimeHash": "3fade690633faec281f001dd7e2e529361ba6ff3f12d49c674d35389d7f9b697"
+  "runtimeHash": "40c4b19cb4fb20fdb3fb2549cc4b157bd46c54ed3e56ba85b9932877b21a80b3"
 }

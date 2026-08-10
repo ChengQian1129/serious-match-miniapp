@@ -1,0 +1,133 @@
+schemaVersion: serious-match.v3.product-decision-map-v0.v1.0
+decisionMapVersion: v3-product-decision-map-v0.1.0
+status: THEORY_DRIVEN_PROVISIONAL
+independentFromDimensions: true
+hardConstraintRule: Only explicit hardness grammar produces hard=true.
+unknownCode: UNSURE
+l3:
+  domains:
+    - contact
+    - time_independence
+    - social
+    - digital_privacy
+    - conflict
+    - money
+    - household
+    - career
+    - family
+    - leisure
+    - exclusivity
+  taskIds:
+    contact:
+      - L3-CT01
+      - L3-CT02
+      - L3-CT03
+      - L3-CT06
+    time_independence:
+      - L3-ST01
+      - L3-ST02
+      - L3-ST06
+    social:
+      - L3-SB01
+      - L3-SB04
+    digital_privacy:
+      - L3-DP03
+      - L3-DP05
+    conflict:
+      - L3-CF01
+      - L3-CF02
+      - L3-CF03
+      - L3-CF04
+    money:
+      - L3-MG03
+      - L3-MG04
+      - L3-MG05
+    household:
+      - L3-HH01
+      - L3-HH04
+    career:
+      - L3-CG01
+    family:
+      - L3-FO01
+      - L3-FO06
+    leisure:
+      - L3-SL01
+      - L3-SL04
+    exclusivity:
+      - L3-SX01
+l4:
+  fields:
+    - ideal
+    - acceptable
+    - priority
+    - tradeOff
+    - hardness
+    - unknown
+  taskIds:
+    character_trustworthiness_floor:
+      - CF-S01
+      - CF-S02
+      - CF-S03
+      - CF-S04
+    physical_preference:
+      - L4-PH01
+      - L4-PH02
+    resources_life_competence:
+      - L4-RC01
+      - L4-RC02
+    intellectual_engagement_preference:
+      - L4-IE01
+      - L4-IE02
+    partner_social_engagement_preference:
+      - SE-P01
+      - SE-P04
+    partner_experiential_exploration_preference:
+      - EX-P01
+      - EX-P02
+    partner_ambition_orientation:
+      - L4-AM01
+      - L4-AM02
+    partner_family_orientation:
+      - L4-FA01
+      - L4-FA02
+    conditional_worldview_preference:
+      - L4-WV01
+    preference_tradeoff:
+      - L4-TR01
+      - L4-TR02
+      - L4-TR03
+l5:
+  fields:
+    - FACT
+    - DESIRE
+    - INTENTION
+    - CONSTRAINT
+    - FEASIBILITY
+  taskIds:
+    parenthood_plan:
+      - L5-CH01
+      - L5-CH02
+      - L5-CH07
+    marriage_plan:
+      - L5-MR01
+      - L5-MR02
+      - L5-MR03
+      - L5-MR04
+    relationship_structure:
+      - L5-RS01
+      - L5-RS02
+    location_distance_plan:
+      - L5-GEO01
+      - L5-GEO02
+      - L5-GEO03
+      - L5-GEO04
+      - L5-GEO05
+      - L5-GEO06
+    smoking_constraint:
+      - L5-SM01
+      - L5-SM02
+    alcohol_constraint:
+      - L5-AL01
+      - L5-AL02
+    age_filter:
+      - L5-AGE01

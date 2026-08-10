@@ -226,7 +226,11 @@ function main() {
     ].map(name => [name, digest(name)])),
     ui: publicUi,
     v2: projectV2Copy(v2),
-    v3: Object.assign(buildV3Copy(), { narratives: projectNarratives(v3Narrative), product: publicValue(v3Product.product || {}) }),
+    v3: Object.assign(buildV3Copy(), {
+      narratives: projectNarratives(v3Narrative),
+      product: publicValue(v3Product.product || {}),
+      productV0: publicValue(v3Product.productV0 || {})
+    }),
     publicErrors: Object.fromEntries(['saveFailed', 'loadFailed', 'submitFailed', 'questionInvalid', 'incomplete', 'network', 'generic'].map(key => [key, ui.errors[key]]))
   }
   fs.mkdirSync(path.dirname(outputPath), { recursive: true })

@@ -7,6 +7,7 @@ const FEATURES = Object.freeze({
   interviewResearchConsent: true,
   v3Pilot: false,
   v3P0Research: false,
+  v3ProductV0: false,
   v3ProductPreview: true,
   v3CalibratedProduction: false
 })

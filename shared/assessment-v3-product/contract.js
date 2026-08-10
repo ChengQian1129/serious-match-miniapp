@@ -56,9 +56,9 @@ function deriveC3ChapterState(dimensionResults) {
   const regulation = dimensionResults && dimensionResults.uncertainty_regulation
   if (!activation || !regulation) return null
   return {
-    activation: activation.state,
-    primaryStrategy: regulation.state,
-    secondaryStrategy: regulation.secondaryState || null
+    activation: activation.resultStatus === 'INSUFFICIENT' ? null : activation.state,
+    primaryStrategy: regulation.resultStatus === 'INSUFFICIENT' ? null : regulation.state,
+    secondaryStrategy: regulation.resultStatus === 'INSUFFICIENT' ? null : (regulation.secondaryState || null)
   }
 }
 
@@ -69,19 +69,27 @@ function assertObject(value, path) {
 function assertDerivedV3Profile(profile) {
   assertObject(profile, 'profile')
   if (profile.contractVersion !== 'v3.derived-profile.v1.0') fail('contractVersion is unsupported')
-  if (!['synthetic_fixture', 'calibrated_production'].includes(profile.source)) fail('source is unsupported')
+  if (!['synthetic_fixture', 'calibrated_production', 'THEORY_DRIVEN_PRODUCT_V0'].includes(profile.source)) fail('source is unsupported')
   if (profile.source === 'synthetic_fixture' && profile.isSynthetic !== true) fail('synthetic_fixture must be marked synthetic')
-  if (profile.source === 'calibrated_production' && profile.isSynthetic === true) fail('calibrated_production cannot be marked synthetic')
+  if (profile.source !== 'synthetic_fixture' && profile.isSynthetic === true) fail(`${profile.source} cannot be marked synthetic`)
   assertObject(profile.assessmentMeta, 'assessmentMeta')
   if (!profile.assessmentMeta.assessmentId) fail('assessmentMeta.assessmentId is required')
+  if (profile.source === 'THEORY_DRIVEN_PRODUCT_V0') {
+    const requiredMeta = ['assessedAt', 'instrumentVersion', 'productQuestionnaireVersion', 'scoringModelVersion', 'constructRegistryVersion', 'itemFreezeVersion', 'authoringLibraryVersion', 'reportVersion']
+    requiredMeta.forEach(key => { if (!profile.assessmentMeta[key]) fail(`assessmentMeta.${key} is required for Product v0`) })
+    if (profile.assessmentMeta.researchStatus !== 'THEORY_DRIVEN_PROVISIONAL') fail('Product v0 researchStatus must be THEORY_DRIVEN_PROVISIONAL')
+  }
   assertObject(profile.dimensionResults, 'dimensionResults')
   const dimensionKeys = Object.keys(profile.dimensionResults)
   if (dimensionKeys.length !== DIMENSION_IDS.length) fail(`expected ${DIMENSION_IDS.length} dimension results`)
   DIMENSION_IDS.forEach(dimensionId => {
     const result = profile.dimensionResults[dimensionId]
     assertObject(result, `dimensionResults.${dimensionId}`)
-    if (!result.state) fail(`dimensionResults.${dimensionId}.state is required`)
+    const resultStatus = result.resultStatus || 'ESTIMATED'
+    if (!['ESTIMATED', 'INSUFFICIENT'].includes(resultStatus)) fail(`dimensionResults.${dimensionId}.resultStatus is invalid`)
+    if (resultStatus === 'ESTIMATED' && !result.state) fail(`dimensionResults.${dimensionId}.state is required`)
     if (!CONFIDENCE_LEVELS.includes(result.confidence)) fail(`dimensionResults.${dimensionId}.confidence is invalid`)
+    if (profile.source === 'THEORY_DRIVEN_PRODUCT_V0' && result.confidence === 'HIGH') fail(`dimensionResults.${dimensionId}.confidence cannot be HIGH in Product v0`)
     if (result.evidenceStatus && !EVIDENCE_STATUSES.includes(result.evidenceStatus)) fail(`dimensionResults.${dimensionId}.evidenceStatus is invalid`)
     if (result.evidence && !Array.isArray(result.evidence)) fail(`dimensionResults.${dimensionId}.evidence must be an array`)
     ;(result.evidence || []).forEach((entry, index) => {
@@ -92,8 +100,8 @@ function assertDerivedV3Profile(profile) {
   })
   const activationResult = profile.dimensionResults.uncertainty_activation
   const regulationResult = profile.dimensionResults.uncertainty_regulation
-  if (!FIVE_ZONE_STATES.includes(activationResult.state)) fail('dimensionResults.uncertainty_activation.state is invalid')
-  if (!UNCERTAINTY_REGULATION_STATES.includes(regulationResult.state)) fail('dimensionResults.uncertainty_regulation.state is invalid')
+  if (activationResult.resultStatus !== 'INSUFFICIENT' && !FIVE_ZONE_STATES.concat(THREE_ZONE_STATES).includes(activationResult.state)) fail('dimensionResults.uncertainty_activation.state is invalid')
+  if (regulationResult.resultStatus !== 'INSUFFICIENT' && !UNCERTAINTY_REGULATION_STATES.includes(regulationResult.state)) fail('dimensionResults.uncertainty_regulation.state is invalid')
   if (regulationResult.secondaryState !== undefined && regulationResult.secondaryState !== null) {
     if (!UNCERTAINTY_REGULATION_STATES.includes(regulationResult.secondaryState)) fail('dimensionResults.uncertainty_regulation.secondaryState is invalid')
     if (regulationResult.secondaryState === regulationResult.state) fail('dimensionResults.uncertainty_regulation.secondaryState must differ from state')

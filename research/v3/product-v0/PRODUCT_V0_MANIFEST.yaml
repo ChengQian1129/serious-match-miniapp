@@ -1,0 +1,39 @@
+schemaVersion: serious-match.v3.product-v0.manifest.v1.0
+productVersion: 0.1.0
+productStatus: THEORY_DRIVEN_PROVISIONAL
+empiricalCalibrationStatus: NOT_YET_CALIBRATED
+publicProductAllowed: true
+diagnosticUseAllowed: false
+compatibilityPredictionAllowed: false
+automaticPartnerRecommendationAllowed: false
+source:
+  candidateFreeze: ../normative/questionnaire_candidate_freeze.yaml
+  reportCore: ../normative/report_core_candidate.yaml
+  constructRegistry: ../normative/construct_registry.yaml
+  responseFormats: ../normative/response_formats.yaml
+  combineSemantics: ../normative/dimension_combine_conclusion.yaml
+  authoringLibrary: ../normative/user_report_authoring_library.yaml
+overlay:
+  questionnaire: product_questionnaire_v0.yaml
+  scoring: provisional_scoring_v0.yaml
+  decisionMap: decision_map_v0.yaml
+  methodDisclosure: product_method_disclosure.md
+runtime:
+  instrumentVersion: v3-product-v0.1.0
+  questionnaireVersion: v3-product-questionnaire-v0.1.0
+  scoringModelVersion: v3-product-scoring-v0.1.0
+  reportVersion: v3.product-report.v1.0
+  derivedProfileVersion: v3.derived-profile.v1.0
+  publicRuntimeAllowed: true
+upgradePolicy:
+  rawAnswerEventsImmutable: true
+  futureScoringMayProduceNewDerivedVersion: true
+  empiricalCalibrationRequiredForFutureUpgrade: true
+prohibited:
+  - compatibility_percentage
+  - relationship_success_probability
+  - automatic_partner_recommendation
+  - inferred_hard_constraint_from_simple_preference
+  - diagnosis
+  - personality_typing
+  - llm_report_generation

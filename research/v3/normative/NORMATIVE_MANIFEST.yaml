@@ -34,9 +34,16 @@ implementationScope:
   - P0/P1 research forms
   - symbolic report renderer for tests only
   - cloud contract after local P0.5 is stable
+productV0Overlay:
+  status: THEORY_DRIVEN_PROVISIONAL
+  questionnaire: ../product-v0/product_questionnaire_v0.yaml
+  scoring: ../product-v0/provisional_scoring_v0.yaml
+  decisionMap: ../product-v0/decision_map_v0.yaml
+  publicRuntimeAllowed: true
+  empiricalCalibrationRequiredForFutureUpgrade: true
   notNow:
-  - production V3 scoring model
-  - production V3 public report from raw answers
+  - empirically calibrated V3 scoring model
+  - empirically calibrated public claims from raw answers
   - compatibility percentage
   - relationship success probability
   - attachment/personality type

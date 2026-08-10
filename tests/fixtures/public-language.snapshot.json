@@ -23590,6 +23590,131 @@
     "text": "还有几件事，问卷看不出来"
   },
   {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.backAction",
+    "text": "返回"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.chapters.C1",
+    "text": "现在想不想开始"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.chapters.C2",
+    "text": "现在有没有位置"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.chapters.C3",
+    "text": "遇到不确定时"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.chapters.C4",
+    "text": "靠近和留空间"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.chapters.C5",
+    "text": "需要支持时"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.chapters.C6",
+    "text": "冲突以后怎么办"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.continueAction",
+    "text": "继续"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.errors.cannotSkip",
+    "text": "这项暂时不能跳过"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.errors.incomplete",
+    "text": "还有一项回答没有完成"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.errors.incompleteSelection",
+    "text": "这项选择还不完整"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.errors.saveFailed",
+    "text": "这项回答暂时无法保存"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.inputPlaceholder",
+    "text": "可以留空"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.intro",
+    "text": "这是一组帮助你整理关系想法的问题。完成后，你会看到一份基于自己回答的分层结果。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.method",
+    "text": "结果仍在持续验证和调整，不是心理诊断。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.pageTitle",
+    "text": "先从自己开始"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.partLabels.ENTRY_FACTS",
+    "text": "先了解一些基本情况"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.partLabels.PART_B_L3_OPERATING_MODEL",
+    "text": "日常相处的安排"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.partLabels.PART_B_L4_PARTNER_DECISION",
+    "text": "你在意什么"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.partLabels.PART_B_L5_FUTURE_ORIENTATION",
+    "text": "之后想过怎样的生活"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.progressTemplate",
+    "text": "{number} / 9"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.resultAction",
+    "text": "查看结果"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.selectedMark",
+    "text": "●"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.skipAction",
+    "text": "先不回答"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.unselectedMark",
+    "text": "○"
+  },
+  {
     "surface": "shared/content/report-copy.js",
     "key": "boundary",
     "text": "这些结果只根据你这次的回答整理，不是心理诊断，也不能预测一段关系会不会成功。"

@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "serious-match.v3.product-v0.runtime-manifest.v1.0",
+  "instrument": {
+    "id": "v3-product-v0",
+    "version": "v3-product-v0.1.0",
+    "questionnaireVersion": "v3-product-questionnaire-v0.1.0",
+    "scoringModelVersion": "v3-product-scoring-v0.1.0",
+    "reportVersion": "v3.product-report.v1.0",
+    "derivedProfileVersion": "v3.derived-profile.v1.0"
+  },
+  "status": "THEORY_DRIVEN_PROVISIONAL",
+  "sources": {
+    "research/v3/normative/questionnaire_candidate_freeze.yaml": "552d51faaad8d3a3a9c0e4bb005d4fe3bc55c404b6f4c312a7fe34ae77ad56c7",
+    "research/v3/normative/construct_registry.yaml": "1efcbb56dcdb472f6726a1a9f2853b2130b4fd3e6159afa1625c35687e0fdc58",
+    "research/v3/normative/response_formats.yaml": "dc51247ecb986515e73f46cb70b0115c4dcc7ce0d899f4616d1958147d4d8f7b",
+    "research/v3/product-v0/product_questionnaire_v0.yaml": "db020bfa61317d53953f4058e0a9cc40bb282b94423751000fad990af032874d",
+    "research/v3/product-v0/provisional_scoring_v0.yaml": "9468f33fd819a618aae7d863f8ba253db7bb28863da59e9b6dfb655e9eba891a",
+    "research/v3/product-v0/decision_map_v0.yaml": "933fa51f7d409b6187066c6cdbce839553353651556e9a00e037e9a61fc85d49",
+    "research/v3/normative/user_report_authoring_library.yaml": "fb83ba15ddb901a37c65006547da73f6d24520a43eec0e2aa9da7535701d1ce1",
+    "shared/content/public-language.generated.js": "2ff97265bcc2a7810d3f5bf03c5de29e15075376111b6ee6432dcb920f62ae6a"
+  },
+  "generatedRuntime": {
+    "questionnaireBundle": "shared/assessment-v3-product-v0/questionnaire-bundle.js",
+    "scoringBundle": "shared/assessment-v3-product-v0/scoring-bundle.js",
+    "runtime": "shared/assessment-v3-product-v0/runtime-engine.js"
+  },
+  "immutableRawAnswerEvents": true,
+  "empiricalCalibrationRequiredForFutureUpgrade": true
+}

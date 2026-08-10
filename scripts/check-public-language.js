@@ -145,6 +145,7 @@ function collectPublicStrings() {
     })
   })
   flattenStrings(registry.v3.narratives || {}).forEach(entry => entries.push(normalizedSnapshotEntry('shared/content/public-language.generated.js', `v3Narrative.${entry.key}`, entry.text)))
+  flattenStrings(registry.v3.productV0 || {}).forEach(entry => entries.push(normalizedSnapshotEntry('shared/content/public-language.generated.js', `v3ProductV0.${entry.key}`, entry.text)))
   Object.entries(registry.publicErrors || {}).forEach(([key, text]) => {
     if (typeof text === 'string') entries.push(normalizedSnapshotEntry('shared/content/public-language.generated.js', `error.${key}`, text))
   })

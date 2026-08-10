@@ -18588,6 +18588,39 @@ module.exports = {
         "method": "这些结果怎么来的"
       }
     },
+    "productV0": {
+      "pageTitle": "先从自己开始",
+      "intro": "这是一组帮助你整理关系想法的问题。完成后，你会看到一份基于自己回答的分层结果。",
+      "method": "结果仍在持续验证和调整，不是心理诊断。",
+      "progressTemplate": "{number} / 9",
+      "backAction": "返回",
+      "continueAction": "继续",
+      "resultAction": "查看结果",
+      "inputPlaceholder": "可以留空",
+      "skipAction": "先不回答",
+      "selectedMark": "●",
+      "unselectedMark": "○",
+      "errors": {
+        "incompleteSelection": "这项选择还不完整",
+        "saveFailed": "这项回答暂时无法保存",
+        "cannotSkip": "这项暂时不能跳过",
+        "incomplete": "还有一项回答没有完成"
+      },
+      "chapters": {
+        "C1": "现在想不想开始",
+        "C2": "现在有没有位置",
+        "C3": "遇到不确定时",
+        "C4": "靠近和留空间",
+        "C5": "需要支持时",
+        "C6": "冲突以后怎么办"
+      },
+      "partLabels": {
+        "ENTRY_FACTS": "先了解一些基本情况",
+        "PART_B_L3_OPERATING_MODEL": "日常相处的安排",
+        "PART_B_L4_PARTNER_DECISION": "你在意什么",
+        "PART_B_L5_FUTURE_ORIENTATION": "之后想过怎样的生活"
+      }
+    },
     "chapterTitles": {
       "C1": "你现在想不想谈恋爱",
       "C2": "你现在有没有时间和精力",

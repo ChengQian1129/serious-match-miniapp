@@ -7,7 +7,7 @@ module.exports = {
     "V2_PUBLIC_COPY_REWRITE.yaml": "aa49d69eb91f4820bea1160ec4699289b31da033b6b383f7af8dc243bb409db1",
     "V3_ALL_USER_FACING_STRINGS_AUDIT.csv": "82fc5e9a1df6fc74701994d3b4670bca132d199ea81e0c717900923942310413",
     "V3_PUBLIC_NARRATIVE_OVERRIDE.yaml": "5f72e3b7c2b9d9b9003e5b28c331e8c937e187e73e1edd2711f85573210363b5",
-    "V3_PRODUCT_PREVIEW_COPY.yaml": "75d6f1281df058d88a8cc12138b04881ac2a86e0b84cad58a25430223d875606",
+    "V3_PRODUCT_PREVIEW_COPY.yaml": "c73c543b0e02524d7e0bab17fd8cc16926b5ced07189a20d48b01bd1b0a96cf2",
     "PUBLIC_FORBIDDEN_LANGUAGE.yaml": "58a52e6589929b11ade6fb79cf0378dd2478d0f329046b74595143dfbeb96add"
   },
   "ui": {
@@ -1979,10 +1979,45 @@ module.exports = {
       "fallback": {
         "dimensionHeadline": "这一部分现在还看不出明确结论。",
         "dimensionSummary": "先把它当作一个可以继续观察的方向。",
+        "insufficientDimensionHeadline": "这一部分现在还看不太出来",
+        "insufficientDimensionSummary": "你的回答里还缺少几条关键信息，所以这里先不急着下结论。",
         "chapterHeadline": "这一部分的回答还没有形成一个很明确的方向。",
         "chapterSummary": "具体情况可能会随着人和相处方式不同而变化。",
         "patternHeadline": "这里有一个值得在真实相处中继续看的地方。",
         "patternSummary": "问卷只能先把线索放在一起，不能替你决定答案。"
+      }
+    },
+    "productV0": {
+      "pageTitle": "先从自己开始",
+      "intro": "这是一组帮助你整理关系想法的问题。完成后，你会看到一份基于自己回答的分层结果。",
+      "method": "结果仍在持续验证和调整，不是心理诊断。",
+      "progressTemplate": "{number} / 9",
+      "backAction": "返回",
+      "continueAction": "继续",
+      "resultAction": "查看结果",
+      "inputPlaceholder": "可以留空",
+      "skipAction": "先不回答",
+      "selectedMark": "●",
+      "unselectedMark": "○",
+      "errors": {
+        "incompleteSelection": "这项选择还不完整",
+        "saveFailed": "这项回答暂时无法保存",
+        "cannotSkip": "这项暂时不能跳过",
+        "incomplete": "还有一项回答没有完成"
+      },
+      "chapters": {
+        "C1": "现在想不想开始",
+        "C2": "现在有没有位置",
+        "C3": "遇到不确定时",
+        "C4": "靠近和留空间",
+        "C5": "需要支持时",
+        "C6": "冲突以后怎么办"
+      },
+      "partLabels": {
+        "ENTRY_FACTS": "先了解一些基本情况",
+        "PART_B_L3_OPERATING_MODEL": "日常相处的安排",
+        "PART_B_L4_PARTNER_DECISION": "你在意什么",
+        "PART_B_L5_FUTURE_ORIENTATION": "之后想过怎样的生活"
       }
     }
   },

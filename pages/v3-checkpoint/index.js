@@ -3,6 +3,8 @@ const { CHAPTERS } = require('../../shared/assessment-v3-product/contract')
 const { getFixture } = require('../../shared/assessment-v3-product/fixtures')
 const { buildReport, buildChapterView, PRODUCT_COPY } = require('../../shared/assessment-v3-product/report-renderer')
 const { navigateOnce, resetNavigation } = require('../../utils/navigation')
+const productRuntime = require('../../shared/assessment-v3-product-v0/runtime-engine')
+const productStore = require('../../utils/assessment-v3-product-v0/session-store')
 
 function chapterIndex(chapterId) {
   const index = CHAPTERS.findIndex(chapter => chapter.id === chapterId)
@@ -18,6 +20,14 @@ function chapterView(personaId, chapterId) {
   return { report, current, next, number: currentIndex + 1, hasNext: Boolean(next) }
 }
 
+function productChapterView(chapterId) {
+  const session = productStore.getSession()
+  const profile = session.derivedProfile || productRuntime.deriveProfile(session)
+  const report = buildReport(profile)
+  const current = buildChapterView(report, chapterId)
+  return { report, current, next: null, number: chapterIndex(chapterId) + 1, hasNext: true }
+}
+
 Page({
   data: {
     ready: false,
@@ -30,6 +40,14 @@ Page({
   },
 
   onLoad(options = {}) {
+    if (options.mode === 'product-v0') {
+      if (!FEATURES.v3ProductV0) return navigateOnce(this, 'reLaunch', { url: '/pages/home/index' })
+      this.mode = 'product-v0'
+      this.chapterId = options.chapter || 'C1'
+      this.nextIndex = options.nextIndex
+      this.loadChapter()
+      return
+    }
     if (!FEATURES.v3ProductPreview) return navigateOnce(this, 'reLaunch', { url: '/pages/home/index' })
     this.personaId = getFixture(options.persona).persona.id
     this.chapterId = options.chapter || 'C1'
@@ -39,6 +57,11 @@ Page({
   onShow() { resetNavigation(this) },
 
   loadChapter() {
+    if (this.mode === 'product-v0') {
+      const view = productChapterView(this.chapterId)
+      this.setData({ ready: true, mode: this.mode, chapter: view.current, number: view.number, chapterNumberText: PRODUCT_COPY.preview.chapterNumber.replace('{number}', String(view.number)), hasNext: true, personaId: '' })
+      return
+    }
     const view = chapterView(this.personaId, this.chapterId)
     this.setData({ ready: true, personaId: this.personaId, chapter: view.current, number: view.number, chapterNumberText: PRODUCT_COPY.preview.chapterNumber.replace('{number}', String(view.number)), hasNext: view.hasNext })
   },
@@ -46,10 +69,15 @@ Page({
   openEvidence(event) {
     const dimensionId = event.currentTarget.dataset.dimensionId
     if (!dimensionId) return
-    navigateOnce(this, 'navigateTo', { url: `/pages/v3-result-evidence/index?persona=${encodeURIComponent(this.personaId)}&dimension=${encodeURIComponent(dimensionId)}` })
+    const query = this.mode === 'product-v0' ? `mode=product-v0&dimension=${encodeURIComponent(dimensionId)}` : `persona=${encodeURIComponent(this.personaId)}&dimension=${encodeURIComponent(dimensionId)}`
+    navigateOnce(this, 'navigateTo', { url: `/pages/v3-result-evidence/index?${query}` })
   },
 
   continueNext() {
+    if (this.mode === 'product-v0') {
+      if (this.nextIndex !== undefined) return navigateOnce(this, 'redirectTo', { url: `/pages/questionnaire-v3/index?index=${encodeURIComponent(this.nextIndex)}` })
+      return navigateOnce(this, 'redirectTo', { url: '/pages/questionnaire-v3/index' })
+    }
     const nextIndex = chapterIndex(this.chapterId) + 1
     const nextChapter = CHAPTERS[nextIndex]
     if (nextChapter) {
@@ -60,12 +88,14 @@ Page({
   },
 
   openResult() {
+    if (this.mode === 'product-v0') return navigateOnce(this, 'navigateTo', { url: '/pages/v3-result/index?mode=product-v0' })
     navigateOnce(this, 'navigateTo', { url: `/pages/v3-result/index?persona=${encodeURIComponent(this.personaId)}` })
   },
 
   backToPreview() {
+    if (this.mode === 'product-v0') return navigateOnce(this, 'navigateBack', { fail: () => navigateOnce(this, 'redirectTo', { url: '/pages/questionnaire-v3/index' }) })
     navigateOnce(this, 'reLaunch', { url: `/pages/v3-product-preview/index?persona=${encodeURIComponent(this.personaId)}` })
   }
 })
 
-module.exports = { chapterIndex, chapterView }
+module.exports = { chapterIndex, chapterView, productChapterView }

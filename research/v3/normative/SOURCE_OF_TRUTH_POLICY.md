@@ -44,6 +44,19 @@ starter_dropin/*
 
 ---
 
+## 2.1 Product v0 overlay authority
+
+After the normative semantic files, the Product v0 overlay is the authority for the first public, theory-driven implementation:
+
+```text
+product-v0/PRODUCT_V0_MANIFEST.yaml
+product-v0/product_questionnaire_v0.yaml
+product-v0/provisional_scoring_v0.yaml
+product-v0/decision_map_v0.yaml
+```
+
+Normative files define what each construct and combine grammar means. Product v0 files define which REPORT_CORE subset is used now and how the provisional implementation operationalizes it. Product v0 must not redefine a construct for implementation convenience. P0/P1 research forms remain research-only and cannot override the Product v0 questionnaire.
+
 ## 3. Three different questionnaire objects
 
 These MUST remain separate.
@@ -133,7 +146,7 @@ The internal measurement model may change after Pilot, but an agent must not rep
 
 ## 5. Scoring boundary
 
-The package deliberately does NOT contain a validated mapping:
+The normative package deliberately does NOT contain an empirically calibrated mapping:
 
 ```text
 raw answers → final dimension state
@@ -144,8 +157,25 @@ Therefore:
 - runtime collection CAN be implemented now;
 - item-to-construct metadata CAN be implemented now;
 - symbolic/synthetic report rendering CAN be implemented now;
-- production scoring thresholds/weights MUST NOT be invented;
-- the public V3 report MUST remain gated until a versioned scoring model exists after Pilot.
+- production/calibrated scoring thresholds and weights MUST NOT be presented as validated;
+- research P0/P1 runtime remains no-production-scoring.
+
+### Product v0 scoring overlay
+
+The separate `research/v3/product-v0/` overlay is explicitly allowed to provide a complete local product:
+
+```text
+raw answers
+-> versioned theory-driven provisional rules
+-> Product v0 DerivedV3Profile
+-> V3 report
+```
+
+Product v0 scoring is deterministic and auditable, but it is not empirically calibrated. It is derived from the frozen V3 construct and combine architecture and cannot redefine scientific meaning. Future research may change item selection, weights, thresholds, state rules, and confidence rules without rewriting historical raw answer events. Public copy must disclose this provisional status.
+
+```text
+THEORY_DRIVEN_PROVISIONAL != EMPIRICALLY_CALIBRATED
+```
 
 ---
 

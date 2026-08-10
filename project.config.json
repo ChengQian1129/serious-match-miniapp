@@ -69,6 +69,18 @@
       },
       {
         "type": "folder",
+        "value": "pages/questionnaire-v3-pilot"
+      },
+      {
+        "type": "folder",
+        "value": "pages/v3-p0-research"
+      },
+      {
+        "type": "folder",
+        "value": "pages/v3-p0-coding"
+      },
+      {
+        "type": "folder",
         "value": "research"
       },
       {
