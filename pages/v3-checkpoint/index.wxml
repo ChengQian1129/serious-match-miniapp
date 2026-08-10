@@ -1,0 +1,37 @@
+<view wx:if="{{ready && chapter}}" class="page v3-checkpoint-page">
+  <view class="v3-checkpoint-shell">
+    <view class="v3-checkpoint-topline">
+      <button class="v3-text-action" bind:tap="backToPreview">{{copy.preview.backAction}}</button>
+      <text>{{chapterNumberText}}</text>
+    </view>
+    <view class="v3-checkpoint-progress">
+      <view class="v3-checkpoint-progress__bar" style="width: {{number / 6 * 100}}%;"></view>
+    </view>
+
+    <view class="v3-checkpoint-title">{{chapter.title}}</view>
+    <view class="v3-checkpoint-intro">{{chapter.intro}}</view>
+
+    <view class="v3-checkpoint-synthesis">
+      <view class="v3-checkpoint-synthesis__label">{{copy.preview.previewBadge}}</view>
+      <view class="v3-checkpoint-synthesis__headline">{{chapter.headline}}</view>
+      <view class="v3-checkpoint-synthesis__summary">{{chapter.summary}}</view>
+    </view>
+
+    <view class="v3-checkpoint-detail-title">{{copy.preview.dimensionTitle}}</view>
+    <view class="v3-checkpoint-dimensions">
+      <view wx:for="{{chapter.dimensionCards}}" wx:key="id" wx:for-item="dimension" class="v3-checkpoint-dimension">
+        <view class="v3-checkpoint-dimension__title">{{dimension.title}}</view>
+        <view class="v3-checkpoint-dimension__headline">{{dimension.headline}}</view>
+        <view class="v3-checkpoint-dimension__summary">{{dimension.summary}}</view>
+        <button wx:if="{{dimension.evidenceAvailable}}" class="v3-evidence-link" data-dimension-id="{{dimension.id}}" bind:tap="openEvidence">{{copy.preview.evidenceAction}} <text>›</text></button>
+      </view>
+    </view>
+
+    <view class="v3-checkpoint-transition">{{chapter.transition}}</view>
+  </view>
+
+  <view class="action-bar v3-checkpoint-actions">
+    <button class="dl-button" bind:tap="continueNext">{{hasNext ? copy.preview.nextAction : copy.preview.resultAction}}</button>
+    <button class="v3-text-action v3-text-action--center" bind:tap="openResult">{{copy.preview.fullReportAction}}</button>
+  </view>
+</view>

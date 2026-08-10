@@ -1180,6 +1180,21 @@
     "text": "01"
   },
   {
+    "surface": "pages/v3-checkpoint/index.wxml",
+    "key": "text.34",
+    "text": "›"
+  },
+  {
+    "surface": "pages/v3-result/index.wxml",
+    "key": "text.38",
+    "text": "›"
+  },
+  {
+    "surface": "pages/v3-result/index.wxml",
+    "key": "text.51",
+    "text": "›"
+  },
+  {
     "surface": "pages/welcome/index.json",
     "key": "navigationBarTitleText",
     "text": "恋爱和相处"
@@ -21946,8 +21961,58 @@
   },
   {
     "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C2.HIGH_HIGH.headline",
+    "text": "你现在有时间和精力，答应下来的事也通常能做到。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C2.HIGH_LOW.headline",
+    "text": "你不太缺时间，真正要注意的是约好的事能不能一直有下文。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C2.HIGH_MID.headline",
+    "text": "时间和精力还可以，但忙起来时有些安排未必一直稳定。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
     "key": "v3Narrative.chapters.C2.label",
     "text": "你现在有没有时间和精力"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C2.LOW_HIGH.headline",
+    "text": "你做事很有交代，但现在确实没有太多时间和精力开始一段新关系。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C2.LOW_LOW.headline",
+    "text": "现在最明显的问题是时间和精力都比较紧，约好的事也容易因此没了下文。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C2.LOW_MID.headline",
+    "text": "你不是不愿意投入，只是现在的生活很容易把关系挤到后面。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C2.MID_HIGH.headline",
+    "text": "你的生活有时会很忙，但只要答应下来，你通常比较会有个交代。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C2.MID_LOW.headline",
+    "text": "生活一忙，约好的事也比较容易断掉，这可能会让对方摸不准你的节奏。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C2.MID_MID.headline",
+    "text": "你现在的时间、精力和联系节奏都比较看阶段，需要边走边调整。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C3.CLARIFYING.headline",
+    "text": "你更愿意直接问清楚。"
   },
   {
     "surface": "shared/content/public-language.generated.js",
@@ -21956,8 +22021,98 @@
   },
   {
     "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C3.MIXED.headline",
+    "text": "你没有固定一种做法，很看对方是谁、事情有多重要。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C3.MONITORING_ORIENTED.headline",
+    "text": "你容易去看线上状态、社交动态等其他线索。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C3.OBSERVING.headline",
+    "text": "你通常会先看看对方接下来怎么做。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C3.REASSURANCE_ORIENTED.headline",
+    "text": "你会比较需要对方明确告诉你他的想法。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C3.RUMINATIVE.headline",
+    "text": "没有新消息时，你也容易在脑子里反复想。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C3.TESTING_PROTEST.headline",
+    "text": "你有时会故意少主动一点，看对方会不会来找你。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C3.TOLERANT_WAITING.headline",
+    "text": "你可以先不急着下结论，等更多信息。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C3.WITHDRAWING.headline",
+    "text": "如果一直说不清，你会慢慢把自己收回来。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C4.HIGH_HIGH.headline",
+    "text": "你喜欢亲近，也需要自己的时间。关系再好，你也不想两个人什么都绑在一起。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C4.HIGH_LOW.headline",
+    "text": "你比较喜欢两个人一起待着，对很多独处时间没有特别强的要求。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C4.HIGH_MID.headline",
+    "text": "你对亲近和互相依靠比较自在，同时也希望各自保留一点自己的生活。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
     "key": "v3Narrative.chapters.C4.label",
     "text": "关系越来越亲近以后"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C4.LOW_HIGH.headline",
+    "text": "你需要不少自己的空间，也不太容易真正依靠另一个人。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C4.LOW_LOW.headline",
+    "text": "你不太需要很多独处时间，不过真正求助、示弱或者依靠对方，对你还是有点难。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C4.LOW_MID.headline",
+    "text": "你对依靠别人比较谨慎，但并不代表你总想一个人待着。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C4.MID_HIGH.headline",
+    "text": "你可以和人靠近，但也很需要自己的空间。信任和相处节奏对你很重要。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C4.MID_LOW.headline",
+    "text": "你不太需要很多独处时间，但真正把重要的事交给对方，还是要看信任够不够。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C4.MID_MID.headline",
+    "text": "你需要多亲近、多少自己的时间，很看具体的人和当时的生活状态。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C5.BALANCED.headline",
+    "text": "你大致知道自己需要什么，也比较能说出来；从情境题看，你也会留意对方需要什么。"
   },
   {
     "surface": "shared/content/public-language.generated.js",
@@ -21966,8 +22121,103 @@
   },
   {
     "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C5.NEED_CLEAR_SIGNAL_LOW.headline",
+    "text": "你其实知道什么会让自己好受一点，但不一定会直接告诉对方。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C5.NEED_CONTEXTUAL.headline",
+    "text": "你需要什么帮助，很看发生了什么。固定一种安慰方式不一定适合你。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C5.PROBLEM_SOLVING_MISMATCH_RISK.headline",
+    "text": "遇到能解决的问题时，你更希望两个人一起想办法。只有安慰可能会让你觉得还不够。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C5.PROVISIONAL.headline",
+    "text": "从情境题只能先看到一个大概。你现实里怎么回应别人，还要看真正相处时的情况。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C5.REASSURANCE_HIGH_SIGNAL_LOW.headline",
+    "text": "关系不安时你很想听到明确说法，但又不一定会直接告诉对方自己在等什么。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C5.SIGNAL_HIGH_RESPONSE_LOW.headline",
+    "text": "你比较会说自己需要什么，但轮到照顾对方时，有时会太快按自己的习惯来。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C5.SIGNAL_LOW_RESPONSE_HIGH.headline",
+    "text": "你可能比较会照顾别人，但轮到自己难受时，反而不太会开口。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C5.SPACE_NEED_SIGNAL_HIGH.headline",
+    "text": "压力大时你会想先自己待一会儿，而且通常能把这件事说清楚。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C5.VALIDATION_MISMATCH_RISK.headline",
+    "text": "你难受时更想先被听懂。如果对方一上来就给建议，你可能会觉得他没真正听进去。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C6.HIGH_ANY_LOW.headline",
+    "text": "你不只是在吵的时候容易被带进去，停下来以后也比较容易让问题一直搁着。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C6.HIGH_LONG_HIGH.headline",
+    "text": "你吵完后需要比较久才能缓过来，不过只要给你时间，你通常还是愿意回来处理。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C6.HIGH_SHORT_HIGH.headline",
+    "text": "吵起来时你的情绪会比较强，但停一会儿以后，你通常还是愿意回来把事情说完。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
     "key": "v3Narrative.chapters.C6.label",
     "text": "吵架以后，你通常怎么处理"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C6.LOW_ANY_LOW.headline",
+    "text": "你不一定会吵得很激烈，但有些问题会因为后来不再提而一直留着。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C6.LOW_IMMEDIATE_HIGH.headline",
+    "text": "你吵架时通常还能继续谈，也比较愿意尽快把问题处理完。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C6.MID_FLEX_HIGH.headline",
+    "text": "你会不会很激动、要不要暂停都看情况，不过大多数时候你还是愿意回来把事情收尾。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C6.PACING_MISMATCH_SENSITIVE.headline",
+    "text": "你对“什么时候继续谈”比较在意。如果两个人在这件事上差太多，吵架会更难处理。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C6.PAUSE_WITHOUT_SIGNAL.headline",
+    "text": "你可能确实需要暂停，但如果不说什么时候回来，对方很容易以为你不想管了。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C6.REPAIR_STRONG.headline",
+    "text": "吵架本身不是重点。更重要的是，你通常愿意在冷静后回来把事情接上。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C6.RETURN_WITHOUT_ISSUE.headline",
+    "text": "你比较容易恢复正常相处，但恢复正常不等于那件事真的解决了。"
   },
   {
     "surface": "shared/content/public-language.generated.js",

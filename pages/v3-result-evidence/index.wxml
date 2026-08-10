@@ -1,0 +1,19 @@
+<view wx:if="{{ready && finding}}" class="page v3-evidence-page">
+  <view class="v3-evidence-shell">
+    <button class="v3-text-action" bind:tap="back">{{copy.preview.backAction}}</button>
+    <view class="v3-evidence-kicker">{{copy.evidence.title}}</view>
+    <view class="v3-evidence-title">{{finding.title}}</view>
+    <view class="v3-evidence-headline">{{finding.headline}}</view>
+    <view class="v3-evidence-summary">{{finding.summary}}</view>
+    <view class="v3-evidence-note">{{finding.sourceNote}}</view>
+
+    <view wx:if="{{finding.evidence.length}}" class="v3-evidence-list">
+      <view wx:for="{{finding.evidence}}" wx:key="question" wx:for-item="item" class="v3-evidence-item">
+        <view class="v3-evidence-item__label">{{item.label}}</view>
+        <view class="v3-evidence-item__question">{{item.question}}</view>
+        <view class="v3-evidence-item__answer">{{copy.evidence.answerPrefix}}{{item.answer}}</view>
+      </view>
+    </view>
+    <view wx:else class="v3-evidence-empty">{{finding.empty}}</view>
+  </view>
+</view>

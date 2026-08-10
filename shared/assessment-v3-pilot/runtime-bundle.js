@@ -18269,65 +18269,206 @@ module.exports = {
         },
         "C2": {
           "label": "你现在有没有时间和精力",
-          "HIGH_HIGH": {},
-          "HIGH_MID": {},
-          "HIGH_LOW": {},
-          "MID_HIGH": {},
-          "MID_MID": {},
-          "MID_LOW": {},
-          "LOW_HIGH": {},
-          "LOW_MID": {},
-          "LOW_LOW": {}
+          "HIGH_HIGH": {
+            "headline": "你现在有时间和精力，答应下来的事也通常能做到。",
+            "summary": ""
+          },
+          "HIGH_MID": {
+            "headline": "时间和精力还可以，但忙起来时有些安排未必一直稳定。",
+            "summary": ""
+          },
+          "HIGH_LOW": {
+            "headline": "你不太缺时间，真正要注意的是约好的事能不能一直有下文。",
+            "summary": ""
+          },
+          "MID_HIGH": {
+            "headline": "你的生活有时会很忙，但只要答应下来，你通常比较会有个交代。",
+            "summary": ""
+          },
+          "MID_MID": {
+            "headline": "你现在的时间、精力和联系节奏都比较看阶段，需要边走边调整。",
+            "summary": ""
+          },
+          "MID_LOW": {
+            "headline": "生活一忙，约好的事也比较容易断掉，这可能会让对方摸不准你的节奏。",
+            "summary": ""
+          },
+          "LOW_HIGH": {
+            "headline": "你做事很有交代，但现在确实没有太多时间和精力开始一段新关系。",
+            "summary": ""
+          },
+          "LOW_MID": {
+            "headline": "你不是不愿意投入，只是现在的生活很容易把关系挤到后面。",
+            "summary": ""
+          },
+          "LOW_LOW": {
+            "headline": "现在最明显的问题是时间和精力都比较紧，约好的事也容易因此没了下文。",
+            "summary": ""
+          }
         },
         "C3": {
           "label": "对方态度变了，你通常会怎样",
-          "CLARIFYING": {},
-          "OBSERVING": {},
-          "REASSURANCE_ORIENTED": {},
-          "MONITORING_ORIENTED": {},
-          "RUMINATIVE": {},
-          "TESTING_PROTEST": {},
-          "TOLERANT_WAITING": {},
-          "WITHDRAWING": {},
-          "MIXED": {}
+          "CLARIFYING": {
+            "headline": "你更愿意直接问清楚。",
+            "summary": ""
+          },
+          "OBSERVING": {
+            "headline": "你通常会先看看对方接下来怎么做。",
+            "summary": ""
+          },
+          "REASSURANCE_ORIENTED": {
+            "headline": "你会比较需要对方明确告诉你他的想法。",
+            "summary": ""
+          },
+          "MONITORING_ORIENTED": {
+            "headline": "你容易去看线上状态、社交动态等其他线索。",
+            "summary": ""
+          },
+          "RUMINATIVE": {
+            "headline": "没有新消息时，你也容易在脑子里反复想。",
+            "summary": ""
+          },
+          "TESTING_PROTEST": {
+            "headline": "你有时会故意少主动一点，看对方会不会来找你。",
+            "summary": ""
+          },
+          "TOLERANT_WAITING": {
+            "headline": "你可以先不急着下结论，等更多信息。",
+            "summary": ""
+          },
+          "WITHDRAWING": {
+            "headline": "如果一直说不清，你会慢慢把自己收回来。",
+            "summary": ""
+          },
+          "MIXED": {
+            "headline": "你没有固定一种做法，很看对方是谁、事情有多重要。",
+            "summary": ""
+          }
         },
         "C4": {
           "label": "关系越来越亲近以后",
-          "HIGH_HIGH": {},
-          "HIGH_MID": {},
-          "HIGH_LOW": {},
-          "MID_HIGH": {},
-          "MID_MID": {},
-          "MID_LOW": {},
-          "LOW_HIGH": {},
-          "LOW_MID": {},
-          "LOW_LOW": {}
+          "HIGH_HIGH": {
+            "headline": "你喜欢亲近，也需要自己的时间。关系再好，你也不想两个人什么都绑在一起。",
+            "summary": ""
+          },
+          "HIGH_MID": {
+            "headline": "你对亲近和互相依靠比较自在，同时也希望各自保留一点自己的生活。",
+            "summary": ""
+          },
+          "HIGH_LOW": {
+            "headline": "你比较喜欢两个人一起待着，对很多独处时间没有特别强的要求。",
+            "summary": ""
+          },
+          "MID_HIGH": {
+            "headline": "你可以和人靠近，但也很需要自己的空间。信任和相处节奏对你很重要。",
+            "summary": ""
+          },
+          "MID_MID": {
+            "headline": "你需要多亲近、多少自己的时间，很看具体的人和当时的生活状态。",
+            "summary": ""
+          },
+          "MID_LOW": {
+            "headline": "你不太需要很多独处时间，但真正把重要的事交给对方，还是要看信任够不够。",
+            "summary": ""
+          },
+          "LOW_HIGH": {
+            "headline": "你需要不少自己的空间，也不太容易真正依靠另一个人。",
+            "summary": ""
+          },
+          "LOW_MID": {
+            "headline": "你对依靠别人比较谨慎，但并不代表你总想一个人待着。",
+            "summary": ""
+          },
+          "LOW_LOW": {
+            "headline": "你不太需要很多独处时间，不过真正求助、示弱或者依靠对方，对你还是有点难。",
+            "summary": ""
+          }
         },
         "C5": {
           "label": "你希望对方怎么支持你",
-          "NEED_CLEAR_SIGNAL_LOW": {},
-          "NEED_CONTEXTUAL": {},
-          "SIGNAL_HIGH_RESPONSE_LOW": {},
-          "SIGNAL_LOW_RESPONSE_HIGH": {},
-          "REASSURANCE_HIGH_SIGNAL_LOW": {},
-          "SPACE_NEED_SIGNAL_HIGH": {},
-          "PROBLEM_SOLVING_MISMATCH_RISK": {},
-          "VALIDATION_MISMATCH_RISK": {},
-          "BALANCED": {},
-          "PROVISIONAL": {}
+          "NEED_CLEAR_SIGNAL_LOW": {
+            "headline": "你其实知道什么会让自己好受一点，但不一定会直接告诉对方。",
+            "summary": ""
+          },
+          "NEED_CONTEXTUAL": {
+            "headline": "你需要什么帮助，很看发生了什么。固定一种安慰方式不一定适合你。",
+            "summary": ""
+          },
+          "SIGNAL_HIGH_RESPONSE_LOW": {
+            "headline": "你比较会说自己需要什么，但轮到照顾对方时，有时会太快按自己的习惯来。",
+            "summary": ""
+          },
+          "SIGNAL_LOW_RESPONSE_HIGH": {
+            "headline": "你可能比较会照顾别人，但轮到自己难受时，反而不太会开口。",
+            "summary": ""
+          },
+          "REASSURANCE_HIGH_SIGNAL_LOW": {
+            "headline": "关系不安时你很想听到明确说法，但又不一定会直接告诉对方自己在等什么。",
+            "summary": ""
+          },
+          "SPACE_NEED_SIGNAL_HIGH": {
+            "headline": "压力大时你会想先自己待一会儿，而且通常能把这件事说清楚。",
+            "summary": ""
+          },
+          "PROBLEM_SOLVING_MISMATCH_RISK": {
+            "headline": "遇到能解决的问题时，你更希望两个人一起想办法。只有安慰可能会让你觉得还不够。",
+            "summary": ""
+          },
+          "VALIDATION_MISMATCH_RISK": {
+            "headline": "你难受时更想先被听懂。如果对方一上来就给建议，你可能会觉得他没真正听进去。",
+            "summary": ""
+          },
+          "BALANCED": {
+            "headline": "你大致知道自己需要什么，也比较能说出来；从情境题看，你也会留意对方需要什么。",
+            "summary": ""
+          },
+          "PROVISIONAL": {
+            "headline": "从情境题只能先看到一个大概。你现实里怎么回应别人，还要看真正相处时的情况。",
+            "summary": ""
+          }
         },
         "C6": {
           "label": "吵架以后，你通常怎么处理",
-          "HIGH_SHORT_HIGH": {},
-          "HIGH_LONG_HIGH": {},
-          "HIGH_ANY_LOW": {},
-          "MID_FLEX_HIGH": {},
-          "LOW_IMMEDIATE_HIGH": {},
-          "LOW_ANY_LOW": {},
-          "PAUSE_WITHOUT_SIGNAL": {},
-          "RETURN_WITHOUT_ISSUE": {},
-          "REPAIR_STRONG": {},
-          "PACING_MISMATCH_SENSITIVE": {}
+          "HIGH_SHORT_HIGH": {
+            "headline": "吵起来时你的情绪会比较强，但停一会儿以后，你通常还是愿意回来把事情说完。",
+            "summary": ""
+          },
+          "HIGH_LONG_HIGH": {
+            "headline": "你吵完后需要比较久才能缓过来，不过只要给你时间，你通常还是愿意回来处理。",
+            "summary": ""
+          },
+          "HIGH_ANY_LOW": {
+            "headline": "你不只是在吵的时候容易被带进去，停下来以后也比较容易让问题一直搁着。",
+            "summary": ""
+          },
+          "MID_FLEX_HIGH": {
+            "headline": "你会不会很激动、要不要暂停都看情况，不过大多数时候你还是愿意回来把事情收尾。",
+            "summary": ""
+          },
+          "LOW_IMMEDIATE_HIGH": {
+            "headline": "你吵架时通常还能继续谈，也比较愿意尽快把问题处理完。",
+            "summary": ""
+          },
+          "LOW_ANY_LOW": {
+            "headline": "你不一定会吵得很激烈，但有些问题会因为后来不再提而一直留着。",
+            "summary": ""
+          },
+          "PAUSE_WITHOUT_SIGNAL": {
+            "headline": "你可能确实需要暂停，但如果不说什么时候回来，对方很容易以为你不想管了。",
+            "summary": ""
+          },
+          "RETURN_WITHOUT_ISSUE": {
+            "headline": "你比较容易恢复正常相处，但恢复正常不等于那件事真的解决了。",
+            "summary": ""
+          },
+          "REPAIR_STRONG": {
+            "headline": "吵架本身不是重点。更重要的是，你通常愿意在冷静后回来把事情接上。",
+            "summary": ""
+          },
+          "PACING_MISMATCH_SENSITIVE": {
+            "headline": "你对“什么时候继续谈”比较在意。如果两个人在这件事上差太多，吵架会更难处理。",
+            "summary": ""
+          }
         }
       },
       "crossChapterPatterns": {

@@ -1,0 +1,155 @@
+.v3-checkpoint-page {
+  padding-bottom: calc(244rpx + env(safe-area-inset-bottom));
+  background: #fbfbfa;
+}
+
+.v3-checkpoint-shell {
+  padding: 28rpx var(--dl-gutter) 72rpx;
+}
+
+.v3-checkpoint-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20rpx;
+  color: var(--dl-grey-500);
+  font-size: 24rpx;
+  line-height: 36rpx;
+}
+
+.v3-text-action {
+  min-height: 52rpx;
+  margin: 0;
+  padding: 8rpx 0;
+  border: 0;
+  background: transparent;
+  color: var(--dl-black);
+  font-size: 25rpx;
+  line-height: 36rpx;
+  text-align: left;
+}
+
+.v3-text-action--center {
+  text-align: center;
+}
+
+.v3-checkpoint-progress {
+  height: 4rpx;
+  margin-top: 16rpx;
+  overflow: hidden;
+  background: var(--dl-grey-200);
+}
+
+.v3-checkpoint-progress__bar {
+  height: 100%;
+  background: var(--dl-black);
+  transition: width 240ms ease-out;
+}
+
+.v3-checkpoint-title {
+  margin-top: 68rpx;
+  font-size: 46rpx;
+  font-weight: 700;
+  line-height: 1.28;
+}
+
+.v3-checkpoint-intro {
+  max-width: 680rpx;
+  margin-top: 18rpx;
+  color: var(--dl-grey-500);
+  font-size: 28rpx;
+  line-height: 44rpx;
+}
+
+.v3-checkpoint-synthesis {
+  margin-top: 48rpx;
+  padding: 28rpx 0 34rpx;
+  border-top: 2rpx solid var(--dl-black);
+  border-bottom: 2rpx solid var(--dl-black);
+}
+
+.v3-checkpoint-synthesis__label,
+.v3-checkpoint-detail-title {
+  color: var(--dl-grey-500);
+  font-size: 23rpx;
+  font-weight: 600;
+  line-height: 34rpx;
+}
+
+.v3-checkpoint-synthesis__headline {
+  margin-top: 14rpx;
+  font-size: 36rpx;
+  font-weight: 700;
+  line-height: 50rpx;
+}
+
+.v3-checkpoint-synthesis__summary {
+  margin-top: 12rpx;
+  color: #444;
+  font-size: 28rpx;
+  line-height: 46rpx;
+}
+
+.v3-checkpoint-detail-title {
+  margin-top: 50rpx;
+  color: var(--dl-black);
+}
+
+.v3-checkpoint-dimensions {
+  border-top: 2rpx solid var(--dl-grey-200);
+}
+
+.v3-checkpoint-dimension {
+  padding: 28rpx 0 30rpx;
+  border-bottom: 2rpx solid var(--dl-grey-200);
+}
+
+.v3-checkpoint-dimension__title {
+  color: var(--dl-grey-500);
+  font-size: 24rpx;
+  line-height: 36rpx;
+}
+
+.v3-checkpoint-dimension__headline {
+  margin-top: 8rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  line-height: 42rpx;
+}
+
+.v3-checkpoint-dimension__summary {
+  margin-top: 8rpx;
+  color: #4a4a4a;
+  font-size: 26rpx;
+  line-height: 42rpx;
+}
+
+.v3-evidence-link {
+  min-height: 52rpx;
+  margin: 14rpx 0 0;
+  padding: 8rpx 0;
+  border: 0;
+  background: transparent;
+  color: var(--dl-black);
+  font-size: 24rpx;
+  line-height: 36rpx;
+  text-align: left;
+  text-decoration: underline;
+}
+
+.v3-checkpoint-transition {
+  margin-top: 38rpx;
+  color: var(--dl-grey-500);
+  font-size: 26rpx;
+  line-height: 42rpx;
+}
+
+.v3-checkpoint-actions {
+  display: grid;
+  gap: 10rpx;
+}
+
+@media (max-width: 360px) {
+  .v3-checkpoint-title { margin-top: 52rpx; font-size: 39rpx; }
+  .v3-checkpoint-synthesis__headline { font-size: 32rpx; line-height: 45rpx; }
+}

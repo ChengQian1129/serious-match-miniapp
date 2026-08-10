@@ -173,7 +173,9 @@ function validateSources() {
     reportCore: { parentTaskCount: 266, orderedParentTaskIds: core.orderedParentTaskIds },
     constructIds: [...constructIds].sort()
   }
-  bundle.publicCopy = Object.assign({}, PUBLIC_LANGUAGE.v3, {
+  const pilotPublicCopy = Object.assign({}, PUBLIC_LANGUAGE.v3)
+  delete pilotPublicCopy.product
+  bundle.publicCopy = Object.assign({}, pilotPublicCopy, {
     chapterTitles: PUBLIC_LANGUAGE.v2.chapterTitles,
     pageTitle: PUBLIC_LANGUAGE.ui.v3Pilot.pageTitle
   })

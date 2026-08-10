@@ -1,0 +1,223 @@
+.v3-result-page {
+  padding-bottom: calc(246rpx + env(safe-area-inset-bottom));
+  background: #fbfbfa;
+}
+
+.v3-result-shell {
+  padding: 62rpx var(--dl-gutter) 80rpx;
+}
+
+.v3-result-kicker,
+.v3-result-section__title,
+.v3-result-dimension__title,
+.v3-decision-item__label {
+  color: var(--dl-grey-500);
+  font-size: 24rpx;
+  font-weight: 600;
+  line-height: 36rpx;
+}
+
+.v3-result-title {
+  margin-top: 14rpx;
+  font-size: 54rpx;
+  font-weight: 700;
+  line-height: 1.18;
+}
+
+.v3-result-notice {
+  margin-top: 24rpx;
+  color: var(--dl-grey-500);
+  font-size: 25rpx;
+  line-height: 40rpx;
+}
+
+.v3-result-section {
+  margin-top: 62rpx;
+}
+
+.v3-result-section__title {
+  color: var(--dl-black);
+  font-size: 28rpx;
+}
+
+.v3-result-section__description {
+  margin-top: 12rpx;
+  color: var(--dl-grey-500);
+  font-size: 26rpx;
+  line-height: 42rpx;
+}
+
+.v3-summary-item {
+  padding: 24rpx 0 26rpx;
+  border-bottom: 2rpx solid var(--dl-grey-200);
+}
+
+.v3-summary-item:first-of-type {
+  margin-top: 14rpx;
+  border-top: 2rpx solid var(--dl-grey-200);
+}
+
+.v3-summary-item__headline {
+  font-size: 32rpx;
+  font-weight: 700;
+  line-height: 45rpx;
+}
+
+.v3-summary-item__summary,
+.v3-summary-unknown__body {
+  margin-top: 8rpx;
+  color: #474747;
+  font-size: 27rpx;
+  line-height: 44rpx;
+}
+
+.v3-summary-unknown {
+  margin-top: 24rpx;
+  padding-top: 22rpx;
+  border-top: 2rpx solid var(--dl-black);
+}
+
+.v3-summary-unknown__title,
+.v3-result-chapter__title,
+.v3-decision-section__title,
+.v3-unknown-item__title,
+.v3-interview-item__title {
+  font-size: 29rpx;
+  font-weight: 700;
+  line-height: 42rpx;
+}
+
+.v3-chapter-list {
+  margin-top: 16rpx;
+  border-top: 2rpx solid var(--dl-grey-200);
+}
+
+.v3-result-chapter {
+  padding: 28rpx 0 34rpx;
+  border-bottom: 2rpx solid var(--dl-grey-200);
+}
+
+.v3-result-chapter__button {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+}
+
+.v3-result-chapter__headline {
+  margin-top: 14rpx;
+  font-size: 32rpx;
+  font-weight: 700;
+  line-height: 45rpx;
+}
+
+.v3-result-chapter__summary,
+.v3-result-dimension__summary,
+.v3-decision-section__intro,
+.v3-decision-item__body,
+.v3-unknown-item__body,
+.v3-interview-item__body,
+.v3-result-method__line {
+  margin-top: 8rpx;
+  color: #494949;
+  font-size: 26rpx;
+  line-height: 42rpx;
+}
+
+.v3-result-chapter__action {
+  margin-top: 14rpx;
+  color: var(--dl-grey-500);
+  font-size: 24rpx;
+  line-height: 36rpx;
+  text-decoration: underline;
+}
+
+.v3-result-chapter__dimensions {
+  margin-top: 26rpx;
+  border-top: 2rpx solid var(--dl-grey-200);
+}
+
+.v3-result-dimension {
+  padding: 22rpx 0 24rpx;
+  border-bottom: 2rpx solid var(--dl-grey-200);
+}
+
+.v3-result-dimension__headline {
+  margin-top: 6rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  line-height: 40rpx;
+}
+
+.v3-evidence-link {
+  min-height: 50rpx;
+  margin: 12rpx 0 0;
+  padding: 6rpx 0;
+  border: 0;
+  background: transparent;
+  color: var(--dl-black);
+  font-size: 24rpx;
+  line-height: 36rpx;
+  text-align: left;
+  text-decoration: underline;
+}
+
+.v3-result-decisions {
+  padding-top: 6rpx;
+  border-top: 2rpx solid var(--dl-black);
+}
+
+.v3-decision-section {
+  margin-top: 30rpx;
+  padding-top: 22rpx;
+  border-top: 2rpx solid var(--dl-grey-200);
+}
+
+.v3-decision-item,
+.v3-unknown-item,
+.v3-interview-item {
+  margin-top: 22rpx;
+}
+
+.v3-decision-item__label {
+  font-size: 22rpx;
+}
+
+.v3-decision-item__detail {
+  margin-top: 10rpx;
+  padding-left: 18rpx;
+  border-left: 4rpx solid var(--dl-black);
+  font-size: 27rpx;
+  line-height: 44rpx;
+}
+
+.v3-result-unknowns,
+.v3-result-interview,
+.v3-result-method {
+  padding-top: 28rpx;
+  border-top: 2rpx solid var(--dl-black);
+}
+
+.v3-result-section__note {
+  margin-top: 24rpx;
+  color: var(--dl-grey-500);
+  font-size: 24rpx;
+  line-height: 38rpx;
+}
+
+.v3-result-actions {
+  display: grid;
+  gap: 10rpx;
+}
+
+@media (max-width: 360px) {
+  .v3-result-shell { padding-top: 46rpx; }
+  .v3-result-title { font-size: 44rpx; }
+  .v3-summary-item__headline,
+  .v3-result-chapter__headline { font-size: 29rpx; line-height: 42rpx; }
+}

@@ -1,0 +1,45 @@
+<view wx:if="{{ready}}" class="page v3-preview-page">
+  <view class="v3-preview-shell">
+    <view class="v3-preview-eyebrow">{{copy.preview.eyebrow}}</view>
+    <view class="v3-preview-title">{{copy.preview.title}}</view>
+    <view class="v3-preview-intro">{{copy.preview.intro}}</view>
+
+    <view class="v3-preview-purpose">
+      <view class="v3-preview-purpose__line">{{copy.preview.purpose}}</view>
+      <view class="v3-preview-purpose__line">{{copy.preview.value}}</view>
+      <view class="v3-preview-purpose__line">{{copy.preview.boundary}}</view>
+    </view>
+
+    <view class="v3-preview-notice">{{copy.preview.notice}}</view>
+
+    <view class="v3-preview-section-title">{{copy.preview.choosePersona}}</view>
+    <view class="v3-preview-section-hint">{{copy.preview.choosePersonaHint}}</view>
+    <view class="v3-persona-list">
+      <button
+        wx:for="{{personas}}"
+        wx:key="id"
+        wx:for-item="persona"
+        class="v3-persona {{persona.id === selectedPersonaId ? 'v3-persona--selected' : ''}}"
+        data-id="{{persona.id}}"
+        bind:tap="choosePersona"
+      >
+        <view class="v3-persona__body">
+          <view class="v3-persona__label">{{persona.label}}</view>
+          <view class="v3-persona__description">{{persona.description}}</view>
+        </view>
+        <text class="v3-persona__mark">{{persona.id === selectedPersonaId ? '●' : '○'}}</text>
+      </button>
+    </view>
+
+    <view wx:if="{{selectedPersona}}" class="v3-preview-selected">
+      <view class="v3-preview-selected__label">{{copy.preview.previewBadge}}</view>
+      <view class="v3-preview-selected__title">{{selectedPersona.label}}</view>
+      <view class="v3-preview-selected__description">{{selectedPersona.description}}</view>
+    </view>
+  </view>
+
+  <view class="action-bar v3-preview-actions">
+    <button class="dl-button" bind:tap="startChapter">{{copy.preview.startAction}}</button>
+    <button class="v3-preview-secondary" bind:tap="openReport">{{copy.preview.fullReportAction}}</button>
+  </view>
+</view>

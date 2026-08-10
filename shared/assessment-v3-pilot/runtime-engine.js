@@ -1,9 +1,19 @@
-const crypto = require('node:crypto')
 const BUNDLE = require('./runtime-bundle')
 
 function hashToUInt(seed) {
-  const hex = crypto.createHash('sha256').update(String(seed)).digest('hex').slice(0, 8)
-  return parseInt(hex, 16) >>> 0
+  // FNV-1a plus a small avalanche step keeps assignment deterministic in WeChat's JS runtime.
+  const text = String(seed)
+  let hash = 0x811c9dc5
+  for (let index = 0; index < text.length; index += 1) {
+    hash ^= text.charCodeAt(index)
+    hash = Math.imul(hash, 0x01000193) >>> 0
+  }
+  hash ^= hash >>> 16
+  hash = Math.imul(hash, 0x85ebca6b) >>> 0
+  hash ^= hash >>> 13
+  hash = Math.imul(hash, 0xc2b2ae35) >>> 0
+  hash ^= hash >>> 16
+  return hash >>> 0
 }
 
 function createRng(seed) {

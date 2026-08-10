@@ -1,0 +1,88 @@
+<view wx:if="{{ready && report}}" class="page v3-result-page">
+  <view class="v3-result-shell">
+    <view class="v3-result-kicker">{{copy.preview.previewBadge}}</view>
+    <view class="v3-result-title">{{report.title}}</view>
+    <view class="v3-result-notice">{{report.notice}}</view>
+
+    <view class="v3-result-section v3-result-summary">
+      <view class="v3-result-section__title">{{report.executiveSummary.title}}</view>
+      <view wx:for="{{report.executiveSummary.patterns}}" wx:key="id" wx:for-item="pattern" class="v3-summary-item">
+        <view class="v3-summary-item__headline">{{pattern.headline}}</view>
+        <view class="v3-summary-item__summary">{{pattern.summary}}</view>
+      </view>
+      <view wx:for="{{report.executiveSummary.unknownPreview}}" wx:key="id" wx:for-item="unknown" class="v3-summary-unknown">
+        <view class="v3-summary-unknown__title">{{unknown.title}}</view>
+        <view class="v3-summary-unknown__body">{{unknown.body}}</view>
+      </view>
+    </view>
+
+    <view class="v3-result-section">
+      <view class="v3-result-section__title">{{copy.preview.reportChapterTitle}}</view>
+      <view class="v3-chapter-list">
+        <view wx:for="{{chapters}}" wx:key="id" wx:for-item="chapter" class="v3-result-chapter">
+          <button class="v3-result-chapter__button" data-chapter-id="{{chapter.id}}" bind:tap="openChapter">
+            <view class="v3-result-chapter__body">
+              <view class="v3-result-chapter__title">{{chapter.title}}</view>
+              <view class="v3-result-chapter__headline">{{chapter.headline}}</view>
+              <view class="v3-result-chapter__summary">{{chapter.summary}}</view>
+              <view class="v3-result-chapter__action">{{copy.navigation.viewDetail}} <text>›</text></view>
+            </view>
+          </button>
+          <view class="v3-result-chapter__dimensions">
+            <view wx:for="{{chapter.dimensionCards}}" wx:key="id" wx:for-item="dimension" class="v3-result-dimension">
+              <view class="v3-result-dimension__title">{{dimension.title}}</view>
+              <view class="v3-result-dimension__headline">{{dimension.headline}}</view>
+              <view class="v3-result-dimension__summary">{{dimension.summary}}</view>
+              <button wx:if="{{dimension.evidenceAvailable}}" class="v3-evidence-link" data-dimension-id="{{dimension.id}}" bind:tap="openEvidence">{{copy.preview.evidenceAction}} <text>›</text></button>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="v3-result-section v3-result-decisions">
+      <view class="v3-result-section__title">{{report.decisionMap.title}}</view>
+      <view wx:for="{{report.decisionMap.sections}}" wx:key="id" wx:for-item="section" class="v3-decision-section">
+        <view class="v3-decision-section__title">{{section.title}}</view>
+        <view class="v3-decision-section__intro">{{section.intro}}</view>
+        <view wx:for="{{section.items}}" wx:key="id" wx:for-item="item" class="v3-decision-item">
+          <view wx:if="{{item.typeLabel}}" class="v3-decision-item__label">{{item.typeLabel}}</view>
+          <view class="v3-decision-item__title">{{item.title}}</view>
+          <view class="v3-decision-item__body">{{item.body}}</view>
+          <view wx:if="{{item.detail}}" class="v3-decision-item__detail">{{item.detail}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="v3-result-section v3-result-unknowns">
+      <view class="v3-result-section__title">{{report.unknowns.title}}</view>
+      <view class="v3-result-section__description">{{report.unknowns.description}}</view>
+      <view wx:for="{{report.unknowns.items}}" wx:key="id" wx:for-item="item" class="v3-unknown-item">
+        <view class="v3-unknown-item__title">{{item.title}}</view>
+        <view class="v3-unknown-item__body">{{item.body}}</view>
+      </view>
+    </view>
+
+    <view class="v3-result-section v3-result-interview">
+      <view class="v3-result-section__title">{{report.interviewPriorities.title}}</view>
+      <view class="v3-result-section__description">{{report.interviewPriorities.description}}</view>
+      <view wx:for="{{report.interviewPriorities.items}}" wx:key="id" wx:for-item="item" class="v3-interview-item">
+        <view class="v3-interview-item__title">{{item.title}}</view>
+        <view class="v3-interview-item__body">{{item.body}}</view>
+      </view>
+      <view class="v3-result-section__note">{{report.interviewPriorities.optional}}</view>
+    </view>
+
+    <view class="v3-result-section v3-result-method">
+      <view class="v3-result-section__title">{{report.methodNote.title}}</view>
+      <view class="v3-result-section__description">{{report.methodNote.body}}</view>
+      <view class="v3-result-method__line">{{report.methodNote.structure}}</view>
+      <view class="v3-result-method__line">{{report.methodNote.privacy}}</view>
+    </view>
+  </view>
+
+  <view class="action-bar v3-result-actions">
+    <button class="dl-button" bind:tap="startAtFirstChapter">{{copy.preview.continueAction}}</button>
+    <button class="v3-text-action v3-text-action--center" bind:tap="restart">{{copy.preview.restartAction}}</button>
+  </view>
+</view>

@@ -165,14 +165,20 @@ function projectV2Copy(source) {
 }
 
 function projectNarratives(source) {
+  function projectNarrativeState(value) {
+    if (Array.isArray(value)) return { headline: value[0] || '', summary: value[1] || '' }
+    if (typeof value === 'string') return { headline: value, summary: '' }
+    if (value && typeof value === 'object') return { headline: value.headline || '', summary: value.summary || '' }
+    return { headline: '', summary: '' }
+  }
   const dimensions = Object.fromEntries(Object.entries(source.dimensions || {}).map(([dimensionId, states]) => [
     dimensionId,
-    Object.fromEntries(Object.entries(states).map(([stateId, value]) => [stateId, { headline: value.headline, summary: value.summary }]))
+    Object.fromEntries(Object.entries(states).map(([stateId, value]) => [stateId, projectNarrativeState(value)]))
   ]))
   const chapters = Object.fromEntries(Object.entries(source.chapters || {}).map(([chapterId, value]) => {
     const projected = { label: value.label }
     Object.entries(value).filter(([key]) => key !== 'label').forEach(([stateId, state]) => {
-      projected[stateId] = Array.isArray(state) ? { headline: state[0], summary: state[1] } : { headline: state.headline, summary: state.summary }
+      projected[stateId] = projectNarrativeState(state)
     })
     return [chapterId, projected]
   }))
@@ -184,6 +190,7 @@ function main() {
   const ui = readYaml('PUBLIC_UI_COPY_REWRITE.yaml')
   const v2 = readYaml('V2_PUBLIC_COPY_REWRITE.yaml')
   const v3Narrative = readYaml('V3_PUBLIC_NARRATIVE_OVERRIDE.yaml')
+  const v3Product = readYaml('V3_PRODUCT_PREVIEW_COPY.yaml')
   const forbidden = readYaml('PUBLIC_FORBIDDEN_LANGUAGE.yaml')
   const publicUi = {
     navigation: pickPublic(ui.navigation, ['globalFallback', 'welcome', 'home', 'questionnaire', 'chapterInsight', 'result', 'relationshipMapRouteVisibleTitle', 'claimEvidence', 'followupIntro', 'followupSettings', 'profile', 'privacy', 'v3Pilot']),
@@ -212,11 +219,12 @@ function main() {
       'V2_PUBLIC_COPY_REWRITE.yaml',
       'V3_ALL_USER_FACING_STRINGS_AUDIT.csv',
       'V3_PUBLIC_NARRATIVE_OVERRIDE.yaml',
+      'V3_PRODUCT_PREVIEW_COPY.yaml',
       'PUBLIC_FORBIDDEN_LANGUAGE.yaml'
     ].map(name => [name, digest(name)])),
     ui: publicUi,
     v2: projectV2Copy(v2),
-    v3: Object.assign(buildV3Copy(), { narratives: projectNarratives(v3Narrative) }),
+    v3: Object.assign(buildV3Copy(), { narratives: projectNarratives(v3Narrative), product: publicValue(v3Product.product || {}) }),
     publicErrors: Object.fromEntries(['saveFailed', 'loadFailed', 'submitFailed', 'questionInvalid', 'incomplete', 'network', 'generic'].map(key => [key, ui.errors[key]]))
   }
   fs.mkdirSync(path.dirname(outputPath), { recursive: true })

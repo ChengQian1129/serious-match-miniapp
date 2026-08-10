@@ -4,6 +4,17 @@ const engine = require('../shared/assessment-v3-pilot/runtime-engine')
 
 function noDuplicates(xs) { return new Set(xs).size === xs.length }
 
+assert.equal(engine.hashToUInt('fixture-baseline'), 6925616)
+assert.equal(engine.formKeyFromSeed('fixture-baseline'), 'B')
+
+const formCounts = { A: 0, B: 0, C: 0 }
+for (let index = 0; index < 10000; index += 1) {
+  const form = engine.formKeyFromSeed(`balance-${index}`)
+  formCounts[form] += 1
+  assert.ok(['A', 'B', 'C'].includes(form))
+}
+assert.ok(Math.max(...Object.values(formCounts)) - Math.min(...Object.values(formCounts)) < 250, `assignment imbalance: ${JSON.stringify(formCounts)}`)
+
 // Deterministic form/assignment.
 const a1 = engine.buildAssignment('fixture-baseline')
 const a2 = engine.buildAssignment('fixture-baseline')

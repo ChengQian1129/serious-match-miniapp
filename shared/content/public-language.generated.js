@@ -7,6 +7,7 @@ module.exports = {
     "V2_PUBLIC_COPY_REWRITE.yaml": "aa49d69eb91f4820bea1160ec4699289b31da033b6b383f7af8dc243bb409db1",
     "V3_ALL_USER_FACING_STRINGS_AUDIT.csv": "82fc5e9a1df6fc74701994d3b4670bca132d199ea81e0c717900923942310413",
     "V3_PUBLIC_NARRATIVE_OVERRIDE.yaml": "a1b4d0330e51914b4948dea8e837e08f1c8d897d6c3f2e4decdce2e75d4c2d31",
+    "V3_PRODUCT_PREVIEW_COPY.yaml": "75d6f1281df058d88a8cc12138b04881ac2a86e0b84cad58a25430223d875606",
     "PUBLIC_FORBIDDEN_LANGUAGE.yaml": "58a52e6589929b11ade6fb79cf0378dd2478d0f329046b74595143dfbeb96add"
   },
   "ui": {
@@ -1261,65 +1262,206 @@ module.exports = {
         },
         "C2": {
           "label": "你现在有没有时间和精力",
-          "HIGH_HIGH": {},
-          "HIGH_MID": {},
-          "HIGH_LOW": {},
-          "MID_HIGH": {},
-          "MID_MID": {},
-          "MID_LOW": {},
-          "LOW_HIGH": {},
-          "LOW_MID": {},
-          "LOW_LOW": {}
+          "HIGH_HIGH": {
+            "headline": "你现在有时间和精力，答应下来的事也通常能做到。",
+            "summary": ""
+          },
+          "HIGH_MID": {
+            "headline": "时间和精力还可以，但忙起来时有些安排未必一直稳定。",
+            "summary": ""
+          },
+          "HIGH_LOW": {
+            "headline": "你不太缺时间，真正要注意的是约好的事能不能一直有下文。",
+            "summary": ""
+          },
+          "MID_HIGH": {
+            "headline": "你的生活有时会很忙，但只要答应下来，你通常比较会有个交代。",
+            "summary": ""
+          },
+          "MID_MID": {
+            "headline": "你现在的时间、精力和联系节奏都比较看阶段，需要边走边调整。",
+            "summary": ""
+          },
+          "MID_LOW": {
+            "headline": "生活一忙，约好的事也比较容易断掉，这可能会让对方摸不准你的节奏。",
+            "summary": ""
+          },
+          "LOW_HIGH": {
+            "headline": "你做事很有交代，但现在确实没有太多时间和精力开始一段新关系。",
+            "summary": ""
+          },
+          "LOW_MID": {
+            "headline": "你不是不愿意投入，只是现在的生活很容易把关系挤到后面。",
+            "summary": ""
+          },
+          "LOW_LOW": {
+            "headline": "现在最明显的问题是时间和精力都比较紧，约好的事也容易因此没了下文。",
+            "summary": ""
+          }
         },
         "C3": {
           "label": "对方态度变了，你通常会怎样",
-          "CLARIFYING": {},
-          "OBSERVING": {},
-          "REASSURANCE_ORIENTED": {},
-          "MONITORING_ORIENTED": {},
-          "RUMINATIVE": {},
-          "TESTING_PROTEST": {},
-          "TOLERANT_WAITING": {},
-          "WITHDRAWING": {},
-          "MIXED": {}
+          "CLARIFYING": {
+            "headline": "你更愿意直接问清楚。",
+            "summary": ""
+          },
+          "OBSERVING": {
+            "headline": "你通常会先看看对方接下来怎么做。",
+            "summary": ""
+          },
+          "REASSURANCE_ORIENTED": {
+            "headline": "你会比较需要对方明确告诉你他的想法。",
+            "summary": ""
+          },
+          "MONITORING_ORIENTED": {
+            "headline": "你容易去看线上状态、社交动态等其他线索。",
+            "summary": ""
+          },
+          "RUMINATIVE": {
+            "headline": "没有新消息时，你也容易在脑子里反复想。",
+            "summary": ""
+          },
+          "TESTING_PROTEST": {
+            "headline": "你有时会故意少主动一点，看对方会不会来找你。",
+            "summary": ""
+          },
+          "TOLERANT_WAITING": {
+            "headline": "你可以先不急着下结论，等更多信息。",
+            "summary": ""
+          },
+          "WITHDRAWING": {
+            "headline": "如果一直说不清，你会慢慢把自己收回来。",
+            "summary": ""
+          },
+          "MIXED": {
+            "headline": "你没有固定一种做法，很看对方是谁、事情有多重要。",
+            "summary": ""
+          }
         },
         "C4": {
           "label": "关系越来越亲近以后",
-          "HIGH_HIGH": {},
-          "HIGH_MID": {},
-          "HIGH_LOW": {},
-          "MID_HIGH": {},
-          "MID_MID": {},
-          "MID_LOW": {},
-          "LOW_HIGH": {},
-          "LOW_MID": {},
-          "LOW_LOW": {}
+          "HIGH_HIGH": {
+            "headline": "你喜欢亲近，也需要自己的时间。关系再好，你也不想两个人什么都绑在一起。",
+            "summary": ""
+          },
+          "HIGH_MID": {
+            "headline": "你对亲近和互相依靠比较自在，同时也希望各自保留一点自己的生活。",
+            "summary": ""
+          },
+          "HIGH_LOW": {
+            "headline": "你比较喜欢两个人一起待着，对很多独处时间没有特别强的要求。",
+            "summary": ""
+          },
+          "MID_HIGH": {
+            "headline": "你可以和人靠近，但也很需要自己的空间。信任和相处节奏对你很重要。",
+            "summary": ""
+          },
+          "MID_MID": {
+            "headline": "你需要多亲近、多少自己的时间，很看具体的人和当时的生活状态。",
+            "summary": ""
+          },
+          "MID_LOW": {
+            "headline": "你不太需要很多独处时间，但真正把重要的事交给对方，还是要看信任够不够。",
+            "summary": ""
+          },
+          "LOW_HIGH": {
+            "headline": "你需要不少自己的空间，也不太容易真正依靠另一个人。",
+            "summary": ""
+          },
+          "LOW_MID": {
+            "headline": "你对依靠别人比较谨慎，但并不代表你总想一个人待着。",
+            "summary": ""
+          },
+          "LOW_LOW": {
+            "headline": "你不太需要很多独处时间，不过真正求助、示弱或者依靠对方，对你还是有点难。",
+            "summary": ""
+          }
         },
         "C5": {
           "label": "你希望对方怎么支持你",
-          "NEED_CLEAR_SIGNAL_LOW": {},
-          "NEED_CONTEXTUAL": {},
-          "SIGNAL_HIGH_RESPONSE_LOW": {},
-          "SIGNAL_LOW_RESPONSE_HIGH": {},
-          "REASSURANCE_HIGH_SIGNAL_LOW": {},
-          "SPACE_NEED_SIGNAL_HIGH": {},
-          "PROBLEM_SOLVING_MISMATCH_RISK": {},
-          "VALIDATION_MISMATCH_RISK": {},
-          "BALANCED": {},
-          "PROVISIONAL": {}
+          "NEED_CLEAR_SIGNAL_LOW": {
+            "headline": "你其实知道什么会让自己好受一点，但不一定会直接告诉对方。",
+            "summary": ""
+          },
+          "NEED_CONTEXTUAL": {
+            "headline": "你需要什么帮助，很看发生了什么。固定一种安慰方式不一定适合你。",
+            "summary": ""
+          },
+          "SIGNAL_HIGH_RESPONSE_LOW": {
+            "headline": "你比较会说自己需要什么，但轮到照顾对方时，有时会太快按自己的习惯来。",
+            "summary": ""
+          },
+          "SIGNAL_LOW_RESPONSE_HIGH": {
+            "headline": "你可能比较会照顾别人，但轮到自己难受时，反而不太会开口。",
+            "summary": ""
+          },
+          "REASSURANCE_HIGH_SIGNAL_LOW": {
+            "headline": "关系不安时你很想听到明确说法，但又不一定会直接告诉对方自己在等什么。",
+            "summary": ""
+          },
+          "SPACE_NEED_SIGNAL_HIGH": {
+            "headline": "压力大时你会想先自己待一会儿，而且通常能把这件事说清楚。",
+            "summary": ""
+          },
+          "PROBLEM_SOLVING_MISMATCH_RISK": {
+            "headline": "遇到能解决的问题时，你更希望两个人一起想办法。只有安慰可能会让你觉得还不够。",
+            "summary": ""
+          },
+          "VALIDATION_MISMATCH_RISK": {
+            "headline": "你难受时更想先被听懂。如果对方一上来就给建议，你可能会觉得他没真正听进去。",
+            "summary": ""
+          },
+          "BALANCED": {
+            "headline": "你大致知道自己需要什么，也比较能说出来；从情境题看，你也会留意对方需要什么。",
+            "summary": ""
+          },
+          "PROVISIONAL": {
+            "headline": "从情境题只能先看到一个大概。你现实里怎么回应别人，还要看真正相处时的情况。",
+            "summary": ""
+          }
         },
         "C6": {
           "label": "吵架以后，你通常怎么处理",
-          "HIGH_SHORT_HIGH": {},
-          "HIGH_LONG_HIGH": {},
-          "HIGH_ANY_LOW": {},
-          "MID_FLEX_HIGH": {},
-          "LOW_IMMEDIATE_HIGH": {},
-          "LOW_ANY_LOW": {},
-          "PAUSE_WITHOUT_SIGNAL": {},
-          "RETURN_WITHOUT_ISSUE": {},
-          "REPAIR_STRONG": {},
-          "PACING_MISMATCH_SENSITIVE": {}
+          "HIGH_SHORT_HIGH": {
+            "headline": "吵起来时你的情绪会比较强，但停一会儿以后，你通常还是愿意回来把事情说完。",
+            "summary": ""
+          },
+          "HIGH_LONG_HIGH": {
+            "headline": "你吵完后需要比较久才能缓过来，不过只要给你时间，你通常还是愿意回来处理。",
+            "summary": ""
+          },
+          "HIGH_ANY_LOW": {
+            "headline": "你不只是在吵的时候容易被带进去，停下来以后也比较容易让问题一直搁着。",
+            "summary": ""
+          },
+          "MID_FLEX_HIGH": {
+            "headline": "你会不会很激动、要不要暂停都看情况，不过大多数时候你还是愿意回来把事情收尾。",
+            "summary": ""
+          },
+          "LOW_IMMEDIATE_HIGH": {
+            "headline": "你吵架时通常还能继续谈，也比较愿意尽快把问题处理完。",
+            "summary": ""
+          },
+          "LOW_ANY_LOW": {
+            "headline": "你不一定会吵得很激烈，但有些问题会因为后来不再提而一直留着。",
+            "summary": ""
+          },
+          "PAUSE_WITHOUT_SIGNAL": {
+            "headline": "你可能确实需要暂停，但如果不说什么时候回来，对方很容易以为你不想管了。",
+            "summary": ""
+          },
+          "RETURN_WITHOUT_ISSUE": {
+            "headline": "你比较容易恢复正常相处，但恢复正常不等于那件事真的解决了。",
+            "summary": ""
+          },
+          "REPAIR_STRONG": {
+            "headline": "吵架本身不是重点。更重要的是，你通常愿意在冷静后回来把事情接上。",
+            "summary": ""
+          },
+          "PACING_MISMATCH_SENSITIVE": {
+            "headline": "你对“什么时候继续谈”比较在意。如果两个人在这件事上差太多，吵架会更难处理。",
+            "summary": ""
+          }
         }
       },
       "crossChapterPatterns": {
@@ -1403,6 +1545,373 @@ module.exports = {
         "unknowns": "还有几件事，问卷看不出来",
         "interview": "如果之后聊一聊，可以重点聊这些",
         "method": "这些结果怎么来的"
+      }
+    },
+    "product": {
+      "preview": {
+        "eyebrow": "先看看这套结果会怎么呈现",
+        "title": "关系说明，从自己开始",
+        "intro": "这是一份演示结果。它把几种关于相处的回答放在一起，让你看到完成后可以得到哪些更具体的线索。",
+        "purpose": "会看你现在想不想开始、遇到变化时怎么做、关系变近后需要什么，以及冲突以后能不能回来继续谈。",
+        "value": "完成后不会得到一个类型或分数，而是看到几件能帮助你认识自己的具体事情。",
+        "boundary": "这套题还在试用和调整，不是心理诊断，也不是专业机构使用的标准测试。",
+        "notice": "这里使用的是内置演示数据，不是你的真实回答，也不会写入研究资料。",
+        "choosePersona": "先选一种演示情况",
+        "choosePersonaHint": "每一种都代表一组不同的回答组合，你可以随时换一个看看。",
+        "startAction": "从第一部分开始",
+        "fullReportAction": "直接看完整结果",
+        "previewBadge": "演示结果",
+        "backAction": "返回",
+        "nextAction": "继续看下一部分",
+        "resultAction": "看完整结果",
+        "evidenceAction": "为什么这么说",
+        "evidenceCollapseAction": "收起依据",
+        "dimensionTitle": "这一部分还可以分开看",
+        "chapterNumber": "第 {number} 部分",
+        "chapterTransition": "下一部分，我们会换一个角度继续看。",
+        "reportNotice": "这是一份演示结果，不代表任何人的真实情况，也不是心理诊断。",
+        "reportSummaryTitle": "先看这 3 点",
+        "reportChapterTitle": "六个部分，放在一起看",
+        "reportDimensionTitle": "具体看每一处",
+        "reportDecisionTitle": "你希望怎样相处",
+        "reportUnknownTitle": "还有几件事，问卷看不出来",
+        "reportInterviewTitle": "如果之后聊一聊，可以重点聊这些",
+        "reportMethodTitle": "这些结果怎么来的",
+        "continueAction": "从第一部分开始",
+        "restartAction": "换一种演示情况",
+        "noEvidence": "这部分暂时没有可以展开的回答。",
+        "syntheticLabel": "演示"
+      },
+      "personas": {
+        "ready_self": {
+          "label": "想开始，也有时间",
+          "description": "对开始一段关系有愿望，生活里也能留出比较稳定的时间。"
+        },
+        "ready_busy": {
+          "label": "想开始，但最近很忙",
+          "description": "认真开始的想法很明确，只是时间和精力现在比较紧。"
+        },
+        "pressured_busy": {
+          "label": "有点被推着走",
+          "description": "周围的进度感比较强，但自己的时间和状态还没有跟上。"
+        },
+        "followthrough_gap": {
+          "label": "有意愿，后续容易断",
+          "description": "期待认真了解一个人，但联系和安排有时没有继续接上。"
+        },
+        "direct_clarifier": {
+          "label": "更愿意直接问清楚",
+          "description": "对方态度变化时，会优先找合适的时机把话说开。"
+        },
+        "high_activation_quiet": {
+          "label": "很在意，但不太会说",
+          "description": "对变化很敏感，心里有很多想法，却不一定马上告诉对方。"
+        },
+        "close_with_space": {
+          "label": "喜欢亲近，也要空间",
+          "description": "可以和人靠近，同时希望保留自己的时间和活动。"
+        },
+        "self_reliant": {
+          "label": "难受时习惯自己扛",
+          "description": "比较会照顾别人，轮到自己需要支持时却不容易开口。"
+        },
+        "support_specific": {
+          "label": "知道自己需要什么",
+          "description": "对什么样的支持更有帮助有感觉，也比较能说出来。"
+        },
+        "conflict_return": {
+          "label": "情绪强，但愿意回来",
+          "description": "冲突时会被情绪带动，冷静后通常愿意把事情重新接上。"
+        },
+        "quiet_unrepaired": {
+          "label": "不常争吵，但有些事会留下",
+          "description": "表面上不一定激烈，没再谈的问题却可能一直放着。"
+        },
+        "mixed_context": {
+          "label": "很看具体情况",
+          "description": "面对不同的人和事情，会在靠近、空间、表达和节奏之间调整。"
+        }
+      },
+      "dimensions": {
+        "relationship_readiness": {
+          "label": "开始一段关系的准备"
+        },
+        "initiation_motivation": {
+          "label": "为什么想开始"
+        },
+        "available_capacity": {
+          "label": "时间和精力"
+        },
+        "relational_follow_through": {
+          "label": "约好的事能不能有下文"
+        },
+        "uncertainty_activation": {
+          "label": "对变化有多敏感"
+        },
+        "uncertainty_regulation": {
+          "label": "遇到不确定时怎么做"
+        },
+        "intimacy_dependence_comfort": {
+          "label": "靠近和依靠的感觉"
+        },
+        "personal_space_need": {
+          "label": "自己的空间"
+        },
+        "support_need": {
+          "label": "希望怎样被支持"
+        },
+        "support_signaling": {
+          "label": "会不会说出需要"
+        },
+        "responsiveness_capability": {
+          "label": "面对对方需要时怎么回应"
+        },
+        "conflict_activation": {
+          "label": "冲突时的情绪强度"
+        },
+        "conflict_pacing_need": {
+          "label": "希望怎样暂停和继续"
+        },
+        "repair_reengagement": {
+          "label": "事情没说完时能不能回来"
+        }
+      },
+      "chapters": {
+        "C1": {
+          "intro": "先看看你现在有没有想开始，以及这份想法主要来自哪里。",
+          "transition": "知道自己想不想开始以后，还要看看生活里有没有位置放进一段关系。"
+        },
+        "C2": {
+          "intro": "有愿望是一回事，时间、精力和后续安排又是另一回事。",
+          "transition": "接下来换到关系出现变化时，看看你通常怎样理解和回应。"
+        },
+        "C3": {
+          "intro": "对方的联系和态度有变化时，你会注意到什么，又会怎么做？",
+          "transition": "不确定时的反应，和关系变亲近后的需要并不完全是一回事。"
+        },
+        "C4": {
+          "intro": "关系越来越近以后，你希望靠多近，又想保留多少自己的生活？",
+          "transition": "靠近和空间之外，还可以继续看你希望怎样得到和给出支持。"
+        },
+        "C5": {
+          "intro": "需要帮助时，你希望对方怎么做；对方需要时，你通常又会怎么回应？",
+          "transition": "最后看看冲突升起来以后，你需要怎样的节奏，以及能不能回来把事情接上。"
+        },
+        "C6": {
+          "intro": "吵架时会发生什么，暂停以后又能不能重新开始谈？",
+          "transition": "六个部分合在一起，才更接近一份完整的相处说明。"
+        }
+      },
+      "confidence": {
+        "highPrefix": "",
+        "mediumPrefix": "目前看起来，",
+        "lowPrefix": "目前只能先这样理解：",
+        "provisionalPrefix": "这部分先当作一个线索："
+      },
+      "decisions": {
+        "l3": {
+          "title": "你希望两个人怎么相处",
+          "intro": "这里放的是日常运行方式。它们需要在真正相处时一起谈，不是给谁打分。",
+          "items": {
+            "contact": {
+              "title": "联系和回应",
+              "body": "你可以先想清楚，什么样的联系频率让你舒服，忙起来时又希望怎样说明。"
+            },
+            "time": {
+              "title": "一起待着，也各自生活",
+              "body": "亲近和独处可以同时存在，重要的是两个人对边界和变化有基本的预期。"
+            },
+            "conflict": {
+              "title": "冲突后的节奏",
+              "body": "什么时候暂停、什么时候回来继续谈，最好在情绪平稳时提前说好。"
+            }
+          }
+        },
+        "l4": {
+          "title": "你找对象时比较在意什么",
+          "intro": "这里分开记录理想、可以接受和不能勉强的地方，不把它们压成一个总分。",
+          "items": {
+            "ideal": {
+              "typeLabel": "比较希望",
+              "title": "日常相处的感觉",
+              "body": "你更在意两个人相处时是否自然、可靠，还是需要更多共同安排？"
+            },
+            "acceptable": {
+              "typeLabel": "可以商量",
+              "title": "可以有差异的地方",
+              "body": "有些不同不一定是问题，前提是双方愿意说明并一起调整。"
+            },
+            "priority": {
+              "typeLabel": "需要认真谈",
+              "title": "需要提前说清楚",
+              "body": "生活地点、联系方式、家庭安排等具体问题，不能只靠感觉带过。"
+            },
+            "tradeoff": {
+              "typeLabel": "需要权衡",
+              "title": "可能要做取舍",
+              "body": "当两个重要愿望撞在一起时，比起找一个完美答案，更重要的是知道自己愿意怎么取舍。"
+            },
+            "boundary": {
+              "typeLabel": "不能勉强",
+              "title": "明确的边界",
+              "body": "只有你自己明确说过的条件，才适合被当作不能退让的边界。"
+            }
+          }
+        },
+        "l5": {
+          "title": "你对以后有什么打算",
+          "intro": "对未来的想法有愿望、打算和现实条件之分，当前答案只能说明你现在想到哪里。",
+          "items": {
+            "desire": {
+              "typeLabel": "想要",
+              "title": "你向往的生活",
+              "body": "先把理想中的生活说清楚，不急着判断它现在能不能做到。"
+            },
+            "intention": {
+              "typeLabel": "打算",
+              "title": "你准备主动推进的事",
+              "body": "有些愿望已经进入接下来一段时间的计划，有些还只是想过。"
+            },
+            "feasibility": {
+              "typeLabel": "现实条件",
+              "title": "现在能不能做到",
+              "body": "工作、住处、家庭和时间会影响落地，它们需要单独拿出来看。"
+            },
+            "constraint": {
+              "typeLabel": "不能勉强",
+              "title": "不能只靠愿望解决的事",
+              "body": "重要限制不会因为两个人喜欢就自动消失，越早说清楚越省力。"
+            }
+          }
+        }
+      },
+      "decisionValues": {
+        "l3": {
+          "contact": {
+            "steady": "你更希望平时保持基本稳定的联系，忙起来时也能提前说一声。",
+            "flexible": "你对固定频率没有那么强的要求，但不喜欢重要的话突然没了下文。"
+          },
+          "time": {
+            "space": "你希望亲近和各自生活同时存在，自己的时间不是关系变差的信号。",
+            "shared": "你更享受把日常安排放在一起，临时变化时也希望及时商量。",
+            "busy": "你愿意开始认识人，但现实安排很满，能不能稳定留出时间要单独确认。"
+          },
+          "conflict": {
+            "return": "你可以接受先暂停，但更在意之后真的回来把没说完的事接上。",
+            "early": "你更倾向于趁事情还没有变大时继续谈，不希望问题拖到后面。",
+            "unfinished": "你不一定会把冲突弄得很激烈，但没有再谈的问题可能一直留着。"
+          }
+        },
+        "l4": {
+          "ideal": {
+            "natural": "你比较在意相处时是否自然、可靠，而不是只看外在条件。",
+            "shared": "你会把共同生活的感觉和愿不愿意一起安排放在比较前面。"
+          },
+          "acceptable": {
+            "talk": "有些差异可以接受，但前提是双方愿意说明并一起调整。",
+            "flexible": "你愿意给差异留空间，具体要看它会不会影响日常相处。"
+          },
+          "priority": {
+            "explicit": "联系方式、生活地点和家庭安排等具体问题，需要提前说清楚。",
+            "pace": "你更需要先确认两个人对关系节奏的理解是不是接近。"
+          },
+          "tradeoff": {
+            "weigh": "当重要愿望撞在一起时，你愿意把取舍讲出来，而不是假装没有冲突。",
+            "slow": "你更愿意放慢一点看清代价，再决定哪些地方可以让步。"
+          },
+          "boundary": {
+            "self_defined": "只有你自己明确说过的条件，才适合被当作不能退让的边界。",
+            "context": "你的边界需要结合具体情境说明，不能只用一个抽象标准代替。"
+          }
+        },
+        "l5": {
+          "desire": {
+            "clear": "你对想要的生活有比较清楚的方向，具体实现可以再慢慢拆开。",
+            "open": "你对未来保留开放态度，暂时不急着把愿望说成固定计划。"
+          },
+          "intention": {
+            "some": "有些愿望已经进入接下来一段时间的打算，有些还需要更多现实信息。",
+            "observe": "你会先观察生活变化，再决定哪些事真的要主动推进。"
+          },
+          "feasibility": {
+            "separate": "你能把想要什么和现在能不能做到分开看，这会让计划更实际。",
+            "tight": "眼下的时间、工作或住处可能会限制推进速度，需要单独留出空间。"
+          },
+          "constraint": {
+            "talk_early": "重要限制越早说清楚，越不容易在关系变深以后突然撞上。",
+            "confirm": "有些事不能只靠愿望解决，需要先确认双方都能接受现实条件。"
+          }
+        }
+      },
+      "unknowns": {
+        "title": "还有几件事，问卷看不出来",
+        "description": "有些答案只有在具体的人和具体的相处里才会出现。下面这些地方，先不要急着替自己下结论。",
+        "items": {
+          "realInteraction": {
+            "title": "真正相处时的感觉",
+            "body": "你在现实互动里会不会放松、会不会改变节奏，还需要真实经历来确认。"
+          },
+          "partnerResponse": {
+            "title": "对方怎么回应你",
+            "body": "同一件事遇到不同的回应，感受可能完全不同，这不是单靠一份问卷能决定的。"
+          },
+          "lifeChange": {
+            "title": "生活变化以后",
+            "body": "工作、住处、家人和健康等变化，可能让现在的答案在以后发生改变。"
+          }
+        }
+      },
+      "interview": {
+        "title": "如果之后聊一聊，可以重点聊这些",
+        "description": "一对一交流不是为了给你重新打分，而是把问卷留白的地方说得更具体。",
+        "optional": "是否参加，之后由你自己决定。",
+        "items": {
+          "realInteraction": {
+            "title": "真实相处时会怎么变化",
+            "body": "如果真的喜欢一个人，你会不会比现在更愿意表达或靠近？"
+          },
+          "supportPattern": {
+            "title": "需要支持时会不会开口",
+            "body": "你知道自己需要什么，和你能不能把它告诉对方，可能不是同一件事。"
+          },
+          "repairInPractice": {
+            "title": "暂停以后能不能回来",
+            "body": "当时说需要一点时间，之后通常会怎样重新开口？"
+          }
+        }
+      },
+      "method": {
+        "title": "这些结果怎么来的",
+        "body": "这套题参考了一些关于恋爱关系、相处方式和冲突处理的研究。正式版本还会继续试用和调整，不是心理诊断，也不是专业机构使用的标准测试。",
+        "structure": "结果会把多道题放在一起看，再分成几个相处场景。回答不一致的地方会保留出来，不会被硬塞进一个类型。",
+        "privacy": "演示结果不代表真实填写；正式使用时，结果只会基于你自己的回答。"
+      },
+      "evidence": {
+        "title": "这部分的回答",
+        "answerPrefix": "你的回答：",
+        "supportingLabel": "支持这条理解",
+        "qualifyingLabel": "需要一起看的回答",
+        "contradictingLabel": "不完全一致的回答",
+        "openAction": "为什么这么说",
+        "collapseAction": "收起依据",
+        "unavailable": "这部分暂时没有可以展开的回答。",
+        "sourceNote": "这里显示的是与这条内容直接相关的题目和回答，不是额外推断。"
+      },
+      "navigation": {
+        "sectionLabel": "部分",
+        "viewDetail": "看这一部分",
+        "previousAction": "上一部分",
+        "nextAction": "下一部分",
+        "reportAction": "看完整结果",
+        "backToPreview": "换一种演示情况"
+      },
+      "fallback": {
+        "dimensionHeadline": "这一部分现在还看不出明确结论。",
+        "dimensionSummary": "先把它当作一个可以继续观察的方向。",
+        "chapterHeadline": "这一部分的回答还没有形成一个很明确的方向。",
+        "chapterSummary": "具体情况可能会随着人和相处方式不同而变化。",
+        "patternHeadline": "这里有一个值得在真实相处中继续看的地方。",
+        "patternSummary": "问卷只能先把线索放在一起，不能替你决定答案。"
       }
     }
   },

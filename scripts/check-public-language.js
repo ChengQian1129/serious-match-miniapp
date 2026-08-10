@@ -193,7 +193,8 @@ function checkSourceLanguageLeaks() {
     path.join(root, 'pages/record-claim/index.js'),
     path.join(root, 'shared/assessment/report-engine.js'),
     path.join(root, 'shared/assessment/report-rules.js'),
-    path.join(root, 'utils/assessment-v2/chapter-insight-engine.js')
+    path.join(root, 'utils/assessment-v2/chapter-insight-engine.js'),
+    path.join(root, 'shared/assessment-v3-product/report-renderer.js')
   ]
   guardedFiles.forEach(file => {
     const source = fs.readFileSync(file, 'utf8')
