@@ -46,10 +46,17 @@ const BASE_DIMENSIONS = Object.freeze({
 const BASE_CHAPTERS = Object.freeze({
   C1: 'READY_SELF_DRIVEN',
   C2: 'HIGH_HIGH',
-  C3: 'CLARIFYING',
+  C3: { activation: 'MID', primaryStrategy: 'CLARIFYING', secondaryStrategy: null },
   C4: 'HIGH_HIGH',
   C5: 'BALANCED',
   C6: 'MID_FLEX_HIGH'
+})
+
+const BASE_PATTERN_CONTEXT = Object.freeze({
+  supportNeedKnown: true,
+  majorConstraintConflict: false,
+  pressure: 'LOW',
+  autonomous: 'HIGH'
 })
 
 const BASE_DECISION_MAP = Object.freeze({
@@ -93,7 +100,8 @@ function createFixture(id, labelKey, descriptionKey, overrides = {}) {
     persona: { id, labelKey, descriptionKey },
     dimensionResults: mergeDimensionResults(overrides.dimensionResults),
     chapterStates: Object.assign({}, BASE_CHAPTERS, overrides.chapterStates || {}),
-    summaryPatternIds: overrides.summaryPatternIds || ['INTIMACY_HIGH_SPACE_HIGH', 'SUPPORT_NEED_SIGNAL_GAP', 'CONFLICT_HIGH_REPAIR_HIGH'],
+    patternContext: Object.assign({}, BASE_PATTERN_CONTEXT, overrides.patternContext || {}),
+    expectedPatternIds: overrides.expectedPatternIds || [],
     decisionMap: overrides.decisionMap || BASE_DECISION_MAP,
     unknowns: overrides.unknowns || BASE_UNKNOWNS,
     interviewPriorities: overrides.interviewPriorities || BASE_INTERVIEW_PRIORITIES
@@ -105,7 +113,7 @@ const FIXTURES = Object.freeze([
   createFixture('ready_busy', 'ready_busy', 'ready_busy', {
     dimensionResults: { available_capacity: { state: 'LOW', confidence: 'HIGH' } },
     chapterStates: { C2: 'LOW_HIGH' },
-    summaryPatternIds: ['READINESS_CAPACITY_GAP', 'CAPACITY_SPACE_DISTINCT'],
+    expectedPatternIds: ['READINESS_CAPACITY_GAP', 'CAPACITY_SPACE_DISTINCT'],
     decisionMap: decisionMapWithValues({ l3: { time: 'busy' }, l5: { feasibility: 'tight' } })
   }),
   createFixture('pressured_busy', 'pressured_busy', 'pressured_busy', {
@@ -115,7 +123,8 @@ const FIXTURES = Object.freeze([
       available_capacity: { state: 'LOW', confidence: 'HIGH' }
     },
     chapterStates: { C1: 'PRESSURED_NOT_READY', C2: 'LOW_MID' },
-    summaryPatternIds: ['PRESSURE_CAPACITY_GAP', 'AUTONOMOUS_READINESS_CONSTRAINT']
+    patternContext: { pressure: 'HIGH', autonomous: 'LOW' },
+    expectedPatternIds: ['PRESSURE_CAPACITY_GAP']
   }),
   createFixture('followthrough_gap', 'followthrough_gap', 'followthrough_gap', {
     dimensionResults: {
@@ -123,27 +132,30 @@ const FIXTURES = Object.freeze([
       repair_reengagement: { state: 'LOW', confidence: 'LOW', evidenceStatus: 'PROVISIONAL' }
     },
     chapterStates: { C2: 'HIGH_LOW', C6: 'MID_ANY_LOW' },
-    summaryPatternIds: ['HIGH_READINESS_LOW_FOLLOWTHROUGH', 'FOLLOWTHROUGH_REPAIR_LINK'],
+    expectedPatternIds: ['HIGH_READINESS_LOW_FOLLOWTHROUGH', 'FOLLOWTHROUGH_REPAIR_LINK'],
     decisionMap: decisionMapWithValues({ l3: { conflict: 'unfinished' }, l5: { intention: 'observe' } })
   }),
   createFixture('direct_clarifier', 'direct_clarifier', 'direct_clarifier', {
-    dimensionResults: { uncertainty_activation: { state: 'HIGH', confidence: 'HIGH' } },
-    chapterStates: { C3: 'CLARIFYING' },
-    summaryPatternIds: ['HIGH_ACTIVATION_REASSURANCE']
+    dimensionResults: {
+      uncertainty_activation: { state: 'HIGH', confidence: 'HIGH' },
+      support_need: { state: 'CLARITY_REASSURANCE', confidence: 'HIGH' }
+    },
+    expectedPatternIds: ['HIGH_ACTIVATION_REASSURANCE']
   }),
   createFixture('high_activation_quiet', 'high_activation_quiet', 'high_activation_quiet', {
     dimensionResults: {
       uncertainty_activation: { state: 'HIGH', confidence: 'HIGH' },
       uncertainty_regulation: { state: 'REASSURANCE_ORIENTED', confidence: 'MEDIUM' },
+      support_need: { state: 'CLARITY_REASSURANCE', confidence: 'HIGH' },
       support_signaling: { state: 'LOW', confidence: 'MEDIUM' }
     },
-    chapterStates: { C3: 'REASSURANCE_ORIENTED', C5: 'NEED_CLEAR_SIGNAL_LOW' },
-    summaryPatternIds: ['HIGH_ACTIVATION_LOW_SIGNAL', 'SUPPORT_NEED_SIGNAL_GAP']
+    chapterStates: { C5: 'NEED_CLEAR_SIGNAL_LOW' },
+    expectedPatternIds: ['HIGH_ACTIVATION_LOW_SIGNAL', 'HIGH_ACTIVATION_REASSURANCE', 'SUPPORT_NEED_SIGNAL_GAP']
   }),
   createFixture('close_with_space', 'close_with_space', 'close_with_space', {
     dimensionResults: { intimacy_dependence_comfort: { state: 'HIGH', confidence: 'HIGH' }, personal_space_need: { state: 'HIGH', confidence: 'HIGH' } },
     chapterStates: { C4: 'HIGH_HIGH' },
-    summaryPatternIds: ['INTIMACY_HIGH_SPACE_HIGH', 'SPACE_PACING_SHARED']
+    expectedPatternIds: ['INTIMACY_HIGH_SPACE_HIGH']
   }),
   createFixture('self_reliant', 'self_reliant', 'self_reliant', {
     dimensionResults: {
@@ -152,16 +164,18 @@ const FIXTURES = Object.freeze([
       responsiveness_capability: { state: 'HIGH', confidence: 'LOW', evidenceStatus: 'PROVISIONAL' }
     },
     chapterStates: { C4: 'LOW_HIGH', C5: 'RESPONSIVE_SELF_SILENT' },
-    summaryPatternIds: ['INTIMACY_LOW_SUPPORT_SIGNAL_LOW', 'RESPONSIVE_SELF_SILENT']
+    expectedPatternIds: ['INTIMACY_LOW_SUPPORT_SIGNAL_LOW', 'RESPONSIVE_SELF_SILENT', 'SUPPORT_NEED_SIGNAL_GAP']
   }),
   createFixture('support_specific', 'support_specific', 'support_specific', {
     dimensionResults: {
       support_need: { state: 'PROBLEM_SOLVING', confidence: 'HIGH' },
       support_signaling: { state: 'HIGH', confidence: 'HIGH' },
-      responsiveness_capability: { state: 'MID', confidence: 'LOW', evidenceStatus: 'PROVISIONAL' }
+      responsiveness_capability: { state: 'MID', confidence: 'LOW', evidenceStatus: 'PROVISIONAL' },
+      intimacy_dependence_comfort: { state: 'MID', confidence: 'MEDIUM' },
+      personal_space_need: { state: 'MID', confidence: 'MEDIUM' }
     },
     chapterStates: { C5: 'PROBLEM_SOLVING_MISMATCH_RISK' },
-    summaryPatternIds: ['SUPPORT_NEED_SIGNAL_GAP']
+    expectedPatternIds: []
   }),
   createFixture('conflict_return', 'conflict_return', 'conflict_return', {
     dimensionResults: {
@@ -170,7 +184,7 @@ const FIXTURES = Object.freeze([
       repair_reengagement: { state: 'HIGH', confidence: 'MEDIUM', evidenceStatus: 'PROVISIONAL' }
     },
     chapterStates: { C6: 'HIGH_SHORT_HIGH' },
-    summaryPatternIds: ['CONFLICT_HIGH_REPAIR_HIGH', 'SPACE_PACING_SHARED']
+    expectedPatternIds: ['CONFLICT_HIGH_REPAIR_HIGH']
   }),
   createFixture('quiet_unrepaired', 'quiet_unrepaired', 'quiet_unrepaired', {
     dimensionResults: {
@@ -179,7 +193,7 @@ const FIXTURES = Object.freeze([
       repair_reengagement: { state: 'LOW', confidence: 'LOW', evidenceStatus: 'PROVISIONAL' }
     },
     chapterStates: { C6: 'LOW_ANY_LOW' },
-    summaryPatternIds: ['CONFLICT_LOW_REPAIR_LOW'],
+    expectedPatternIds: ['CONFLICT_LOW_REPAIR_LOW'],
     decisionMap: decisionMapWithValues({ l3: { conflict: 'unfinished' }, l5: { feasibility: 'tight' } })
   }),
   createFixture('mixed_context', 'mixed_context', 'mixed_context', {
@@ -189,8 +203,9 @@ const FIXTURES = Object.freeze([
       uncertainty_regulation: { state: 'MIXED', confidence: 'LOW' },
       intimacy_dependence_comfort: { state: 'MID', confidence: 'LOW' }
     },
-    chapterStates: { C1: 'WANT_BUT_NOT_READY', C3: 'MIXED', C4: 'MID_MID' },
-    summaryPatternIds: ['AUTONOMOUS_READINESS_CONSTRAINT'],
+    chapterStates: { C1: 'WANT_BUT_NOT_READY', C4: 'MID_MID' },
+    patternContext: { autonomous: 'LOW' },
+    expectedPatternIds: [],
     decisionMap: decisionMapWithValues({ l3: { time: 'shared' }, l5: { desire: 'open', intention: 'observe' } })
   })
 ])

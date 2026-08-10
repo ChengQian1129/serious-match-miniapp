@@ -1,13 +1,16 @@
 const assert = require('node:assert/strict')
 const fs = require('node:fs')
 const path = require('node:path')
+const normative = require('./sync-assessment-v3-product')
 const app = require('../app.json')
 const { FEATURES } = require('../utils/features')
 const { DIMENSION_IDS, CHAPTERS } = require('../shared/assessment-v3-product/contract')
 const { listFixtures } = require('../shared/assessment-v3-product/fixtures')
 const { buildReport } = require('../shared/assessment-v3-product/report-renderer')
+const { derivePatternEligibility, evaluatePattern } = require('../shared/assessment-v3-product/pattern-eligibility')
 
 const root = path.resolve(__dirname, '..')
+assert.equal(fs.readFileSync(normative.outputPath, 'utf8'), normative.render(normative.buildBundle()), 'generated V3 product normative bundle is stale; run npm run sync:assessment-v3-product')
 const routes = [
   'pages/v3-product-preview/index',
   'pages/v3-checkpoint/index',
@@ -32,6 +35,12 @@ listFixtures().forEach(fixture => {
   assert.deepEqual(report.chapterSyntheses.map(chapter => chapter.id), CHAPTERS.map(chapter => chapter.id))
   assert.deepEqual(report.decisionMap.sections.map(section => section.id), ['l3', 'l4', 'l5'])
   assert.ok(report.executiveSummary.patterns.length <= 3)
+  const eligibility = new Map(derivePatternEligibility(fixture).map(item => [item.patternId, item]))
+  report.executiveSummary.patterns.forEach(pattern => assert.equal(eligibility.get(pattern.id).eligible, true, `${fixture.persona.id}: ineligible pattern ${pattern.id}`))
+  ;(fixture.expectedPatternIds || []).forEach(patternId => assert.equal(evaluatePattern(fixture, patternId).eligible, true, `${fixture.persona.id}: expected pattern ${patternId} is ineligible`))
+  const c3 = report.chapterSyntheses.find(chapter => chapter.id === 'C3')
+  const regulationCard = report.dimensionCards.find(card => card.id === 'uncertainty_regulation')
+  assert.notEqual(c3.headline, regulationCard.headline)
   report.dimensionCards.forEach(card => card.evidence.forEach(item => {
     assert.ok(item.question)
     assert.ok(item.answer)

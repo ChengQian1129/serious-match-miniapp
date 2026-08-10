@@ -59,6 +59,8 @@ input:
   patternContext:
     majorConstraintConflict: boolean
     supportNeedKnown: boolean
+    pressure: nullable LOW|MID|HIGH
+    autonomous: nullable LOW|MID|HIGH
 output:
   executiveSummary: max 3 selected cross-chapter patterns + highest-value uncertainty
   dimensionCards: 14 cards

@@ -18307,43 +18307,7 @@ module.exports = {
           }
         },
         "C3": {
-          "label": "对方态度变了，你通常会怎样",
-          "CLARIFYING": {
-            "headline": "你更愿意直接问清楚。",
-            "summary": ""
-          },
-          "OBSERVING": {
-            "headline": "你通常会先看看对方接下来怎么做。",
-            "summary": ""
-          },
-          "REASSURANCE_ORIENTED": {
-            "headline": "你会比较需要对方明确告诉你他的想法。",
-            "summary": ""
-          },
-          "MONITORING_ORIENTED": {
-            "headline": "你容易去看线上状态、社交动态等其他线索。",
-            "summary": ""
-          },
-          "RUMINATIVE": {
-            "headline": "没有新消息时，你也容易在脑子里反复想。",
-            "summary": ""
-          },
-          "TESTING_PROTEST": {
-            "headline": "你有时会故意少主动一点，看对方会不会来找你。",
-            "summary": ""
-          },
-          "TOLERANT_WAITING": {
-            "headline": "你可以先不急着下结论，等更多信息。",
-            "summary": ""
-          },
-          "WITHDRAWING": {
-            "headline": "如果一直说不清，你会慢慢把自己收回来。",
-            "summary": ""
-          },
-          "MIXED": {
-            "headline": "你没有固定一种做法，很看对方是谁、事情有多重要。",
-            "summary": ""
-          }
+          "label": "对方态度变了，你通常会怎样"
         },
         "C4": {
           "label": "关系越来越亲近以后",
@@ -18535,6 +18499,76 @@ module.exports = {
         "AUTONOMOUS_READINESS_CONSTRAINT": {
           "headline": "你很想开始，也还是有些事不能勉强",
           "summary": "就算你现在很想谈恋爱，要不要孩子、以后住哪里等重要问题，还是需要单独看。"
+        }
+      },
+      "chapterCompositions": {
+        "C3": {
+          "activation": {
+            "VERY_LOW": {
+              "headline": "关系里的模糊通常不太会把你困住",
+              "summary": "变化本身一般不会长时间占住你的注意力。"
+            },
+            "LOW": {
+              "headline": "你会注意到变化，但一般能先等更多信息",
+              "summary": "你会留意关系里的信号，只是通常还能先把它放一放。"
+            },
+            "MID": {
+              "headline": "你会不会不安，很看这段关系有多重要、变化有多明显",
+              "summary": "不同的人和情境，可能会让你受到的影响不一样。"
+            },
+            "HIGH": {
+              "headline": "关系一变得不清楚，你会比较快受到影响",
+              "summary": "关系里的变化很容易进入你的注意力，也会让你想尽快弄明白。"
+            },
+            "VERY_HIGH": {
+              "headline": "关系一不清楚，你的注意力很容易一直被牵着走",
+              "summary": "只要没有新的确定信息，你就可能很难把注意力完全放回别的事情上。"
+            }
+          },
+          "strategy": {
+            "CLARIFYING": {
+              "headline": "你通常会直接问清楚",
+              "summary": "你更倾向把问题拿出来确认，而不是只靠猜。"
+            },
+            "OBSERVING": {
+              "headline": "你通常会先看看对方接下来怎么做",
+              "summary": "你会先留意后续行动，再决定要不要把话说开。"
+            },
+            "REASSURANCE_ORIENTED": {
+              "headline": "你会比较需要对方明确告诉你他的想法",
+              "summary": "明确的说明和确认，通常能帮你更快找回稳定感。"
+            },
+            "MONITORING_ORIENTED": {
+              "headline": "信息不够时，你容易继续找其他线索",
+              "summary": "你可能会从线上状态、社交动态或其他细节里补充判断。"
+            },
+            "RUMINATIVE": {
+              "headline": "没有新消息时，你也容易在心里反复想",
+              "summary": "你可能会在没有答案的时候持续回想细节，试着把事情想明白。"
+            },
+            "TESTING_PROTEST": {
+              "headline": "你有时会少主动一点，看看对方会不会来找你",
+              "summary": "你可能通过改变自己的投入，观察对方是否会主动靠近。"
+            },
+            "TOLERANT_WAITING": {
+              "headline": "你可以先不急着下结论，等更多信息",
+              "summary": "你愿意给事情留一点时间，再根据新的信息判断。"
+            },
+            "WITHDRAWING": {
+              "headline": "如果一直说不清，你会慢慢把自己收回来",
+              "summary": "长时间没有清晰进展时，你更可能先降低投入，保护自己的节奏。"
+            },
+            "MIXED": {
+              "headline": "你没有固定一种做法，很看具体情况",
+              "summary": "对方是谁、关系到哪一步，以及事情有多重要，都会影响你的下一步。"
+            }
+          },
+          "connectors": {
+            "headline": "；",
+            "summary": "这两件事放在一起看，",
+            "secondaryHeadline": "；不过，",
+            "secondarySummary": "另外，"
+          }
         }
       },
       "reportTitles": {

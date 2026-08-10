@@ -183,7 +183,8 @@ function projectNarratives(source) {
     return [chapterId, projected]
   }))
   const crossChapterPatterns = Object.fromEntries(Object.entries(source.crossChapterPatterns || {}).map(([patternId, value]) => [patternId, { headline: value.headline, summary: value.summary }]))
-  return { dimensions, chapters, crossChapterPatterns, reportTitles: source.reportTitles || {} }
+  const chapterCompositions = publicValue(source.chapterCompositions || {})
+  return { dimensions, chapters, crossChapterPatterns, chapterCompositions, reportTitles: source.reportTitles || {} }
 }
 
 function main() {

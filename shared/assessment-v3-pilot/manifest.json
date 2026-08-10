@@ -18,7 +18,7 @@
     "normative/pilot_pruning_calibration.yaml": "10ceefa70eb11f221782b7f3ef348b0ab18ecbf042b3c062ee0c6bea1435cf1e",
     "normative/questionnaire_candidate_freeze.yaml": "552d51faaad8d3a3a9c0e4bb005d4fe3bc55c404b6f4c312a7fe34ae77ad56c7",
     "normative/report_core_candidate.yaml": "c06a60c52e8ed04b3ec93b62181e3c631dbcb6f81185c6488b94ee8f3fa72d86",
-    "normative/report_runtime_schema.yaml": "0a1419c8e5684c2ef7a61eb71390cfabe5c1d79bc3d9d8b180a647a2d517a6b4",
+    "normative/report_runtime_schema.yaml": "6c183671f2033196b0bfa9b2af4d8d211f976679692a3a41fe15feb4d2d77c5a",
     "normative/response_formats.yaml": "dc51247ecb986515e73f46cb70b0115c4dcc7ce0d899f4616d1958147d4d8f7b",
     "normative/user_report_authoring_library.yaml": "fb83ba15ddb901a37c65006547da73f6d24520a43eec0e2aa9da7535701d1ce1",
     "pilot/P0_cognitive_interview_guide.md": "8861ea4510e463ba13f9272c288b3fabe71e1165a540243268743587aa627e5c",
@@ -41,5 +41,5 @@
     "childResponseFields": 119,
     "constructRegistryObjects": 60
   },
-  "runtimeHash": "a2a057d7a1f866104eb57d239b157d896df279597f33eddb965b270bf05902a5"
+  "runtimeHash": "3fade690633faec281f001dd7e2e529361ba6ff3f12d49c674d35389d7f9b697"
 }

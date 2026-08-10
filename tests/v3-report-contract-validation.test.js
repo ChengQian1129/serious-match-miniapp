@@ -3,7 +3,7 @@ const fs = require('node:fs')
 const app = require('../app.json')
 const { FEATURES } = require('../utils/features')
 const { getFixture } = require('../shared/assessment-v3-product/fixtures')
-const { createDerivedV3Profile } = require('../shared/assessment-v3-product/contract')
+const { createDerivedV3Profile, assertDerivedV3Profile, clone } = require('../shared/assessment-v3-product/contract')
 const { buildReport } = require('../shared/assessment-v3-product/report-renderer')
 
 assert.equal(FEATURES.v3ProductPreview, true)
@@ -16,6 +16,12 @@ assert.equal(report.assessmentMeta.scoringModelVersion, 'synthetic-fixture')
 assert.equal(report.isSynthetic, true)
 assert.ok(report.decisionMap.sections.every(section => section.items.length > 0))
 assert.equal(fs.readFileSync(require.resolve('../shared/assessment-v3-pilot/runtime-engine'), 'utf8').includes('node:crypto'), false)
+const legacyProfile = clone(profile)
+legacyProfile.summaryPatternIds = ['INTIMACY_HIGH_SPACE_HIGH']
+assert.throws(() => assertDerivedV3Profile(legacyProfile), /summaryPatternIds is deprecated/)
+const inconsistentC3 = clone(profile)
+inconsistentC3.chapterStates.C3.activation = 'HIGH'
+assert.throws(() => assertDerivedV3Profile(inconsistentC3), /chapterStates\.C3\.activation/)
 const futureProfile = createDerivedV3Profile(Object.assign({}, profile, { source: 'calibrated_production', isSynthetic: false }))
 assert.equal(buildReport(futureProfile).isSynthetic, false)
 

@@ -12,7 +12,8 @@ assert.ok(PRODUCT_COPY.decisions.l4.items.boundary.body)
 assert.ok(PRODUCT_COPY.decisions.l5.items.feasibility.body)
 assert.ok(PRODUCT_COPY.interview.items.supportPattern.body)
 assert.equal(publicLanguage.v3.narratives.chapters.C2.HIGH_HIGH.summary, '')
-assert.equal(publicLanguage.v3.narratives.chapters.C3.CLARIFYING.summary, '')
+assert.ok(publicLanguage.v3.narratives.chapterCompositions.C3.activation.HIGH.headline)
+assert.ok(publicLanguage.v3.narratives.chapterCompositions.C3.strategy.CLARIFYING.headline)
 
 function publicText(value) {
   if (typeof value === 'string') return value

@@ -21906,6 +21906,166 @@
   },
   {
     "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapterCompositions.C3.activation.HIGH.headline",
+    "text": "关系一变得不清楚，你会比较快受到影响"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapterCompositions.C3.activation.HIGH.summary",
+    "text": "关系里的变化很容易进入你的注意力，也会让你想尽快弄明白。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapterCompositions.C3.activation.LOW.headline",
+    "text": "你会注意到变化，但一般能先等更多信息"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapterCompositions.C3.activation.LOW.summary",
+    "text": "你会留意关系里的信号，只是通常还能先把它放一放。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapterCompositions.C3.activation.MID.headline",
+    "text": "你会不会不安，很看这段关系有多重要、变化有多明显"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapterCompositions.C3.activation.MID.summary",
+    "text": "不同的人和情境，可能会让你受到的影响不一样。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapterCompositions.C3.activation.VERY_HIGH.headline",
+    "text": "关系一不清楚，你的注意力很容易一直被牵着走"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapterCompositions.C3.activation.VERY_HIGH.summary",
+    "text": "只要没有新的确定信息，你就可能很难把注意力完全放回别的事情上。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapterCompositions.C3.activation.VERY_LOW.headline",
+    "text": "关系里的模糊通常不太会把你困住"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapterCompositions.C3.activation.VERY_LOW.summary",
+    "text": "变化本身一般不会长时间占住你的注意力。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapterCompositions.C3.connectors.headline",
+    "text": "；"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapterCompositions.C3.connectors.secondaryHeadline",
+    "text": "；不过，"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapterCompositions.C3.connectors.secondarySummary",
+    "text": "另外，"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapterCompositions.C3.connectors.summary",
+    "text": "这两件事放在一起看，"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapterCompositions.C3.strategy.CLARIFYING.headline",
+    "text": "你通常会直接问清楚"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapterCompositions.C3.strategy.CLARIFYING.summary",
+    "text": "你更倾向把问题拿出来确认，而不是只靠猜。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapterCompositions.C3.strategy.MIXED.headline",
+    "text": "你没有固定一种做法，很看具体情况"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapterCompositions.C3.strategy.MIXED.summary",
+    "text": "对方是谁、关系到哪一步，以及事情有多重要，都会影响你的下一步。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapterCompositions.C3.strategy.MONITORING_ORIENTED.headline",
+    "text": "信息不够时，你容易继续找其他线索"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapterCompositions.C3.strategy.MONITORING_ORIENTED.summary",
+    "text": "你可能会从线上状态、社交动态或其他细节里补充判断。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapterCompositions.C3.strategy.OBSERVING.headline",
+    "text": "你通常会先看看对方接下来怎么做"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapterCompositions.C3.strategy.OBSERVING.summary",
+    "text": "你会先留意后续行动，再决定要不要把话说开。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapterCompositions.C3.strategy.REASSURANCE_ORIENTED.headline",
+    "text": "你会比较需要对方明确告诉你他的想法"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapterCompositions.C3.strategy.REASSURANCE_ORIENTED.summary",
+    "text": "明确的说明和确认，通常能帮你更快找回稳定感。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapterCompositions.C3.strategy.RUMINATIVE.headline",
+    "text": "没有新消息时，你也容易在心里反复想"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapterCompositions.C3.strategy.RUMINATIVE.summary",
+    "text": "你可能会在没有答案的时候持续回想细节，试着把事情想明白。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapterCompositions.C3.strategy.TESTING_PROTEST.headline",
+    "text": "你有时会少主动一点，看看对方会不会来找你"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapterCompositions.C3.strategy.TESTING_PROTEST.summary",
+    "text": "你可能通过改变自己的投入，观察对方是否会主动靠近。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapterCompositions.C3.strategy.TOLERANT_WAITING.headline",
+    "text": "你可以先不急着下结论，等更多信息"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapterCompositions.C3.strategy.TOLERANT_WAITING.summary",
+    "text": "你愿意给事情留一点时间，再根据新的信息判断。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapterCompositions.C3.strategy.WITHDRAWING.headline",
+    "text": "如果一直说不清，你会慢慢把自己收回来"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapterCompositions.C3.strategy.WITHDRAWING.summary",
+    "text": "长时间没有清晰进展时，你更可能先降低投入，保护自己的节奏。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
     "key": "v3Narrative.chapters.C1.label",
     "text": "你现在想不想谈恋爱"
   },
@@ -22011,53 +22171,8 @@
   },
   {
     "surface": "shared/content/public-language.generated.js",
-    "key": "v3Narrative.chapters.C3.CLARIFYING.headline",
-    "text": "你更愿意直接问清楚。"
-  },
-  {
-    "surface": "shared/content/public-language.generated.js",
     "key": "v3Narrative.chapters.C3.label",
     "text": "对方态度变了，你通常会怎样"
-  },
-  {
-    "surface": "shared/content/public-language.generated.js",
-    "key": "v3Narrative.chapters.C3.MIXED.headline",
-    "text": "你没有固定一种做法，很看对方是谁、事情有多重要。"
-  },
-  {
-    "surface": "shared/content/public-language.generated.js",
-    "key": "v3Narrative.chapters.C3.MONITORING_ORIENTED.headline",
-    "text": "你容易去看线上状态、社交动态等其他线索。"
-  },
-  {
-    "surface": "shared/content/public-language.generated.js",
-    "key": "v3Narrative.chapters.C3.OBSERVING.headline",
-    "text": "你通常会先看看对方接下来怎么做。"
-  },
-  {
-    "surface": "shared/content/public-language.generated.js",
-    "key": "v3Narrative.chapters.C3.REASSURANCE_ORIENTED.headline",
-    "text": "你会比较需要对方明确告诉你他的想法。"
-  },
-  {
-    "surface": "shared/content/public-language.generated.js",
-    "key": "v3Narrative.chapters.C3.RUMINATIVE.headline",
-    "text": "没有新消息时，你也容易在脑子里反复想。"
-  },
-  {
-    "surface": "shared/content/public-language.generated.js",
-    "key": "v3Narrative.chapters.C3.TESTING_PROTEST.headline",
-    "text": "你有时会故意少主动一点，看对方会不会来找你。"
-  },
-  {
-    "surface": "shared/content/public-language.generated.js",
-    "key": "v3Narrative.chapters.C3.TOLERANT_WAITING.headline",
-    "text": "你可以先不急着下结论，等更多信息。"
-  },
-  {
-    "surface": "shared/content/public-language.generated.js",
-    "key": "v3Narrative.chapters.C3.WITHDRAWING.headline",
-    "text": "如果一直说不清，你会慢慢把自己收回来。"
   },
   {
     "surface": "shared/content/public-language.generated.js",

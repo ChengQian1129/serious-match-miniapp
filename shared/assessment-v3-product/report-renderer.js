@@ -1,6 +1,7 @@
 const PUBLIC_LANGUAGE = require('../content/public-language.generated')
 const runtime = require('../assessment-v3-pilot/runtime-engine')
 const { CHAPTERS, DIMENSION_IDS, assertDerivedV3Profile, clone } = require('./contract')
+const { deriveEligiblePatternIds } = require('./pattern-eligibility')
 
 const PRODUCT_COPY = PUBLIC_LANGUAGE.v3.product
 const NARRATIVES = PUBLIC_LANGUAGE.v3.narratives
@@ -81,7 +82,10 @@ function dimensionCard(profile, dimensionId) {
 function selectSummaryPatterns(profile) {
   const selected = []
   const seen = new Set()
-  ;(profile.summaryPatternIds || []).forEach(patternId => {
+  const eligiblePatternIds = profile && profile.dimensionResults && profile.patternContext
+    ? deriveEligiblePatternIds(profile)
+    : []
+  eligiblePatternIds.forEach(patternId => {
     if (selected.length >= 3 || seen.has(patternId)) return
     if (selected.some(item => (PATTERN_SUPPRESSION[item.id] || []).includes(patternId))) return
     const suppressedByCurrent = PATTERN_SUPPRESSION[patternId] || []
@@ -96,8 +100,30 @@ function selectSummaryPatterns(profile) {
   return selected
 }
 
+function c3Narrative(profile) {
+  const state = profile && profile.chapterStates && profile.chapterStates.C3
+  if (!state) return { headline: PRODUCT_COPY.fallback.chapterHeadline, summary: PRODUCT_COPY.fallback.chapterSummary }
+  const compositions = NARRATIVES.chapterCompositions && NARRATIVES.chapterCompositions.C3
+  const activation = compositions && compositions.activation && compositions.activation[state.activation]
+  const primary = compositions && compositions.strategy && compositions.strategy[state.primaryStrategy]
+  if (!activation || !primary) return { headline: PRODUCT_COPY.fallback.chapterHeadline, summary: PRODUCT_COPY.fallback.chapterSummary }
+  const connectors = compositions.connectors || {}
+  let headline = `${activation.headline}${connectors.headline || ''}${primary.headline}`
+  let summary = `${activation.summary}${connectors.summary || ''}${primary.summary}`
+  if (state.secondaryStrategy && state.secondaryStrategy !== state.primaryStrategy) {
+    const secondary = compositions.strategy[state.secondaryStrategy]
+    if (secondary) {
+      headline += `${connectors.secondaryHeadline || connectors.headline || ''}${secondary.headline}`
+      summary += `${connectors.secondarySummary || ''}${secondary.summary}`
+    }
+  }
+  return { headline, summary }
+}
+
 function chapterSynthesis(profile, chapter) {
-  const narrative = narrativeForChapter(chapter.id, profile.chapterStates[chapter.id])
+  const narrative = chapter.id === 'C3'
+    ? c3Narrative(profile)
+    : narrativeForChapter(chapter.id, profile.chapterStates[chapter.id])
   return {
     id: chapter.id,
     title: NARRATIVES.reportTitles[chapter.id] || NARRATIVES.chapters[chapter.id].label,
@@ -216,5 +242,6 @@ module.exports = {
   selectSummaryPatterns,
   publicResponseForEvidence,
   PRODUCT_COPY,
-  PATTERN_SUPPRESSION
+  PATTERN_SUPPRESSION,
+  c3Narrative
 }
