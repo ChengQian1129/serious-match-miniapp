@@ -67,7 +67,8 @@ page.onProductShow()
 assert.equal(typeof deferredRestoreSuccess, 'function')
 page.handleStart()
 deferredRestoreSuccess({ result: { ok: true, data: { session: cloudSession, report: null } } })
-assert.equal(productStore.hasSession(), false)
+assert.equal(productStore.hasSession(), true)
+assert.equal(page.data.productRestoreState, 'READY')
 deferRestore = false
 
 productStore.saveSession(runtime.answerItem(productStore.emptySession(300), 'RR01', 1, 301))

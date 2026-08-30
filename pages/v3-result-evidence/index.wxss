@@ -101,6 +101,19 @@
   line-height: 42rpx;
 }
 
+.v3-evidence-item__edit {
+  min-height: 72rpx;
+  margin: 8rpx 0 0;
+  padding: 14rpx 0;
+  border: 0;
+  background: transparent;
+  color: var(--dl-grey-500);
+  font-size: 23rpx;
+  line-height: 36rpx;
+  text-align: left;
+  text-decoration: underline;
+}
+
 .v3-evidence-empty {
   margin-top: 30rpx;
   color: var(--dl-grey-500);
@@ -110,6 +123,15 @@
 
 .v3-evidence-page--empty .v3-evidence-shell {
   min-height: 100vh;
+}
+
+.v3-evidence-page .v3-evidence-item__edit {
+  box-sizing: border-box;
+  width: auto;
+  min-width: 88rpx;
+  max-width: 100%;
+  margin-right: 0;
+  margin-left: 0;
 }
 
 .v3-evidence-empty-state {

@@ -4,22 +4,19 @@ const runtime = require('../../shared/assessment-v3-product-v0/runtime-engine')
 const publicLanguage = require('../../shared/content/public-language.generated')
 const cloud = require('../../utils/cloud')
 const { navigateOnce, resetNavigation } = require('../../utils/navigation')
+const { recordEvent, hasSeenProductTrust, markProductTrustSeen } = require('../../utils/storage')
+const journey = require('../../utils/assessment-v3-product-v0/journey-model')
 
 const PRODUCT_V0_COPY = publicLanguage.v3.productV0
 const CHAPTER_LABELS = Object.freeze(PRODUCT_V0_COPY.chapters || {})
-const SECTION_KEYS = Object.freeze(runtime.BUNDLE.orderedParentTaskIds.reduce((keys, taskId) => {
-  const task = runtime.getTask(taskId)
-  const key = task && task.freezeMeta && (task.freezeMeta.chapter || task.freezeMeta.part)
-  return key && !keys.includes(key) ? keys.concat(key) : keys
-}, []))
 
 function chapterIndex(chapter) { return ['C1', 'C2', 'C3', 'C4', 'C5', 'C6'].indexOf(chapter) }
 function hasOwn(value, key) { return Object.prototype.hasOwnProperty.call(value || {}, key) }
 function sameValue(left, right) { return JSON.stringify(left) === JSON.stringify(right) }
 function sectionPosition(task) {
-  const key = task && task.freezeMeta && (task.freezeMeta.chapter || task.freezeMeta.part)
-  const index = SECTION_KEYS.indexOf(key)
-  return { number: index >= 0 ? index + 1 : 1, total: SECTION_KEYS.length }
+  const section = task && journey.getSectionForTask(task.taskId)
+  const index = section ? journey.getSectionIndexForTask(task.taskId) : 0
+  return { number: index >= 0 ? index + 1 : 1, total: journey.getSections().length, section }
 }
 function progressLabel(number, total) {
   return PRODUCT_V0_COPY.progressTemplate.replace('{number}', String(number)).replace('{total}', String(total))
@@ -49,6 +46,17 @@ function isFirstTask(taskId) {
   return runtime.BUNDLE.orderedParentTaskIds.indexOf(taskId) === 0
 }
 
+function itemAnchor(itemId) { return `product-v0-item-${String(itemId || '').replace(/[^a-zA-Z0-9_-]/g, '-')}` }
+
+function syncLabel(state) {
+  const copy = PRODUCT_V0_COPY.questionnaire || {}
+  if (state === 'CLOUD_SYNCING') return copy.syncingLabel || PRODUCT_V0_COPY.syncingLabel
+  if (state === 'SYNCED') return copy.syncedLabel || '已保存'
+  if (state === 'CLOUD_FAILED') return copy.syncFailedLabel || '已保存在本机，同步失败 · 重试'
+  if (state === 'LOCAL_SAVED') return copy.localSavedLabel || '已保存在本机'
+  return ''
+}
+
 function buildItems(task, session, pendingInputs = {}) {
   const answers = session.latestAnswers || session.answers || {}
   return runtime.itemEntries(task).map(entry => {
@@ -66,7 +74,9 @@ function buildItems(task, session, pendingInputs = {}) {
       value: value === undefined ? '' : value,
       selectedValues,
       selectedMark: value !== undefined && value !== '' ? PRODUCT_V0_COPY.selectedMark : PRODUCT_V0_COPY.unselectedMark,
-      canSkip: Boolean(format && (format.allowBlank || format.type === 'free_text'))
+      canSkip: Boolean(format && (format.allowBlank || format.type === 'free_text')),
+      anchorId: itemAnchor(entry.itemId),
+      isMultiSelect: Boolean(format && format.type === 'multi_select')
     }
   })
 }
@@ -80,7 +90,9 @@ function entryIsComplete(entry, answers, missingness) {
 function pageState(session, pendingInputs = {}) {
   const taskId = store.currentTaskId(session)
   const task = taskId ? runtime.publicTask(taskId) : null
-  if (!task) return { taskId: '', task: null, items: [], chapter: '', chapterLabel: '', chapterNumber: 0, sectionNumber: SECTION_KEYS.length, sectionCount: SECTION_KEYS.length, progress: 1, progressLabel: progressLabel(SECTION_KEYS.length, SECTION_KEYS.length), progressPercentLabel: '100%', progressWidth: '100%', isFirstTask: false, showIntro: false, isDecisionPart: false, canContinue: false, continueLabel: PRODUCT_V0_COPY.resultAction }
+  const sectionCount = journey.getSections().length
+  const questionnaireCopy = PRODUCT_V0_COPY.questionnaire || {}
+  if (!task) return { taskId: '', task: null, items: [], chapter: '', chapterLabel: '', chapterNumber: 0, sectionNumber: sectionCount, sectionCount, progress: 1, progressLabel: progressLabel(sectionCount, sectionCount), sectionProgressLabel: '', progressPercentLabel: '100%', progressWidth: '100%', isFirstTask: false, showIntro: false, isDecisionPart: false, canContinue: false, continueLabel: PRODUCT_V0_COPY.resultAction, backLabel: questionnaireCopy.previousAction || PRODUCT_V0_COPY.backAction, globalComplete: journey.isAssessmentComplete(session), hasMultiSelect: false }
   const chapter = task.freezeMeta && task.freezeMeta.chapter
   const part = task.freezeMeta && task.freezeMeta.part
   const section = sectionPosition(task)
@@ -88,15 +100,20 @@ function pageState(session, pendingInputs = {}) {
   const missingness = Object.assign({}, session.missingness || {})
   Object.keys(pendingInputs).forEach(itemId => { delete missingness[itemId] })
   const ratio = runtime.progress(session).ratio
+  const sectionProgress = journey.getSectionProgress(session, section.section && section.section.id)
+  const sectionProgressLabel = (questionnaireCopy.sectionProgressTemplate || '本部分 {completed} / {total}')
+    .replace('{completed}', String(sectionProgress.completedTasks))
+    .replace('{total}', String(sectionProgress.totalTasks))
   return {
     taskId,
     task: { prompt: task.prompt || '' },
     items: buildItems(task, session, pendingInputs),
     chapter: chapter || '',
-    chapterLabel: chapter ? CHAPTER_LABELS[chapter] : ((PRODUCT_V0_COPY.partLabels || {})[part] || ''),
+    chapterLabel: section.section && section.section.title || (chapter ? CHAPTER_LABELS[chapter] : ((PRODUCT_V0_COPY.partLabels || {})[part] || '')),
     chapterNumber: chapter ? chapterIndex(chapter) + 1 : 7,
     sectionNumber: section.number,
     sectionCount: section.total,
+    sectionProgressLabel,
     progress: ratio,
     progressLabel: progressLabel(section.number, section.total),
     progressPercentLabel: progressPercentLabel(ratio),
@@ -105,21 +122,41 @@ function pageState(session, pendingInputs = {}) {
     showIntro: isFirstTask(taskId),
     continueLabel: taskId ? PRODUCT_V0_COPY.continueAction : PRODUCT_V0_COPY.resultAction,
     isDecisionPart: !chapter,
-    canContinue: runtime.itemEntries(task).every(entry => entryIsComplete(entry, answers, missingness))
+    backLabel: isFirstTask(taskId) ? (questionnaireCopy.firstBackAction || '退出') : (questionnaireCopy.previousAction || PRODUCT_V0_COPY.backAction),
+    canContinue: runtime.itemEntries(task).every(entry => entryIsComplete(entry, answers, missingness)),
+    globalComplete: journey.isAssessmentComplete(session),
+    hasMultiSelect: runtime.itemEntries(task).some(entry => { const format = runtime.resolveFormat(entry.item.response); return format && format.type === 'multi_select' })
   }
 }
 
 Page({
-  data: { ready: false, copy: PRODUCT_V0_COPY, task: null, items: [], taskId: '', chapter: '', chapterLabel: '', chapterNumber: 1, sectionNumber: 1, sectionCount: SECTION_KEYS.length, progress: 0, progressLabel: progressLabel(1, SECTION_KEYS.length), progressPercentLabel: '0%', progressWidth: '0%', isFirstTask: false, showIntro: false, isDecisionPart: false, continueLabel: PRODUCT_V0_COPY.continueAction, motionClass: '', syncing: false, syncError: '' },
+  data: { ready: false, copy: PRODUCT_V0_COPY, task: null, items: [], taskId: '', chapter: '', chapterLabel: '', chapterNumber: 1, sectionNumber: 1, sectionCount: journey.getSections().length, sectionProgressLabel: '', progress: 0, progressLabel: progressLabel(1, journey.getSections().length), progressPercentLabel: '0%', progressWidth: '0%', isFirstTask: false, showIntro: false, isDecisionPart: false, continueLabel: PRODUCT_V0_COPY.continueAction, backLabel: PRODUCT_V0_COPY.questionnaire && PRODUCT_V0_COPY.questionnaire.firstBackAction || '退出', hasMultiSelect: false, globalComplete: false, motionClass: '', syncing: false, syncError: '', syncState: '', syncStatusLabel: '', validationMessage: '', invalidItemId: '', editing: false, showTrustNote: false },
 
   onLoad(options = {}) {
     if (!FEATURES.v3ProductV0) return navigateOnce(this, 'reLaunch', { url: '/pages/home/index' })
     this.pendingInputs = {}
+    this.returnTo = ''
+    if (options.returnTo) {
+      try { this.returnTo = decodeURIComponent(String(options.returnTo)) } catch (error) { this.returnTo = '' }
+    }
+    this.editing = Boolean(options.taskId && this.returnTo)
     let session = store.getSession()
-    if (options.index !== undefined) session = store.setTaskIndex(Number(options.index))
+    if (options.taskId) {
+      const positioned = store.setTaskId(options.taskId)
+      if (!positioned) {
+        this.setData({ ready: true, invalidRoute: true, validationMessage: (PRODUCT_V0_COPY.questionnaire && PRODUCT_V0_COPY.questionnaire.invalidTask) || '暂时没能加载这道题' })
+        return
+      }
+      session = positioned
+    } else if (options.index !== undefined) session = store.setTaskIndex(Number(options.index))
     if (!session.startedAt) session = store.saveSession(store.emptySession())
     this.session = session
-    this.setData(Object.assign({ ready: true }, pageState(session, this.pendingInputs)))
+    const showTrustNote = isFirstTask(store.currentTaskId(session)) && !hasSeenProductTrust()
+    if (showTrustNote) markProductTrustSeen()
+    if (this.editing) recordEvent('answer_edit_start', { taskId: store.currentTaskId(session) })
+    const initialSyncState = session.status === 'pending_cloud' ? 'LOCAL_SAVED' : (session.answerEvents.length ? 'SYNCED' : '')
+    this.setData(Object.assign({ ready: true, editing: this.editing, showTrustNote, syncState: initialSyncState, syncStatusLabel: syncLabel(initialSyncState) }, pageState(session, this.pendingInputs)))
+    recordEvent('section_start', { sectionId: journey.getSectionForTask(store.currentTaskId(session)) && journey.getSectionForTask(store.currentTaskId(session)).id, sectionIndex: pageState(session, this.pendingInputs).sectionNumber })
   },
 
   onShow() { resetNavigation(this); if (this.data.ready) { this.refresh(); this.syncPending() } },
@@ -127,12 +164,37 @@ Page({
 
   refresh() {
     this.session = store.getSession()
-    this.setData(pageState(this.session, this.pendingInputs))
+    this.setData(Object.assign({}, pageState(this.session, this.pendingInputs), { syncStatusLabel: syncLabel(this.data.syncState) }))
+  },
+
+  markLocalSaved() {
+    this.setData({ syncState: 'LOCAL_SAVED', syncStatusLabel: syncLabel('LOCAL_SAVED'), syncError: '' })
+  },
+
+  incompleteItem() {
+    const session = store.getSession()
+    const task = runtime.getTask(store.currentTaskId(session))
+    if (!task) return null
+    const answers = Object.assign({}, session.latestAnswers || session.answers || {}, this.pendingInputs || {})
+    const missingness = Object.assign({}, session.missingness || {})
+    Object.keys(this.pendingInputs || {}).forEach(itemId => { delete missingness[itemId] })
+    return runtime.itemEntries(task).find(entry => !entryIsComplete(entry, answers, missingness)) || null
+  },
+
+  showIncomplete() {
+    const entry = this.incompleteItem()
+    if (!entry) return false
+    const questionnaireCopy = PRODUCT_V0_COPY.questionnaire || {}
+    const detail = runtime.itemEntries(runtime.getTask(entry.parent.taskId)).length > 1 ? `${questionnaireCopy.incompleteField || '这里还需要完成'}：${entry.item.prompt || entry.parent.prompt || ''}` : (questionnaireCopy.incomplete || '这里还需要一个回答')
+    this.setData({ validationMessage: detail, invalidItemId: itemAnchor(entry.itemId) })
+    if (typeof wx !== 'undefined' && typeof wx.pageScrollTo === 'function') wx.pageScrollTo({ selector: `#${itemAnchor(entry.itemId)}`, offsetTop: -24, duration: 180 })
+    return true
   },
 
   commitPendingInputs(itemId) {
     const pending = this.pendingInputs || {}
     const ids = itemId ? [itemId] : Object.keys(pending)
+    let changed = false
     for (const currentItemId of ids) {
       if (!hasOwn(pending, currentItemId)) continue
       const value = pending[currentItemId]
@@ -142,21 +204,29 @@ Page({
       const storedAnswers = session.latestAnswers || session.answers || {}
       if (value === undefined || value === null || value === '') {
         if (format && (format.allowBlank || format.type === 'free_text')) {
-          if (hasOwn(storedAnswers, currentItemId) || hasOwn(session.missingness, currentItemId)) store.markMissing(currentItemId, 'NOT_SURE')
+          if (!hasOwn(session.missingness, currentItemId)) {
+            store.markMissing(currentItemId, 'NOT_SURE')
+            changed = true
+          }
           delete pending[currentItemId]
           continue
         }
+        this.setData({ validationMessage: (PRODUCT_V0_COPY.questionnaire && PRODUCT_V0_COPY.questionnaire.incomplete) || PRODUCT_V0_COPY.errors.incomplete, invalidItemId: itemAnchor(currentItemId) })
         return false
       }
       if (!entry || !runtime.validateValue(entry, value).ok) {
-        wx.showToast({ title: PRODUCT_V0_COPY.errors.saveFailed, icon: 'none' })
+        this.setData({ validationMessage: (PRODUCT_V0_COPY.errors && PRODUCT_V0_COPY.errors.saveFailed) || '这项回答暂时无法保存', invalidItemId: itemAnchor(currentItemId) })
         return false
       }
       const stored = storedAnswers[currentItemId]
-      if (!sameValue(stored, value) || hasOwn(session.missingness, currentItemId)) store.answerItem(currentItemId, value)
+      if (!sameValue(stored, value) || hasOwn(session.missingness, currentItemId)) {
+        store.answerItem(currentItemId, value)
+        changed = true
+      }
       delete pending[currentItemId]
     }
     this.session = store.getSession()
+    if (changed) this.markLocalSaved()
     return true
   },
 
@@ -171,10 +241,10 @@ Page({
       const index = selected.findIndex(candidate => String(candidate) === String(value))
       if (index >= 0) selected.splice(index, 1)
       else selected.push(String(value))
-      try { this.session = store.answerItem(itemId, selected); this.refresh(); this.syncPending() } catch (error) { wx.showToast({ title: PRODUCT_V0_COPY.errors.incompleteSelection, icon: 'none' }) }
+      try { this.session = store.answerItem(itemId, selected); this.markLocalSaved(); this.setData({ validationMessage: '', invalidItemId: '' }); this.refresh(); this.syncPending() } catch (error) { wx.showToast({ title: PRODUCT_V0_COPY.errors.incompleteSelection, icon: 'none' }) }
       return
     }
-    try { this.session = store.answerItem(itemId, value); this.refresh(); this.syncPending() } catch (error) { wx.showToast({ title: PRODUCT_V0_COPY.errors.saveFailed, icon: 'none' }) }
+    try { this.session = store.answerItem(itemId, value); this.markLocalSaved(); this.setData({ validationMessage: '', invalidItemId: '' }); this.refresh(); this.syncPending() } catch (error) { wx.showToast({ title: PRODUCT_V0_COPY.errors.saveFailed, icon: 'none' }) }
   },
 
   handleInput(event) {
@@ -184,59 +254,108 @@ Page({
     const itemIndex = this.data.items.findIndex(item => item.itemId === itemId)
     const state = pageState(store.getSession(), this.pendingInputs)
     if (itemIndex < 0) return this.setData({ canContinue: state.canContinue })
-    this.setData({ [`items[${itemIndex}].value`]: event.detail.value, canContinue: state.canContinue })
+    this.setData({ [`items[${itemIndex}].value`]: event.detail.value, canContinue: state.canContinue, validationMessage: '', invalidItemId: '' })
   },
 
   handleInputBlur(event) {
-    this.commitPendingInputs(event.currentTarget.dataset.itemId)
+    const committed = this.commitPendingInputs(event.currentTarget.dataset.itemId)
     this.refresh()
+    if (!committed) this.showIncomplete()
   },
 
   skipItem(event) {
     const itemId = event.currentTarget.dataset.itemId
     delete (this.pendingInputs || {})[itemId]
-    try { this.session = store.markMissing(itemId, 'NOT_SURE'); this.refresh(); this.syncPending() } catch (error) { wx.showToast({ title: PRODUCT_V0_COPY.errors.cannotSkip, icon: 'none' }) }
+    try { this.session = store.markMissing(itemId, 'NOT_SURE'); this.markLocalSaved(); this.setData({ validationMessage: '', invalidItemId: '' }); this.refresh(); this.syncPending() } catch (error) { wx.showToast({ title: PRODUCT_V0_COPY.errors.cannotSkip, icon: 'none' }) }
+  },
+
+  openPrivacy() { navigateOnce(this, 'navigateTo', { url: '/pages/privacy/index' }) },
+
+  goHome() { navigateOnce(this, 'reLaunch', { url: '/pages/home/index' }) },
+
+  retrySync() {
+    this.setData({ syncError: '', syncState: 'LOCAL_SAVED', syncStatusLabel: syncLabel('LOCAL_SAVED') })
+    this.syncPending()
+  },
+
+  finishEditing() {
+    if (!this.editing || this._editRouting) return false
+    const session = store.getSession()
+    if (!journey.isAssessmentComplete(session)) {
+      this.showIncomplete()
+      return false
+    }
+    try {
+      store.completeAssessment()
+      this.markLocalSaved()
+      recordEvent('answer_edit_complete', { taskId: store.currentTaskId(session) })
+      this.syncPending()
+      this._editRouting = true
+      const returnTo = this.returnTo || '/pages/v3-result/index?mode=product-v0'
+      return navigateOnce(this, 'redirectTo', { url: returnTo, fail: () => navigateOnce(this, 'reLaunch', { url: '/pages/v3-result/index?mode=product-v0' }) })
+    } catch (error) {
+      this.setData({ validationMessage: (PRODUCT_V0_COPY.errors && PRODUCT_V0_COPY.errors.saveFailed) || '这项回答暂时无法保存' })
+      return false
+    }
   },
 
   handleBack() {
-    if (!this.commitPendingInputs()) return
+    if (!this.commitPendingInputs()) return this.showIncomplete()
+    if (this.editing) return this.finishEditing()
     this.syncPending()
     const session = store.getSession()
-    if (session.currentTaskIndex <= 0) return navigateOnce(this, 'navigateBack', { fail: () => navigateOnce(this, 'reLaunch', { url: '/pages/home/index' }) })
+    if (session.currentTaskIndex <= 0) {
+      recordEvent('section_pause', { sectionId: journey.currentSection(session) && journey.currentSection(session).id })
+      return navigateOnce(this, 'navigateBack', { fail: () => navigateOnce(this, 'reLaunch', { url: '/pages/home/index' }) })
+    }
     this.session = store.goPrevious()
+    this.markLocalSaved()
     this.setData(Object.assign({ motionClass: 'motion-back' }, pageState(this.session, this.pendingInputs)))
     this.syncPending()
   },
 
   handleContinue() {
-    if (this._isRouting || !this.commitPendingInputs()) return
+    if (this._isRouting) return
+    if (!this.commitPendingInputs()) return this.showIncomplete()
     this.refresh()
-    if (!this.data.canContinue) return wx.showToast({ title: PRODUCT_V0_COPY.errors.incomplete, icon: 'none' })
-    const before = store.getSession(); const currentTask = runtime.getTask(store.currentTaskId(before)); const currentChapter = currentTask && currentTask.freezeMeta && currentTask.freezeMeta.chapter
+    if (!this.data.canContinue) return this.showIncomplete()
+    if (this.editing) return this.finishEditing()
+    const before = store.getSession()
+    const currentSection = journey.currentSection(before)
     try {
       const next = store.goNext()
-      const nextTask = runtime.getTask(store.currentTaskId(next)); const nextChapter = nextTask && nextTask.freezeMeta && nextTask.freezeMeta.chapter
+      const nextSection = journey.currentSection(next)
       if (next.status === 'completed' && next.completedAt) {
+        if (currentSection) recordEvent('section_complete', { sectionId: currentSection.id, sectionIndex: journey.getSectionProgress(before, currentSection.id).sectionNumber })
+        recordEvent('final_result_view', { completedCount: journey.getGlobalProgress(next).completedTasks })
         this.syncPending()
         return navigateOnce(this, 'redirectTo', { url: '/pages/v3-result/index?mode=product-v0' })
       }
-      const crossedChapter = currentChapter && nextChapter && currentChapter !== nextChapter
-      const leftCore = currentChapter === 'C6' && !nextChapter
+      const crossedSection = currentSection && nextSection && currentSection.id !== nextSection.id
       this.syncPending()
-      if (crossedChapter || leftCore) return navigateOnce(this, 'redirectTo', { url: `/pages/v3-checkpoint/index?mode=product-v0&chapter=${encodeURIComponent(currentChapter)}&nextIndex=${next.currentTaskIndex}` })
-      if (!nextTask) return navigateOnce(this, 'redirectTo', { url: '/pages/v3-result/index?mode=product-v0' })
+      if (crossedSection) {
+        recordEvent('section_complete', { sectionId: currentSection.id, sectionIndex: journey.getSectionProgress(before, currentSection.id).sectionNumber })
+        return navigateOnce(this, 'redirectTo', { url: `/pages/v3-checkpoint/index?mode=product-v0&section=${encodeURIComponent(currentSection.id)}&nextIndex=${next.currentTaskIndex}` })
+      }
+      const nextTask = runtime.getTask(store.currentTaskId(next))
+      if (!nextTask) return navigateOnce(this, 'redirectTo', { url: '/pages/v3-result/index?mode=product-v0&scope=partial' })
       this.session = next
+      this.markLocalSaved()
       this.setData(Object.assign({ motionClass: 'motion-forward' }, pageState(next, this.pendingInputs)))
-    } catch (error) { wx.showToast({ title: PRODUCT_V0_COPY.errors.incomplete, icon: 'none' }) }
+    } catch (error) { this.setData({ validationMessage: (PRODUCT_V0_COPY.errors && PRODUCT_V0_COPY.errors.incomplete) || '这里还需要一个回答' }); this.showIncomplete() }
   },
 
   syncPending() {
-    if (this._cloudSyncing || !cloud.isCloudReady()) return
+    if (this._cloudSyncing) return
     const session = store.getSession()
     if (!store.hasSession() || !session.answerEvents.length) return
+    if (!cloud.isCloudReady()) {
+      this.setData({ syncState: 'LOCAL_SAVED', syncStatusLabel: syncLabel('LOCAL_SAVED'), syncError: '' })
+      return
+    }
     this._cloudSyncing = true
     const requestedRevision = sessionRevision(session)
-    this.setData({ syncing: true, syncError: '' })
+    this.setData({ syncing: true, syncState: 'CLOUD_SYNCING', syncStatusLabel: syncLabel('CLOUD_SYNCING'), syncError: '' })
     const success = data => {
       const current = store.getSession()
       const returned = data && data.session
@@ -247,15 +366,15 @@ Page({
       else if (!localChanged && !serverWon) store.markSynced(data && data.syncedAt)
       this._cloudSyncing = false
       if (localChanged && !serverWon) {
-        this.setData({ syncing: false, syncError: '' })
+        this.setData({ syncing: false, syncState: 'LOCAL_SAVED', syncStatusLabel: syncLabel('LOCAL_SAVED'), syncError: '' })
         return this.syncPending()
       }
-      this.setData({ syncing: false, syncError: '' })
+      this.setData({ syncing: false, syncState: 'SYNCED', syncStatusLabel: syncLabel('SYNCED'), syncError: '' })
       this.refresh()
     }
     const fail = error => {
       this._cloudSyncing = false
-      this.setData({ syncing: false, syncError: cloud.cloudErrorMessage(error) })
+      this.setData({ syncing: false, syncState: 'CLOUD_FAILED', syncStatusLabel: syncLabel('CLOUD_FAILED'), syncError: cloud.cloudErrorMessage(error) })
     }
     const callbacks = { success, fail }
     if (session.status === 'completed') cloud.completeProductV0ToCloud(session, callbacks)

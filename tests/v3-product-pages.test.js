@@ -34,7 +34,7 @@ checkpoint.openEvidence({ currentTarget: { dataset: { dimensionId: checkpoint.da
 assert.match(lastNavigation.url, /pages\/v3-result-evidence\/index\?mode=product-v0&dimension=/)
 checkpoint._isRouting = false
 checkpoint.continueNext()
-assert.equal(lastNavigation.url, '/pages/v3-result/index?mode=product-v0')
+assert.equal(lastNavigation.url, '/pages/v3-result/index?mode=product-v0&scope=partial')
 
 const result = loadPage('../pages/v3-result/index.js')
 result.onLoad({ persona: 'ready_self' })

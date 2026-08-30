@@ -14,7 +14,7 @@ assert.equal(packageJson.version, '3.0.0-product-v0')
 assert.equal(FEATURES.v3ProductV0, true)
 assert.equal(FEATURES.v3ProductPreview, false)
 assert.equal(FEATURES.v3CalibratedProduction, false)
-;['pages/home/index', 'pages/questionnaire-v3/index', 'pages/v3-checkpoint/index', 'pages/v3-result/index', 'pages/v3-result-evidence/index', 'pages/privacy/index'].forEach(route => assert.ok(app.pages.includes(route), `${route} is not registered`))
+;['pages/home/index', 'pages/questionnaire-v3/index', 'pages/v3-checkpoint/index', 'pages/v3-result/index', 'pages/v3-result-evidence/index', 'pages/v3-answer-review/index', 'pages/privacy/index'].forEach(route => assert.ok(app.pages.includes(route), `${route} is not registered`))
 ;['pages/questionnaire-v3-pilot/index', 'pages/v3-p0-research/index', 'pages/v3-p0-coding/index', 'pages/v3-product-preview/index'].forEach(route => assert.equal(app.pages.includes(route), false, `${route} must stay out of the public app manifest`))
 
 const ignoredFolders = new Set((project.packOptions && project.packOptions.ignore || []).filter(item => item.type === 'folder').map(item => item.value.replace(/\\/g, '/')))

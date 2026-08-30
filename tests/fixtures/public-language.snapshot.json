@@ -706,6 +706,31 @@
   },
   {
     "surface": "pages/home/index.js",
+    "key": "literal.10",
+    "text": "查看结果"
+  },
+  {
+    "surface": "pages/home/index.js",
+    "key": "literal.11",
+    "text": "你的结果已经生成"
+  },
+  {
+    "surface": "pages/home/index.js",
+    "key": "literal.12",
+    "text": "继续"
+  },
+  {
+    "surface": "pages/home/index.js",
+    "key": "literal.13",
+    "text": "继续填写你的答题"
+  },
+  {
+    "surface": "pages/home/index.js",
+    "key": "literal.14",
+    "text": "开始"
+  },
+  {
+    "surface": "pages/home/index.js",
     "key": "literal.1",
     "text": "继续答题"
   },
@@ -717,12 +742,37 @@
   {
     "surface": "pages/home/index.js",
     "key": "literal.3",
-    "text": "查看结果"
+    "text": "已完成 {completed} / {total} 个部分"
   },
   {
     "surface": "pages/home/index.js",
     "key": "literal.4",
-    "text": "继续答题"
+    "text": "正在恢复进度…"
+  },
+  {
+    "surface": "pages/home/index.js",
+    "key": "literal.5",
+    "text": "正在恢复进度"
+  },
+  {
+    "surface": "pages/home/index.js",
+    "key": "literal.6",
+    "text": "选择进度"
+  },
+  {
+    "surface": "pages/home/index.js",
+    "key": "literal.7",
+    "text": "两台设备的进度不一样"
+  },
+  {
+    "surface": "pages/home/index.js",
+    "key": "literal.8",
+    "text": "暂时没能确认云端进度"
+  },
+  {
+    "surface": "pages/home/index.js",
+    "key": "literal.9",
+    "text": "重试"
   },
   {
     "surface": "pages/privacy/index.json",
@@ -873,6 +923,66 @@
     "surface": "pages/questionnaire-result/index.wxml",
     "key": "text.77",
     "text": "›"
+  },
+  {
+    "surface": "pages/questionnaire-v3/index.js",
+    "key": "literal.0",
+    "text": "已保存"
+  },
+  {
+    "surface": "pages/questionnaire-v3/index.js",
+    "key": "literal.10",
+    "text": "这项回答暂时无法保存"
+  },
+  {
+    "surface": "pages/questionnaire-v3/index.js",
+    "key": "literal.11",
+    "text": "这里还需要一个回答"
+  },
+  {
+    "surface": "pages/questionnaire-v3/index.js",
+    "key": "literal.1",
+    "text": "已保存在本机，同步失败 · 重试"
+  },
+  {
+    "surface": "pages/questionnaire-v3/index.js",
+    "key": "literal.2",
+    "text": "已保存在本机"
+  },
+  {
+    "surface": "pages/questionnaire-v3/index.js",
+    "key": "literal.3",
+    "text": "本部分 {completed} / {total}"
+  },
+  {
+    "surface": "pages/questionnaire-v3/index.js",
+    "key": "literal.4",
+    "text": "退出"
+  },
+  {
+    "surface": "pages/questionnaire-v3/index.js",
+    "key": "literal.5",
+    "text": "退出"
+  },
+  {
+    "surface": "pages/questionnaire-v3/index.js",
+    "key": "literal.6",
+    "text": "暂时没能加载这道题"
+  },
+  {
+    "surface": "pages/questionnaire-v3/index.js",
+    "key": "literal.7",
+    "text": "${questionnaireCopy.incompleteField || '这里还需要完成'}：${entry.item.prompt || entry.parent.prompt || ''}"
+  },
+  {
+    "surface": "pages/questionnaire-v3/index.js",
+    "key": "literal.8",
+    "text": "这里还需要一个回答"
+  },
+  {
+    "surface": "pages/questionnaire-v3/index.js",
+    "key": "literal.9",
+    "text": "这项回答暂时无法保存"
   },
   {
     "surface": "pages/questionnaire/index.js",
@@ -1030,18 +1140,118 @@
     "text": "01"
   },
   {
+    "surface": "pages/v3-answer-review/index.js",
+    "key": "literal.0",
+    "text": "未回答"
+  },
+  {
+    "surface": "pages/v3-answer-review/index.js",
+    "key": "literal.1",
+    "text": "已回答"
+  },
+  {
+    "surface": "pages/v3-answer-review/index.js",
+    "key": "literal.2",
+    "text": "已完成 ${global.completedSections} / ${global.totalSections} 个部分"
+  },
+  {
+    "surface": "pages/v3-answer-review/index.js",
+    "key": "literal.3",
+    "text": "已完成 ${global.completedSections} / ${global.totalSections} 个部分"
+  },
+  {
+    "surface": "pages/v3-answer-review/index.wxml",
+    "key": "text.30",
+    "text": "›"
+  },
+  {
+    "surface": "pages/v3-answer-review/index.wxml",
+    "key": "text.8",
+    "text": "{{completedSectionsLabel}} · 修改后会重新计算结果。"
+  },
+  {
+    "surface": "pages/v3-checkpoint/index.js",
+    "key": "literal.0",
+    "text": "第 ${progress.sectionNumber} / ${progress.sectionCount} 部分"
+  },
+  {
+    "surface": "pages/v3-checkpoint/index.js",
+    "key": "literal.1",
+    "text": "本部分 ${progress.completedTasks} / ${progress.totalTasks} 题"
+  },
+  {
+    "surface": "pages/v3-checkpoint/index.js",
+    "key": "literal.2",
+    "text": "已完成 ${globalProgress.completedSections} / ${globalProgress.totalSections} 个部分"
+  },
+  {
+    "surface": "pages/v3-checkpoint/index.js",
+    "key": "literal.3",
+    "text": "${section.title}完成了"
+  },
+  {
+    "surface": "pages/v3-checkpoint/index.js",
+    "key": "literal.4",
+    "text": "接下来，我们进入“${nextSection.title}”。"
+  },
+  {
+    "surface": "pages/v3-checkpoint/index.js",
+    "key": "literal.5",
+    "text": "这份结果还会随着你之后的回答继续变得清楚。"
+  },
+  {
     "surface": "pages/v3-checkpoint/index.wxml",
-    "key": "text.34",
+    "key": "text.39",
+    "text": "›"
+  },
+  {
+    "surface": "pages/v3-result-evidence/index.wxml",
+    "key": "text.23",
+    "text": "›"
+  },
+  {
+    "surface": "pages/v3-result/index.js",
+    "key": "literal.0",
+    "text": "已完成"
+  },
+  {
+    "surface": "pages/v3-result/index.js",
+    "key": "literal.1",
+    "text": "进行中"
+  },
+  {
+    "surface": "pages/v3-result/index.js",
+    "key": "literal.2",
+    "text": "尚未完成"
+  },
+  {
+    "surface": "pages/v3-result/index.js",
+    "key": "literal.3",
+    "text": "已完成 {completed} / {total} 个部分"
+  },
+  {
+    "surface": "pages/v3-result/index.js",
+    "key": "literal.4",
+    "text": "目前只显示已经完成的部分；继续回答后，结果会逐步补充。"
+  },
+  {
+    "surface": "pages/v3-result/index.js",
+    "key": "literal.5",
+    "text": "目前的回答还不足以支持稳定判断。"
+  },
+  {
+    "surface": "pages/v3-result/index.wxml",
+    "key": "text.103",
     "text": "›"
   },
   {
     "surface": "pages/v3-result/index.wxml",
-    "key": "text.40",
+    "key": "text.146",
     "text": "›"
   },
   {
     "surface": "pages/v3-result/index.wxml",
-    "key": "text.59",
+    "key": "text.67",
     "text": "›"
   },
   {
@@ -23222,7 +23432,7 @@
   {
     "surface": "shared/content/public-language.generated.js",
     "key": "v3ProductV0.backAction",
-    "text": "返回"
+    "text": "上一题"
   },
   {
     "surface": "shared/content/public-language.generated.js",
@@ -23256,6 +23466,51 @@
   },
   {
     "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.checkpoint.collapseAction",
+    "text": "收起详细结果"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.checkpoint.completedLabel",
+    "text": "这一部分完成了"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.checkpoint.continueAction",
+    "text": "继续"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.checkpoint.detailAction",
+    "text": "查看这一部分的详细结果"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.checkpoint.finalTransitionBody",
+    "text": "现在可以查看完整结果了。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.checkpoint.finalTransitionTitle",
+    "text": "前 10 个部分都完成了"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.checkpoint.nextSectionTemplate",
+    "text": "下一部分：{title}"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.checkpoint.partialAction",
+    "text": "查看目前已经完成的部分"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.checkpoint.pauseAction",
+    "text": "先休息，回到首页"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
     "key": "v3ProductV0.continueAction",
     "text": "继续"
   },
@@ -23281,6 +23536,246 @@
   },
   {
     "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.feedback.doesNotFitAction",
+    "text": "不太符合"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.feedback.fitsAction",
+    "text": "比较符合"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.feedback.prompt",
+    "text": "这条结果符合你的感觉吗？"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.feedback.reasons.answer_inaccurate",
+    "text": "我的回答没表达准确"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.feedback.reasons.complex",
+    "text": "我的情况本来就比较复杂"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.feedback.reasons.misunderstood",
+    "text": "我可能理解错了题目"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.feedback.reasons.other",
+    "text": "其他"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.feedback.reasons.overreached",
+    "text": "这条结论推得太远"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.feedback.reasonTitle",
+    "text": "哪个地方不太符合？"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.feedback.resultTargetLabel",
+    "text": "这份结果"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.feedback.skipReasonAction",
+    "text": "暂不说明"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.feedback.submitAction",
+    "text": "提交反馈"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.feedback.submittedLabel",
+    "text": "已记录，谢谢你告诉我们。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.home.cancelAction",
+    "text": "先等等"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.home.cloudSyncingLabel",
+    "text": "正在同步…"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.home.completedSectionsTemplate",
+    "text": "已完成 {completed} / {total} 个部分"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.home.conflictDescription",
+    "text": "我们没有替你覆盖任何一边的回答。请选择要加载的进度。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.home.conflictError",
+    "text": "另一台设备上有更新的进度，请先选择一边继续。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.home.conflictTitle",
+    "text": "两台设备的进度不一样"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.home.continueAction",
+    "text": "继续"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.home.editAction",
+    "text": "修改回答"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.home.initializingDescription",
+    "text": "先确认本机和云端有没有已经保存的回答。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.home.initializingTitle",
+    "text": "正在确认你的进度"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.home.localOnlyLabel",
+    "text": "已保存在本机，联网后同步"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.home.offlineAction",
+    "text": "离线开始新的评估"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.home.offlineConfirm",
+    "text": "离线开始"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.home.offlineDialogContent",
+    "text": "当前无法确认其他设备是否已有进度。离线开始后，恢复网络时可能需要处理较新的云端进度。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.home.offlineDialogTitle",
+    "text": "现在还不能确认云端进度"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.home.readyCompletedDescription",
+    "text": "可以先看结果，也可以回头修改之前的回答。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.home.readyCompletedTitle",
+    "text": "你的结果已经生成"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.home.readyLocalDescription",
+    "text": "已经完成的回答都还在，从上次停下的部分继续。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.home.readyLocalTitle",
+    "text": "继续填写你的答题"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.home.readyNewDescription",
+    "text": "可以分几次完成，回答会先保存在本机，再尝试同步到云端。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.home.readyNewTitle",
+    "text": "从自己开始"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.home.restoreErrorDescription",
+    "text": "本机已有的回答仍然安全保留。你可以重试，或明确选择使用本机进度。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.home.restoreErrorTitle",
+    "text": "暂时没能确认云端进度"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.home.restoringDescription",
+    "text": "确认完成前不会开始新的评估。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.home.restoringTitle",
+    "text": "正在恢复进度"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.home.retryAction",
+    "text": "重试"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.home.sectionProgressTemplate",
+    "text": "第 {sectionCompleted} / {sectionTotal} 题"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.home.startAction",
+    "text": "开始"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.home.statusComplete",
+    "text": "已完成"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.home.statusInProgress",
+    "text": "进行中"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.home.statusLocked",
+    "text": "尚未完成"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.home.syncedLabel",
+    "text": "已保存"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.home.useCloudAction",
+    "text": "加载云端进度"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.home.useLocalAction",
+    "text": "使用本机进度继续"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.home.viewResultAction",
+    "text": "查看结果"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
     "key": "v3ProductV0.inputPlaceholder",
     "text": "可以留空"
   },
@@ -23288,6 +23783,211 @@
     "surface": "shared/content/public-language.generated.js",
     "key": "v3ProductV0.intro",
     "text": "这是一组帮助你整理关系想法的问题。题目比较多，可以分几次完成，随时停下来。完成后，你会看到一份基于自己回答的分层结果。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.C1.checkpointType",
+    "text": "insight"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.C1.completedTitle",
+    "text": "进入一段关系，完成了"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.C1.description",
+    "text": "先看看你现在有没有想开始，以及这份想法主要来自哪里。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.C1.title",
+    "text": "进入一段关系"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.C2.checkpointType",
+    "text": "insight"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.C2.completedTitle",
+    "text": "时间与投入，完成了"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.C2.description",
+    "text": "有愿望是一回事，时间、精力和后续安排又是另一回事。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.C2.title",
+    "text": "时间与投入"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.C3.checkpointType",
+    "text": "insight"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.C3.completedTitle",
+    "text": "面对不确定，完成了"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.C3.description",
+    "text": "对方的联系和态度有变化时，你会注意到什么，又会怎么做？"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.C3.title",
+    "text": "面对不确定"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.C4.checkpointType",
+    "text": "insight"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.C4.completedTitle",
+    "text": "亲密与个人空间，完成了"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.C4.description",
+    "text": "关系越来越近以后，你希望靠多近，又想保留多少自己的生活？"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.C4.title",
+    "text": "亲密与个人空间"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.C5.checkpointType",
+    "text": "insight"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.C5.completedTitle",
+    "text": "支持与被理解，完成了"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.C5.description",
+    "text": "需要帮助时，你希望对方怎么做；对方需要时，你通常又会怎么回应？"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.C5.title",
+    "text": "支持与被理解"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.C6.checkpointType",
+    "text": "insight"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.C6.completedTitle",
+    "text": "冲突与修复，完成了"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.C6.description",
+    "text": "吵架时会发生什么，暂停以后又能不能重新开始谈？"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.C6.remainingSectionsTemplate",
+    "text": "核心部分完成了，还剩 {count} 个部分。完成后才能查看完整结果。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.C6.title",
+    "text": "冲突与修复"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.ENTRY_FACTS.checkpointType",
+    "text": "transition"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.ENTRY_FACTS.completedTitle",
+    "text": "关于你的基本情况，完成了"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.ENTRY_FACTS.description",
+    "text": "先补充一些会影响日常安排的实际情况。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.ENTRY_FACTS.title",
+    "text": "关于你的基本情况"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.PART_B_L3_OPERATING_MODEL.checkpointType",
+    "text": "transition"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.PART_B_L3_OPERATING_MODEL.completedTitle",
+    "text": "日常相处怎么安排，完成了"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.PART_B_L3_OPERATING_MODEL.description",
+    "text": "接下来聊聊你希望两个人平时怎样安排生活。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.PART_B_L3_OPERATING_MODEL.title",
+    "text": "日常相处怎么安排"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.PART_B_L4_PARTNER_DECISION.checkpointType",
+    "text": "transition"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.PART_B_L4_PARTNER_DECISION.completedTitle",
+    "text": "你在伴侣身上在意什么，完成了"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.PART_B_L4_PARTNER_DECISION.description",
+    "text": "再看看你在选择长期伴侣时比较在意什么。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.PART_B_L4_PARTNER_DECISION.title",
+    "text": "你在伴侣身上在意什么"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.PART_B_L5_LIFE_DESIGN.checkpointType",
+    "text": "transition"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.PART_B_L5_LIFE_DESIGN.completedTitle",
+    "text": "以后想过怎样的生活，完成了"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.PART_B_L5_LIFE_DESIGN.description",
+    "text": "最后聊聊你对以后生活的想法，以及哪些地方需要提前商量。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.journey.sections.PART_B_L5_LIFE_DESIGN.title",
+    "text": "以后想过怎样的生活"
   },
   {
     "surface": "shared/content/public-language.generated.js",
@@ -23326,6 +24026,96 @@
   },
   {
     "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.questionnaire.editSaveAction",
+    "text": "保存并返回"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.questionnaire.firstBackAction",
+    "text": "退出"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.questionnaire.globalProgressLabel",
+    "text": "评估进度"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.questionnaire.homeAction",
+    "text": "回到首页"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.questionnaire.incomplete",
+    "text": "这里还需要一个回答"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.questionnaire.incompleteField",
+    "text": "这里还需要完成"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.questionnaire.invalidTask",
+    "text": "暂时没能加载这道题"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.questionnaire.localOnlyLabel",
+    "text": "已保存在本机，联网后同步"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.questionnaire.localSavedLabel",
+    "text": "已保存在本机"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.questionnaire.multiSelectHint",
+    "text": "可多选"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.questionnaire.previousAction",
+    "text": "上一题"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.questionnaire.retryAction",
+    "text": "重试"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.questionnaire.sectionProgressTemplate",
+    "text": "本部分 {completed} / {total}"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.questionnaire.syncedLabel",
+    "text": "已保存"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.questionnaire.syncFailedLabel",
+    "text": "已保存在本机，同步失败 · 重试"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.questionnaire.syncingLabel",
+    "text": "正在同步…"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.questionnaire.trustNote",
+    "text": "回答默认私密保存，用来生成你的结果。不需要提供联系方式才能完成，你可以随时删除自己的评估数据。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.questionnaire.trustPrivacyAction",
+    "text": "查看隐私说明"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
     "key": "v3ProductV0.real.evidence.sourceNote",
     "text": "这里显示的是与你的这条结果直接相关的题目和回答，不是额外推断。"
   },
@@ -23338,6 +24128,16 @@
     "surface": "shared/content/public-language.generated.js",
     "key": "v3ProductV0.real.method.privacy",
     "text": "结果只基于你自己的回答。你可以随时修改回答或删除本次问卷和结果。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.answerReviewAction",
+    "text": "查看并修改回答"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.answerReviewTitle",
+    "text": "回答复核"
   },
   {
     "surface": "shared/content/public-language.generated.js",
@@ -23371,8 +24171,18 @@
   },
   {
     "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.completedSectionsTemplate",
+    "text": "已完成 {completed} / {total} 个部分"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
     "key": "v3ProductV0.real.preview.continueAction",
-    "text": "回到答题"
+    "text": "修改回答"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.coreInsightTitle",
+    "text": "已完成部分的线索"
   },
   {
     "surface": "shared/content/public-language.generated.js",
@@ -23427,12 +24237,27 @@
   {
     "surface": "shared/content/public-language.generated.js",
     "key": "v3ProductV0.real.preview.fullReportAction",
-    "text": "查看完整结果"
+    "text": "查看目前已经完成的部分"
   },
   {
     "surface": "shared/content/public-language.generated.js",
     "key": "v3ProductV0.real.preview.intro",
     "text": "这份结果根据你这次的回答整理，帮助你把想法、需要和相处方式分开看。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.journeyTitle",
+    "text": "你的答题旅程"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.lockedSectionBody",
+    "text": "这部分还没有完成，所以暂时不提前下结论。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.lockedSectionTitle",
+    "text": "继续回答后，这里会出现新的线索"
   },
   {
     "surface": "shared/content/public-language.generated.js",
@@ -23448,6 +24273,16 @@
     "surface": "shared/content/public-language.generated.js",
     "key": "v3ProductV0.real.preview.notice",
     "text": "这份结果只基于你这次的回答；它描述的是现在的线索，不是固定结论。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.partialNotice",
+    "text": "目前只显示已经完成的部分；继续回答后，结果会逐步补充。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.partialTitle",
+    "text": "目前的关系线索"
   },
   {
     "surface": "shared/content/public-language.generated.js",

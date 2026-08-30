@@ -1,21 +1,27 @@
-<view wx:if="{{ready}}" class="page product-v0-page">
+<view wx:if="{{ready && !invalidRoute}}" class="page product-v0-page">
   <view class="product-v0-shell">
     <view wx:if="{{showIntro}}" class="product-v0-intro">
       <view class="product-v0-kicker">{{progressLabel}}</view>
       <view class="product-v0-title">{{copy.pageTitle}}</view>
       <view class="product-v0-intro__body">{{copy.intro}}</view>
       <view class="product-v0-intro__note">{{copy.method}}</view>
+      <view wx:if="{{showTrustNote}}" class="product-v0-trust-note">
+        <view class="product-v0-trust-note__body">{{copy.questionnaire.trustNote}}</view>
+        <button class="product-v0-trust-note__action" bind:tap="openPrivacy">{{copy.questionnaire.trustPrivacyAction}}</button>
+      </view>
     </view>
     <view wx:if="{{!showIntro}}" class="product-v0-context">{{progressLabel}}</view>
     <view class="product-v0-topline">
-      <button class="product-v0-back" bind:tap="handleBack">{{copy.backAction}}</button>
-      <view class="product-v0-chapter">{{chapterLabel}}</view>
-      <view class="product-v0-count">{{progressPercentLabel}}</view>
+      <button class="product-v0-back" bind:tap="handleBack">{{backLabel}}</button>
+      <view class="product-v0-section-number">{{progressLabel}}</view>
+      <view class="product-v0-section-progress">{{sectionProgressLabel}}</view>
     </view>
-    <view class="product-v0-progress"><view class="product-v0-progress__bar" style="width: {{progressWidth}};"></view></view>
+    <view class="product-v0-section-title">{{chapterLabel}}</view>
+    <view class="product-v0-progress" aria-label="{{copy.questionnaire.globalProgressLabel}}"><view class="product-v0-progress__bar" style="width: {{progressWidth}};"></view></view>
     <view wx:if="{{task}}" class="product-v0-task {{motionClass}}">
       <view class="product-v0-question">{{task.prompt}}</view>
-      <view wx:for="{{items}}" wx:key="itemId" wx:for-item="answerItem" class="product-v0-item">
+      <view wx:if="{{hasMultiSelect}}" class="product-v0-multi-hint">{{copy.questionnaire.multiSelectHint}}</view>
+      <view wx:for="{{items}}" wx:key="itemId" wx:for-item="answerItem" id="{{answerItem.anchorId}}" class="product-v0-item {{invalidItemId === answerItem.anchorId ? 'product-v0-item--invalid' : ''}}">
         <view wx:if="{{items.length > 1}}" class="product-v0-item__prompt">{{answerItem.prompt}}</view>
         <view wx:if="{{answerItem.type === 'single_select'}}" class="product-v0-options">
           <button wx:for="{{answerItem.options}}" wx:key="code" wx:for-item="option" class="product-v0-option {{option.selected ? 'product-v0-option--selected' : ''}}" hover-class="product-v0-option--pressed" data-item-id="{{answerItem.itemId}}" data-value="{{option.code}}" aria-role="radio" aria-label="{{option.label}}" aria-checked="{{option.selected}}" bind:tap="chooseAnswer">
@@ -32,6 +38,17 @@
       </view>
     </view>
   </view>
-  <view wx:if="{{syncing || syncError}}" class="product-v0-sync"><text wx:if="{{syncing}}">{{copy.syncingLabel}}</text><text wx:if="{{syncError}}">{{syncError}}</text></view>
-  <view class="action-bar product-v0-actions"><button class="dl-button" disabled="{{!canContinue}}" bind:tap="handleContinue">{{continueLabel}}</button></view>
+  <view wx:if="{{validationMessage}}" class="product-v0-validation" role="alert">{{validationMessage}}</view>
+  <view wx:if="{{syncStatusLabel || syncError}}" class="product-v0-sync" role="status">
+    <text>{{syncStatusLabel}}</text>
+    <text wx:if="{{syncError && syncState !== 'CLOUD_FAILED'}}">{{syncError}}</text>
+    <button wx:if="{{syncState === 'CLOUD_FAILED'}}" class="product-v0-sync__retry" bind:tap="retrySync">{{copy.questionnaire.retryAction}}</button>
+  </view>
+  <view class="action-bar product-v0-actions"><button class="dl-button" bind:tap="handleContinue">{{editing ? copy.questionnaire.editSaveAction : continueLabel}}</button></view>
+</view>
+
+<view wx:if="{{ready && invalidRoute}}" class="page product-v0-invalid-state">
+  <view class="product-v0-invalid-state__title">{{validationMessage}}</view>
+  <view class="product-v0-invalid-state__body">{{copy.questionnaire.homeAction}}</view>
+  <button class="dl-button" bind:tap="goHome">{{copy.questionnaire.homeAction}}</button>
 </view>

@@ -98,8 +98,24 @@ async function run() {
   assert.equal(result.data.report.reportVersion, 1)
   assert.ok(result.data.report.generatedAt > 0)
   assert.equal(result.data.report.isSynthetic, false)
+  assert.ok(result.data.report.contentVersion)
+  assert.equal(result.data.report.questionnaireVersion, runtime.BUNDLE.instrument.questionnaireVersion)
   assert.equal(result.data.report.dimensionCards.length, 14)
   const reportId = result.data.report._id
+
+  result = await cloudFunction.main({ action: 'assessmentFeedbackAppend', reportId, feedbackEvent: { eventId: 'product-feedback-1', targetType: 'result', targetId: 'overall', value: 'does_not_fit', reasonCode: 'overreached', createdAt: 6000 } })
+  assert.equal(result.ok, true)
+  assert.equal(result.data.feedbackEvent.targetType, 'result')
+  assert.equal(result.data.feedbackEvent.reasonCode, 'overreached')
+
+  result = await cloudFunction.main({ action: 'assessmentFeedbackAppend', reportId, feedbackEvent: { eventId: 'product-feedback-1', targetType: 'result', targetId: 'overall', value: 'does_not_fit', reasonCode: 'overreached', createdAt: 6000 } })
+  assert.equal(result.data.duplicateIgnored, true)
+
+  result = await cloudFunction.main({ action: 'assessmentFeedbackAppend', reportId, feedbackEvent: { eventId: 'product-feedback-c1', targetType: 'chapter', targetId: 'C1', value: 'fits', reasonCode: '', createdAt: 6001 } })
+  assert.equal(result.ok, true)
+  assert.equal(result.data.feedbackEvent.targetType, 'chapter')
+  assert.ok(result.data.feedbackEvent.contentVersion)
+  assert.equal(result.data.feedbackEvent.questionnaireVersion, runtime.BUNDLE.instrument.questionnaireVersion)
 
   result = await cloudFunction.main({ action: 'assessmentComplete', session: full })
   assert.equal(result.ok, true)
@@ -110,6 +126,7 @@ async function run() {
   assert.equal(result.ok, true)
   assert.equal(result.data.session.status, 'completed')
   assert.equal(result.data.report._id, reportId)
+  assert.equal(result.data.report.feedbackEvents.length, 2)
 
   const revised = runtime.answerItem(full, 'RR01', 7, 5000)
   result = await cloudFunction.main({ action: 'assessmentSaveDraft', session: revised })

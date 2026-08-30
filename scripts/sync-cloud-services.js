@@ -66,10 +66,12 @@ function generatedProductFiles() {
     ])],
     ['assessment-v3-product-report-renderer.generated.js', replace('shared/assessment-v3-product/report-renderer.js', [
       ["require('../content/public-language.generated')", "require('./public-language.generated')"],
+      ["require('../content/version')", "require('./content-version.generated')"],
       ["require('../assessment-v3-pilot/runtime-engine')", "require('./assessment-v3-product-v0-runtime.generated')"],
       ["require('./contract')", "require('./assessment-v3-product-contract.generated')"],
       ["require('./pattern-eligibility')", "require('./assessment-v3-product-pattern-eligibility.generated')"]
     ])],
+    ['content-version.generated.js', generated(require(path.join(root, 'shared/content/version.js')))],
     ['public-language.generated.js', fs.readFileSync(path.join(root, 'shared/content/public-language.generated.js'), 'utf8')]
   ])
 }

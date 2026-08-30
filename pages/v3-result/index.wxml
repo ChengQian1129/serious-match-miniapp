@@ -1,23 +1,63 @@
-<view wx:if="{{ready && report}}" class="page v3-result-page">
+<view wx:if="{{ready && report && !emptyState}}" class="page v3-result-page {{isPartial ? 'v3-result-page--partial' : ''}}">
   <view class="v3-result-shell">
-    <view class="v3-result-kicker">{{copy.preview.previewBadge}}</view>
-    <view class="v3-result-title">{{report.title}}</view>
-    <view class="v3-result-notice">{{report.notice}}</view>
+    <view class="v3-result-kicker">{{isPartial ? copy.preview.partialTitle : copy.preview.previewBadge}}</view>
+    <view class="v3-result-title">{{isPartial ? copy.preview.partialTitle : report.title}}</view>
+    <view class="v3-result-notice">{{resultNotice}}</view>
 
     <view class="v3-result-section v3-result-summary">
-      <view class="v3-result-section__title">{{report.executiveSummary.title}}</view>
+      <view class="v3-result-section__title">{{isPartial && !hasPatterns ? completedSectionsLabel : report.executiveSummary.title}}</view>
       <view wx:for="{{report.executiveSummary.patterns}}" wx:key="id" wx:for-item="pattern" class="v3-summary-item">
         <view class="v3-summary-item__headline">{{pattern.headline}}</view>
         <view class="v3-summary-item__summary">{{pattern.summary}}</view>
+        <view wx:if="{{mode === 'product-v0' && !isPartial}}" class="v3-inline-feedback">
+          <view class="v3-inline-feedback__prompt">{{copy.feedback.prompt}}</view>
+          <view class="v3-inline-feedback__choices">
+            <button class="v3-inline-feedback__choice {{pattern.feedbackValue === 'fits' ? 'v3-inline-feedback__choice--selected' : ''}}" data-target-type="pattern" data-target-id="{{pattern.id}}" data-value="fits" bind:tap="selectTargetFeedback">{{copy.feedback.fitsAction}}</button>
+            <button class="v3-inline-feedback__choice {{pattern.feedbackValue === 'does_not_fit' ? 'v3-inline-feedback__choice--selected' : ''}}" data-target-type="pattern" data-target-id="{{pattern.id}}" data-value="does_not_fit" bind:tap="selectTargetFeedback">{{copy.feedback.doesNotFitAction}}</button>
+          </view>
+          <view wx:if="{{pattern.feedbackValue === 'does_not_fit' && !pattern.feedbackSubmitted}}" class="v3-inline-feedback__reasons">
+            <view class="v3-inline-feedback__reason-title">{{copy.feedback.reasonTitle}}</view>
+            <button wx:for="{{feedbackReasons}}" wx:key="id" wx:for-item="reason" class="v3-inline-feedback__reason {{pattern.feedbackReason === reason.id ? 'v3-inline-feedback__reason--selected' : ''}}" data-target-type="pattern" data-target-id="{{pattern.id}}" data-reason="{{reason.id}}" bind:tap="selectTargetFeedbackReason">{{reason.label}}</button>
+          </view>
+          <button wx:if="{{pattern.feedbackValue && !pattern.feedbackSubmitted}}" class="v3-inline-feedback__submit" data-target-type="pattern" data-target-id="{{pattern.id}}" bind:tap="submitTargetFeedback">{{copy.feedback.submitAction}}</button>
+          <view wx:if="{{pattern.feedbackSubmitted}}" class="v3-inline-feedback__submitted" role="status">{{copy.feedback.submittedLabel}}</view>
+          <view wx:if="{{pattern.feedbackSyncing}}" class="v3-inline-feedback__sync" role="status">{{copy.preview.syncingLabel}}</view>
+          <view wx:if="{{pattern.feedbackSyncError}}" class="v3-inline-feedback__sync v3-inline-feedback__sync--error" role="alert">{{pattern.feedbackSyncError}}</view>
+        </view>
       </view>
       <view wx:for="{{report.executiveSummary.unknownPreview}}" wx:key="id" wx:for-item="unknown" class="v3-summary-unknown">
         <view class="v3-summary-unknown__title">{{unknown.title}}</view>
         <view class="v3-summary-unknown__body">{{unknown.body}}</view>
       </view>
+      <view wx:if="{{!hasPatterns}}" class="v3-result-progress-note">{{summaryFallback}}</view>
     </view>
 
-    <view class="v3-result-section">
-      <view class="v3-result-section__title">{{copy.preview.reportChapterTitle}}</view>
+    <view wx:if="{{mode === 'product-v0'}}" class="v3-result-section v3-result-journey">
+      <view class="v3-result-section__title">{{copy.preview.journeyTitle}}</view>
+      <view class="v3-result-section__hint">{{completedSectionsLabel}}</view>
+      <view class="v3-journey-list">
+        <view wx:for="{{journeySections}}" wx:key="id" wx:for-item="section" class="v3-journey-item {{section.status === 'locked' ? 'v3-journey-item--locked' : ''}}">
+          <button wx:if="{{section.canOpen}}" class="v3-journey-item__button" data-section-id="{{section.id}}" bind:tap="openSection">
+            <view class="v3-journey-item__body">
+              <view class="v3-journey-item__topline"><text>{{section.sectionNumber}} / {{section.sectionCount}}</text><text>{{section.statusLabel}}</text></view>
+              <view class="v3-journey-item__title">{{section.title}}</view>
+              <view class="v3-journey-item__description">{{section.description}}</view>
+              <view class="v3-journey-item__action">{{copy.navigation.viewDetail}} <text>›</text></view>
+            </view>
+          </button>
+          <view wx:else class="v3-journey-item__body">
+            <view class="v3-journey-item__topline"><text>{{section.sectionNumber}} / {{section.sectionCount}}</text><text>{{section.statusLabel}}</text></view>
+            <view class="v3-journey-item__title">{{section.title}}</view>
+            <view class="v3-journey-item__description">{{copy.preview.lockedSectionBody}}</view>
+            <view wx:if="{{section.status === 'in_progress'}}" class="v3-journey-item__action">{{copy.home.continueAction}}</view>
+          </view>
+        </view>
+      </view>
+      <button class="v3-answer-review-action" bind:tap="openAnswerReview">{{copy.preview.answerReviewAction}}</button>
+    </view>
+
+    <view wx:if="{{chapters.length}}" class="v3-result-section">
+      <view class="v3-result-section__title">{{mode === 'product-v0' ? copy.preview.coreInsightTitle : copy.preview.reportChapterTitle}}</view>
       <view wx:if="{{copy.preview.reportDimensionTitle}}" class="v3-result-section__hint">{{copy.preview.reportDimensionTitle}}</view>
       <view class="v3-chapter-list">
         <view wx:for="{{chapters}}" wx:key="id" wx:for-item="chapter" class="v3-result-chapter">
@@ -29,6 +69,21 @@
               <view class="v3-result-chapter__action">{{copy.navigation.viewDetail}} <text>›</text></view>
             </view>
           </button>
+          <view wx:if="{{mode === 'product-v0' && !isPartial}}" class="v3-inline-feedback">
+            <view class="v3-inline-feedback__prompt">{{copy.feedback.prompt}}</view>
+            <view class="v3-inline-feedback__choices">
+              <button class="v3-inline-feedback__choice {{chapter.feedbackValue === 'fits' ? 'v3-inline-feedback__choice--selected' : ''}}" data-target-type="chapter" data-target-id="{{chapter.id}}" data-value="fits" bind:tap="selectTargetFeedback">{{copy.feedback.fitsAction}}</button>
+              <button class="v3-inline-feedback__choice {{chapter.feedbackValue === 'does_not_fit' ? 'v3-inline-feedback__choice--selected' : ''}}" data-target-type="chapter" data-target-id="{{chapter.id}}" data-value="does_not_fit" bind:tap="selectTargetFeedback">{{copy.feedback.doesNotFitAction}}</button>
+            </view>
+            <view wx:if="{{chapter.feedbackValue === 'does_not_fit' && !chapter.feedbackSubmitted}}" class="v3-inline-feedback__reasons">
+              <view class="v3-inline-feedback__reason-title">{{copy.feedback.reasonTitle}}</view>
+              <button wx:for="{{feedbackReasons}}" wx:key="id" wx:for-item="reason" class="v3-inline-feedback__reason {{chapter.feedbackReason === reason.id ? 'v3-inline-feedback__reason--selected' : ''}}" data-target-type="chapter" data-target-id="{{chapter.id}}" data-reason="{{reason.id}}" bind:tap="selectTargetFeedbackReason">{{reason.label}}</button>
+            </view>
+            <button wx:if="{{chapter.feedbackValue && !chapter.feedbackSubmitted}}" class="v3-inline-feedback__submit" data-target-type="chapter" data-target-id="{{chapter.id}}" bind:tap="submitTargetFeedback">{{copy.feedback.submitAction}}</button>
+            <view wx:if="{{chapter.feedbackSubmitted}}" class="v3-inline-feedback__submitted" role="status">{{copy.feedback.submittedLabel}}</view>
+            <view wx:if="{{chapter.feedbackSyncing}}" class="v3-inline-feedback__sync" role="status">{{copy.preview.syncingLabel}}</view>
+            <view wx:if="{{chapter.feedbackSyncError}}" class="v3-inline-feedback__sync v3-inline-feedback__sync--error" role="alert">{{chapter.feedbackSyncError}}</view>
+          </view>
           <view class="v3-result-chapter__dimensions">
             <button class="v3-result-dimensions-toggle" hover-class="v3-result-dimensions-toggle--active" data-chapter-id="{{chapter.id}}" aria-role="button" aria-label="{{copy.preview.dimensionTitle}}" aria-expanded="{{chapter.expanded}}" bind:tap="toggleChapter">
               <text>{{copy.preview.dimensionTitle}}</text><text class="dl-chevron">{{chapter.expanded ? '⌃' : '›'}}</text>
@@ -39,6 +94,21 @@
                 <view class="v3-result-dimension__headline">{{dimension.headline}}</view>
                 <view class="v3-result-dimension__summary">{{dimension.summary}}</view>
                 <button wx:if="{{dimension.evidenceAvailable}}" class="v3-evidence-link" hover-class="v3-evidence-link--active" data-dimension-id="{{dimension.id}}" bind:tap="openEvidence">{{copy.preview.evidenceAction}} <text>›</text></button>
+                <view wx:if="{{mode === 'product-v0' && !isPartial}}" class="v3-inline-feedback">
+                  <view class="v3-inline-feedback__prompt">{{copy.feedback.prompt}}</view>
+                  <view class="v3-inline-feedback__choices">
+                    <button class="v3-inline-feedback__choice {{dimension.feedbackValue === 'fits' ? 'v3-inline-feedback__choice--selected' : ''}}" data-target-type="dimension" data-target-id="{{dimension.id}}" data-value="fits" bind:tap="selectTargetFeedback">{{copy.feedback.fitsAction}}</button>
+                    <button class="v3-inline-feedback__choice {{dimension.feedbackValue === 'does_not_fit' ? 'v3-inline-feedback__choice--selected' : ''}}" data-target-type="dimension" data-target-id="{{dimension.id}}" data-value="does_not_fit" bind:tap="selectTargetFeedback">{{copy.feedback.doesNotFitAction}}</button>
+                  </view>
+                  <view wx:if="{{dimension.feedbackValue === 'does_not_fit' && !dimension.feedbackSubmitted}}" class="v3-inline-feedback__reasons">
+                    <view class="v3-inline-feedback__reason-title">{{copy.feedback.reasonTitle}}</view>
+                    <button wx:for="{{feedbackReasons}}" wx:key="id" wx:for-item="reason" class="v3-inline-feedback__reason {{dimension.feedbackReason === reason.id ? 'v3-inline-feedback__reason--selected' : ''}}" data-target-type="dimension" data-target-id="{{dimension.id}}" data-reason="{{reason.id}}" bind:tap="selectTargetFeedbackReason">{{reason.label}}</button>
+                  </view>
+                  <button wx:if="{{dimension.feedbackValue && !dimension.feedbackSubmitted}}" class="v3-inline-feedback__submit" data-target-type="dimension" data-target-id="{{dimension.id}}" bind:tap="submitTargetFeedback">{{copy.feedback.submitAction}}</button>
+                  <view wx:if="{{dimension.feedbackSubmitted}}" class="v3-inline-feedback__submitted" role="status">{{copy.feedback.submittedLabel}}</view>
+                  <view wx:if="{{dimension.feedbackSyncing}}" class="v3-inline-feedback__sync" role="status">{{copy.preview.syncingLabel}}</view>
+                  <view wx:if="{{dimension.feedbackSyncError}}" class="v3-inline-feedback__sync v3-inline-feedback__sync--error" role="alert">{{dimension.feedbackSyncError}}</view>
+                </view>
               </view>
             </view>
           </view>
@@ -46,7 +116,7 @@
       </view>
     </view>
 
-    <view class="v3-result-section v3-result-decisions">
+    <view wx:if="{{hasDecisions}}" class="v3-result-section v3-result-decisions">
       <view class="v3-result-section__title">{{report.decisionMap.title}}</view>
       <view wx:for="{{report.decisionMap.sections}}" wx:key="id" wx:for-item="section" class="v3-decision-section">
         <view class="v3-decision-section__title">{{section.title}}</view>
@@ -60,7 +130,7 @@
       </view>
     </view>
 
-    <view class="v3-result-section v3-result-unknowns">
+    <view wx:if="{{hasUnknowns}}" class="v3-result-section v3-result-unknowns">
       <view class="v3-result-section__title">{{report.unknowns.title}}</view>
       <view class="v3-result-section__description">{{report.unknowns.description}}</view>
       <view wx:for="{{report.unknowns.items}}" wx:key="id" wx:for-item="item" class="v3-unknown-item">
@@ -69,7 +139,7 @@
       </view>
     </view>
 
-    <view class="v3-result-section v3-result-interview">
+    <view wx:if="{{hasInterview}}" class="v3-result-section v3-result-interview">
       <view class="v3-result-section__title">{{report.interviewPriorities.title}}</view>
       <view class="v3-result-section__description">{{report.interviewPriorities.description}}</view>
       <view wx:for="{{report.interviewPriorities.items}}" wx:key="id" wx:for-item="item" class="v3-interview-item">
@@ -90,11 +160,36 @@
     <view class="v3-result-secondary-actions">
       <button class="v3-text-action" bind:tap="restart">{{copy.preview.restartAction}}</button>
       <button wx:if="{{mode === 'product-v0'}}" class="v3-text-action v3-danger-action" bind:tap="requestDelete">{{copy.preview.deleteAction}}</button>
+      </view>
+
+    <view wx:if="{{mode === 'product-v0' && !isPartial}}" class="v3-result-section v3-result-feedback">
+      <view class="v3-result-section__title">{{copy.feedback.resultTargetLabel}}</view>
+      <view class="v3-feedback-prompt">{{copy.feedback.prompt}}</view>
+      <view wx:if="{{!feedbackSubmitted}}" class="v3-feedback-options">
+        <button class="v3-feedback-option {{feedbackValue === 'fits' ? 'v3-feedback-option--selected' : ''}}" data-value="fits" bind:tap="selectFeedback">{{copy.feedback.fitsAction}}</button>
+        <button class="v3-feedback-option {{feedbackValue === 'does_not_fit' ? 'v3-feedback-option--selected' : ''}}" data-value="does_not_fit" bind:tap="selectFeedback">{{copy.feedback.doesNotFitAction}}</button>
+      </view>
+      <view wx:if="{{feedbackValue === 'does_not_fit' && !feedbackSubmitted}}" class="v3-feedback-reasons">
+        <view class="v3-feedback-reasons__title">{{copy.feedback.reasonTitle}}</view>
+        <button wx:for="{{feedbackReasons}}" wx:key="id" wx:for-item="reason" class="v3-feedback-reason {{feedbackReason === reason.id ? 'v3-feedback-reason--selected' : ''}}" data-reason="{{reason.id}}" bind:tap="selectFeedbackReason">{{reason.label}}</button>
+      </view>
+      <button wx:if="{{!feedbackSubmitted && feedbackValue}}" class="v3-feedback-submit" bind:tap="submitFeedback">{{copy.feedback.submitAction}}</button>
+      <button wx:if="{{!feedbackSubmitted && !feedbackValue}}" class="v3-text-action v3-feedback-skip" bind:tap="skipFeedback">{{copy.feedback.skipReasonAction}}</button>
+      <view wx:if="{{feedbackSubmitted}}" class="v3-feedback-submitted" role="status">{{copy.feedback.submittedLabel}}</view>
+      <view wx:if="{{feedbackSyncing}}" class="v3-feedback-sync" role="status">{{copy.preview.syncingLabel}}</view>
+      <view wx:if="{{feedbackSyncError}}" class="v3-feedback-sync v3-feedback-sync--error" role="alert">{{feedbackSyncError}}</view>
     </view>
-  </view>
 
   <view class="action-bar v3-result-actions">
-    <button class="dl-button" bind:tap="startAtFirstChapter">{{copy.preview.continueAction}}</button>
+    <button wx:if="{{isPartial}}" class="dl-button" bind:tap="openContinue">{{copy.preview.startAction}}</button>
+    <button wx:else class="dl-button" bind:tap="openAnswerReview">{{copy.preview.continueAction}}</button>
     <view wx:if="{{syncing || syncError}}" class="v3-result-sync"><text wx:if="{{syncing}}">{{copy.preview.syncingLabel}}</text><text wx:if="{{syncError}}">{{syncError}}</text></view>
   </view>
+</view>
+</view>
+
+<view wx:if="{{ready && emptyState}}" class="page v3-result-empty-state">
+  <view class="v3-result-empty-state__title">{{copy.home.readyNewTitle}}</view>
+  <view class="v3-result-empty-state__body">{{copy.home.readyNewDescription}}</view>
+  <button class="dl-button" bind:tap="openContinue">{{copy.home.startAction}}</button>
 </view>

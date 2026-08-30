@@ -1,9 +1,16 @@
 const PUBLIC_LANGUAGE = require('./public-language.generated')
+const { CONTENT_VERSION } = require('./content-version.generated')
 const { CHAPTERS, DIMENSION_IDS, assertDerivedV3Profile, clone } = require('./assessment-v3-product-contract.generated')
 const { deriveEligiblePatternIds } = require('./assessment-v3-product-pattern-eligibility.generated')
 
 const PRODUCT_COPY = PUBLIC_LANGUAGE.v3.product
 const PRODUCT_V0_COPY = Object.assign({}, PRODUCT_COPY, {
+  home: Object.assign({}, PRODUCT_COPY.home, PUBLIC_LANGUAGE.v3.productV0 && PUBLIC_LANGUAGE.v3.productV0.home),
+  journey: Object.assign({}, PRODUCT_COPY.journey, PUBLIC_LANGUAGE.v3.productV0 && PUBLIC_LANGUAGE.v3.productV0.journey),
+  questionnaire: Object.assign({}, PRODUCT_COPY.questionnaire, PUBLIC_LANGUAGE.v3.productV0 && PUBLIC_LANGUAGE.v3.productV0.questionnaire),
+  checkpoint: Object.assign({}, PRODUCT_COPY.checkpoint, PUBLIC_LANGUAGE.v3.productV0 && PUBLIC_LANGUAGE.v3.productV0.checkpoint),
+  feedback: Object.assign({}, PRODUCT_COPY.feedback, PUBLIC_LANGUAGE.v3.productV0 && PUBLIC_LANGUAGE.v3.productV0.feedback),
+  errors: Object.assign({}, PRODUCT_COPY.errors, PUBLIC_LANGUAGE.v3.productV0 && PUBLIC_LANGUAGE.v3.productV0.errors),
   preview: Object.assign({}, PRODUCT_COPY.preview, PUBLIC_LANGUAGE.v3.productV0 && PUBLIC_LANGUAGE.v3.productV0.real && PUBLIC_LANGUAGE.v3.productV0.real.preview),
   method: Object.assign({}, PRODUCT_COPY.method, PUBLIC_LANGUAGE.v3.productV0 && PUBLIC_LANGUAGE.v3.productV0.real && PUBLIC_LANGUAGE.v3.productV0.real.method),
   evidence: Object.assign({}, PRODUCT_COPY.evidence, PUBLIC_LANGUAGE.v3.productV0 && PUBLIC_LANGUAGE.v3.productV0.real && PUBLIC_LANGUAGE.v3.productV0.real.evidence)
@@ -62,6 +69,8 @@ function evidenceLabel(role, copy = PRODUCT_COPY) {
 function publicResponseForEvidence(entry, copy = PRODUCT_COPY) {
   if (entry && entry.question && entry.answer) {
     return {
+      taskId: entry.taskId || '',
+      itemId: entry.itemId || null,
       question: entry.question,
       answer: entry.answer,
       label: evidenceLabel(entry.role, copy),
@@ -69,11 +78,31 @@ function publicResponseForEvidence(entry, copy = PRODUCT_COPY) {
     }
   }
   return {
+    taskId: entry.taskId || '',
+    itemId: entry.itemId || null,
     question: entry.question || entry.taskId || '',
     answer: entry.answer || entry.answerText || String(entry.answerCode || ''),
     label: evidenceLabel(entry.role, copy),
     source: copy.evidence.sourceNote
   }
+}
+
+function buildPartialReport(profileInput, completedSectionIds = []) {
+  const report = buildReport(profileInput)
+  const completed = new Set(completedSectionIds)
+  const coreCompleted = CHAPTERS.filter(chapter => completed.has(chapter.id)).map(chapter => chapter.id)
+  const allCoreCompleted = coreCompleted.length === CHAPTERS.length
+  const allDecisionSectionsCompleted = ['PART_B_L3_OPERATING_MODEL', 'PART_B_L4_PARTNER_DECISION', 'PART_B_L5_LIFE_DESIGN'].every(id => completed.has(id))
+  return Object.assign({}, report, {
+    executiveSummary: Object.assign({}, report.executiveSummary, {
+      patterns: allCoreCompleted ? report.executiveSummary.patterns : [],
+      unknownPreview: allCoreCompleted ? report.executiveSummary.unknownPreview : []
+    }),
+    chapterSyntheses: report.chapterSyntheses.filter(chapter => completed.has(chapter.id)),
+    decisionMap: allDecisionSectionsCompleted ? report.decisionMap : Object.assign({}, report.decisionMap, { sections: [] }),
+    unknowns: Object.assign({}, report.unknowns, { items: allCoreCompleted ? report.unknowns.items : [] }),
+    interviewPriorities: Object.assign({}, report.interviewPriorities, { items: allCoreCompleted ? report.interviewPriorities.items : [] })
+  })
 }
 
 function dimensionCard(profile, dimensionId, copy = copyForProfile(profile)) {
@@ -188,6 +217,8 @@ function buildReport(profileInput) {
   const summaryPatterns = selectSummaryPatterns(profile)
   return {
     contractVersion: 'v3.product-report.v1.0',
+    contentVersion: CONTENT_VERSION,
+    questionnaireVersion: profile.assessmentMeta && profile.assessmentMeta.productQuestionnaireVersion || null,
     source: profile.source,
     isSynthetic: profile.isSynthetic,
     personaId: profile.persona && profile.persona.id ? profile.persona.id : (profile.assessmentMeta && profile.assessmentMeta.assessmentId) || '',
@@ -251,6 +282,7 @@ function buildEvidenceView(report, dimensionId) {
 
 module.exports = {
   buildReport,
+  buildPartialReport,
   buildChapterView,
   buildEvidenceView,
   dimensionCard,

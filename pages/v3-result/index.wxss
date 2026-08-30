@@ -33,6 +33,18 @@
   line-height: 40rpx;
 }
 
+.v3-result-page--partial .v3-result-title {
+  font-size: 48rpx;
+}
+
+.v3-result-progress-note {
+  margin-top: 16rpx;
+  padding: 18rpx 0;
+  color: var(--dl-grey-500);
+  font-size: 26rpx;
+  line-height: 42rpx;
+}
+
 .v3-result-section {
   margin-top: 62rpx;
 }
@@ -160,6 +172,96 @@
   text-decoration: underline;
 }
 
+.v3-journey-list {
+  margin-top: 16rpx;
+  border-top: 2rpx solid var(--dl-grey-200);
+}
+
+.v3-journey-item {
+  border-bottom: 2rpx solid var(--dl-grey-200);
+}
+
+.v3-journey-item__button {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+}
+
+.v3-journey-item__button:active {
+  background: var(--dl-grey-50);
+}
+
+.v3-journey-item__body {
+  min-width: 0;
+  padding: 24rpx 0 26rpx;
+}
+
+.v3-journey-item__topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20rpx;
+  color: var(--dl-grey-500);
+  font-size: 22rpx;
+  line-height: 34rpx;
+}
+
+.v3-journey-item__title {
+  margin-top: 8rpx;
+  font-size: 29rpx;
+  font-weight: 700;
+  line-height: 42rpx;
+  overflow-wrap: anywhere;
+}
+
+.v3-journey-item__description {
+  margin-top: 6rpx;
+  color: #494949;
+  font-size: 25rpx;
+  line-height: 40rpx;
+  overflow-wrap: anywhere;
+}
+
+.v3-journey-item__action {
+  margin-top: 12rpx;
+  color: var(--dl-grey-500);
+  font-size: 23rpx;
+  line-height: 36rpx;
+  text-decoration: underline;
+}
+
+.v3-journey-item--locked .v3-journey-item__title {
+  color: var(--dl-grey-500);
+}
+
+.v3-answer-review-action,
+.v3-feedback-submit {
+  display: flex;
+  width: 100%;
+  min-height: 88rpx;
+  align-items: center;
+  justify-content: center;
+  margin: 26rpx 0 0;
+  padding: 18rpx 24rpx;
+  border: 2rpx solid var(--dl-black);
+  border-radius: 8rpx;
+  background: transparent;
+  color: var(--dl-black);
+  font-size: 27rpx;
+  line-height: 40rpx;
+}
+
+.v3-answer-review-action:active,
+.v3-feedback-submit:active {
+  background: var(--dl-grey-50);
+}
+
 .v3-result-chapter__dimensions {
   margin-top: 26rpx;
   border-top: 2rpx solid var(--dl-grey-200);
@@ -192,6 +294,99 @@
   padding: 22rpx 0 24rpx;
   border-bottom: 2rpx solid var(--dl-grey-200);
 }
+
+.v3-inline-feedback {
+  margin-top: 18rpx;
+  padding-top: 16rpx;
+  border-top: 1rpx solid var(--dl-grey-200);
+}
+
+.v3-inline-feedback__prompt {
+  color: var(--dl-grey-500);
+  font-size: 23rpx;
+  line-height: 34rpx;
+}
+
+.v3-inline-feedback__choices {
+  display: flex;
+  gap: 12rpx;
+  margin-top: 8rpx;
+}
+
+.v3-inline-feedback__choice {
+  flex: 1;
+  min-width: 0;
+  min-height: 70rpx;
+  margin: 0;
+  padding: 14rpx 10rpx;
+  border: 2rpx solid var(--dl-grey-300);
+  border-radius: 6rpx;
+  background: #fff;
+  color: var(--dl-black);
+  font-size: 23rpx;
+  line-height: 34rpx;
+  text-align: center;
+}
+
+.v3-inline-feedback__choice--selected {
+  border-color: var(--dl-black);
+  background: var(--dl-grey-50);
+  font-weight: 600;
+}
+
+.v3-inline-feedback__reasons { margin-top: 10rpx; }
+
+.v3-inline-feedback__reason-title {
+  color: var(--dl-grey-500);
+  font-size: 22rpx;
+  line-height: 34rpx;
+}
+
+.v3-inline-feedback__reason {
+  display: block;
+  width: 100%;
+  min-height: 68rpx;
+  margin: 6rpx 0 0;
+  padding: 12rpx 14rpx;
+  border: 2rpx solid var(--dl-grey-300);
+  border-radius: 6rpx;
+  background: #fff;
+  color: var(--dl-black);
+  font-size: 22rpx;
+  line-height: 34rpx;
+  text-align: left;
+}
+
+.v3-inline-feedback__reason--selected {
+  border-color: var(--dl-black);
+  background: var(--dl-grey-50);
+  font-weight: 600;
+}
+
+.v3-inline-feedback__submit {
+  display: block;
+  width: 100%;
+  min-height: 70rpx;
+  margin: 10rpx 0 0;
+  padding: 14rpx 18rpx;
+  border: 2rpx solid var(--dl-black);
+  border-radius: 6rpx;
+  background: var(--dl-black);
+  color: #fff;
+  font-size: 23rpx;
+  line-height: 34rpx;
+  text-align: center;
+}
+
+.v3-inline-feedback__submitted,
+.v3-inline-feedback__sync {
+  margin-top: 8rpx;
+  color: var(--dl-grey-500);
+  font-size: 22rpx;
+  line-height: 34rpx;
+}
+
+.v3-inline-feedback__sync--error { color: var(--dl-danger); }
 
 .v3-result-dimension__title,
 .v3-result-dimension__headline,
@@ -291,14 +486,117 @@
 .v3-result-sync { margin-top: 10rpx; color: var(--dl-grey-500); font-size: 23rpx; line-height: 34rpx; text-align: center; }
 .v3-danger-action { color: #8f2e2e; }
 
+.v3-result-feedback {
+  padding-top: 28rpx;
+  border-top: 2rpx solid var(--dl-black);
+}
+
+.v3-feedback-prompt {
+  margin-top: 12rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  line-height: 42rpx;
+}
+
+.v3-feedback-options,
+.v3-feedback-reasons {
+  margin-top: 16rpx;
+}
+
+.v3-feedback-option,
+.v3-feedback-reason {
+  display: block;
+  width: 100%;
+  min-height: 76rpx;
+  margin: 8rpx 0 0;
+  padding: 16rpx 18rpx;
+  border: 2rpx solid var(--dl-grey-300);
+  border-radius: 6rpx;
+  background: #fff;
+  color: var(--dl-black);
+  font-size: 25rpx;
+  line-height: 38rpx;
+  text-align: left;
+}
+
+.v3-feedback-option--selected,
+.v3-feedback-reason--selected {
+  border-color: var(--dl-black);
+  background: var(--dl-grey-50);
+  font-weight: 600;
+}
+
+.v3-feedback-reasons__title {
+  color: var(--dl-grey-500);
+  font-size: 23rpx;
+  line-height: 36rpx;
+}
+
+.v3-feedback-skip {
+  margin-top: 12rpx;
+}
+
+.v3-feedback-submitted {
+  margin-top: 16rpx;
+  color: var(--dl-grey-500);
+  font-size: 25rpx;
+  line-height: 40rpx;
+}
+
+.v3-feedback-sync {
+  margin-top: 8rpx;
+  color: var(--dl-grey-500);
+  font-size: 23rpx;
+  line-height: 36rpx;
+}
+
+.v3-feedback-sync--error {
+  color: var(--dl-danger);
+}
+
+.v3-result-empty-state {
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 180rpx var(--dl-gutter) 80rpx;
+  background: #fbfbfa;
+}
+
+.v3-result-empty-state__title {
+  font-size: 40rpx;
+  font-weight: 700;
+  line-height: 54rpx;
+}
+
+.v3-result-empty-state__body {
+  margin: 16rpx 0 42rpx;
+  color: var(--dl-grey-500);
+  font-size: 27rpx;
+  line-height: 42rpx;
+}
+
 /* Override the base button width injected by WeChat DevTools. */
 .v3-result-page .v3-result-chapter__button,
 .v3-result-page .v3-result-dimensions-toggle,
 .v3-result-page .v3-evidence-link,
-.v3-result-page .v3-followup-action {
+.v3-result-page .v3-followup-action,
+.v3-result-page .v3-journey-item__button,
+.v3-result-page .v3-answer-review-action,
+.v3-result-page .v3-feedback-submit,
+.v3-result-page .v3-feedback-option,
+.v3-result-page .v3-feedback-reason,
+.v3-result-page .v3-inline-feedback__reason,
+.v3-result-page .v3-inline-feedback__submit {
   box-sizing: border-box;
   width: 100%;
   min-width: 100%;
+  max-width: 100%;
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.v3-result-page .v3-inline-feedback__choice {
+  box-sizing: border-box;
+  min-width: 0;
   max-width: 100%;
   margin-right: 0;
   margin-left: 0;

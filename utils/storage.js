@@ -4,6 +4,7 @@ const EVENTS_KEY = 'serious_match_events_v2'
 const CLOUD_SYNC_KEY = 'serious_match_cloud_sync_v1'
 const WELCOME_KEY = 'serious_match_welcome_seen_v1'
 const WELCOME_VERSION = 2
+const PRODUCT_TRUST_KEY = 'serious_match_product_trust_seen_v1'
 const LEGACY_CLEANUP_KEY = 'serious_match_v2_legacy_cleanup_done'
 
 function clearLegacyAssessmentOnce() {
@@ -49,7 +50,7 @@ function deleteMatchingProfile() {
 }
 
 function deleteProfile() {
-  [PROFILE_KEY, SOURCE_KEY, EVENTS_KEY, CLOUD_SYNC_KEY, 'serious_match_assessment_v2', 'serious_match_report_v2', 'serious_match_assessment_storage_choice_v2', 'serious_match_exploration_v1', 'serious_match_record_feedback_v1', 'serious_match_questionnaire_v1'].forEach(key => wx.removeStorageSync(key))
+  [PROFILE_KEY, SOURCE_KEY, EVENTS_KEY, CLOUD_SYNC_KEY, PRODUCT_TRUST_KEY, 'serious_match_assessment_v2', 'serious_match_report_v2', 'serious_match_assessment_storage_choice_v2', 'serious_match_exploration_v1', 'serious_match_record_feedback_v1', 'serious_match_questionnaire_v1'].forEach(key => wx.removeStorageSync(key))
 }
 
 function getCloudSync() { return wx.getStorageSync(CLOUD_SYNC_KEY) || {} }
@@ -59,6 +60,15 @@ function saveSource(source) { if (!wx.getStorageSync(SOURCE_KEY)) wx.setStorageS
 function getSource() { return wx.getStorageSync(SOURCE_KEY) || 'direct' }
 function hasSeenWelcome() { return wx.getStorageSync(WELCOME_KEY) === WELCOME_VERSION }
 function markWelcomeSeen() { wx.setStorageSync(WELCOME_KEY, WELCOME_VERSION) }
-function recordEvent(name, details) { const events = wx.getStorageSync(EVENTS_KEY) || []; const event = { name, source: getSource(), at: Date.now() }; if (details && typeof details === 'object') event.details = details; events.push(event); wx.setStorageSync(EVENTS_KEY, events.slice(-100)) }
+function hasSeenProductTrust() { return wx.getStorageSync(PRODUCT_TRUST_KEY) === 1 }
+function markProductTrustSeen() { wx.setStorageSync(PRODUCT_TRUST_KEY, 1) }
+function recordEvent(name, details) {
+  if (typeof wx === 'undefined' || typeof wx.getStorageSync !== 'function' || typeof wx.setStorageSync !== 'function') return
+  const events = wx.getStorageSync(EVENTS_KEY) || []
+  const event = { name, source: getSource(), at: Date.now() }
+  if (details && typeof details === 'object') event.details = details
+  events.push(event)
+  wx.setStorageSync(EVENTS_KEY, events.slice(-100))
+}
 
-module.exports = { getProfile, hasProfile, replaceProfile, saveSection, saveDraft, completeProfile, setStatus, clearAssessmentFromProfile, deleteMatchingProfile, deleteProfile, markCloudSynced, needsCloudSync, saveSource, hasSeenWelcome, markWelcomeSeen, recordEvent }
+module.exports = { getProfile, hasProfile, replaceProfile, saveSection, saveDraft, completeProfile, setStatus, clearAssessmentFromProfile, deleteMatchingProfile, deleteProfile, markCloudSynced, needsCloudSync, saveSource, hasSeenWelcome, markWelcomeSeen, hasSeenProductTrust, markProductTrustSeen, recordEvent }

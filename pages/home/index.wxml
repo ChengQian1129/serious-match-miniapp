@@ -5,10 +5,32 @@
       <view class="home-title">{{heroTitle}}</view>
       <view class="home-desc">{{heroDesc}}</view>
       <view wx:if="{{progressText}}" class="home-note">{{progressText}}</view>
+      <view wx:if="{{isProductMode && productHasData && productRestoreState === 'READY'}}" class="home-progress-block">
+        <view class="home-progress-block__section">{{productSectionTitle}}</view>
+        <view class="home-progress-block__detail">{{productSectionProgress}} · {{productCompletedSections}}</view>
+        <view wx:if="{{productSaveLabel}}" class="home-progress-block__save">{{productSaveLabel}}</view>
+      </view>
     </view>
     <view class="home-actions dl-stack">
-      <button class="dl-button" bind:tap="handleStart">{{actionText}}</button>
+      <button class="dl-button" disabled="{{isProductMode && !productCanStart}}" bind:tap="handleStart">{{actionText}}</button>
       <button class="dl-button dl-button--outline" bind:tap="openGuide">{{guideAction}}</button>
+    </view>
+  </view>
+  <view wx:if="{{isProductMode && productRestoreState === 'RESTORE_ERROR'}}" class="home-restore-panel home-restore-panel--error" role="alert">
+    <view class="home-restore-panel__title">{{productCopy.home.restoreErrorTitle}}</view>
+    <view class="home-restore-panel__body">{{productRestoreError}}</view>
+    <view class="home-restore-panel__actions">
+      <button class="home-restore-panel__action" bind:tap="retryProductSync">{{productCopy.home.retryAction}}</button>
+      <button wx:if="{{productCanUseLocal}}" class="home-restore-panel__action" bind:tap="useLocalProgress">{{productCopy.home.useLocalAction}}</button>
+      <button wx:if="{{!productHasData}}" class="home-restore-panel__action" bind:tap="startOffline">{{productCopy.home.offlineAction}}</button>
+    </view>
+  </view>
+  <view wx:if="{{isProductMode && productRestoreState === 'RESTORE_CONFLICT'}}" class="home-restore-panel home-restore-panel--conflict" role="alert">
+    <view class="home-restore-panel__title">{{productCopy.home.conflictTitle}}</view>
+    <view class="home-restore-panel__body">{{productRestoreError}}</view>
+    <view class="home-restore-panel__actions">
+      <button wx:if="{{productCanUseCloud}}" class="home-restore-panel__action" bind:tap="useCloudProgress">{{productCopy.home.useCloudAction}}</button>
+      <button wx:if="{{productCanUseLocal}}" class="home-restore-panel__action" bind:tap="useLocalProgress">{{productCopy.home.useLocalAction}}</button>
     </view>
   </view>
   <view class="home-example">
@@ -20,7 +42,7 @@
     <view class="home-topics"><view wx:for="{{topics}}" wx:key="*this" class="home-topic">{{item}}</view></view>
   </view>
   <view class="home-pool-note">{{followupHint}}</view>
-  <button wx:if="{{productSyncError}}" class="home-sync-error" bind:tap="retryProductSync">{{productSyncError}} {{productRetryAction}}</button>
+  <view wx:if="{{isProductMode && productRestoreState === 'RESTORING'}}" class="home-restore-status" role="status">{{productCopy.home.restoringDescription}}</view>
   <view class="home-utility-links">
     <button class="home-utility-link" bind:tap="openPrivacy">{{privacyAction}}</button>
     <button wx:if="{{productHasData}}" class="home-utility-link home-utility-link--danger" loading="{{productDeleting}}" bind:tap="deleteProductData">{{productDeleteAction}}</button>

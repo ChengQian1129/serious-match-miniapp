@@ -259,6 +259,8 @@ function productReportDocument(report, session, openid, reportId, reportVersion)
     reportVersion,
     instrumentVersion: session.instrumentVersion,
     productQuestionnaireVersion: session.productQuestionnaireVersion,
+    contentVersion: report.contentVersion || null,
+    questionnaireVersion: report.questionnaireVersion || session.productQuestionnaireVersion || null,
     scoringModelVersion: session.scoringModelVersion,
     reportRuleVersion: report.contractVersion,
     generatedAt: session.completedAt || Date.now(),
@@ -698,6 +700,48 @@ function sanitizeFeedbackEvent(source, report, openid) {
   }
 }
 
+const PRODUCT_FEEDBACK_VALUES = new Set(['fits', 'does_not_fit'])
+const PRODUCT_FEEDBACK_REASONS = new Set(['answer_inaccurate', 'misunderstood', 'overreached', 'complex', 'other'])
+const PRODUCT_FEEDBACK_TARGETS = new Set(['result', 'pattern', 'dimension', 'chapter'])
+
+function productFeedbackTargetExists(report, targetType, targetId) {
+  if (targetType === 'result') return targetId === 'overall'
+  if (targetType === 'pattern') return (report.executiveSummary && report.executiveSummary.patterns || []).some(item => item.id === targetId)
+  if (targetType === 'dimension') return (report.dimensionCards || []).some(item => item.id === targetId)
+  if (targetType === 'chapter') return (report.chapterSyntheses || []).some(item => item.id === targetId)
+  return false
+}
+
+function sanitizeProductFeedbackEvent(source, report, openid) {
+  if (!source || typeof source !== 'object') reject('缺少 Product v0 反馈事件', 'INVALID_FEEDBACK')
+  const targetType = text(source.targetType, 24)
+  const targetId = text(source.targetId, 80)
+  const value = text(source.value, 24)
+  const reasonCode = text(source.reasonCode, 40)
+  if (!PRODUCT_FEEDBACK_TARGETS.has(targetType) || !targetId || !productFeedbackTargetExists(report, targetType, targetId)) reject('Product v0 反馈目标不存在', 'INVALID_FEEDBACK')
+  if (!PRODUCT_FEEDBACK_VALUES.has(value)) reject('Product v0 反馈选项无效', 'INVALID_FEEDBACK')
+  if (reasonCode && (!PRODUCT_FEEDBACK_REASONS.has(reasonCode) || value !== 'does_not_fit')) reject('Product v0 反馈原因无效', 'INVALID_FEEDBACK')
+  const eventId = text(source.eventId, 128)
+  const createdAt = Number(source.createdAt)
+  if (!eventId || !Number.isFinite(createdAt) || createdAt <= 0) reject('Product v0 反馈编号或时间无效', 'INVALID_FEEDBACK')
+  return {
+    _id: feedbackEventDocId(openid, eventId),
+    _openid: openid,
+    eventId,
+    assessmentType: PRODUCT_V0_TYPE,
+    reportId: report._id,
+    targetType,
+    targetId,
+    value,
+    reasonCode: reasonCode || null,
+    createdAt,
+    instrumentVersion: report.instrumentVersion,
+    reportRuleVersion: report.reportRuleVersion,
+    contentVersion: report.contentVersion || null,
+    questionnaireVersion: report.questionnaireVersion || report.productQuestionnaireVersion || null
+  }
+}
+
 function confirmationProjection(report, event) {
   const current = Object.assign({}, report.userConfirmations || {})[event.claimId]
   if (current && (Number(current.reviewedAt) > Number(event.createdAt) || (Number(current.reviewedAt) === Number(event.createdAt) && String(current.feedbackId) > String(event.eventId)))) return report.userConfirmations || {}
@@ -711,7 +755,7 @@ function confirmationProjectionFromEvents(events) {
 }
 
 function sameFeedbackEvent(left, right) {
-  return ['_openid', 'eventId', 'reportId', 'claimId', 'value', 'note', 'context', 'createdAt', 'supersedesFeedbackId', 'instrumentVersion', 'reportRuleVersion'].every(key => left[key] === right[key])
+  return ['_openid', 'eventId', 'assessmentType', 'reportId', 'claimId', 'targetType', 'targetId', 'value', 'reasonCode', 'note', 'context', 'createdAt', 'supersedesFeedbackId', 'instrumentVersion', 'reportRuleVersion', 'contentVersion', 'questionnaireVersion'].every(key => left[key] === right[key])
 }
 
 function consentDocId(openid, eventId) {
@@ -1261,7 +1305,7 @@ exports.main = async event => {
         try {
           const feedback = await assessmentFeedbackEvents.where({ _openid: OPENID, reportId: report._id }).limit(100).get()
           report.feedbackEvents = (feedback.data || []).sort((left, right) => Number(left.createdAt) - Number(right.createdAt))
-          report.userConfirmations = confirmationProjectionFromEvents(report.feedbackEvents)
+          if (report.assessmentType !== PRODUCT_V0_TYPE) report.userConfirmations = confirmationProjectionFromEvents(report.feedbackEvents)
         } catch (error) {
           if (!/collection.*(does not exist|not exists?|not found)/i.test(error.errMsg || error.message || '')) throw error
         }
@@ -1289,6 +1333,19 @@ exports.main = async event => {
     if (event.action === 'assessmentFeedbackAppend') {
       const report = await findOwnReport(OPENID, text(event.reportId, 128))
       if (!report) reject('报告不存在或不属于当前用户', 'INVALID_FEEDBACK')
+      if (report.assessmentType === PRODUCT_V0_TYPE) {
+        const feedbackEvent = sanitizeProductFeedbackEvent(event.feedbackEvent, report, OPENID)
+        let existing = null
+        try { existing = (await assessmentFeedbackEvents.doc(feedbackEvent._id).get()).data || null } catch (error) {
+          if (!/does not exist|not exists?|not found/i.test(error.errMsg || error.message || '')) throw error
+        }
+        if (existing) {
+          if (!sameFeedbackEvent(existing, feedbackEvent)) reject('反馈编号已用于其他内容', 'FEEDBACK_CONFLICT')
+          return { ok: true, data: { feedbackEvent: existing, duplicateIgnored: true } }
+        }
+        await assessmentFeedbackEvents.doc(feedbackEvent._id).set({ data: documentData(feedbackEvent) })
+        return { ok: true, data: { feedbackEvent } }
+      }
       const feedbackEvent = sanitizeFeedbackEvent(event.feedbackEvent, report, OPENID)
       let existing = null
       try { existing = (await assessmentFeedbackEvents.doc(feedbackEvent._id).get()).data || null } catch (error) {

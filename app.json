@@ -7,6 +7,7 @@
     "pages/v3-checkpoint/index",
     "pages/v3-result/index",
     "pages/v3-result-evidence/index",
+    "pages/v3-answer-review/index",
     "pages/chapter-insight/index",
     "pages/questionnaire-result/index",
     "pages/relationship-map/index",

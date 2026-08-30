@@ -1,14 +1,15 @@
 const { getSession, hasSession, getReport, shouldSyncAssessment, replaceSession, replaceReport } = require('../../utils/assessment-v2/session-store')
 const cloud = require('../../utils/cloud')
-const { isCloudReady, getAssessmentFromCloud, getProductV0FromCloud } = cloud
+const { isCloudReady, getAssessmentFromCloud } = cloud
 const { CHAPTERS } = require('../../utils/assessment-v2/questionnaire-definitions')
 const { FEATURES } = require('../../utils/features')
 const productStore = require('../../utils/assessment-v3-product-v0/session-store')
-const productRuntime = require('../../shared/assessment-v3-product-v0/runtime-engine')
+const productJourney = require('../../utils/assessment-v3-product-v0/journey-model')
 const { getStatusBarHeight } = require('../../utils/window')
 const { navigateOnce, resetNavigation } = require('../../utils/navigation')
 const { recordEvent } = require('../../utils/storage')
 const { home, guide, CONTENT_VERSION } = require('../../shared/content/ui-copy')
+const PRODUCT_V0_COPY = require('../../shared/content/public-language.generated').v3.productV0
 
 function progressPercentLabel(ratio) {
   if (ratio > 0 && ratio < 0.01) return '<1%'
@@ -20,6 +21,8 @@ Page({
     statusBarHeight: getStatusBarHeight(),
     showGuide: false,
     contentVersion: CONTENT_VERSION,
+    isProductMode: FEATURES.v3ProductV0,
+    productCopy: PRODUCT_V0_COPY,
     actionText: home.action,
     heroTitle: home.title,
     heroDesc: home.description,
@@ -44,7 +47,20 @@ Page({
     productRetryAction: home.retryAction,
     productHasData: false,
     productDeleting: false,
-    productSyncError: ''
+    productSyncError: '',
+    productRestoreState: 'INITIALIZING',
+    productRestoreError: '',
+    productCanStart: !FEATURES.v3ProductV0,
+    productCanUseLocal: false,
+    productCanUseCloud: false,
+    productSectionTitle: '',
+    productSectionProgress: '',
+    productCompletedSections: '',
+    productSaveLabel: ''
+  },
+
+  onLoad(options = {}) {
+    this.startIntent = options.intent === 'start'
   },
 
   onShow() {
@@ -79,18 +95,43 @@ Page({
   },
 
   onProductShow() {
-    this._productRestoreCancelled = false
+    if (!this._productRestoreAttempted) this._productRestoreCancelled = false
     const session = productStore.getSession()
-    this.applyProductState(session)
-    if (isCloudReady() && !this._productRestoreAttempted) {
+    if (!cloud.isCloudReady()) {
+      this.applyProductState(session, { restoreState: 'RESTORE_ERROR', restoreError: cloud.getSetupIssue() || (PRODUCT_V0_COPY.errors && PRODUCT_V0_COPY.errors.restoreFailed) })
+      this.setData({ productSyncError: cloud.getSetupIssue() || (PRODUCT_V0_COPY.errors && PRODUCT_V0_COPY.errors.restoreFailed) || '' })
+      recordEvent('assessment_restore_fail', { networkState: 'unavailable' })
+      recordEvent('home_view')
+      return
+    }
+    this.applyProductState(session, { restoreState: 'RESTORING' })
+    if (!this._productRestoreAttempted) {
       const restoreToken = (this._productRestoreToken || 0) + 1
       this._productRestoreToken = restoreToken
       this._productRestoreAttempted = true
-      getProductV0FromCloud(productStore.hasSession() ? session.assessmentId : '', {
+      recordEvent('assessment_restore_start')
+      cloud.getProductV0FromCloud(productStore.hasSession() ? session.assessmentId : '', {
         success: data => {
           if (restoreToken !== this._productRestoreToken || this._productRestoreCancelled) return
           const local = productStore.getSession()
-          if (data.session && (!productStore.hasSession() || Number(data.session.updatedAt) > Number(local.updatedAt))) productStore.replaceSession(data.session)
+          const localHasUnsyncedAnswers = local.answerEvents.length > 0 && local.status === 'pending_cloud'
+          const remoteIsNewer = data.session && Number(data.session.updatedAt) > Number(local.updatedAt)
+          if (remoteIsNewer && localHasUnsyncedAnswers) {
+            this._productRemoteCandidate = data
+            this._productRestoreAttempted = true
+            this.setData({
+              productRestoreState: 'RESTORE_CONFLICT',
+              productRestoreError: PRODUCT_V0_COPY.home.conflictDescription,
+              productSyncError: PRODUCT_V0_COPY.home.conflictError,
+              productCanStart: false,
+              productCanUseLocal: true,
+              productCanUseCloud: true,
+              productHasData: true
+            })
+            recordEvent('assessment_restore_fail', { networkState: 'conflict' })
+            return
+          }
+          if (data.session && (!productStore.hasSession() || remoteIsNewer)) productStore.replaceSession(data.session)
           if (data.session && data.session.status !== 'completed') productStore.clearReport()
           const localReport = productStore.getReport()
           const cloudReport = data.report
@@ -99,38 +140,88 @@ Page({
           const cloudGeneratedAt = Number(cloudReport && cloudReport.generatedAt) || Number(data.session && data.session.completedAt) || 0
           const localGeneratedAt = Number(localReport && localReport.generatedAt) || Number(local.completedAt) || 0
           if (cloudReport && (!localReport || cloudVersion > localVersion || (cloudVersion === localVersion && cloudGeneratedAt > localGeneratedAt))) productStore.replaceReport(cloudReport)
-          this.applyProductState(productStore.getSession())
-          this.setData({ productSyncError: '' })
           this._productRestoreAttempted = false
+          this._productRemoteCandidate = null
+          this.applyProductState(productStore.getSession(), { restoreState: 'READY' })
+          this.setData({ productSyncError: '', productRestoreError: '' })
+          recordEvent('assessment_restore_success', { networkState: 'online' })
+          this.orchestrateStartIntent()
         },
-        fail: error => { this._productRestoreAttempted = false; this.setData({ productSyncError: cloud.cloudErrorMessage(error) }) }
+        fail: error => {
+          if (restoreToken !== this._productRestoreToken || this._productRestoreCancelled) return
+          this._productRestoreAttempted = false
+          const message = cloud.cloudErrorMessage(error)
+          this.applyProductState(productStore.getSession(), { restoreState: 'RESTORE_ERROR', restoreError: message })
+          this.setData({ productSyncError: message, productRestoreError: message })
+          recordEvent('assessment_restore_fail', { networkState: 'online' })
+        }
       })
     }
     recordEvent('home_view')
   },
 
-  applyProductState(session) {
+  applyProductState(session, options = {}) {
     const report = productStore.getReport()
     const hasData = productStore.hasSession()
-    if (session.status === 'completed' && (session.derivedProfile || report)) {
-      return this.setData({ actionText: '查看结果', heroTitle: home.completedTitle, heroDesc: home.completedDescription, progressText: '', productHasData: hasData })
+    const restoreState = options.restoreState || this.data.productRestoreState || 'READY'
+    const localProgress = productJourney.getGlobalProgress(session)
+    const section = productJourney.currentSection(session)
+    const sectionProgress = section ? productJourney.getSectionProgress(session, section.id) : { completedTasks: 0, totalTasks: 0 }
+    const productHome = PRODUCT_V0_COPY.home || {}
+    const sectionProgressText = (productHome.sectionProgressTemplate || '{sectionCompleted} / {sectionTotal}')
+      .replace('{sectionCompleted}', String(sectionProgress.completedTasks))
+      .replace('{sectionTotal}', String(sectionProgress.totalTasks))
+    const completedSectionsText = (productHome.completedSectionsTemplate || '已完成 {completed} / {total} 个部分')
+      .replace('{completed}', String(localProgress.completedSections))
+      .replace('{total}', String(localProgress.totalSections))
+    const base = {
+      productRestoreState: restoreState,
+      productRestoreError: options.restoreError || '',
+      productHasData: hasData,
+      productCanStart: restoreState === 'READY' && !this.data.productDeleting,
+      productCanUseLocal: restoreState === 'RESTORE_ERROR' && hasData,
+      productCanUseCloud: restoreState === 'RESTORE_CONFLICT' && Boolean(this._productRemoteCandidate),
+      productSectionTitle: section ? section.title : '',
+      productSectionProgress: sectionProgressText,
+      productCompletedSections: completedSectionsText,
+      productSaveLabel: session.status === 'pending_cloud' ? (productHome.localOnlyLabel || '') : (session.answerEvents.length ? (productHome.syncedLabel || '') : '')
+    }
+    if (restoreState === 'RESTORING') {
+      return this.setData(Object.assign(base, { actionText: productHome.restoringTitle || '正在恢复进度…', heroTitle: productHome.restoringTitle || '正在恢复进度', heroDesc: productHome.restoringDescription || '', progressText: '', productCanStart: false }))
+    }
+    if (restoreState === 'RESTORE_CONFLICT') {
+      return this.setData(Object.assign(base, { actionText: productHome.conflictTitle || '选择进度', heroTitle: productHome.conflictTitle || '两台设备的进度不一样', heroDesc: productHome.conflictDescription || '', progressText: '', productCanStart: false }))
+    }
+    if (restoreState === 'RESTORE_ERROR') {
+      const title = productHome.restoreErrorTitle || '暂时没能确认云端进度'
+      return this.setData(Object.assign(base, { actionText: productHome.retryAction || '重试', heroTitle: title, heroDesc: productHome.restoreErrorDescription || options.restoreError || '', progressText: '', productCanStart: true }))
+    }
+    if (session.status === 'completed' && (session.derivedProfile || report) && productJourney.isAssessmentComplete(session)) {
+      return this.setData(Object.assign(base, { actionText: productHome.viewResultAction || '查看结果', heroTitle: productHome.readyCompletedTitle || '你的结果已经生成', heroDesc: productHome.readyCompletedDescription || '', progressText: '' }))
     }
     if (hasData) {
-      const progress = productRuntime.progress(session)
-      const progressDesc = (home.progressDescriptionTemplate || '').replace('{completed}', String(progress.completedParents)).replace('{total}', String(progress.assignedParents))
-      return this.setData({ actionText: '继续答题', heroTitle: home.progressTitle, heroDesc: progressDesc, progressText: '', productHasData: true })
+      return this.setData(Object.assign(base, { actionText: productHome.continueAction || '继续', heroTitle: productHome.readyLocalTitle || '继续填写你的答题', heroDesc: productHome.readyLocalDescription || '', progressText: '' }))
     }
-    this.setData({ actionText: home.action, heroTitle: home.title, heroDesc: home.description, progressText: '', productHasData: false })
+    return this.setData(Object.assign(base, { actionText: productHome.startAction || '开始', heroTitle: productHome.readyNewTitle || home.title, heroDesc: productHome.readyNewDescription || home.description, progressText: '' }))
+  },
+
+  orchestrateStartIntent() {
+    if (!this.startIntent || this._startIntentHandled || this.data.productRestoreState !== 'READY' || !this.data.productCanStart) return
+    this._startIntentHandled = true
+    recordEvent('assessment_start')
+    this.beginAssessment()
   },
 
   handleStart() {
     if (this._isRouting) return
     if (FEATURES.v3ProductV0) {
-      this._productRestoreCancelled = true
-      this._productRestoreToken = (this._productRestoreToken || 0) + 1
-      this._productRestoreAttempted = false
+      if (this.data.productRestoreState === 'RESTORING') return
+      if (this.data.productRestoreState === 'RESTORE_ERROR') return this.retryProductSync()
+      if (this.data.productRestoreState === 'RESTORE_CONFLICT') return
+      if (!this.data.productCanStart) return
       const session = productStore.getSession()
-      if (session.status === 'completed' && (session.derivedProfile || productStore.getReport())) return navigateOnce(this, 'navigateTo', { url: '/pages/v3-result/index?mode=product-v0' })
+      recordEvent('assessment_start')
+      if (session.status === 'completed' && (session.derivedProfile || productStore.getReport()) && productJourney.isAssessmentComplete(session)) return navigateOnce(this, 'navigateTo', { url: '/pages/v3-result/index?mode=product-v0' })
       return this.beginAssessment()
     }
     const report = getReport()
@@ -152,15 +243,57 @@ Page({
 
   retryProductSync() {
     this._productRestoreAttempted = false
+    this._productRestoreCancelled = false
+    this.setData({ productSyncError: '', productRestoreError: '', productRestoreState: 'INITIALIZING', productCanStart: false })
     this.onProductShow()
+  },
+
+  useLocalProgress() {
+    if (this.data.productRestoreState !== 'RESTORE_CONFLICT' && this.data.productRestoreState !== 'RESTORE_ERROR') return
+    this._productRemoteCandidate = null
+    this._productRestoreAttempted = true
+    this.applyProductState(productStore.getSession(), { restoreState: 'READY' })
+    this.setData({ productSyncError: '', productRestoreError: '' })
+    recordEvent('assessment_offline_continue', { networkState: 'local' })
+    this.orchestrateStartIntent()
+  },
+
+  useCloudProgress() {
+    if (!this._productRemoteCandidate || !this._productRemoteCandidate.session) return
+    const remote = this._productRemoteCandidate
+    productStore.replaceSession(remote.session)
+    if (remote.report) productStore.replaceReport(remote.report)
+    else productStore.clearReport()
+    this._productRemoteCandidate = null
+    this._productRestoreAttempted = true
+    this.applyProductState(productStore.getSession(), { restoreState: 'READY' })
+    this.setData({ productSyncError: '', productRestoreError: '' })
+    recordEvent('assessment_restore_success', { networkState: 'cloud_selected' })
+    this.orchestrateStartIntent()
+  },
+
+  startOffline() {
+    if (this.data.productRestoreState !== 'RESTORE_ERROR' || productStore.hasSession()) return
+    const start = () => {
+      productStore.saveSession(productStore.emptySession())
+      this._productRestoreAttempted = true
+      this.setData({ productSyncError: '', productRestoreError: '' })
+      this.applyProductState(productStore.getSession(), { restoreState: 'READY' })
+      recordEvent('assessment_offline_continue', { networkState: 'offline_new' })
+      this.orchestrateStartIntent()
+      if (!this.startIntent) this.beginAssessment()
+    }
+    if (typeof wx === 'undefined' || typeof wx.showModal !== 'function') return start()
+    wx.showModal({ title: PRODUCT_V0_COPY.home.offlineDialogTitle, content: PRODUCT_V0_COPY.home.offlineDialogContent, confirmText: PRODUCT_V0_COPY.home.offlineConfirm, cancelText: PRODUCT_V0_COPY.home.cancelAction, success: result => { if (result.confirm) start() } })
   },
 
   deleteProductData() {
     if (!FEATURES.v3ProductV0 || this.data.productDeleting) return
     const removeLocal = () => {
       productStore.resetSession()
-      this.setData({ productDeleting: false, productHasData: false, productSyncError: '' })
-      this.applyProductState(productStore.getSession())
+      this._productRemoteCandidate = null
+      this.setData({ productDeleting: false, productHasData: false, productSyncError: '', productRestoreError: '' })
+      this.applyProductState(productStore.getSession(), { restoreState: 'READY' })
       if (typeof wx !== 'undefined' && typeof wx.showToast === 'function') wx.showToast({ title: this.data.productDeleteSuccess, icon: 'success' })
     }
     const remove = () => {

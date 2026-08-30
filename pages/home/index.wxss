@@ -98,6 +98,19 @@
 
 .home-note { margin-top: 10rpx; color: var(--dl-black); font-size: 25rpx; font-weight: 600; line-height: 36rpx; }
 
+.home-progress-block { margin-top: 28rpx; padding-top: 22rpx; border-top: 2rpx solid var(--dl-grey-200); }
+.home-progress-block__section { font-size: 29rpx; font-weight: 700; line-height: 42rpx; overflow-wrap: anywhere; }
+.home-progress-block__detail { margin-top: 8rpx; color: var(--dl-grey-500); font-size: 24rpx; line-height: 38rpx; }
+.home-progress-block__save { margin-top: 6rpx; color: var(--dl-grey-500); font-size: 23rpx; line-height: 36rpx; }
+
+.home-restore-panel { margin: 0 var(--dl-gutter) 40rpx; padding: 24rpx 0 28rpx; border-top: 2rpx solid var(--dl-black); border-bottom: 2rpx solid var(--dl-black); }
+.home-restore-panel--error { border-top-color: var(--dl-danger); }
+.home-restore-panel__title { font-size: 29rpx; font-weight: 700; line-height: 42rpx; }
+.home-restore-panel__body { margin-top: 10rpx; color: var(--dl-grey-500); font-size: 25rpx; line-height: 40rpx; overflow-wrap: anywhere; }
+.home-restore-panel__actions { display: flex; flex-direction: column; align-items: stretch; gap: 4rpx; margin-top: 16rpx; }
+.home-restore-panel__action { min-height: 80rpx; margin: 0; padding: 20rpx 0; border: 0; background: transparent; color: var(--dl-black); font-size: 25rpx; line-height: 38rpx; text-align: left; text-decoration: underline; }
+.home-restore-status { margin: 0 var(--dl-gutter) 32rpx; color: var(--dl-grey-500); font-size: 24rpx; line-height: 38rpx; }
+
 .home-pool-note {
   padding: 38rpx var(--dl-gutter) calc(56rpx + env(safe-area-inset-bottom));
   border-top: 2rpx solid var(--dl-grey-200);

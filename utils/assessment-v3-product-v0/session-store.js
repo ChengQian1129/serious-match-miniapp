@@ -1,4 +1,5 @@
 const runtime = require('../../shared/assessment-v3-product-v0/runtime-engine')
+const journey = require('./journey-model')
 
 const SESSION_KEY = 'serious_match_assessment_v3_product_v0'
 const REPORT_KEY = 'serious_match_report_v3_product_v0'
@@ -26,7 +27,8 @@ function normalizeSession(value) {
     missingness,
     currentTaskIndex: boundedTaskIndex(value.currentTaskIndex),
     taskEvents: Array.isArray(value.taskEvents) ? value.taskEvents : [],
-    completedChapters: Array.isArray(value.completedChapters) ? value.completedChapters : []
+    completedChapters: Array.isArray(value.completedChapters) ? value.completedChapters : [],
+    reportRevision: Number(value.reportRevision) || 0
   })
 }
 
@@ -61,6 +63,7 @@ function markSynced(syncedAt = now()) {
 }
 
 function currentTaskId(session = getSession()) { return runtime.BUNDLE.orderedParentTaskIds[session.currentTaskIndex] || null }
+function getTaskIndexById(taskId) { return journey.getTaskIndexById(taskId) }
 function recordTaskEvent(session, type, payload) {
   return Object.assign({}, session, { taskEvents: (session.taskEvents || []).concat({ eventId: `${type}.${now()}.${(session.taskEvents || []).length + 1}`, eventType: type, timestamp: now(), payload: clone(payload || {}) }), updatedAt: now() })
 }
@@ -69,7 +72,7 @@ function answerItem(itemId, rawValue) {
   const before = getSession()
   let next = runtime.answerItem(before, itemId, rawValue)
   next = Object.assign({}, recordTaskEvent(next, before.answerEvents.some(event => event.itemId === itemId) ? 'ANSWER_CHANGED' : 'ANSWERED', { itemId, taskId: runtime.getEntry(itemId).parent.taskId }), { status: 'pending_cloud' })
-  if (before.completedAt) Object.assign(next, { completedAt: null, derivedProfile: null, derivedProfileVersion: null, reportVersion: null })
+  if (before.completedAt) Object.assign(next, { completedAt: null, derivedProfile: null, derivedProfileVersion: null, reportVersion: null, reportRevision: Number(before.reportRevision) || Number(before.reportVersion) || 1 })
   invalidateReport()
   return saveSession(next)
 }
@@ -77,7 +80,7 @@ function answerItem(itemId, rawValue) {
 function markMissing(itemId, code) {
   const before = getSession()
   const next = Object.assign({}, recordTaskEvent(runtime.markMissing(before, itemId, code), 'SKIP', { itemId, code }), { status: 'pending_cloud' })
-  if (before.completedAt) Object.assign(next, { completedAt: null, derivedProfile: null, derivedProfileVersion: null, reportVersion: null })
+  if (before.completedAt) Object.assign(next, { completedAt: null, derivedProfile: null, derivedProfileVersion: null, reportVersion: null, reportRevision: Number(before.reportRevision) || Number(before.reportVersion) || 1 })
   invalidateReport()
   return saveSession(next)
 }
@@ -100,13 +103,21 @@ function goPrevious() {
   return saveSession(Object.assign({}, recordTaskEvent(session, 'BACK', { itemId: currentTaskId(session) }), { currentTaskIndex: Math.max(0, session.currentTaskIndex - 1), status: 'pending_cloud' }))
 }
 function setTaskIndex(index) {
-  const session = getSession(); const bounded = Math.max(0, Math.min(Number(index) || 0, runtime.BUNDLE.orderedParentTaskIds.length - 1))
+  const session = getSession(); const bounded = boundedTaskIndex(index)
   return saveSession(Object.assign({}, session, { currentTaskIndex: bounded, updatedAt: now(), status: 'pending_cloud' }))
 }
+function setTaskId(taskId) {
+  const index = getTaskIndexById(taskId)
+  if (index < 0) return null
+  return setTaskIndex(index)
+}
 function completeAssessment() {
-  const next = runtime.completeSession(getSession())
-  return saveSession(recordTaskEvent(next, 'COMPLETE', { status: next.status }))
+  const before = getSession()
+  const next = runtime.completeSession(before)
+  const reportRevision = (Number(before.reportRevision) || Number(before.reportVersion) || 0) + 1
+  next.reportRevision = reportRevision
+  return saveSession(recordTaskEvent(next, 'COMPLETE', { status: next.status, reportRevision }))
 }
 function getProgress() { return runtime.progress(getSession()) }
 
-module.exports = { SESSION_KEY, REPORT_KEY, emptySession, normalizeSession, getSession, hasSession, getReport, saveReport, clearReport, replaceSession, replaceReport, markSynced, saveSession, resetSession, currentTaskId, answerItem, markMissing, isCurrentComplete, goNext, goPrevious, setTaskIndex, completeAssessment, getProgress }
+module.exports = { SESSION_KEY, REPORT_KEY, emptySession, normalizeSession, getSession, hasSession, getReport, saveReport, clearReport, replaceSession, replaceReport, markSynced, saveSession, resetSession, currentTaskId, getTaskIndexById, setTaskId, answerItem, markMissing, isCurrentComplete, goNext, goPrevious, setTaskIndex, completeAssessment, getProgress, isAssessmentComplete: journey.isAssessmentComplete }

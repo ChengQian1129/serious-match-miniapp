@@ -1,24 +1,27 @@
-<view wx:if="{{ready && chapter}}" class="page v3-checkpoint-page">
+<view wx:if="{{ready && chapter}}" class="page v3-checkpoint-page {{isProductMode ? 'v3-checkpoint-page--product' : ''}}">
   <view class="v3-checkpoint-shell">
     <view class="v3-checkpoint-topline">
-      <button class="v3-text-action" bind:tap="backToPreview">{{copy.preview.backAction}}</button>
-      <text>{{chapterNumberText}}</text>
+      <button class="v3-text-action" bind:tap="backToPreview">{{isProductMode ? copy.questionnaire.previousAction : copy.preview.backAction}}</button>
+      <text class="v3-checkpoint-topline__label">{{chapterNumberText}}</text>
     </view>
     <view class="v3-checkpoint-progress">
-      <view class="v3-checkpoint-progress__bar" style="width: {{number / 6 * 100}}%;"></view>
+      <view class="v3-checkpoint-progress__bar" style="width: {{progressWidth}};"></view>
     </view>
 
     <view class="v3-checkpoint-title">{{chapter.title}}</view>
     <view class="v3-checkpoint-intro">{{chapter.intro}}</view>
 
     <view class="v3-checkpoint-synthesis">
-      <view class="v3-checkpoint-synthesis__label">{{copy.preview.previewBadge}}</view>
+      <view class="v3-checkpoint-synthesis__label">{{isProductMode ? copy.checkpoint.completedLabel : copy.preview.previewBadge}}</view>
       <view class="v3-checkpoint-synthesis__headline">{{chapter.headline}}</view>
       <view class="v3-checkpoint-synthesis__summary">{{chapter.summary}}</view>
     </view>
 
-    <view class="v3-checkpoint-detail-title">{{copy.preview.dimensionTitle}}</view>
-    <view class="v3-checkpoint-dimensions">
+    <button wx:if="{{hasDetails && isProductMode}}" class="v3-checkpoint-detail-toggle" bind:tap="toggleDetails" aria-expanded="{{detailsExpanded}}">
+      <text>{{detailsExpanded ? copy.checkpoint.collapseAction : copy.checkpoint.detailAction}}</text><text class="dl-chevron">{{detailsExpanded ? '⌃' : '›'}}</text>
+    </button>
+    <view wx:if="{{detailsExpanded}}" class="v3-checkpoint-detail-title">{{isProductMode ? copy.preview.dimensionTitle : copy.preview.dimensionTitle}}</view>
+    <view wx:if="{{detailsExpanded}}" class="v3-checkpoint-dimensions">
       <view wx:for="{{chapter.dimensionCards}}" wx:key="id" wx:for-item="dimension" class="v3-checkpoint-dimension">
         <view class="v3-checkpoint-dimension__title">{{dimension.title}}</view>
         <view class="v3-checkpoint-dimension__headline">{{dimension.headline}}</view>
@@ -28,10 +31,13 @@
     </view>
 
     <view class="v3-checkpoint-transition">{{chapter.transition}}</view>
+    <view wx:if="{{isProductMode && nextSectionLabel}}" class="v3-checkpoint-next">{{nextSectionLabel}}</view>
   </view>
 
   <view class="action-bar v3-checkpoint-actions">
-    <button class="dl-button" bind:tap="continueNext">{{hasNext ? copy.preview.nextAction : copy.preview.resultAction}}</button>
-    <button class="v3-text-action v3-text-action--center" bind:tap="openResult">{{copy.preview.fullReportAction}}</button>
+    <button class="dl-button" bind:tap="continueNext">{{hasNext ? (isProductMode ? copy.checkpoint.continueAction : copy.preview.nextAction) : (isProductMode ? (isFinal ? copy.preview.resultAction : copy.checkpoint.partialAction) : copy.preview.resultAction)}}</button>
+    <button wx:if="{{isProductMode && !isFinal}}" class="v3-text-action v3-text-action--center" bind:tap="openResult">{{copy.checkpoint.partialAction}}</button>
+    <button wx:if="{{isProductMode}}" class="v3-text-action v3-text-action--center" bind:tap="pause">{{copy.checkpoint.pauseAction}}</button>
+    <button wx:if="{{!isProductMode}}" class="v3-text-action v3-text-action--center" bind:tap="openResult">{{copy.preview.fullReportAction}}</button>
   </view>
 </view>

@@ -17,6 +17,12 @@
   line-height: 36rpx;
 }
 
+.v3-checkpoint-topline__label {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  text-align: right;
+}
+
 .v3-text-action {
   min-height: 88rpx;
   margin: 0;
@@ -88,6 +94,23 @@
   color: #444;
   font-size: 28rpx;
   line-height: 46rpx;
+}
+
+.v3-checkpoint-detail-toggle {
+  display: flex;
+  width: 100%;
+  min-height: 88rpx;
+  align-items: center;
+  justify-content: space-between;
+  margin: 34rpx 0 0;
+  padding: 12rpx 0;
+  border: 0;
+  border-bottom: 2rpx solid var(--dl-grey-200);
+  background: transparent;
+  color: var(--dl-black);
+  font-size: 25rpx;
+  line-height: 36rpx;
+  text-align: left;
 }
 
 .v3-checkpoint-detail-title {
@@ -164,9 +187,44 @@
   line-height: 42rpx;
 }
 
+.v3-checkpoint-next {
+  margin-top: 18rpx;
+  color: var(--dl-black);
+  font-size: 25rpx;
+  font-weight: 600;
+  line-height: 40rpx;
+}
+
 .v3-checkpoint-actions {
   display: grid;
   gap: 10rpx;
+}
+
+.v3-checkpoint-page--product .v3-checkpoint-shell {
+  padding-top: 24rpx;
+}
+
+.v3-checkpoint-page--product .v3-checkpoint-title {
+  margin-top: 52rpx;
+}
+
+.v3-checkpoint-page--product .v3-checkpoint-synthesis {
+  margin-top: 34rpx;
+}
+
+.v3-checkpoint-page--product .v3-text-action--center {
+  min-height: 76rpx;
+}
+
+.v3-checkpoint-detail-toggle,
+.v3-checkpoint-page .v3-text-action--center,
+.v3-checkpoint-page .v3-evidence-link {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  margin-right: 0;
+  margin-left: 0;
 }
 
 @media (max-width: 360px) {

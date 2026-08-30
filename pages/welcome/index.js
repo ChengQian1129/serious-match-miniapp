@@ -26,7 +26,7 @@ Page({
     if (this._isRouting) return
     markWelcomeSeen()
     recordEvent('welcome_begin')
-    navigateOnce(this, 'reLaunch', { url: '/pages/home/index' })
+    navigateOnce(this, 'reLaunch', { url: '/pages/home/index?intent=start' })
   },
 
   openMethod() {
