@@ -14,3 +14,11 @@
 .compare-boundary { margin-top: 34rpx; color: var(--dl-grey-500); font-size: 23rpx; line-height: 38rpx; }
 .compare-error { margin-top: 24rpx; }
 .compare-back { width: 100%; margin-top: 28rpx; padding: 18rpx; border: 0; background: transparent; color: var(--dl-grey-500); font-size: 24rpx; }
+.compare-page .compare-back {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  margin-right: 0;
+  margin-left: 0;
+}

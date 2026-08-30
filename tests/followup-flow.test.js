@@ -30,10 +30,23 @@ store.clear()
 const intro = loadPage('../pages/followup-intro/index.js')
 intro.continue()
 assert.equal(routedTo, '/pages/followup-settings/index')
+intro.onLoad({ returnTo: 'product-v0' })
+intro._isRouting = false
+routedTo = ''
+intro.continue()
+assert.equal(routedTo, '/pages/followup-settings/index?returnTo=product-v0')
+intro.onLoad({})
 
 routedTo = ''
 const settings = loadPage('../pages/followup-settings/index.js')
 settings.onShow()
+settings.onLoad({ returnTo: 'product-v0' })
+settings._isRouting = false
+settings.editProfile()
+assert.equal(routedTo, '/pages/followup-profile/index?returnTo=settings&returnAfter=product-v0')
+settings.onLoad({})
+settings._isRouting = false
+routedTo = ''
 settings.toggle({ currentTarget: { dataset: { scope: 'research_use' } } })
 settings.save()
 assert.equal(routedTo, '')
@@ -43,7 +56,7 @@ assert.equal(store.get().participant.displayName, undefined)
 
 settings.toggle({ currentTarget: { dataset: { scope: 'interview_contact' } } })
 settings.save()
-assert.equal(routedTo, '/pages/followup-profile/index')
+assert.equal(routedTo, '/pages/followup-profile/index?returnTo=settings&returnAfter=report')
 
 routedTo = ''
 const cloud = require('../utils/cloud')
@@ -69,5 +82,9 @@ assert.equal(saved.contact.preferredTime, '周末下午')
 assert.equal(participantCloudWrite.contact.channel, 'wechat')
 assert.equal(participantCloudWrite.write.schemaVersion, 'participant-2.1.0')
 assert.equal(store.get().participantWrite.pendingCloud, false)
+profile.onLoad({ returnTo: 'settings', returnAfter: 'product-v0' })
+profile._isRouting = false
+profile.back()
+assert.equal(routedTo, '/pages/followup-settings/index?returnTo=product-v0')
 
 console.log('Follow-up flow OK: consent first, research without contact, contact profile only when required')

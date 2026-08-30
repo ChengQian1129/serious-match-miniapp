@@ -21,8 +21,15 @@ const { validateAnswers, evaluateAssessment } = require('./assessment-v2-scoring
 const { buildReport } = require('./assessment-v2-report-engine')
 const { assessResponseQuality } = require('./assessment-v2-quality-engine')
 const { HYPOTHESIS_RULE_VERSION, buildInterviewPreparation } = require('./assessment-v2-interview-rules.generated')
+const productV0Runtime = require('./assessment-v3-product-v0-runtime.generated')
+const { buildReport: buildProductV0Report } = require('./assessment-v3-product-report-renderer.generated')
 const PRIVACY_VERSION = 'cloud-1.0'
 const CONSENT_VERSION = 'followup-consent-2.1.0'
+const PRODUCT_V0_TYPE = 'v3-product-v0'
+const PRODUCT_V0_INSTRUMENT_VERSION = productV0Runtime.BUNDLE.instrument.version
+const PRODUCT_V0_QUESTIONNAIRE_VERSION = productV0Runtime.BUNDLE.instrument.questionnaireVersion
+const PRODUCT_V0_SCORING_VERSION = productV0Runtime.SCORING.scoringModelVersion
+const PRODUCT_V0_MISSINGNESS = new Set(productV0Runtime.MISSINGNESS_CODES)
 const CONSENT_SCOPES = new Set(['interview_contact', 'research_use', 'offline_invitation'])
 const CASE_TRANSITIONS = Object.freeze({
   created: new Set(['preparation_ready', 'closed']),
@@ -146,6 +153,118 @@ function sanitizeAssessmentSession(source, openid) {
     updatedAt: now,
     completedAt: source.completedAt ? Number(source.completedAt) : null
   }
+}
+
+function productAssessmentDocId(openid, assessmentId) {
+  return assessmentDocId(openid, assessmentId)
+}
+
+function productAnswerEventId(value) {
+  return text(value, 128)
+}
+
+function sanitizeProductAnswerEvents(sourceEvents) {
+  if (!Array.isArray(sourceEvents) || sourceEvents.length > 2000) reject('Product v0 回答事件无效', 'INVALID_ASSESSMENT')
+  const eventIds = new Set()
+  const latestByItem = new Map()
+  let previousAnsweredAt = 0
+  return sourceEvents.map(source => {
+    const itemId = text(source && source.itemId, 80)
+    const entry = productV0Runtime.getEntry(itemId)
+    const eventId = productAnswerEventId(source && source.eventId)
+    const answeredAt = Number(source && source.answeredAt)
+    if (!entry || !eventId || !/^[A-Za-z][A-Za-z0-9._-]{2,127}$/.test(eventId) || eventIds.has(eventId)) reject('Product v0 回答事件无效', 'INVALID_ASSESSMENT')
+    if (!Number.isFinite(answeredAt) || answeredAt <= 0 || answeredAt < previousAnsweredAt) reject('Product v0 回答时间无效', 'INVALID_ASSESSMENT')
+    const validation = productV0Runtime.validateValue(entry, source.rawValue)
+    if (!validation.ok) reject('Product v0 回答值无效', 'INVALID_ASSESSMENT')
+    const previous = latestByItem.get(itemId)
+    const supersedesEventId = source.supersedesEventId == null ? null : productAnswerEventId(source.supersedesEventId)
+    if (!previous && supersedesEventId !== null) reject('Product v0 回答修订来源无效', 'INVALID_ASSESSMENT')
+    if (previous && supersedesEventId !== previous.eventId) reject('Product v0 回答修订链无效', 'INVALID_ASSESSMENT')
+    const clean = {
+      eventId,
+      itemId,
+      taskId: entry.parent.taskId,
+      rawValue: productV0Runtime.clone(source.rawValue),
+      answeredAt,
+      supersedesEventId,
+      immutable: true
+    }
+    eventIds.add(eventId)
+    latestByItem.set(itemId, clean)
+    previousAnsweredAt = answeredAt
+    return clean
+  })
+}
+
+function sanitizeProductMissingness(source, answers) {
+  if (!source || typeof source !== 'object' || Array.isArray(source)) return {}
+  const missingness = {}
+  Object.entries(source).forEach(([itemId, value]) => {
+    if (!productV0Runtime.getEntry(itemId) || !value || typeof value !== 'object' || !PRODUCT_V0_MISSINGNESS.has(value.code)) reject('Product v0 缺失类型无效', 'INVALID_ASSESSMENT')
+    const markedAt = Number(value.markedAt)
+    if (!Number.isFinite(markedAt) || markedAt <= 0) reject('Product v0 缺失时间无效', 'INVALID_ASSESSMENT')
+    missingness[itemId] = { code: value.code, markedAt }
+  })
+  return missingness
+}
+
+function sanitizeProductAssessmentSession(source, openid) {
+  if (!source || source.assessmentType !== PRODUCT_V0_TYPE || source.instrumentVersion !== PRODUCT_V0_INSTRUMENT_VERSION || source.productQuestionnaireVersion !== PRODUCT_V0_QUESTIONNAIRE_VERSION || source.scoringModelVersion !== PRODUCT_V0_SCORING_VERSION) reject('Product v0 版本无效', 'INVALID_ASSESSMENT')
+  const assessmentId = text(source.assessmentId, 100)
+  if (!/^v3-product-v0\.[A-Za-z0-9._-]+$/.test(assessmentId)) reject('Product v0 评估编号无效', 'INVALID_ASSESSMENT')
+  const answerEvents = sanitizeProductAnswerEvents(source.answerEvents)
+  const answers = productV0Runtime.latestAnswersFromEvents(answerEvents)
+  const missingness = sanitizeProductMissingness(source.missingness, answers)
+  Object.keys(missingness).forEach(itemId => { delete answers[itemId] })
+  const startedAt = Number(source.startedAt)
+  const clientUpdatedAt = Number(source.updatedAt)
+  if (!Number.isFinite(startedAt) || startedAt <= 0 || !Number.isFinite(clientUpdatedAt) || clientUpdatedAt < startedAt) reject('Product v0 时间无效', 'INVALID_ASSESSMENT')
+  const maxTaskIndex = Math.max(0, productV0Runtime.BUNDLE.orderedParentTaskIds.length - 1)
+  const currentTaskIndex = Math.max(0, Math.min(Number(source.currentTaskIndex) || 0, maxTaskIndex))
+  const completedChapters = Array.isArray(source.completedChapters)
+    ? [...new Set(source.completedChapters.filter(chapter => /^C[1-6]$/.test(chapter)))].slice(0, 6)
+    : []
+  return {
+    _id: productAssessmentDocId(openid, assessmentId),
+    _openid: openid,
+    assessmentId,
+    assessmentType: PRODUCT_V0_TYPE,
+    instrumentVersion: PRODUCT_V0_INSTRUMENT_VERSION,
+    productQuestionnaireVersion: PRODUCT_V0_QUESTIONNAIRE_VERSION,
+    scoringModelVersion: PRODUCT_V0_SCORING_VERSION,
+    status: 'pending_cloud',
+    currentTaskIndex,
+    latestAnswers: answers,
+    answers,
+    answerEvents,
+    missingness,
+    taskEvents: [],
+    completedChapters,
+    startedAt,
+    clientUpdatedAt,
+    updatedAt: Date.now(),
+    completedAt: null,
+    derivedProfileVersion: null,
+    reportVersion: null
+  }
+}
+
+function productReportDocument(report, session, openid, reportId, reportVersion) {
+  return Object.assign({
+    _id: reportId,
+    _openid: openid,
+    assessmentId: session.assessmentId,
+    assessmentType: PRODUCT_V0_TYPE,
+    reportVersion,
+    instrumentVersion: session.instrumentVersion,
+    productQuestionnaireVersion: session.productQuestionnaireVersion,
+    scoringModelVersion: session.scoringModelVersion,
+    reportRuleVersion: report.contractVersion,
+    generatedAt: session.completedAt || Date.now(),
+    userConfirmations: {},
+    shareSettings: {}
+  }, report)
 }
 
 async function findAssessmentSession(openid, assessmentId) {
@@ -1048,6 +1167,21 @@ exports.main = async event => {
     }
 
     if (event.action === 'assessmentSaveDraft') {
+      if (event.session && event.session.assessmentType === PRODUCT_V0_TYPE) {
+        const session = sanitizeProductAssessmentSession(event.session, OPENID)
+        const existing = await findAssessmentSession(OPENID, session.assessmentId)
+        if (existing && Number(existing.clientUpdatedAt) > Number(session.clientUpdatedAt)) {
+          return { ok: true, data: { session: existing, syncedAt: Date.now(), staleIgnored: true } }
+        }
+        if (existing && existing.status === 'completed' && Number(existing.clientUpdatedAt) === Number(session.clientUpdatedAt)) {
+          return { ok: true, data: { session: existing, syncedAt: Date.now(), staleIgnored: true } }
+        }
+        if (existing && existing.activeReportId) session.activeReportId = existing.activeReportId
+        if (existing && Number(existing.reportVersion)) session.reportVersion = Number(existing.reportVersion)
+        session.status = 'synced'
+        await assessmentSessions.doc(session._id).set({ data: documentData(session) })
+        return { ok: true, data: { session, syncedAt: Date.now() } }
+      }
       const session = sanitizeAssessmentSession(event.session, OPENID)
       const existing = await findAssessmentSession(OPENID, session.assessmentId)
       if (existing && (Number(existing.clientUpdatedAt) > Number(session.clientUpdatedAt) || (Number(existing.clientUpdatedAt) === Number(session.clientUpdatedAt) && existing.status === 'report_generated'))) {
@@ -1061,6 +1195,25 @@ exports.main = async event => {
     }
 
     if (event.action === 'assessmentComplete') {
+      if (event.session && event.session.assessmentType === PRODUCT_V0_TYPE) {
+        const session = sanitizeProductAssessmentSession(event.session, OPENID)
+        const previous = await findAssessmentSession(OPENID, session.assessmentId)
+        if (previous && Number(previous.clientUpdatedAt) > Number(session.clientUpdatedAt)) reject('云端存在更新的回答，请刷新后再生成结果', 'ASSESSMENT_CONFLICT')
+        if (previous && previous.status === 'completed' && previous.activeReportId && Number(previous.clientUpdatedAt) === Number(session.clientUpdatedAt)) {
+          const existingReport = (await assessmentReports.doc(previous.activeReportId).get()).data
+          return { ok: true, data: { session: previous, report: existingReport, syncedAt: Date.now(), duplicateIgnored: true } }
+        }
+        const completedAt = Date.now()
+        const completed = productV0Runtime.completeSession(session, completedAt)
+        const reportVersion = previous && Number(previous.reportVersion) ? Number(previous.reportVersion) + 1 : 1
+        const report = buildProductV0Report(completed.derivedProfile)
+        const reportId = `${session._id}_report_${reportVersion}`
+        const reportDocument = productReportDocument(report, completed, OPENID, reportId, reportVersion)
+        const completedSession = Object.assign({}, completed, { activeReportId: reportId, reportVersion, status: 'completed', updatedAt: completedAt })
+        await assessmentReports.doc(reportId).set({ data: documentData(reportDocument) })
+        await assessmentSessions.doc(session._id).set({ data: documentData(completedSession) })
+        return { ok: true, data: { session: completedSession, report: reportDocument, syncedAt: completedAt } }
+      }
       const session = sanitizeAssessmentSession(event.session, OPENID)
       if (ITEMS.some(item => !(item.id in session.answers))) reject('关系说明书还有未完成的题目', 'INVALID_ASSESSMENT')
       evaluateAssessment(session.answers)
@@ -1089,13 +1242,17 @@ exports.main = async event => {
     if (event.action === 'assessmentGet') {
       const assessmentId = text(event.assessmentId, 100)
       let session = assessmentId ? await findAssessmentSession(OPENID, assessmentId) : null
+      const assessmentType = text(event.assessmentType, 64)
+      if (session && assessmentType && session.assessmentType !== assessmentType) session = null
       if (!assessmentId && !session) {
-        const candidates = await assessmentSessions.where({ _openid: OPENID }).limit(20).get()
+        const query = assessmentType ? { _openid: OPENID, assessmentType } : { _openid: OPENID }
+        const candidates = await assessmentSessions.where(query).limit(20).get()
         session = (candidates.data || []).sort((a, b) => Number(b.updatedAt) - Number(a.updatedAt))[0] || null
       }
       if (!session) return { ok: true, data: { session: null, report: null } }
       let report = null
-      if (session.activeReportId) {
+      const reportableStatus = session.assessmentType === PRODUCT_V0_TYPE ? session.status === 'completed' : true
+      if (session.activeReportId && reportableStatus) {
         try { report = (await assessmentReports.doc(session.activeReportId).get()).data || null } catch (error) {
           if (!/does not exist|not exists?|not found/i.test(error.errMsg || error.message || '')) throw error
         }
@@ -1113,7 +1270,8 @@ exports.main = async event => {
     }
 
     if (event.action === 'assessmentHistory') {
-      const result = await assessmentReports.where({ _openid: OPENID }).limit(20).get()
+      const assessmentType = text(event.assessmentType, 64)
+      const result = await assessmentReports.where(assessmentType ? { _openid: OPENID, assessmentType } : { _openid: OPENID }).limit(20).get()
       const reports = (result.data || []).sort((left, right) => Number(right.generatedAt) - Number(left.generatedAt)).map(report => ({
         _id: report._id,
         assessmentId: report.assessmentId,
@@ -1163,6 +1321,12 @@ exports.main = async event => {
     }
 
     if (event.action === 'assessmentDelete') {
+      if (text(event.assessmentType, 64) === PRODUCT_V0_TYPE) {
+        await removeDocumentsWhere(assessmentReports, { _openid: OPENID, assessmentType: PRODUCT_V0_TYPE })
+        await removeDocumentsWhere(assessmentSessions, { _openid: OPENID, assessmentType: PRODUCT_V0_TYPE })
+        await removeDocumentsWhere(assessmentFeedbackEvents, { _openid: OPENID, assessmentType: PRODUCT_V0_TYPE })
+        return { ok: true, data: { deleted: true, productV0Only: true } }
+      }
       await removeDocumentsWhere(interviewValidationEvents, { participantId: OPENID })
       await removeDocumentsWhere(interviewCases, { participantId: OPENID })
       await removeOwnDocuments(assessmentReports, OPENID)

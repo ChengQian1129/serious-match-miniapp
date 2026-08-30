@@ -36,22 +36,30 @@ Page({
   data: { form: {}, contact: {}, contactField: null, copy: followupCopy.profile, contactChannels: CONTACT_CHANNELS, isSaving: false, error: '' },
   onLoad(query) {
     this.returnTo = query && query.returnTo === 'settings' ? 'settings' : 'back'
-    this.returnAfter = query && query.returnAfter === 'map' ? 'map' : 'report'
+    this.returnAfter = query && ['map', 'product-v0'].includes(query.returnAfter) ? query.returnAfter : 'report'
   },
   onShow() { resetNavigation(this); this.load() },
   load() {
+    const loadToken = (this._loadToken || 0) + 1
+    this._loadToken = loadToken
+    this._loadDirty = false
     const local = store.get()
     this.setParticipantData(local.participant || {}, local.contact || {})
-    if (isCloudReady()) getParticipant({ success: data => { if (data.participant && !store.get().participant.displayName) { store.markParticipantSynced(data.participant, data.contact || {}); this.setParticipantData(data.participant, data.contact || {}) } }, fail: () => {} })
+    if (isCloudReady()) getParticipant({ success: data => {
+      if (loadToken !== this._loadToken || this._loadDirty || this.data.isSaving) return
+      if (data.participant && !store.get().participant.displayName) { store.markParticipantSynced(data.participant, data.contact || {}); this.setParticipantData(data.participant, data.contact || {}) }
+    }, fail: () => {} })
   },
   setParticipantData(participant, contact) {
     const form = Object.assign({}, participant)
     if (!form.availability && contact.preferredTime) form.availability = contact.preferredTime
     this.setData({ form, contact, contactField: contactField(contact.channel) })
   },
-  input(event) { const field = event.currentTarget.dataset.field; this.setData({ [`form.${field}`]: String(event.detail.value || '') }) },
-  inputContact(event) { const field = event.currentTarget.dataset.field; this.setData({ [`contact.${field}`]: String(event.detail.value || '') }) },
+  input(event) { this._loadDirty = true; const field = event.currentTarget.dataset.field; this.setData({ [`form.${field}`]: String(event.detail.value || '') }) },
+  inputContact(event) { this._loadDirty = true; const field = event.currentTarget.dataset.field; this.setData({ [`contact.${field}`]: String(event.detail.value || '') }) },
   chooseContactChannel(event) {
+    if (this.data.isSaving) return
+    this._loadDirty = true
     const channel = event.currentTarget.dataset.value
     if (!contactField(channel)) return
     const contact = Object.assign({}, this.data.contact, { channel })
@@ -83,7 +91,7 @@ Page({
       if (data && data.participant) store.markParticipantSynced(data.participant, data.contact || contact)
       this.setData({ isSaving: false, error: '' })
       recordEvent('followup_profile_save')
-      const url = this.returnAfter === 'map' || this.returnAfter === 'report' ? `/pages/followup-settings/index?returnTo=${this.returnAfter}` : '/pages/followup-settings/index'
+      const url = ['map', 'report', 'product-v0'].includes(this.returnAfter) ? `/pages/followup-settings/index?returnTo=${this.returnAfter}` : '/pages/followup-settings/index'
       navigateOnce(this, 'redirectTo', { url })
     }
     if (!isCloudReady()) return finish()
@@ -95,6 +103,7 @@ Page({
   },
   back() {
     if (this.returnTo === 'settings') return navigateOnce(this, 'redirectTo', { url: `/pages/followup-settings/index?returnTo=${this.returnAfter}` })
-    navigateOnce(this, 'navigateBack', { fail: () => navigateOnce(this, 'reLaunch', { url: this.returnAfter === 'map' ? '/pages/relationship-map/index' : '/pages/questionnaire-result/index' }) })
+    const fallback = this.returnAfter === 'map' ? '/pages/relationship-map/index' : this.returnAfter === 'product-v0' ? '/pages/v3-result/index?mode=product-v0' : '/pages/questionnaire-result/index'
+    navigateOnce(this, 'navigateBack', { fail: () => navigateOnce(this, 'reLaunch', { url: fallback }) })
   }
 })

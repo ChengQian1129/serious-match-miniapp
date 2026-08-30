@@ -1,5 +1,5 @@
 .v3-result-page {
-  padding-bottom: calc(246rpx + env(safe-area-inset-bottom));
+  padding-bottom: calc(220rpx + env(safe-area-inset-bottom));
   background: #fbfbfa;
 }
 
@@ -22,6 +22,8 @@
   font-size: 54rpx;
   font-weight: 700;
   line-height: 1.18;
+  overflow-wrap: anywhere;
+  white-space: normal;
 }
 
 .v3-result-notice {
@@ -38,7 +40,11 @@
 .v3-result-section__title {
   color: var(--dl-black);
   font-size: 28rpx;
+  overflow-wrap: anywhere;
+  white-space: normal;
 }
+
+.v3-result-section__hint { margin-top: 8rpx; color: var(--dl-grey-500); font-size: 24rpx; line-height: 38rpx; }
 
 .v3-result-section__description {
   margin-top: 12rpx;
@@ -109,6 +115,10 @@
   text-align: left;
 }
 
+.v3-result-chapter__button--active { background: var(--dl-grey-50); }
+
+.v3-result-chapter__body { min-width: 0; }
+
 .v3-result-chapter__headline {
   margin-top: 14rpx;
   font-size: 32rpx;
@@ -129,6 +139,19 @@
   line-height: 42rpx;
 }
 
+.v3-text-action {
+  min-height: 88rpx;
+  margin: 0;
+  padding: 18rpx 0;
+  border: 0;
+  background: transparent;
+  color: var(--dl-black);
+  font-size: 25rpx;
+  line-height: 36rpx;
+  text-align: left;
+  text-decoration: underline;
+}
+
 .v3-result-chapter__action {
   margin-top: 14rpx;
   color: var(--dl-grey-500);
@@ -142,9 +165,39 @@
   border-top: 2rpx solid var(--dl-grey-200);
 }
 
+.v3-result-dimensions-toggle {
+  display: flex;
+  width: 100%;
+  min-height: 88rpx;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20rpx;
+  margin: 0;
+  padding: 22rpx 0;
+  border: 0;
+  border-bottom: 2rpx solid var(--dl-grey-200);
+  border-radius: 0;
+  background: transparent;
+  color: var(--dl-black);
+  font-size: 25rpx;
+  line-height: 40rpx;
+  text-align: left;
+}
+
+.v3-result-dimensions-toggle--active { background: var(--dl-grey-50); }
+
+.v3-result-chapter__dimension-list { overflow: hidden; }
+
 .v3-result-dimension {
   padding: 22rpx 0 24rpx;
   border-bottom: 2rpx solid var(--dl-grey-200);
+}
+
+.v3-result-dimension__title,
+.v3-result-dimension__headline,
+.v3-result-dimension__summary {
+  overflow-wrap: anywhere;
+  white-space: normal;
 }
 
 .v3-result-dimension__headline {
@@ -155,7 +208,7 @@
 }
 
 .v3-evidence-link {
-  min-height: 50rpx;
+  min-height: 88rpx;
   margin: 12rpx 0 0;
   padding: 6rpx 0;
   border: 0;
@@ -166,6 +219,26 @@
   text-align: left;
   text-decoration: underline;
 }
+
+.v3-evidence-link--active { background: var(--dl-grey-50); }
+
+.v3-followup-action {
+  display: flex;
+  width: 100%;
+  min-height: 88rpx;
+  align-items: center;
+  justify-content: center;
+  margin: 28rpx 0 0;
+  padding: 18rpx 24rpx;
+  border: 2rpx solid var(--dl-black);
+  border-radius: 8rpx;
+  background: transparent;
+  color: var(--dl-black);
+  font-size: 27rpx;
+  line-height: 40rpx;
+}
+
+.v3-followup-action:active { background: var(--dl-grey-50); }
 
 .v3-result-decisions {
   padding-top: 6rpx;
@@ -211,8 +284,40 @@
 }
 
 .v3-result-actions {
-  display: grid;
-  gap: 10rpx;
+  display: block;
+}
+
+.v3-result-secondary-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8rpx 34rpx; margin-top: 30rpx; padding-top: 22rpx; border-top: 2rpx solid var(--dl-grey-200); }
+.v3-result-sync { margin-top: 10rpx; color: var(--dl-grey-500); font-size: 23rpx; line-height: 34rpx; text-align: center; }
+.v3-danger-action { color: #8f2e2e; }
+
+/* Override the base button width injected by WeChat DevTools. */
+.v3-result-page .v3-result-chapter__button,
+.v3-result-page .v3-result-dimensions-toggle,
+.v3-result-page .v3-evidence-link,
+.v3-result-page .v3-followup-action {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.v3-result-page .v3-result-chapter__button {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+.v3-result-page .v3-text-action {
+  box-sizing: border-box;
+  width: auto;
+  min-width: 88rpx;
+  max-width: 100%;
+  margin-right: 0;
+  margin-left: 0;
 }
 
 @media (max-width: 360px) {

@@ -20,7 +20,7 @@
   height: 36rpx;
 }
 
-.home-mark view {
+.home-mark__bar {
   position: absolute;
   width: 16rpx;
   height: 30rpx;
@@ -28,17 +28,18 @@
   transform: skewY(28deg);
 }
 
-.home-mark view:first-child {
+.home-mark__bar--first {
   top: 5rpx;
   left: 5rpx;
 }
 
-.home-mark view:last-child {
+.home-mark__bar--last {
   right: 5rpx;
   bottom: 5rpx;
 }
 
 .home-copy {
+  min-width: 0;
   margin-top: auto;
 }
 
@@ -60,6 +61,8 @@
   color: #666666;
   font-size: 27rpx;
   line-height: 44rpx;
+  overflow-wrap: anywhere;
+  white-space: normal;
 }
 
 .home-actions {
@@ -73,7 +76,7 @@
 }
 
 .home-example { margin: 0 var(--dl-gutter) 54rpx; padding: 30rpx 0 34rpx; border-top: 2rpx solid var(--dl-black); border-bottom: 2rpx solid var(--dl-black); }
-.home-example__text { margin-top: 18rpx; font-size: 30rpx; line-height: 50rpx; }
+.home-example__text { margin-top: 18rpx; font-size: 30rpx; line-height: 50rpx; overflow-wrap: anywhere; white-space: normal; }
 .home-topics { margin: 24rpx var(--dl-gutter) 0; }
 .home-topic { padding: 18rpx 0; border-bottom: 2rpx solid var(--dl-grey-200); font-size: 27rpx; line-height: 40rpx; }
 
@@ -93,9 +96,7 @@
   font-weight: 600;
 }
 
-.home-note {
-  margin-top: 10rpx;
-}
+.home-note { margin-top: 10rpx; color: var(--dl-black); font-size: 25rpx; font-weight: 600; line-height: 36rpx; }
 
 .home-pool-note {
   padding: 38rpx var(--dl-gutter) calc(56rpx + env(safe-area-inset-bottom));
@@ -105,4 +106,25 @@
   line-height: 40rpx;
 }
 
-.sheet-copy { margin-top: 24rpx; color: var(--dl-grey-500); font-size: 27rpx; line-height: 46rpx; }
+.home-sync-error { width: 100%; margin: 0; padding: 24rpx var(--dl-gutter); border: 0; border-top: 2rpx solid var(--dl-grey-200); background: transparent; color: var(--dl-danger); font-size: 24rpx; line-height: 38rpx; text-align: left; }
+.home-utility-links { display: flex; justify-content: center; gap: 34rpx; padding: 10rpx var(--dl-gutter) calc(32rpx + env(safe-area-inset-bottom)); }
+.home-utility-link { min-height: 88rpx; margin: 0; padding: 24rpx 0; border: 0; background: transparent; color: var(--dl-grey-500); font-size: 23rpx; line-height: 36rpx; text-decoration: underline; }
+.home-utility-link--danger { color: var(--dl-danger); }
+.home-page .home-sync-error {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  margin-right: 0;
+  margin-left: 0;
+}
+.home-page .home-utility-link {
+  box-sizing: border-box;
+  width: auto;
+  min-width: 88rpx;
+  max-width: 100%;
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.sheet-copy { margin-top: 24rpx; padding-right: var(--dl-gutter); padding-left: var(--dl-gutter); color: var(--dl-grey-500); font-size: 27rpx; line-height: 46rpx; }

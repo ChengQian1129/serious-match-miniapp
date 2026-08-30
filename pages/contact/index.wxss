@@ -81,6 +81,15 @@
   line-height: 52rpx;
 }
 
+.contact-page .phone-field__clear {
+  box-sizing: border-box;
+  width: 52rpx;
+  min-width: 52rpx;
+  max-width: 52rpx;
+  margin-right: 0;
+  margin-left: 0;
+}
+
 .phone-field__clear:active {
   color: #0a0a0a;
 }
@@ -108,6 +117,15 @@
 
 .confirmation-row:first-child {
   border-top: 2rpx solid #dedede;
+}
+
+.contact-page .confirmation-row {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  margin-right: 0;
+  margin-left: 0;
 }
 
 .confirmation-check {
@@ -163,6 +181,15 @@
   font-size: 30rpx;
   font-weight: 600;
   text-align: left;
+}
+
+.contact-page .privacy-link {
+  box-sizing: border-box;
+  width: auto;
+  min-width: 0;
+  max-width: none;
+  margin-right: var(--dl-gutter);
+  margin-left: var(--dl-gutter);
 }
 
 .contact-action-bar {

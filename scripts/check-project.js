@@ -27,7 +27,7 @@ function packedFiles(directory, relativeDirectory, ignoredFolders, ignoredFiles)
 
 function referencedTDesignFolders(pageJsonFiles) {
   const tdesignRoot = path.join(projectRoot, 'miniprogram_npm', 'tdesign-miniprogram')
-  const folders = new Set(['common', 'mixins', 'locale', 'config-provider'])
+  const folders = new Set(['common', 'mixins', 'locale', 'config-provider', 'miniprogram_npm'])
   const queue = []
   const enqueue = value => {
     if (!value || !value.includes('tdesign-miniprogram/')) return
@@ -76,8 +76,14 @@ const packIgnore = projectConfig.packOptions && projectConfig.packOptions.ignore
 const ignoredFolders = new Set(packIgnore.filter(item => item.type === 'folder').map(item => item.value.replace(/\\/g, '/')))
 if (projectConfig.cloudfunctionRoot) ignoredFolders.add(projectConfig.cloudfunctionRoot.replace(/[\\/]$/, '').replace(/\\/g, '/'))
 const ignoredFiles = new Set(packIgnore.filter(item => item.type === 'file').map(item => item.value.replace(/\\/g, '/')))
-const pageJsonFiles = walk(path.join(projectRoot, 'pages'), '.json')
+function isPackedPath(file) {
+  const relative = path.relative(projectRoot, file).split(path.sep).join('/')
+  return !ignoredFiles.has(relative) && ![...ignoredFolders].some(folder => relative === folder || relative.startsWith(`${folder}/`))
+}
+const pageJsonFiles = walk(path.join(projectRoot, 'pages'), '.json').filter(isPackedPath)
 const tdesignFolders = referencedTDesignFolders(pageJsonFiles)
+tdesignFolders.forEach(folder => assert.equal(ignoredFolders.has(`miniprogram_npm/tdesign-miniprogram/${folder}`), false, `Referenced TDesign folder is ignored: ${folder}`))
+assert.equal(ignoredFiles.has('miniprogram_npm/tdesign-miniprogram/miniprogram_npm/tslib/index.js'), false, 'TDesign runtime dependency tslib must be packed')
 const packed = packedFiles(projectRoot, '', ignoredFolders, ignoredFiles).filter(file => {
   const relative = path.relative(projectRoot, file).split(path.sep).join('/')
   if (!relative.startsWith('miniprogram_npm/tdesign-miniprogram/')) return true

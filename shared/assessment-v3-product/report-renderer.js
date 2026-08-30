@@ -1,9 +1,13 @@
 const PUBLIC_LANGUAGE = require('../content/public-language.generated')
-const runtime = require('../assessment-v3-pilot/runtime-engine')
 const { CHAPTERS, DIMENSION_IDS, assertDerivedV3Profile, clone } = require('./contract')
 const { deriveEligiblePatternIds } = require('./pattern-eligibility')
 
 const PRODUCT_COPY = PUBLIC_LANGUAGE.v3.product
+const PRODUCT_V0_COPY = Object.assign({}, PRODUCT_COPY, {
+  preview: Object.assign({}, PRODUCT_COPY.preview, PUBLIC_LANGUAGE.v3.productV0 && PUBLIC_LANGUAGE.v3.productV0.real && PUBLIC_LANGUAGE.v3.productV0.real.preview),
+  method: Object.assign({}, PRODUCT_COPY.method, PUBLIC_LANGUAGE.v3.productV0 && PUBLIC_LANGUAGE.v3.productV0.real && PUBLIC_LANGUAGE.v3.productV0.real.method),
+  evidence: Object.assign({}, PRODUCT_COPY.evidence, PUBLIC_LANGUAGE.v3.productV0 && PUBLIC_LANGUAGE.v3.productV0.real && PUBLIC_LANGUAGE.v3.productV0.real.evidence)
+})
 const NARRATIVES = PUBLIC_LANGUAGE.v3.narratives
 
 const PATTERN_SUPPRESSION = Object.freeze({
@@ -17,75 +21,69 @@ function objectAt(root, path) {
   return String(path).split('.').reduce((value, key) => value && value[key], root)
 }
 
-function confidencePrefix(result) {
-  if (result.evidenceStatus === 'PROVISIONAL') return PRODUCT_COPY.confidence.provisionalPrefix
-  return PRODUCT_COPY.confidence[`${String(result.confidence || '').toLowerCase()}Prefix`] || ''
+function copyForProfile(profile) {
+  return profile && profile.source === 'THEORY_DRIVEN_PRODUCT_V0' ? PRODUCT_V0_COPY : PRODUCT_COPY
 }
 
-function narrativeForDimension(dimensionId, result) {
+function confidencePrefix(result, copy = PRODUCT_COPY) {
+  if (result.evidenceStatus === 'PROVISIONAL') return copy.confidence.provisionalPrefix
+  return copy.confidence[`${String(result.confidence || '').toLowerCase()}Prefix`] || ''
+}
+
+function narrativeForDimension(dimensionId, result, copy = PRODUCT_COPY) {
   if (!result || result.resultStatus === 'INSUFFICIENT') {
     return {
-      headline: PRODUCT_COPY.fallback.insufficientDimensionHeadline || PRODUCT_COPY.fallback.dimensionHeadline,
-      summary: PRODUCT_COPY.fallback.insufficientDimensionSummary || PRODUCT_COPY.fallback.dimensionSummary
+      headline: copy.fallback.insufficientDimensionHeadline || copy.fallback.dimensionHeadline,
+      summary: copy.fallback.insufficientDimensionSummary || copy.fallback.dimensionSummary
     }
   }
   const narrative = NARRATIVES.dimensions[dimensionId] && NARRATIVES.dimensions[dimensionId][result.state]
   if (narrative && narrative.headline) return narrative
-  return { headline: PRODUCT_COPY.fallback.dimensionHeadline, summary: PRODUCT_COPY.fallback.dimensionSummary }
+  return { headline: copy.fallback.dimensionHeadline, summary: copy.fallback.dimensionSummary }
 }
 
-function narrativeForChapter(chapterId, state) {
+function narrativeForChapter(chapterId, state, copy = PRODUCT_COPY) {
   const narrative = NARRATIVES.chapters[chapterId] && NARRATIVES.chapters[chapterId][state]
   if (narrative && narrative.headline) return narrative
-  return { headline: PRODUCT_COPY.fallback.chapterHeadline, summary: PRODUCT_COPY.fallback.chapterSummary }
+  return { headline: copy.fallback.chapterHeadline, summary: copy.fallback.chapterSummary }
 }
 
-function narrativeForPattern(patternId) {
+function narrativeForPattern(patternId, copy = PRODUCT_COPY) {
   const narrative = NARRATIVES.crossChapterPatterns[patternId]
   if (narrative && narrative.headline) return narrative
-  return { headline: PRODUCT_COPY.fallback.patternHeadline, summary: PRODUCT_COPY.fallback.patternSummary }
+  return { headline: copy.fallback.patternHeadline, summary: copy.fallback.patternSummary }
 }
 
-function evidenceLabel(role) {
+function evidenceLabel(role, copy = PRODUCT_COPY) {
   const key = role === 'qualifying' ? 'qualifyingLabel' : role === 'contradicting' ? 'contradictingLabel' : 'supportingLabel'
-  return PRODUCT_COPY.evidence[key]
+  return copy.evidence[key]
 }
 
-function publicResponseForEvidence(entry) {
+function publicResponseForEvidence(entry, copy = PRODUCT_COPY) {
   if (entry && entry.question && entry.answer) {
     return {
       question: entry.question,
       answer: entry.answer,
-      label: evidenceLabel(entry.role),
-      source: PRODUCT_COPY.evidence.sourceNote
+      label: evidenceLabel(entry.role, copy),
+      source: copy.evidence.sourceNote
     }
   }
-  const task = runtime.getPublicTask(entry.taskId)
-  if (!task) return null
-  const item = entry.itemId && task.children
-    ? task.children.find(child => child.itemId === entry.itemId)
-    : task
-  if (!item) return null
-  const format = runtime.resolvePublicFormat(item.response, item.itemId, task.taskId)
-  const option = format && Array.isArray(format.options)
-    ? format.options.find(candidate => String(candidate.code) === String(entry.answerCode))
-    : null
   return {
-    question: item.prompt || task.prompt || '',
-    answer: option ? option.label : (entry.answerText || String(entry.answerCode || '')),
-    label: evidenceLabel(entry.role),
-    source: PRODUCT_COPY.evidence.sourceNote
+    question: entry.question || entry.taskId || '',
+    answer: entry.answer || entry.answerText || String(entry.answerCode || ''),
+    label: evidenceLabel(entry.role, copy),
+    source: copy.evidence.sourceNote
   }
 }
 
-function dimensionCard(profile, dimensionId) {
+function dimensionCard(profile, dimensionId, copy = copyForProfile(profile)) {
   const result = profile.dimensionResults[dimensionId]
-  const narrative = narrativeForDimension(dimensionId, result)
-  const evidence = (result.evidence || []).map(publicResponseForEvidence).filter(Boolean)
+  const narrative = narrativeForDimension(dimensionId, result, copy)
+  const evidence = (result.evidence || []).map(entry => publicResponseForEvidence(entry, copy)).filter(Boolean)
   return {
     id: dimensionId,
-    title: objectAt(PRODUCT_COPY, `dimensions.${dimensionId}.label`) || PRODUCT_COPY.fallback.dimensionHeadline,
-    headline: `${confidencePrefix(result)}${narrative.headline}`,
+    title: objectAt(copy, `dimensions.${dimensionId}.label`) || copy.fallback.dimensionHeadline,
+    headline: `${confidencePrefix(result, copy)}${narrative.headline}`,
     summary: narrative.summary,
     evidence,
     evidenceAvailable: evidence.length > 0,
@@ -115,13 +113,13 @@ function selectSummaryPatterns(profile) {
   return selected
 }
 
-function c3Narrative(profile) {
+function c3Narrative(profile, copy = PRODUCT_COPY) {
   const state = profile && profile.chapterStates && profile.chapterStates.C3
-  if (!state) return { headline: PRODUCT_COPY.fallback.chapterHeadline, summary: PRODUCT_COPY.fallback.chapterSummary }
+  if (!state) return { headline: copy.fallback.chapterHeadline, summary: copy.fallback.chapterSummary }
   const compositions = NARRATIVES.chapterCompositions && NARRATIVES.chapterCompositions.C3
   const activation = compositions && compositions.activation && compositions.activation[state.activation]
   const primary = compositions && compositions.strategy && compositions.strategy[state.primaryStrategy]
-  if (!activation || !primary) return { headline: PRODUCT_COPY.fallback.chapterHeadline, summary: PRODUCT_COPY.fallback.chapterSummary }
+  if (!activation || !primary) return { headline: copy.fallback.chapterHeadline, summary: copy.fallback.chapterSummary }
   const connectors = compositions.connectors || {}
   let headline = `${activation.headline}${connectors.headline || ''}${primary.headline}`
   let summary = `${activation.summary}${connectors.summary || ''}${primary.summary}`
@@ -135,47 +133,47 @@ function c3Narrative(profile) {
   return { headline, summary }
 }
 
-function chapterSynthesis(profile, chapter) {
+function chapterSynthesis(profile, chapter, copy = copyForProfile(profile)) {
   const narrative = chapter.id === 'C3'
-    ? c3Narrative(profile)
-    : narrativeForChapter(chapter.id, profile.chapterStates[chapter.id])
+    ? c3Narrative(profile, copy)
+    : narrativeForChapter(chapter.id, profile.chapterStates[chapter.id], copy)
   return {
     id: chapter.id,
     title: NARRATIVES.reportTitles[chapter.id] || NARRATIVES.chapters[chapter.id].label,
-    intro: PRODUCT_COPY.chapters[chapter.id].intro,
+    intro: copy.chapters[chapter.id].intro,
     headline: narrative.headline,
     summary: narrative.summary,
     dimensionIds: chapter.dimensionIds.slice(),
-    transition: PRODUCT_COPY.chapters[chapter.id].transition
+    transition: copy.chapters[chapter.id].transition
   }
 }
 
-function decisionSection(profile, key) {
+function decisionSection(profile, key, copy = copyForProfile(profile)) {
   const source = profile.decisionMap[key] || { items: [] }
-  const copy = PRODUCT_COPY.decisions[key]
+  const sectionCopy = copy.decisions[key]
   return {
     id: key,
-    title: copy.title,
-    intro: copy.intro,
+    title: sectionCopy.title,
+    intro: sectionCopy.intro,
     items: (source.items || []).map(item => {
-      const itemCopy = copy.items[item.copyKey]
+      const itemCopy = sectionCopy.items[item.copyKey]
       if (!itemCopy) return null
-      const valueCopy = PRODUCT_COPY.decisionValues && PRODUCT_COPY.decisionValues[key] && PRODUCT_COPY.decisionValues[key][item.copyKey] && PRODUCT_COPY.decisionValues[key][item.copyKey][item.valueKey]
+      const valueCopy = copy.decisionValues && copy.decisionValues[key] && copy.decisionValues[key][item.copyKey] && copy.decisionValues[key][item.copyKey][item.valueKey]
       return Object.assign({ id: item.copyKey }, itemCopy, valueCopy ? { detail: valueCopy } : {})
     }).filter(Boolean)
   }
 }
 
-function unknownItems(profile) {
+function unknownItems(profile, copy = copyForProfile(profile)) {
   return (profile.unknowns || []).map(key => {
-    const item = PRODUCT_COPY.unknowns.items[key]
+    const item = copy.unknowns.items[key]
     return item ? Object.assign({ id: key }, item) : null
   }).filter(Boolean)
 }
 
-function interviewItems(profile) {
+function interviewItems(profile, copy = copyForProfile(profile)) {
   return (profile.interviewPriorities || []).map(priority => {
-    const item = PRODUCT_COPY.interview.items[priority.copyKey]
+    const item = copy.interview.items[priority.copyKey]
     if (!item) return null
     return Object.assign({ id: priority.copyKey, dimensionId: priority.dimensionId || '' }, item)
   }).filter(Boolean)
@@ -184,8 +182,9 @@ function interviewItems(profile) {
 function buildReport(profileInput) {
   const profile = clone(profileInput)
   assertDerivedV3Profile(profile)
-  const dimensionCards = DIMENSION_IDS.map(dimensionId => dimensionCard(profile, dimensionId))
-  const chapters = CHAPTERS.map(chapter => chapterSynthesis(profile, chapter))
+  const copy = copyForProfile(profile)
+  const dimensionCards = DIMENSION_IDS.map(dimensionId => dimensionCard(profile, dimensionId, copy))
+  const chapters = CHAPTERS.map(chapter => chapterSynthesis(profile, chapter, copy))
   const summaryPatterns = selectSummaryPatterns(profile)
   return {
     contractVersion: 'v3.product-report.v1.0',
@@ -194,34 +193,34 @@ function buildReport(profileInput) {
     personaId: profile.persona && profile.persona.id ? profile.persona.id : (profile.assessmentMeta && profile.assessmentMeta.assessmentId) || '',
     assessmentMeta: clone(profile.assessmentMeta),
     title: NARRATIVES.reportTitles.cover,
-    notice: PRODUCT_COPY.preview.reportNotice,
+    notice: copy.preview.reportNotice,
     executiveSummary: {
-      title: PRODUCT_COPY.preview.reportSummaryTitle,
+      title: copy.preview.reportSummaryTitle,
       patterns: summaryPatterns,
-      unknownPreview: unknownItems(profile).slice(0, 1)
+      unknownPreview: unknownItems(profile, copy).slice(0, 1)
     },
     dimensionCards,
     chapterSyntheses: chapters,
     decisionMap: {
-      title: PRODUCT_COPY.preview.reportDecisionTitle,
-      sections: ['l3', 'l4', 'l5'].map(key => decisionSection(profile, key))
+      title: copy.preview.reportDecisionTitle,
+      sections: ['l3', 'l4', 'l5'].map(key => decisionSection(profile, key, copy))
     },
     unknowns: {
-      title: PRODUCT_COPY.preview.reportUnknownTitle,
-      description: PRODUCT_COPY.unknowns.description,
-      items: unknownItems(profile)
+      title: copy.preview.reportUnknownTitle,
+      description: copy.unknowns.description,
+      items: unknownItems(profile, copy)
     },
     interviewPriorities: {
-      title: PRODUCT_COPY.preview.reportInterviewTitle,
-      description: PRODUCT_COPY.interview.description,
-      optional: PRODUCT_COPY.interview.optional,
-      items: interviewItems(profile)
+      title: copy.preview.reportInterviewTitle,
+      description: copy.interview.description,
+      optional: copy.interview.optional,
+      items: interviewItems(profile, copy)
     },
     methodNote: {
-      title: PRODUCT_COPY.preview.reportMethodTitle,
-      body: PRODUCT_COPY.method.body,
-      structure: PRODUCT_COPY.method.structure,
-      privacy: PRODUCT_COPY.method.privacy
+      title: copy.preview.reportMethodTitle,
+      body: copy.method.body,
+      structure: copy.method.structure,
+      privacy: copy.method.privacy
     }
   }
 }
@@ -239,13 +238,14 @@ function buildChapterView(report, chapterId) {
 function buildEvidenceView(report, dimensionId) {
   const card = getDimensionCard(report, dimensionId)
   if (!card) return null
+  const copy = report && report.source === 'THEORY_DRIVEN_PRODUCT_V0' ? PRODUCT_V0_COPY : PRODUCT_COPY
   return {
     title: card.title,
     headline: card.headline,
     summary: card.summary,
     evidence: card.evidence,
-    sourceNote: PRODUCT_COPY.evidence.sourceNote,
-    empty: PRODUCT_COPY.evidence.unavailable
+    sourceNote: copy.evidence.sourceNote,
+    empty: copy.evidence.unavailable
   }
 }
 
@@ -257,6 +257,7 @@ module.exports = {
   selectSummaryPatterns,
   publicResponseForEvidence,
   PRODUCT_COPY,
+  PRODUCT_V0_COPY,
   PATTERN_SUPPRESSION,
   c3Narrative
 }

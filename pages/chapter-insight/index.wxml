@@ -1,13 +1,13 @@
 <view wx:if="{{chapter && insight}}" class="page page--with-action chapter-insight-page" style="padding-top: {{statusBarHeight}}px;">
   <view class="chapter-insight">
-    <button class="chapter-insight__back" bind:tap="reviewChapter"><text>‹</text>修改这一部分</button>
+    <button class="chapter-insight__back" bind:tap="reviewChapter" aria-label="修改这一部分"><text class="chapter-insight__back-icon">‹</text>修改这一部分</button>
     <view class="page-kicker">第 {{chapterNumber}} 部分完成</view>
     <view class="chapter-insight__chapter">{{chapter.title}}</view>
     <view class="chapter-insight__headline">{{insight.headline}}</view>
     <view class="chapter-insight__summary">{{insight.summary}}</view>
 
     <view wx:if="{{insight.evidence.length}}" class="chapter-insight__evidence">
-      <button class="chapter-insight__evidence-toggle" bind:tap="toggleEvidence">
+      <button class="chapter-insight__evidence-toggle" bind:tap="toggleEvidence" aria-expanded="{{evidenceExpanded}}">
         {{evidenceExpanded ? '收起' : evidenceCopy.toggle}}<text class="dl-chevron">{{evidenceExpanded ? '⌃' : '›'}}</text>
       </button>
       <view wx:if="{{evidenceExpanded}}" class="chapter-insight__evidence-list">

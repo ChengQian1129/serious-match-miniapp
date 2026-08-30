@@ -48,9 +48,9 @@ assert.equal(typeof itemList.find(item => item.itemId === 'UA-S01.a').fieldCode,
 assert.equal(itemList.find(item => item.itemId === 'UA-S01.a').probeFocus.length > 0, true)
 
 const app = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'app.json'), 'utf8'))
-assert.equal(app.pages.includes('pages/v3-p0-research/index'), true)
-assert.equal(app.pages.includes('pages/v3-p0-coding/index'), true)
+assert.equal(app.pages.includes('pages/v3-p0-research/index'), false)
+assert.equal(app.pages.includes('pages/v3-p0-coding/index'), false)
 const features = require('../utils/features').FEATURES
 assert.equal(features.v3P0Research, false)
 
-console.log('V3 P0 page boundary and internal routing checks OK')
+console.log('V3 P0 page boundary and internal routing checks OK: internal pages stay out of the public manifest')

@@ -17,3 +17,12 @@
     <view wx:else class="v3-evidence-empty">{{finding.empty}}</view>
   </view>
 </view>
+<view wx:if="{{ready && !finding}}" class="page v3-evidence-page v3-evidence-page--empty">
+  <view class="v3-evidence-shell">
+    <button class="v3-text-action" bind:tap="back">{{copy.preview.backAction}}</button>
+    <view class="v3-evidence-empty-state">
+      <view class="v3-evidence-empty-state__title">{{copy.evidence.unavailable}}</view>
+      <view class="v3-evidence-empty-state__body">{{copy.evidence.sourceNote}}</view>
+    </view>
+  </view>
+</view>

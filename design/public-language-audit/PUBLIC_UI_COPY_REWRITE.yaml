@@ -38,7 +38,7 @@ welcome:
   closing:
     action: DELETE
   meta:
-    replaceWith: 大约需要几分钟，可以随时停下来。
+    replaceWith: 整套问题比较多，可以分几次完成，随时停下来。
     implementationNote: 不要把固定题数和估算时长硬编码在 copy 文件中；从当前 instrument publicMeta/真实 telemetry 读取。
   action:
     replaceWith: 开始答题
@@ -52,7 +52,7 @@ home:
   titleResume:
     replaceWith: 继续答题
   description:
-    replaceWith: 这些题问的都是实际可能遇到的情况。按你平时最可能的反应回答就行。
+    replaceWith: 这些题问的都是实际可能遇到的情况。可以分几次完成，按你平时最可能的反应回答就行。
   exampleLabel:
     replaceWith: 比如
   example:

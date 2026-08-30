@@ -4,14 +4,19 @@ const store = require('../../utils/followup-store')
 const followupCopy = require('../../shared/content/followup-copy')
 const { recordEvent } = require('../../utils/storage')
 
-function returnTarget(value) { return value === 'map' ? 'map' : 'report' }
+function returnTarget(value) { return ['map', 'product-v0'].includes(value) ? value : 'report' }
 
 function profileUrl(target) {
   if (!target) return '/pages/followup-profile/index'
   return `/pages/followup-profile/index?returnTo=settings&returnAfter=${returnTarget(target)}`
 }
 
-function returnPageUrl(target) { return returnTarget(target) === 'map' ? '/pages/relationship-map/index' : '/pages/questionnaire-result/index' }
+function returnPageUrl(target) {
+  const normalized = returnTarget(target)
+  if (normalized === 'map') return '/pages/relationship-map/index'
+  if (normalized === 'product-v0') return '/pages/v3-result/index?mode=product-v0'
+  return '/pages/questionnaire-result/index'
+}
 
 const DEFINITIONS = [
   { scope: 'interview_contact', title: followupCopy.scopes.interview_contact.title, desc: followupCopy.scopes.interview_contact.description },
@@ -24,22 +29,32 @@ Page({
   onLoad(query) { this.returnTo = returnTarget(query && query.returnTo) },
   onShow() { resetNavigation(this); this.load(); recordEvent('followup_entry_view') },
   load() {
+    const loadToken = (this._loadToken || 0) + 1
+    this._loadToken = loadToken
+    this._loadDirty = false
     const local = store.get()
     this.apply(local.consents || {}, local.participant)
-    if (isCloudReady()) getParticipant({ success: data => { let state = store.mergeCloudConsents(data.consents || {}); if (!state.participant.displayName && data.participant) { state.participant = data.participant; state.contact = data.contact || {}; state = store.save(state) } this.apply(state.consents || {}, state.participant) }, fail: () => {} })
+    if (isCloudReady()) getParticipant({ success: data => {
+      if (loadToken !== this._loadToken || this._loadDirty || this.data.isSaving || this.data.isDeleting) return
+      let state = store.mergeCloudConsents(data.consents || {})
+      if (!state.participant.displayName && data.participant) { state.participant = data.participant; state.contact = data.contact || {}; state = store.save(state) }
+      this.apply(state.consents || {}, state.participant)
+    }, fail: () => {} })
   },
   apply(consents, participant) {
     const scopes = DEFINITIONS.map(item => Object.assign({}, item, { checked: Boolean(consents[item.scope] && consents[item.scope].value === 'granted'), grantedAt: consents[item.scope] && consents[item.scope].value === 'granted' ? consents[item.scope].createdAt : null }))
     this.setData({ scopes, hasProfile: Boolean(participant && participant.displayName), requiresContact: scopes.some(item => item.checked && ['interview_contact', 'offline_invitation'].includes(item.scope)) })
   },
   toggle(event) {
+    if (this.data.isSaving || this.data.isDeleting) return
+    this._loadDirty = true
     const scope = event.currentTarget.dataset.scope
     const scopes = this.data.scopes.map(item => item.scope === scope ? Object.assign({}, item, { checked: !item.checked }) : item)
     this.setData({ scopes, requiresContact: scopes.some(item => item.checked && ['interview_contact', 'offline_invitation'].includes(item.scope)) })
     recordEvent('followup_scope_change', { scope, value: scopes.find(item => item.scope === scope).checked ? 'granted' : 'revoked' })
   },
   save() {
-    if (this.data.isSaving) return
+    if (this.data.isSaving || this.data.isDeleting) return
     this.setData({ isSaving: true, error: '' })
     const state = store.get()
     const previous = state.consents || {}
@@ -68,9 +83,11 @@ Page({
   },
   editProfile() { navigateOnce(this, 'redirectTo', { url: profileUrl(this.returnTo) }) },
   deleteRegistration() {
-    if (this.data.isDeleting) return
+    if (this.data.isDeleting || this.data.isSaving) return
     wx.showModal({ title: followupCopy.settings.deleteTitle, content: followupCopy.settings.deleteBody, confirmText: followupCopy.settings.deleteConfirm, cancelText: followupCopy.settings.deleteCancel, confirmColor: '#ff3b30', success: result => {
-      if (!result.confirm) return
+      if (!result.confirm || this.data.isSaving || this.data.isDeleting) return
+      this._loadToken = (this._loadToken || 0) + 1
+      this._loadDirty = true
       this.setData({ isDeleting: true, error: '' })
       const finish = () => { store.clear(); this.setData({ isDeleting: false }); navigateOnce(this, 'reLaunch', { url: returnPageUrl(this.returnTo) }) }
       if (isCloudReady()) deleteParticipant({ success: finish, fail: error => this.setData({ isDeleting: false, error: cloudErrorMessage(error) }) }); else finish()

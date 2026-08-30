@@ -656,6 +656,11 @@
   },
   {
     "surface": "pages/chapter-insight/index.wxml",
+    "key": "attr.0",
+    "text": "修改这一部分"
+  },
+  {
+    "surface": "pages/chapter-insight/index.wxml",
     "key": "text.2",
     "text": "‹"
   },
@@ -710,6 +715,16 @@
     "text": "第 ${chapterIndex + 1} 部分 / 6。之前的回答都还在，接着答就行。"
   },
   {
+    "surface": "pages/home/index.js",
+    "key": "literal.3",
+    "text": "查看结果"
+  },
+  {
+    "surface": "pages/home/index.js",
+    "key": "literal.4",
+    "text": "继续答题"
+  },
+  {
     "surface": "pages/privacy/index.json",
     "key": "navigationBarTitleText",
     "text": "隐私说明"
@@ -727,7 +742,7 @@
   {
     "surface": "pages/privacy/index.wxml",
     "key": "text.12",
-    "text": "包括问卷回答、回答时间、每部分结果和修改记录。不填写联系方式也能完成答题。"
+    "text": "包括问卷回答、回答时间、结果和修改记录。不填写联系方式也能完成答题。"
   },
   {
     "surface": "pages/privacy/index.wxml",
@@ -742,7 +757,7 @@
   {
     "surface": "pages/privacy/index.wxml",
     "key": "text.16",
-    "text": "只用于生成、保存和维护你的结果，不公开展示。"
+    "text": "只用于生成、保存和维护你的结果，不公开展示。当前结果仍在试用和调整，不是心理诊断。"
   },
   {
     "surface": "pages/privacy/index.wxml",
@@ -858,171 +873,6 @@
     "surface": "pages/questionnaire-result/index.wxml",
     "key": "text.77",
     "text": "›"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.js",
-    "key": "literal.0",
-    "text": "请选择 ${validation.minSelections}–${validation.maxSelections} 项"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.js",
-    "key": "literal.10",
-    "text": "请输入不大于 ${message.split('NUMBER_MAX_')[1]} 的数字。"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.js",
-    "key": "literal.11",
-    "text": "回答不能超过 ${message.split('TEXT_MAX_')[1]} 字。"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.js",
-    "key": "literal.12",
-    "text": "请写下你的回答，或者先返回上一题。"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.js",
-    "key": "literal.13",
-    "text": "最多选择"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.js",
-    "key": "literal.14",
-    "text": "至少选择"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.js",
-    "key": "literal.15",
-    "text": "不在当前"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.js",
-    "key": "literal.16",
-    "text": "这道题当前不可用，请返回上一题再试。"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.js",
-    "key": "literal.17",
-    "text": "仍有"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.js",
-    "key": "literal.18",
-    "text": "请先完成这道题，或选择“暂时跳过”。"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.js",
-    "key": "literal.19",
-    "text": "无效"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.js",
-    "key": "literal.1",
-    "text": "至少选择 ${validation.minSelections} 项"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.js",
-    "key": "literal.20",
-    "text": "请检查这道题的填写内容。"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.js",
-    "key": "literal.21",
-    "text": "答题"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.js",
-    "key": "literal.22",
-    "text": "本题已完成"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.js",
-    "key": "literal.23",
-    "text": "当前题目仍有未完成的回答"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.js",
-    "key": "literal.2",
-    "text": "最多选择 ${validation.maxSelections} 项"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.js",
-    "key": "literal.3",
-    "text": "，也可以留空"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.js",
-    "key": "literal.4",
-    "text": "最多 ${format.maxChars || 300} 字"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.js",
-    "key": "literal.5",
-    "text": "输入数字"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.js",
-    "key": "literal.6",
-    "text": "写下你的回答"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.js",
-    "key": "literal.7",
-    "text": "最多选择 ${message.split('MAX_SELECTIONS_')[1]} 项。"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.js",
-    "key": "literal.8",
-    "text": "至少选择 ${message.split('MIN_SELECTIONS_')[1]} 项。"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.js",
-    "key": "literal.9",
-    "text": "请输入不小于 ${message.split('NUMBER_MIN_')[1]} 的数字。"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.json",
-    "key": "navigationBarTitleText",
-    "text": "答题 · 测试版"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.wxml",
-    "key": "attr.1",
-    "text": "已完成 {{progressText}}"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.wxml",
-    "key": "text.22",
-    "text": "已答 {{task.accounted}} / {{task.expectedCount}}"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.wxml",
-    "key": "text.29",
-    "text": "请分别回答下面的每一项。"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.wxml",
-    "key": "text.4",
-    "text": "‹"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.wxml",
-    "key": "text.47",
-    "text": "单位：{{responseItem.response.unit}}"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.wxml",
-    "key": "text.53",
-    "text": "已暂时跳过"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.wxml",
-    "key": "text.7",
-    "text": "答题 · 测试版"
-  },
-  {
-    "surface": "pages/questionnaire-v3-pilot/index.wxml",
-    "key": "text.82",
-    "text": "返回首页"
   },
   {
     "surface": "pages/questionnaire/index.js",
@@ -1185,233 +1035,13 @@
     "text": "›"
   },
   {
-    "surface": "pages/v3-p0-coding/index.json",
-    "key": "navigationBarTitleText",
-    "text": "Research coding"
-  },
-  {
-    "surface": "pages/v3-p0-coding/index.wxml",
-    "key": "attr.0",
-    "text": "Comma-separated terms"
-  },
-  {
-    "surface": "pages/v3-p0-coding/index.wxml",
-    "key": "text.103",
-    "text": "Research runtime is unavailable"
-  },
-  {
-    "surface": "pages/v3-p0-coding/index.wxml",
-    "key": "text.107",
-    "text": "Exit"
-  },
-  {
-    "surface": "pages/v3-p0-coding/index.wxml",
-    "key": "text.115",
-    "text": "Prepare versioned export"
-  },
-  {
-    "surface": "pages/v3-p0-coding/index.wxml",
-    "key": "text.120",
-    "text": "Exit"
-  },
-  {
-    "surface": "pages/v3-p0-coding/index.wxml",
-    "key": "text.21",
-    "text": "Item probe"
-  },
-  {
-    "surface": "pages/v3-p0-coding/index.wxml",
-    "key": "text.25",
-    "text": "Research field: {{currentItem.fieldCode}}"
-  },
-  {
-    "surface": "pages/v3-p0-coding/index.wxml",
-    "key": "text.27",
-    "text": "Probe focus: {{currentItem.probeFocus}}"
-  },
-  {
-    "surface": "pages/v3-p0-coding/index.wxml",
-    "key": "text.2",
-    "text": "Internal interviewer workspace"
-  },
-  {
-    "surface": "pages/v3-p0-coding/index.wxml",
-    "key": "text.37",
-    "text": "Suspected contamination terms"
-  },
-  {
-    "surface": "pages/v3-p0-coding/index.wxml",
-    "key": "text.4",
-    "text": "{{waveId}} coding"
-  },
-  {
-    "surface": "pages/v3-p0-coding/index.wxml",
-    "key": "text.40",
-    "text": "Interviewer note"
-  },
-  {
-    "surface": "pages/v3-p0-coding/index.wxml",
-    "key": "text.43",
-    "text": "Missing-option note"
-  },
-  {
-    "surface": "pages/v3-p0-coding/index.wxml",
-    "key": "text.46",
-    "text": "Paraphrase or term note"
-  },
-  {
-    "surface": "pages/v3-p0-coding/index.wxml",
-    "key": "text.50",
-    "text": "Save coding"
-  },
-  {
-    "surface": "pages/v3-p0-coding/index.wxml",
-    "key": "text.52",
-    "text": "Save notes"
-  },
-  {
-    "surface": "pages/v3-p0-coding/index.wxml",
-    "key": "text.58",
-    "text": "Wave debrief"
-  },
-  {
-    "surface": "pages/v3-p0-coding/index.wxml",
-    "key": "text.60",
-    "text": "Three hardest item IDs"
-  },
-  {
-    "surface": "pages/v3-p0-coding/index.wxml",
-    "key": "text.63",
-    "text": "Three most repetitive item IDs"
-  },
-  {
-    "surface": "pages/v3-p0-coding/index.wxml",
-    "key": "text.66",
-    "text": "Strongest correct-answer feeling item ID"
-  },
-  {
-    "surface": "pages/v3-p0-coding/index.wxml",
-    "key": "text.69",
-    "text": "Important thing not asked"
-  },
-  {
-    "surface": "pages/v3-p0-coding/index.wxml",
-    "key": "text.6",
-    "text": "Pseudonymous ID: {{participantStudyId}}"
-  },
-  {
-    "surface": "pages/v3-p0-coding/index.wxml",
-    "key": "text.72",
-    "text": "Item asked too early"
-  },
-  {
-    "surface": "pages/v3-p0-coding/index.wxml",
-    "key": "text.75",
-    "text": "Privacy-sensitive but answerable item"
-  },
-  {
-    "surface": "pages/v3-p0-coding/index.wxml",
-    "key": "text.78",
-    "text": "Private interview note"
-  },
-  {
-    "surface": "pages/v3-p0-coding/index.wxml",
-    "key": "text.86",
-    "text": "Save debrief"
-  },
-  {
-    "surface": "pages/v3-p0-coding/index.wxml",
-    "key": "text.88",
-    "text": "Complete and archive"
-  },
-  {
-    "surface": "pages/v3-p0-coding/index.wxml",
-    "key": "text.91",
-    "text": "Prepare versioned export"
-  },
-  {
-    "surface": "pages/v3-p0-coding/index.wxml",
-    "key": "text.96",
-    "text": "Back to participant flow"
-  },
-  {
-    "surface": "pages/v3-p0-coding/index.wxml",
-    "key": "text.98",
-    "text": "Exit research mode"
-  },
-  {
-    "surface": "pages/v3-p0-research/index.json",
-    "key": "navigationBarTitleText",
-    "text": "答题"
-  },
-  {
-    "surface": "pages/v3-p0-research/index.wxml",
-    "key": "attr.0",
-    "text": "Example: STUDY-001"
-  },
-  {
-    "surface": "pages/v3-p0-research/index.wxml",
-    "key": "attr.1",
-    "text": "Researcher entry"
-  },
-  {
-    "surface": "pages/v3-p0-research/index.wxml",
-    "key": "attr.2",
-    "text": "Researcher entry"
-  },
-  {
-    "surface": "pages/v3-p0-research/index.wxml",
-    "key": "text.24",
-    "text": "Wave"
-  },
-  {
-    "surface": "pages/v3-p0-research/index.wxml",
-    "key": "text.2",
-    "text": "Internal research runtime"
-  },
-  {
-    "surface": "pages/v3-p0-research/index.wxml",
-    "key": "text.30",
-    "text": "Participant study ID"
-  },
-  {
-    "surface": "pages/v3-p0-research/index.wxml",
-    "key": "text.33",
-    "text": "Relationship history category"
-  },
-  {
-    "surface": "pages/v3-p0-research/index.wxml",
-    "key": "text.36",
-    "text": "Current dating status"
-  },
-  {
-    "surface": "pages/v3-p0-research/index.wxml",
-    "key": "text.39",
-    "text": "Response context for relationship items"
-  },
-  {
-    "surface": "pages/v3-p0-research/index.wxml",
-    "key": "text.47",
-    "text": "Start interview"
-  },
-  {
-    "surface": "pages/v3-p0-research/index.wxml",
-    "key": "text.4",
-    "text": "Cognitive interview"
-  },
-  {
-    "surface": "pages/v3-p0-research/index.wxml",
-    "key": "text.6",
-    "text": "Choose one iterative wave and enter a pseudonymous study ID."
-  },
-  {
     "surface": "pages/v3-result/index.wxml",
-    "key": "text.38",
+    "key": "text.40",
     "text": "›"
   },
   {
     "surface": "pages/v3-result/index.wxml",
-    "key": "text.51",
+    "key": "text.59",
     "text": "›"
   },
   {
@@ -21437,7 +21067,7 @@
   {
     "surface": "shared/content/public-language.generated.js",
     "key": "ui.home.description",
-    "text": "这些题问的都是实际可能遇到的情况。按你平时最可能的反应回答就行。"
+    "text": "这些题问的都是实际可能遇到的情况。可以分几次完成，按你平时最可能的反应回答就行。"
   },
   {
     "surface": "shared/content/public-language.generated.js",
@@ -21997,7 +21627,7 @@
   {
     "surface": "shared/content/public-language.generated.js",
     "key": "ui.welcome.meta",
-    "text": "大约需要几分钟，可以随时停下来。"
+    "text": "整套问题比较多，可以分几次完成，随时停下来。"
   },
   {
     "surface": "shared/content/public-language.generated.js",
@@ -23657,7 +23287,7 @@
   {
     "surface": "shared/content/public-language.generated.js",
     "key": "v3ProductV0.intro",
-    "text": "这是一组帮助你整理关系想法的问题。完成后，你会看到一份基于自己回答的分层结果。"
+    "text": "这是一组帮助你整理关系想法的问题。题目比较多，可以分几次完成，随时停下来。完成后，你会看到一份基于自己回答的分层结果。"
   },
   {
     "surface": "shared/content/public-language.generated.js",
@@ -23692,7 +23322,227 @@
   {
     "surface": "shared/content/public-language.generated.js",
     "key": "v3ProductV0.progressTemplate",
-    "text": "{number} / 9"
+    "text": "第 {number} / {total} 部分"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.evidence.sourceNote",
+    "text": "这里显示的是与你的这条结果直接相关的题目和回答，不是额外推断。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.method.body",
+    "text": "这套题参考了一些关于恋爱关系、相处方式和冲突处理的研究。当前版本仍在试用和调整，不是心理诊断，也不是专业机构使用的标准测试。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.method.privacy",
+    "text": "结果只基于你自己的回答。你可以随时修改回答或删除本次问卷和结果。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.backAction",
+    "text": "返回"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.boundary",
+    "text": "这套题仍会继续试用和调整，不是心理诊断，也不是专业机构使用的标准测试。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.chapterNumber",
+    "text": "第 {number} 部分"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.chapterTransition",
+    "text": "下一部分，我们换一个角度继续看。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.choosePersona",
+    "text": "选择回答情况"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.choosePersonaHint",
+    "text": "请选择与你这次回答相符的内容。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.continueAction",
+    "text": "回到答题"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.deleteAction",
+    "text": "删除这次结果"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.deleteCancel",
+    "text": "取消"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.deleteConfirm",
+    "text": "确认删除"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.deleteDialogContent",
+    "text": "问卷、结果和本机保存的副本都会删除。删除后不能恢复。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.deleteDialogTitle",
+    "text": "删除这次结果？"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.dimensionTitle",
+    "text": "这一部分还可以分开看"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.evidenceAction",
+    "text": "查看依据"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.evidenceCollapseAction",
+    "text": "收起依据"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.eyebrow",
+    "text": "你的关系说明"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.followupAction",
+    "text": "了解一下"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.fullReportAction",
+    "text": "查看完整结果"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.intro",
+    "text": "这份结果根据你这次的回答整理，帮助你把想法、需要和相处方式分开看。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.nextAction",
+    "text": "继续看下一部分"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.noEvidence",
+    "text": "这部分暂时没有可以展开的回答。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.notice",
+    "text": "这份结果只基于你这次的回答；它描述的是现在的线索，不是固定结论。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.previewBadge",
+    "text": "本次回答"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.purpose",
+    "text": "它会把现在想不想开始、遇到变化时怎么做，以及靠近、支持和冲突后的节奏放在一起看。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.reportChapterTitle",
+    "text": "六个部分，放在一起看"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.reportDecisionTitle",
+    "text": "你希望怎样相处"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.reportDimensionTitle",
+    "text": "具体看每一处"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.reportInterviewTitle",
+    "text": "如果之后聊一聊，可以重点聊这些"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.reportMethodTitle",
+    "text": "这些结果怎么来的"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.reportNotice",
+    "text": "这份结果基于你这次的回答，不是诊断，也不能替你预测一段关系会怎样发展。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.reportSummaryTitle",
+    "text": "先看这 3 点"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.reportUnknownTitle",
+    "text": "还有几件事，问卷看不出来"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.restartAction",
+    "text": "重新回答"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.restartConfirm",
+    "text": "重新回答"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.restartDialogContent",
+    "text": "这会清除当前结果和回答，从头开始，操作不能撤回。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.restartDialogTitle",
+    "text": "重新回答？"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.resultAction",
+    "text": "看完整结果"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.startAction",
+    "text": "继续答题"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.syncingLabel",
+    "text": "正在保存…"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.title",
+    "text": "你的结果"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.value",
+    "text": "这里不会把你归进一个类型，而是保留几件可以带回真实生活继续观察的事。"
   },
   {
     "surface": "shared/content/public-language.generated.js",
@@ -23708,6 +23558,11 @@
     "surface": "shared/content/public-language.generated.js",
     "key": "v3ProductV0.skipAction",
     "text": "先不回答"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.syncingLabel",
+    "text": "正在保存…"
   },
   {
     "surface": "shared/content/public-language.generated.js",
@@ -23991,8 +23846,38 @@
   },
   {
     "surface": "shared/content/ui-copy.js",
+    "key": "home.deleteAction",
+    "text": "删除这次回答"
+  },
+  {
+    "surface": "shared/content/ui-copy.js",
+    "key": "home.deleteCancel",
+    "text": "取消"
+  },
+  {
+    "surface": "shared/content/ui-copy.js",
+    "key": "home.deleteConfirm",
+    "text": "确认删除"
+  },
+  {
+    "surface": "shared/content/ui-copy.js",
+    "key": "home.deleteDialogContent",
+    "text": "会删除本机和云端保存的本次问卷、结果和修改记录，删除后不能恢复。"
+  },
+  {
+    "surface": "shared/content/ui-copy.js",
+    "key": "home.deleteDialogTitle",
+    "text": "删除这次回答？"
+  },
+  {
+    "surface": "shared/content/ui-copy.js",
+    "key": "home.deleteSuccess",
+    "text": "已删除"
+  },
+  {
+    "surface": "shared/content/ui-copy.js",
     "key": "home.description",
-    "text": "这些题问的都是实际可能遇到的情况。按你平时最可能的反应回答就行。"
+    "text": "这些题问的都是实际可能遇到的情况。可以分几次完成，按你平时最可能的反应回答就行。"
   },
   {
     "surface": "shared/content/ui-copy.js",
@@ -24016,8 +23901,23 @@
   },
   {
     "surface": "shared/content/ui-copy.js",
+    "key": "home.privacyAction",
+    "text": "隐私说明"
+  },
+  {
+    "surface": "shared/content/ui-copy.js",
+    "key": "home.progressDescriptionTemplate",
+    "text": "已经完成 {completed} / {total} 组，之前的回答都还在。"
+  },
+  {
+    "surface": "shared/content/ui-copy.js",
     "key": "home.progressTitle",
     "text": "上次答到这里"
+  },
+  {
+    "surface": "shared/content/ui-copy.js",
+    "key": "home.retryAction",
+    "text": "点击重试"
   },
   {
     "surface": "shared/content/ui-copy.js",
@@ -24107,12 +24007,17 @@
   {
     "surface": "shared/content/ui-copy.js",
     "key": "welcome.meta",
-    "text": "大约需要几分钟，可以随时停下来。"
+    "text": "整套问题比较多，可以分几次完成，随时停下来。"
   },
   {
     "surface": "shared/content/ui-copy.js",
     "key": "welcome.methodAction",
     "text": "这些问题怎么来的？"
+  },
+  {
+    "surface": "shared/content/ui-copy.js",
+    "key": "welcome.privacyAction",
+    "text": "隐私说明"
   },
   {
     "surface": "shared/content/ui-copy.js",

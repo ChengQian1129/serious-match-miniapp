@@ -32,14 +32,14 @@
     "pilot/pilot_analysis_plan.md": "1cc8197c8ed547a398f86d7c853d1420eca0b36253b88859a8e67b6e592f5a31",
     "pilot/pilot_blueprint.md": "bd3611d73deab451a85bdc37ee8fd09e282ce7b5a812f1c5be7e707c7daa27f8",
     "pilot/pilot_pruning_calibration.md": "198d8abf577b2dd4049fdf9e611e40207ee440df8a3b912c6fa208cf17c144f5",
-    "product-v0/PRODUCT_V0_CHANGELOG.md": "d96dc393716920d6128d981885275cc89fe579bef400d2f94ee9633ea18bbfd8",
+    "product-v0/PRODUCT_V0_CHANGELOG.md": "06e8c8a7ffa2de868d6e8cbb2aa9029548d8b2e5c4ad803b3f9acc39b8b179b4",
     "product-v0/PRODUCT_V0_MANIFEST.yaml": "1de3b71baa422b90967be4af9391815289b593006a328c46b40a0de0dfa54ed8",
-    "product-v0/PRODUCT_V0_POLICY.md": "a82881a84064335d13dd37189f70085148bc5875e36ed2d1e34791ed6ee8495b",
+    "product-v0/PRODUCT_V0_POLICY.md": "fef1ee0bd96f7592fa9c314a556d15ee11668d625fab055227ce11dca5891a8c",
     "product-v0/decision_map_v0.yaml": "933fa51f7d409b6187066c6cdbce839553353651556e9a00e037e9a61fc85d49",
-    "product-v0/product_coverage_audit.yaml": "b3c96e5b9576ad1ed751e4e397f19386c02cb38117aa83ac4cc18c6f142dd20e",
+    "product-v0/product_coverage_audit.yaml": "c0c8a02af066de15406964a80be251975b912be959b70ca4e625f5b18b28109a",
     "product-v0/product_item_selection_audit.yaml": "45dd2a3eb50c489212ee2fc803a00ff376a5508f50a153bef8d0c70d6dda083b",
     "product-v0/product_method_disclosure.md": "24d0e701127809b558c9ac9f304743175e4d5113ac0db70a3eb55778b937e6a6",
-    "product-v0/product_questionnaire_v0.yaml": "db020bfa61317d53953f4058e0a9cc40bb282b94423751000fad990af032874d",
+    "product-v0/product_questionnaire_v0.yaml": "20275c15136de0bc12d08808f102cddc3187fea07b9f49ff855589d704410b15",
     "product-v0/provisional_scoring_v0.yaml": "9468f33fd819a618aae7d863f8ba253db7bb28863da59e9b6dfb655e9eba891a"
   },
   "counts": {
@@ -50,5 +50,5 @@
     "childResponseFields": 119,
     "constructRegistryObjects": 60
   },
-  "runtimeHash": "40c4b19cb4fb20fdb3fb2549cc4b157bd46c54ed3e56ba85b9932877b21a80b3"
+  "runtimeHash": "9e2620e9e3660184806e063acfb2e4419b7a57c78df960df93e23ce0dfb1b55d"
 }

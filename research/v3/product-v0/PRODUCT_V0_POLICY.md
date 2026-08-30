@@ -8,4 +8,4 @@ The research P0/P1 forms remain research-only. They do not define the Product v0
 
 The product describes a person's current answers, preferences, capacity, and provisional behavior clues. It does not diagnose, rank people, calculate compatibility, predict relationship success, recommend partners, or infer a hard boundary from an ordinary preference. A hard boundary appears only when the user explicitly answers a hard-condition item using the authored hardness grammar.
 
-The local vertical slice is the deliverable for this version. Cloud persistence and public-home cutover are intentionally deferred until the real-answer path has passed regression tests.
+The public Product v0 route includes local-first cloud persistence, cross-device restore, report versioning, and deletion. Empirical calibration remains a future upgrade gate; a production deployment still requires the configured cloud environment and real-device acceptance described in the repository release checklist.

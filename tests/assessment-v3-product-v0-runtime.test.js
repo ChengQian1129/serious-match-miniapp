@@ -23,6 +23,8 @@ assert.equal(profile.isSynthetic, false)
 assert.equal(Object.keys(profile.dimensionResults).length, 14)
 assert.equal(profile.assessmentMeta.researchStatus, 'THEORY_DRIVEN_PROVISIONAL')
 assert.ok(profile.dimensionResults.relationship_readiness.evidence.length)
+assert.equal(runtime.optionLabel(runtime.getEntry('SE-P01'), 1), '很少主动和朋友见面')
+assert.equal(runtime.optionLabel(runtime.getEntry('EX-P02'), 1), '几乎从不主动提新地方或新活动')
 
 const unknown = runtime.deriveProfile(Object.fromEntries(Object.entries(base).slice(0, 4)))
 assert.equal(unknown.dimensionResults.relationship_readiness.resultStatus, 'INSUFFICIENT')

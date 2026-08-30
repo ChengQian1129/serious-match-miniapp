@@ -1,7 +1,7 @@
 const { FEATURES } = require('../../utils/features')
 const { CHAPTERS } = require('../../shared/assessment-v3-product/contract')
 const { getFixture } = require('../../shared/assessment-v3-product/fixtures')
-const { buildReport, buildChapterView, PRODUCT_COPY } = require('../../shared/assessment-v3-product/report-renderer')
+const { buildReport, buildChapterView, PRODUCT_COPY, PRODUCT_V0_COPY } = require('../../shared/assessment-v3-product/report-renderer')
 const { navigateOnce, resetNavigation } = require('../../utils/navigation')
 const productRuntime = require('../../shared/assessment-v3-product-v0/runtime-engine')
 const productStore = require('../../utils/assessment-v3-product-v0/session-store')
@@ -24,8 +24,9 @@ function productChapterView(chapterId) {
   const session = productStore.getSession()
   const profile = session.derivedProfile || productRuntime.deriveProfile(session)
   const report = buildReport(profile)
-  const current = buildChapterView(report, chapterId)
-  return { report, current, next: null, number: chapterIndex(chapterId) + 1, hasNext: true }
+  const currentId = CHAPTERS[chapterIndex(chapterId)].id
+  const current = buildChapterView(report, currentId)
+  return { report, current, next: null, number: chapterIndex(currentId) + 1, hasNext: false }
 }
 
 Page({
@@ -45,6 +46,7 @@ Page({
       this.mode = 'product-v0'
       this.chapterId = options.chapter || 'C1'
       this.nextIndex = options.nextIndex
+      this.setData({ copy: PRODUCT_V0_COPY })
       this.loadChapter()
       return
     }
@@ -59,7 +61,7 @@ Page({
   loadChapter() {
     if (this.mode === 'product-v0') {
       const view = productChapterView(this.chapterId)
-      this.setData({ ready: true, mode: this.mode, chapter: view.current, number: view.number, chapterNumberText: PRODUCT_COPY.preview.chapterNumber.replace('{number}', String(view.number)), hasNext: true, personaId: '' })
+      this.setData({ ready: true, mode: this.mode, copy: PRODUCT_V0_COPY, chapter: view.current, number: view.number, chapterNumberText: PRODUCT_V0_COPY.preview.chapterNumber.replace('{number}', String(view.number)), hasNext: this.nextIndex !== undefined, personaId: '' })
       return
     }
     const view = chapterView(this.personaId, this.chapterId)
@@ -76,7 +78,7 @@ Page({
   continueNext() {
     if (this.mode === 'product-v0') {
       if (this.nextIndex !== undefined) return navigateOnce(this, 'redirectTo', { url: `/pages/questionnaire-v3/index?index=${encodeURIComponent(this.nextIndex)}` })
-      return navigateOnce(this, 'redirectTo', { url: '/pages/questionnaire-v3/index' })
+      return navigateOnce(this, 'redirectTo', { url: '/pages/v3-result/index?mode=product-v0' })
     }
     const nextIndex = chapterIndex(this.chapterId) + 1
     const nextChapter = CHAPTERS[nextIndex]
@@ -94,7 +96,7 @@ Page({
 
   backToPreview() {
     if (this.mode === 'product-v0') return navigateOnce(this, 'navigateBack', { fail: () => navigateOnce(this, 'redirectTo', { url: '/pages/questionnaire-v3/index' }) })
-    navigateOnce(this, 'reLaunch', { url: `/pages/v3-product-preview/index?persona=${encodeURIComponent(this.personaId)}` })
+    navigateOnce(this, 'reLaunch', { url: '/pages/home/index' })
   }
 })
 

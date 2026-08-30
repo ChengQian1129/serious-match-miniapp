@@ -9,7 +9,8 @@ Page({
     contentVersion: CONTENT_VERSION,
     welcome,
     guide,
-    showMethod: false
+    showMethod: false,
+    privacyAction: welcome.privacyAction
   },
 
   onShow() {
@@ -34,6 +35,8 @@ Page({
   },
 
   closeMethod() { this.setData({ showMethod: false }) },
+
+  openPrivacy() { navigateOnce(this, 'navigateTo', { url: '/pages/privacy/index' }) },
 
   handleMethodVisibleChange(event) { this.setData({ showMethod: Boolean(event.detail && event.detail.visible) }) }
 })

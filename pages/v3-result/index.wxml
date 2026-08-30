@@ -18,9 +18,10 @@
 
     <view class="v3-result-section">
       <view class="v3-result-section__title">{{copy.preview.reportChapterTitle}}</view>
+      <view wx:if="{{copy.preview.reportDimensionTitle}}" class="v3-result-section__hint">{{copy.preview.reportDimensionTitle}}</view>
       <view class="v3-chapter-list">
         <view wx:for="{{chapters}}" wx:key="id" wx:for-item="chapter" class="v3-result-chapter">
-          <button class="v3-result-chapter__button" data-chapter-id="{{chapter.id}}" bind:tap="openChapter">
+          <button class="v3-result-chapter__button" hover-class="v3-result-chapter__button--active" data-chapter-id="{{chapter.id}}" bind:tap="openChapter">
             <view class="v3-result-chapter__body">
               <view class="v3-result-chapter__title">{{chapter.title}}</view>
               <view class="v3-result-chapter__headline">{{chapter.headline}}</view>
@@ -29,11 +30,16 @@
             </view>
           </button>
           <view class="v3-result-chapter__dimensions">
-            <view wx:for="{{chapter.dimensionCards}}" wx:key="id" wx:for-item="dimension" class="v3-result-dimension">
-              <view class="v3-result-dimension__title">{{dimension.title}}</view>
-              <view class="v3-result-dimension__headline">{{dimension.headline}}</view>
-              <view class="v3-result-dimension__summary">{{dimension.summary}}</view>
-              <button wx:if="{{dimension.evidenceAvailable}}" class="v3-evidence-link" data-dimension-id="{{dimension.id}}" bind:tap="openEvidence">{{copy.preview.evidenceAction}} <text>›</text></button>
+            <button class="v3-result-dimensions-toggle" hover-class="v3-result-dimensions-toggle--active" data-chapter-id="{{chapter.id}}" aria-role="button" aria-label="{{copy.preview.dimensionTitle}}" aria-expanded="{{chapter.expanded}}" bind:tap="toggleChapter">
+              <text>{{copy.preview.dimensionTitle}}</text><text class="dl-chevron">{{chapter.expanded ? '⌃' : '›'}}</text>
+            </button>
+            <view wx:if="{{chapter.expanded}}" class="v3-result-chapter__dimension-list">
+              <view wx:for="{{chapter.dimensionCards}}" wx:key="id" wx:for-item="dimension" class="v3-result-dimension">
+                <view class="v3-result-dimension__title">{{dimension.title}}</view>
+                <view class="v3-result-dimension__headline">{{dimension.headline}}</view>
+                <view class="v3-result-dimension__summary">{{dimension.summary}}</view>
+                <button wx:if="{{dimension.evidenceAvailable}}" class="v3-evidence-link" hover-class="v3-evidence-link--active" data-dimension-id="{{dimension.id}}" bind:tap="openEvidence">{{copy.preview.evidenceAction}} <text>›</text></button>
+              </view>
             </view>
           </view>
         </view>
@@ -71,6 +77,7 @@
         <view class="v3-interview-item__body">{{item.body}}</view>
       </view>
       <view class="v3-result-section__note">{{report.interviewPriorities.optional}}</view>
+      <button wx:if="{{mode === 'product-v0'}}" class="v3-followup-action" bind:tap="openFollowup">{{copy.preview.followupAction}}</button>
     </view>
 
     <view class="v3-result-section v3-result-method">
@@ -79,10 +86,15 @@
       <view class="v3-result-method__line">{{report.methodNote.structure}}</view>
       <view class="v3-result-method__line">{{report.methodNote.privacy}}</view>
     </view>
+
+    <view class="v3-result-secondary-actions">
+      <button class="v3-text-action" bind:tap="restart">{{copy.preview.restartAction}}</button>
+      <button wx:if="{{mode === 'product-v0'}}" class="v3-text-action v3-danger-action" bind:tap="requestDelete">{{copy.preview.deleteAction}}</button>
+    </view>
   </view>
 
   <view class="action-bar v3-result-actions">
     <button class="dl-button" bind:tap="startAtFirstChapter">{{copy.preview.continueAction}}</button>
-    <button class="v3-text-action v3-text-action--center" bind:tap="restart">{{copy.preview.restartAction}}</button>
+    <view wx:if="{{syncing || syncError}}" class="v3-result-sync"><text wx:if="{{syncing}}">{{copy.preview.syncingLabel}}</text><text wx:if="{{syncError}}">{{syncError}}</text></view>
   </view>
 </view>

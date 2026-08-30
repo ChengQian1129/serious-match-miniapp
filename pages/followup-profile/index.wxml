@@ -1,9 +1,9 @@
 <view class="page page--with-action followup-profile">
   <view class="page-header"><view class="page-kicker">{{copy.kicker}}</view><view class="page-title">{{copy.title}}</view><view class="page-desc followup-copy-text">{{copy.description}}</view></view>
   <view class="followup-form">
-    <view class="dl-input-wrap"><view class="dl-input-label">{{copy.displayName}}</view><input class="dl-input" maxlength="40" placeholder="{{copy.displayNamePlaceholder}}" value="{{form.displayName}}" data-field="displayName" bindinput="input" /></view>
-    <view class="dl-input-wrap"><view class="dl-input-label">{{copy.cityArea}}</view><input class="dl-input" maxlength="80" placeholder="{{copy.cityAreaPlaceholder}}" value="{{form.cityArea}}" data-field="cityArea" bindinput="input" /></view>
-    <view class="dl-input-wrap"><view class="dl-input-label">{{copy.availability}}</view><input class="dl-input" maxlength="80" placeholder="{{copy.availabilityPlaceholder}}" value="{{form.availability}}" data-field="availability" bindinput="input" /></view>
+    <view class="dl-input-wrap"><view class="dl-input-label">{{copy.displayName}}</view><input class="dl-input" aria-label="{{copy.displayName}}" maxlength="40" placeholder="{{copy.displayNamePlaceholder}}" value="{{form.displayName}}" data-field="displayName" bindinput="input" /></view>
+    <view class="dl-input-wrap"><view class="dl-input-label">{{copy.cityArea}}</view><input class="dl-input" aria-label="{{copy.cityArea}}" maxlength="80" placeholder="{{copy.cityAreaPlaceholder}}" value="{{form.cityArea}}" data-field="cityArea" bindinput="input" /></view>
+    <view class="dl-input-wrap"><view class="dl-input-label">{{copy.availability}}</view><input class="dl-input" aria-label="{{copy.availability}}" maxlength="80" placeholder="{{copy.availabilityPlaceholder}}" value="{{form.availability}}" data-field="availability" bindinput="input" /></view>
     <view class="section-title">{{copy.channel}}</view>
     <view class="dl-input-wrap">
       <view class="contact-channel-list" aria-label="{{copy.channel}}">
@@ -12,10 +12,10 @@
     </view>
     <view wx:if="{{contactField}}" class="dl-input-wrap contact-value-wrap">
       <view class="dl-input-label">{{contactField.label}}</view>
-      <input class="dl-input" type="{{contactField.inputType}}" maxlength="{{contactField.maxLength}}" placeholder="{{contactField.placeholder}}" value="{{contact.value}}" data-field="value" bindinput="inputContact" adjust-position="true" cursor-spacing="24" />
+      <input class="dl-input" aria-label="{{contactField.label}}" type="{{contactField.inputType}}" maxlength="{{contactField.maxLength}}" placeholder="{{contactField.placeholder}}" value="{{contact.value}}" data-field="value" bindinput="inputContact" adjust-position="true" cursor-spacing="24" />
       <view class="dl-input-hint">{{contactField.hint}}</view>
     </view>
-    <view class="dl-input-wrap"><view class="dl-input-label">{{copy.note}}</view><textarea class="dl-input dl-textarea" maxlength="500" placeholder="{{copy.notePlaceholder}}" value="{{form.note}}" data-field="note" bindinput="input" /></view>
+    <view class="dl-input-wrap"><view class="dl-input-label">{{copy.note}}</view><textarea class="dl-input dl-textarea" aria-label="{{copy.note}}" maxlength="500" placeholder="{{copy.notePlaceholder}}" value="{{form.note}}" data-field="note" bindinput="input" /></view>
     <view wx:if="{{error}}" class="field-error">{{error}}</view>
   </view>
   <view class="action-bar"><button class="dl-button" loading="{{isSaving}}" bindtap="save">{{copy.save}}</button><button class="dl-button dl-button--ghost" bindtap="back">{{copy.back}}</button></view>

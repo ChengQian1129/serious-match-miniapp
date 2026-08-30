@@ -23,6 +23,17 @@
 .report-chapter-result__summary { margin-top: 12rpx; font-size: 26rpx; line-height: 42rpx; white-space: pre-line; }
 .report-details { margin-top: 48rpx; border-top: 2rpx solid var(--dl-black); }
 .report-details__toggle { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 24rpx; margin: 0; padding: 28rpx 0; border: 0; border-bottom: 2rpx solid var(--dl-grey-200); border-radius: 0; background: transparent; color: var(--dl-black); text-align: left; }
+.report-page .report-details__toggle,
+.report-page .report-chapter,
+.report-page .report-followup__button,
+.report-page .report-data__delete {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  margin-right: 0;
+  margin-left: 0;
+}
 .report-details__title { font-size: 30rpx; font-weight: 700; line-height: 42rpx; }
 .report-details__description { margin-top: 6rpx; color: var(--dl-grey-500); font-size: 24rpx; line-height: 38rpx; }
 .report-details__toggle > .dl-chevron { flex: 0 0 auto; color: var(--dl-grey-500); font-size: 34rpx; }

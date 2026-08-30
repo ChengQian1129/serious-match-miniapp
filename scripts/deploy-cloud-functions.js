@@ -32,6 +32,10 @@ if (result.error) {
   console.error(result.error.message)
   process.exit(1)
 }
+if (/需要重新登录|please\s+(?:sign|log)\s+in|re-?login/i.test(output)) {
+  console.error('WeChat DevTools is signed out. Log in to DevTools, reopen the project, then rerun npm run deploy:cloud.')
+  process.exit(1)
+}
 if (Number(result.status) !== 0 || /fail to deploy|\|\s+false\s+\||× deploy cloudfunctions/i.test(output)) {
   console.error('Cloud function deployment did not complete successfully.')
   process.exit(1)

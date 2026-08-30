@@ -1,6 +1,6 @@
 .welcome-page {
-  --ink: #24172d;
-  --paper: #fbf5ec;
+  --ink: var(--dl-black);
+  --paper: #fbfbfa;
   display: flex;
   min-height: 100vh;
   box-sizing: border-box;
@@ -12,24 +12,35 @@
 
 .welcome-head { display: flex; align-items: center; min-height: 58rpx; }
 .welcome-brand { display: flex; align-items: center; gap: 14rpx; font-size: 25rpx; font-weight: 700; letter-spacing: 1rpx; }
-.welcome-brand__symbol { position: relative; width: 34rpx; height: 30rpx; }
-.welcome-brand__symbol view { position: absolute; width: 15rpx; height: 26rpx; background: var(--ink); transform: skewY(-28deg); }
-.welcome-brand__symbol view:first-child { top: 2rpx; left: 1rpx; }
-.welcome-brand__symbol view:last-child { right: 1rpx; bottom: 1rpx; opacity: .35; }
+.welcome-brand__symbol { position: relative; width: 42rpx; height: 36rpx; }
+.welcome-brand__bar { position: absolute; width: 16rpx; height: 30rpx; background: var(--ink); transform: skewY(28deg); }
+.welcome-brand__bar--first { top: 5rpx; left: 5rpx; }
+.welcome-brand__bar--last { right: 5rpx; bottom: 5rpx; }
 
 .welcome-copy { flex: 1 1 auto; padding: 150rpx 0 70rpx; animation: welcome-in 620ms cubic-bezier(.2,.8,.2,1) both; }
 .welcome-title { width: 100%; max-width: none; min-width: 0; font-size: 54rpx; font-weight: 700; line-height: 1.22; white-space: pre-line; }
-.welcome-body { width: 100%; max-width: none; min-width: 0; margin-top: 42rpx; color: var(--ink); font-size: 28rpx; line-height: 48rpx; }
+.welcome-body { width: 100%; max-width: none; min-width: 0; margin-top: 42rpx; color: var(--ink); font-size: 28rpx; line-height: 48rpx; overflow-wrap: anywhere; }
 .welcome-body__intro { color: var(--ink); font-weight: 700; }
-.welcome-question { margin-top: 22rpx; padding-left: 28rpx; border-left: 4rpx solid rgba(36, 23, 45, .18); }
+.welcome-question { margin-top: 22rpx; padding-left: 28rpx; border-left: 4rpx solid rgba(10, 10, 10, .18); }
 .welcome-body__boundary { margin-top: 38rpx; }
 .welcome-body__closing { margin-top: 8rpx; }
-.welcome-meta { margin-top: 36rpx; color: rgba(36, 23, 45, .58); font-size: 23rpx; line-height: 36rpx; }
+.welcome-meta { margin-top: 36rpx; color: rgba(10, 10, 10, .58); font-size: 24rpx; line-height: 38rpx; }
 
 .welcome-actions { animation: welcome-in 620ms 100ms cubic-bezier(.2,.8,.2,1) both; }
 .welcome-primary { display: flex; width: 100%; min-height: 100rpx; align-items: center; justify-content: center; margin: 0; padding: 22rpx 28rpx; border: 0; border-radius: 0; color: var(--paper); background: var(--ink); font-size: 29rpx; font-weight: 700; line-height: 42rpx; }
 .welcome-primary__arrow { margin-left: 18rpx; font-size: 35rpx; line-height: 35rpx; }
-.welcome-method { width: 100%; margin: 22rpx 0 0; padding: 12rpx 0; border: 0; background: transparent; color: var(--ink); font-size: 25rpx; line-height: 42rpx; text-decoration: underline; }
+.welcome-method { width: 100%; min-height: 88rpx; margin: 22rpx 0 0; padding: 22rpx 0; border: 0; background: transparent; color: var(--ink); font-size: 25rpx; line-height: 42rpx; text-decoration: underline; }
+.welcome-privacy { width: 100%; min-height: 88rpx; margin: 4rpx 0 0; padding: 24rpx 0; border: 0; background: transparent; color: rgba(10, 10, 10, .58); font-size: 23rpx; line-height: 38rpx; text-decoration: underline; }
+.welcome-page .welcome-primary,
+.welcome-page .welcome-method,
+.welcome-page .welcome-privacy {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  margin-right: 0;
+  margin-left: 0;
+}
 .welcome-method-sheet__copy, .welcome-method-sheet__focus { white-space: pre-line; }
 .welcome-method-sheet__focus { margin-top: 18rpx; font-weight: 600; }
 
@@ -39,5 +50,5 @@
   .welcome-page { padding-right: var(--dl-gutter); padding-left: var(--dl-gutter); }
   .welcome-copy { padding-top: 108rpx; padding-bottom: 48rpx; }
   .welcome-title { font-size: 45rpx; }
-  .welcome-body { font-size: 26rpx; line-height: 44rpx; }
+  .welcome-body { font-size: 27rpx; line-height: 46rpx; }
 }

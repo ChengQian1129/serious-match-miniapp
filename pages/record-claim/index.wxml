@@ -1,6 +1,6 @@
 <view wx:if="{{claim}}" class="page page--with-action claim-page claim-enter">
   <view class="claim-header">
-    <button class="claim-back" bind:tap="returnReport"><text>‹</text>回到你的结果</button>
+    <button class="claim-back" bind:tap="returnReport"><text class="claim-back__icon">‹</text>回到你的结果</button>
     <view class="page-kicker">为什么这么说</view>
     <view class="claim-title">{{claim.title}}</view>
     <view class="claim-text">{{claim.text}}</view>
@@ -8,7 +8,7 @@
   </view>
 
   <view class="claim-section">
-    <button class="claim-evidence-toggle" bind:tap="toggleEvidence">
+    <button class="claim-evidence-toggle" bind:tap="toggleEvidence" aria-expanded="{{evidenceExpanded}}">
       {{evidenceExpanded ? '收起' : evidenceCopy.toggle}}<text class="dl-chevron">{{evidenceExpanded ? '⌃' : '›'}}</text>
     </button>
     <view wx:if="{{evidenceExpanded}}" class="claim-evidence-panel">

@@ -1,13 +1,13 @@
 <view class="page followup-settings">
   <view class="page-header"><view class="page-kicker">{{copy.kicker}}</view><view class="page-title">{{copy.title}}</view><view class="page-desc">{{copy.description}}</view></view>
   <view class="dl-list consent-list">
-    <button wx:for="{{scopes}}" wx:key="scope" class="dl-list-row dl-list-row--button consent-row" data-scope="{{item.scope}}" bindtap="toggle">
+    <button wx:for="{{scopes}}" wx:key="scope" class="dl-list-row dl-list-row--button consent-row" data-scope="{{item.scope}}" aria-role="checkbox" aria-label="{{item.title}}" aria-checked="{{item.checked}}" disabled="{{isSaving || isDeleting}}" hover-class="consent-row--pressed" bindtap="toggle">
       <view class="dl-list-row__body"><view class="dl-list-row__title">{{item.title}}</view><view class="dl-list-row__desc">{{item.desc}}</view></view>
       <view class="consent-toggle {{item.checked ? 'consent-toggle--on' : ''}}"><view class="consent-toggle__dot"></view></view>
     </button>
   </view>
-  <view class="followup-settings__actions"><button class="dl-button" loading="{{isSaving}}" bindtap="save">{{copy.save}}</button><button wx:if="{{hasProfile || requiresContact}}" class="dl-button dl-button--outline" bindtap="editProfile">{{hasProfile ? copy.manageProfile : copy.fillProfile}}</button></view>
+  <view class="followup-settings__actions"><button class="dl-button" loading="{{isSaving}}" disabled="{{isDeleting}}" bindtap="save">{{copy.save}}</button><button wx:if="{{hasProfile || requiresContact}}" class="dl-button dl-button--outline" disabled="{{isSaving || isDeleting}}" bindtap="editProfile">{{hasProfile ? copy.manageProfile : copy.fillProfile}}</button></view>
   <view wx:if="{{error}}" class="field-error followup-settings__error">{{error}}</view>
   <view class="section-title">{{copy.deleteTitle}}</view>
-  <view class="danger-zone"><view class="dl-list-row__desc">{{copy.deleteBody}}</view><button class="dl-button dl-button--danger" loading="{{isDeleting}}" bindtap="deleteRegistration">{{copy.deleteAction}}</button></view>
+  <view class="danger-zone"><view class="dl-list-row__desc">{{copy.deleteBody}}</view><button class="dl-button dl-button--danger" loading="{{isDeleting}}" disabled="{{isSaving}}" bindtap="deleteRegistration">{{copy.deleteAction}}</button></view>
 </view>

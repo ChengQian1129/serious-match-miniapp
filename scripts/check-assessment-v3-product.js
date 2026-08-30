@@ -12,7 +12,6 @@ const { derivePatternEligibility, evaluatePattern } = require('../shared/assessm
 const root = path.resolve(__dirname, '..')
 assert.equal(fs.readFileSync(normative.outputPath, 'utf8'), normative.render(normative.buildBundle()), 'generated V3 product normative bundle is stale; run npm run sync:assessment-v3-product')
 const routes = [
-  'pages/v3-product-preview/index',
   'pages/v3-checkpoint/index',
   'pages/v3-result/index',
   'pages/v3-result-evidence/index'
@@ -23,7 +22,10 @@ routes.forEach(route => {
   assert.ok(fs.existsSync(path.join(root, `${route}.js`)), `${route}.js is missing`)
   assert.ok(fs.existsSync(path.join(root, `${route}.wxml`)), `${route}.wxml is missing`)
 })
-assert.equal(FEATURES.v3ProductPreview, true)
+assert.equal(app.pages.includes('pages/v3-product-preview/index'), false, 'Preview page must stay out of the public app manifest')
+assert.ok(fs.existsSync(path.join(root, 'pages/v3-product-preview/index.js')), 'Preview page source is missing for internal regression tests')
+assert.equal(FEATURES.v3ProductV0, true)
+assert.equal(FEATURES.v3ProductPreview, false)
 assert.equal(FEATURES.v3CalibratedProduction, false)
 assert.equal(listFixtures().length >= 12, true)
 

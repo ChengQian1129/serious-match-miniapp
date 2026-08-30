@@ -78,7 +78,7 @@ function validateValue(entry, value) {
 }
 
 function optionLabel(entry, value) {
-  const format = formatForEntry(entry)
+  const format = resolvePublicFormat(entry && entry.item && entry.item.response, entry && entry.itemId, entry && entry.parent && entry.parent.taskId) || formatForEntry(entry)
   const raw = rawCode(value)
   if (Array.isArray(raw)) {
     return raw.map(code => optionLabel(entry, code)).filter(Boolean).join('、')
@@ -368,6 +368,8 @@ function answerItem(sessionInput, itemId, rawValue, timestamp = now()) {
 function markMissing(sessionInput, itemId, code, timestamp = now()) {
   if (!MISSINGNESS_CODES.includes(code)) throw new Error(`Invalid missingness code: ${code}`)
   const session = clone(sessionInput || createEmptySession(timestamp)); if (!getEntry(itemId)) throw new Error(`Unknown Product v0 item: ${itemId}`)
+  if (session.latestAnswers) delete session.latestAnswers[itemId]
+  if (session.answers) delete session.answers[itemId]
   session.missingness = Object.assign({}, session.missingness, { [itemId]: { code, markedAt: timestamp } }); session.updatedAt = timestamp
   return session
 }
@@ -439,8 +441,39 @@ function completeSession(sessionInput, timestamp = now()) {
 
 function publicTask(taskId) {
   const task = getTask(taskId); if (!task) return null
-  return Object.assign({}, task, { prompt: task.prompt || '', children: (task.children || []).map(child => Object.assign({}, child, { prompt: child.prompt || '' })) })
+  const publicCopy = BUNDLE.publicCopy || {}
+  const publicTask = Object.assign({}, task, {
+    prompt: publicPrompt((publicCopy.taskPrompts || {})[task.taskId] || task.prompt || ''),
+    section: task.freezeMeta && task.freezeMeta.chapter && (publicCopy.chapterTitles || {})[task.freezeMeta.chapter] || ''
+  })
+  if (Array.isArray(task.children)) {
+    publicTask.children = task.children.map(child => Object.assign({}, child, {
+      prompt: publicPrompt((publicCopy.childPrompts || {})[child.itemId] || child.prompt || '')
+    }))
+  }
+  return publicTask
 }
+
+function publicOptionLabels(responseSpec, itemId, parentTaskId) {
+  const format = resolveFormat(responseSpec)
+  if (!format) return {}
+  const publicCopy = BUNDLE.publicCopy || {}
+  return Object.assign({},
+    (publicCopy.responseFormatOptions || {})[responseSpec && responseSpec.formatRef] || {},
+    (publicCopy.taskOptions || {})[itemId] || {},
+    (publicCopy.taskSpecificOptions || {})[parentTaskId] || {}
+  )
+}
+
+function resolvePublicFormat(responseSpec, itemId, parentTaskId) {
+  const format = resolveFormat(responseSpec)
+  if (!format) return null
+  const labels = publicOptionLabels(responseSpec, itemId, parentTaskId)
+  if (!Object.keys(labels).length) return format
+  return Object.assign({}, format, { options: (format.options || []).map(option => Object.assign({}, option, labels[String(option.code)] ? { label: labels[String(option.code)] } : {})) })
+}
+
+function publicPrompt(value) { return String(value || '').replace(/\*\*/g, '') }
 
 module.exports = {
   BUNDLE,
@@ -464,6 +497,8 @@ module.exports = {
   completeSession,
   latestAnswersFromEvents,
   publicTask,
+  getPublicTask: publicTask,
+  resolvePublicFormat,
   scoreDimension,
   zone
 }

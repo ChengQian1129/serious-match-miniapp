@@ -226,9 +226,9 @@ product:
     patternSummary: 问卷只能先把线索放在一起，不能替你决定答案。
 productV0:
   pageTitle: 先从自己开始
-  intro: 这是一组帮助你整理关系想法的问题。完成后，你会看到一份基于自己回答的分层结果。
+  intro: 这是一组帮助你整理关系想法的问题。题目比较多，可以分几次完成，随时停下来。完成后，你会看到一份基于自己回答的分层结果。
   method: 结果仍在持续验证和调整，不是心理诊断。
-  progressTemplate: '{number} / 9'
+  progressTemplate: '第 {number} / {total} 部分'
   backAction: 返回
   continueAction: 继续
   resultAction: 查看结果
@@ -236,6 +236,7 @@ productV0:
   skipAction: 先不回答
   selectedMark: ●
   unselectedMark: ○
+  syncingLabel: 正在保存…
   errors:
     incompleteSelection: 这项选择还不完整
     saveFailed: 这项回答暂时无法保存
@@ -253,3 +254,52 @@ productV0:
     PART_B_L3_OPERATING_MODEL: 日常相处的安排
     PART_B_L4_PARTNER_DECISION: 你在意什么
     PART_B_L5_FUTURE_ORIENTATION: 之后想过怎样的生活
+  real:
+    preview:
+      eyebrow: 你的关系说明
+      title: 你的结果
+      intro: 这份结果根据你这次的回答整理，帮助你把想法、需要和相处方式分开看。
+      purpose: 它会把现在想不想开始、遇到变化时怎么做，以及靠近、支持和冲突后的节奏放在一起看。
+      value: 这里不会把你归进一个类型，而是保留几件可以带回真实生活继续观察的事。
+      boundary: 这套题仍会继续试用和调整，不是心理诊断，也不是专业机构使用的标准测试。
+      notice: 这份结果只基于你这次的回答；它描述的是现在的线索，不是固定结论。
+      choosePersona: 选择回答情况
+      choosePersonaHint: 请选择与你这次回答相符的内容。
+      startAction: 继续答题
+      fullReportAction: 查看完整结果
+      previewBadge: 本次回答
+      syncingLabel: 正在保存…
+      backAction: 返回
+      nextAction: 继续看下一部分
+      resultAction: 看完整结果
+      evidenceAction: 查看依据
+      evidenceCollapseAction: 收起依据
+      dimensionTitle: 这一部分还可以分开看
+      chapterNumber: 第 {number} 部分
+      chapterTransition: 下一部分，我们换一个角度继续看。
+      reportNotice: 这份结果基于你这次的回答，不是诊断，也不能替你预测一段关系会怎样发展。
+      reportSummaryTitle: 先看这 3 点
+      reportChapterTitle: 六个部分，放在一起看
+      reportDimensionTitle: 具体看每一处
+      reportDecisionTitle: 你希望怎样相处
+      reportUnknownTitle: 还有几件事，问卷看不出来
+      reportInterviewTitle: 如果之后聊一聊，可以重点聊这些
+      followupAction: 了解一下
+      reportMethodTitle: 这些结果怎么来的
+      continueAction: 回到答题
+      restartAction: 重新回答
+      restartDialogTitle: 重新回答？
+      restartDialogContent: 这会清除当前结果和回答，从头开始，操作不能撤回。
+      restartConfirm: 重新回答
+      deleteAction: 删除这次结果
+      deleteDialogTitle: 删除这次结果？
+      deleteDialogContent: 问卷、结果和本机保存的副本都会删除。删除后不能恢复。
+      deleteConfirm: 确认删除
+      deleteCancel: 取消
+      noEvidence: 这部分暂时没有可以展开的回答。
+      syntheticLabel: ''
+    method:
+      body: 这套题参考了一些关于恋爱关系、相处方式和冲突处理的研究。当前版本仍在试用和调整，不是心理诊断，也不是专业机构使用的标准测试。
+      privacy: 结果只基于你自己的回答。你可以随时修改回答或删除本次问卷和结果。
+    evidence:
+      sourceNote: 这里显示的是与你的这条结果直接相关的题目和回答，不是额外推断。

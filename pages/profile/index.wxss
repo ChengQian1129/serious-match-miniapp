@@ -41,6 +41,15 @@
   letter-spacing: 0;
 }
 
+.profile-page .profile-menu-button {
+  box-sizing: border-box;
+  width: 92rpx;
+  min-width: 92rpx;
+  max-width: 92rpx;
+  margin-right: 0;
+  margin-left: 0;
+}
+
 .profile-delete {
   color: #ff3b30;
 }

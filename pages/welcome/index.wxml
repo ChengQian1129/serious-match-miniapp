@@ -1,7 +1,7 @@
 <view class="welcome-page" style="padding-top: {{statusBarHeight}}px;">
   <view class="welcome-head">
     <view class="welcome-brand">
-      <view class="welcome-brand__symbol"><view></view><view></view></view>
+      <view class="welcome-brand__symbol"><view class="welcome-brand__bar welcome-brand__bar--first"></view><view class="welcome-brand__bar welcome-brand__bar--last"></view></view>
     </view>
   </view>
 
@@ -19,6 +19,7 @@
   <view class="welcome-actions">
     <button class="welcome-primary" bind:tap="begin">{{welcome.action}}<text class="welcome-primary__arrow">↗</text></button>
     <button class="welcome-method" bind:tap="openMethod">{{welcome.methodAction}}</button>
+    <button class="welcome-privacy" bind:tap="openPrivacy">{{privacyAction}}</button>
   </view>
 </view>
 

@@ -6,8 +6,8 @@
 
   <view class="section-title section-title--first">信息处理</view>
   <view class="dl-list privacy-list">
-    <view class="dl-list-row privacy-row"><view class="privacy-index">01</view><view class="dl-list-row__body"><view class="dl-list-row__title">保存的信息</view><view class="dl-list-row__desc">包括问卷回答、回答时间、每部分结果和修改记录。不填写联系方式也能完成答题。</view></view></view>
-    <view class="dl-list-row privacy-row"><view class="privacy-index">02</view><view class="dl-list-row__body"><view class="dl-list-row__title">怎么使用</view><view class="dl-list-row__desc">只用于生成、保存和维护你的结果，不公开展示。</view></view></view>
+    <view class="dl-list-row privacy-row"><view class="privacy-index">01</view><view class="dl-list-row__body"><view class="dl-list-row__title">保存的信息</view><view class="dl-list-row__desc">包括问卷回答、回答时间、结果和修改记录。不填写联系方式也能完成答题。</view></view></view>
+    <view class="dl-list-row privacy-row"><view class="privacy-index">02</view><view class="dl-list-row__body"><view class="dl-list-row__title">怎么使用</view><view class="dl-list-row__desc">只用于生成、保存和维护你的结果，不公开展示。当前结果仍在试用和调整，不是心理诊断。</view></view></view>
     <view class="dl-list-row privacy-row"><view class="privacy-index">03</view><view class="dl-list-row__body"><view class="dl-list-row__title">{{privacy.retentionTitle}}</view><view class="dl-list-row__desc">{{privacy.retention}}</view></view></view>
     <view class="dl-list-row privacy-row"><view class="privacy-index">04</view><view class="dl-list-row__body"><view class="dl-list-row__title">{{privacy.rightsTitle}}</view><view class="dl-list-row__desc">{{privacy.rights}}</view></view></view>
   </view>

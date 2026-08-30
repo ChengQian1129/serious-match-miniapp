@@ -1,5 +1,14 @@
 .followup-settings { padding-bottom: calc(72rpx + env(safe-area-inset-bottom)); }
 .consent-row { min-height: 164rpx; padding: 24rpx 0; }
+.consent-row--pressed { background: var(--dl-grey-50); }
+.followup-settings .consent-row {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  margin-right: 0;
+  margin-left: 0;
+}
 .consent-toggle { display: flex; width: 86rpx; height: 50rpx; flex: 0 0 86rpx; align-items: center; padding: 5rpx; border-radius: 25rpx; background: var(--dl-grey-200); transition: background 160ms ease-out; }
 .consent-toggle__dot { width: 40rpx; height: 40rpx; border-radius: 50%; background: white; box-shadow: 0 2rpx 8rpx rgba(0,0,0,.12); transition: transform 160ms ease-out; }
 .consent-toggle--on { background: var(--dl-black); }

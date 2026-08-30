@@ -3,6 +3,14 @@
 .share-desc { margin-top: 22rpx; color: var(--dl-grey-500); font-size: 25rpx; line-height: 42rpx; }
 .share-options { margin-top: 44rpx; border-top: 2rpx solid var(--dl-black); }
 .share-option { display: grid; width: 100%; grid-template-columns: 42rpx minmax(0, 1fr); gap: 12rpx; margin: 0; padding: 24rpx 0; border: 0; border-bottom: 2rpx solid var(--dl-grey-200); border-radius: 0; background: transparent; color: var(--dl-black); font-size: 27rpx; line-height: 42rpx; text-align: left; }
+.share-page .share-option {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  margin-right: 0;
+  margin-left: 0;
+}
 .share-option__check { color: #a34a36; font-weight: 700; }
 .share-option__category { display: block; margin-bottom: 6rpx; color: var(--dl-grey-500); font-size: 21rpx; line-height: 30rpx; }
 .share-generate { margin-top: 34rpx; }

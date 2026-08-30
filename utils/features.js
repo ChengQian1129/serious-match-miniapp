@@ -1,4 +1,4 @@
-// Public product boundaries for the 2.1 pilot.
+// Public product boundaries for the Product v0 release.
 const FEATURES = Object.freeze({
   friendComparison: false,
   matchingProfile: false,
@@ -7,8 +7,8 @@ const FEATURES = Object.freeze({
   interviewResearchConsent: true,
   v3Pilot: false,
   v3P0Research: false,
-  v3ProductV0: false,
-  v3ProductPreview: true,
+  v3ProductV0: true,
+  v3ProductPreview: false,
   v3CalibratedProduction: false
 })
 

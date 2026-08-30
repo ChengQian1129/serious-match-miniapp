@@ -1,35 +1,37 @@
 <view wx:if="{{ready}}" class="page product-v0-page">
   <view class="product-v0-shell">
-    <view class="product-v0-intro">
+    <view wx:if="{{showIntro}}" class="product-v0-intro">
       <view class="product-v0-kicker">{{progressLabel}}</view>
-      <view class="product-v0-title">{{copy.title}}</view>
+      <view class="product-v0-title">{{copy.pageTitle}}</view>
       <view class="product-v0-intro__body">{{copy.intro}}</view>
       <view class="product-v0-intro__note">{{copy.method}}</view>
     </view>
+    <view wx:if="{{!showIntro}}" class="product-v0-context">{{progressLabel}}</view>
     <view class="product-v0-topline">
       <button class="product-v0-back" bind:tap="handleBack">{{copy.backAction}}</button>
       <view class="product-v0-chapter">{{chapterLabel}}</view>
       <view class="product-v0-count">{{progressPercentLabel}}</view>
     </view>
-    <view class="product-v0-progress"><view class="product-v0-progress__bar" style="width: {{progressPercentLabel}};"></view></view>
+    <view class="product-v0-progress"><view class="product-v0-progress__bar" style="width: {{progressWidth}};"></view></view>
     <view wx:if="{{task}}" class="product-v0-task {{motionClass}}">
       <view class="product-v0-question">{{task.prompt}}</view>
       <view wx:for="{{items}}" wx:key="itemId" wx:for-item="answerItem" class="product-v0-item">
         <view wx:if="{{items.length > 1}}" class="product-v0-item__prompt">{{answerItem.prompt}}</view>
         <view wx:if="{{answerItem.type === 'single_select'}}" class="product-v0-options">
-          <button wx:for="{{answerItem.options}}" wx:key="code" wx:for-item="option" class="product-v0-option {{option.selected ? 'product-v0-option--selected' : ''}}" data-item-id="{{answerItem.itemId}}" data-value="{{option.code}}" bind:tap="chooseAnswer">
-            <text class="product-v0-option__dot">{{option.selected ? answerItem.selectedMark : copy.unselectedMark}}</text><text>{{option.label}}</text>
+          <button wx:for="{{answerItem.options}}" wx:key="code" wx:for-item="option" class="product-v0-option {{option.selected ? 'product-v0-option--selected' : ''}}" hover-class="product-v0-option--pressed" data-item-id="{{answerItem.itemId}}" data-value="{{option.code}}" aria-role="radio" aria-label="{{option.label}}" aria-checked="{{option.selected}}" bind:tap="chooseAnswer">
+            <text class="product-v0-option__dot">{{option.selected ? answerItem.selectedMark : copy.unselectedMark}}</text><text class="product-v0-option__label">{{option.label}}</text>
           </button>
         </view>
         <view wx:if="{{answerItem.type === 'multi_select'}}" class="product-v0-options product-v0-options--multi">
-          <button wx:for="{{answerItem.options}}" wx:key="code" wx:for-item="option" class="product-v0-option {{option.selected ? 'product-v0-option--selected' : ''}}" data-item-id="{{answerItem.itemId}}" data-value="{{option.code}}" bind:tap="chooseAnswer">
-            <text class="product-v0-option__dot">{{option.selected ? answerItem.selectedMark : copy.unselectedMark}}</text><text>{{option.label}}</text>
+          <button wx:for="{{answerItem.options}}" wx:key="code" wx:for-item="option" class="product-v0-option {{option.selected ? 'product-v0-option--selected' : ''}}" hover-class="product-v0-option--pressed" data-item-id="{{answerItem.itemId}}" data-value="{{option.code}}" aria-role="checkbox" aria-label="{{option.label}}" aria-checked="{{option.selected}}" bind:tap="chooseAnswer">
+            <text class="product-v0-option__dot">{{option.selected ? answerItem.selectedMark : copy.unselectedMark}}</text><text class="product-v0-option__label">{{option.label}}</text>
           </button>
         </view>
-        <input wx:if="{{answerItem.type === 'number' || answerItem.type === 'free_text'}}" class="product-v0-input" type="{{answerItem.type === 'number' ? 'number' : 'text'}}" value="{{answerItem.value}}" placeholder="{{copy.inputPlaceholder}}" data-item-id="{{answerItem.itemId}}" bindinput="handleInput" />
-        <button wx:if="{{answerItem.canSkip}}" class="product-v0-skip" data-item-id="{{answerItem.itemId}}" bind:tap="skipItem">{{copy.skipAction}}</button>
+        <input wx:if="{{answerItem.type === 'number' || answerItem.type === 'free_text'}}" class="product-v0-input" type="{{answerItem.type === 'number' ? 'number' : 'text'}}" aria-label="{{answerItem.prompt}}" value="{{answerItem.value}}" placeholder="{{copy.inputPlaceholder}}" data-item-id="{{answerItem.itemId}}" bindinput="handleInput" bindblur="handleInputBlur" />
+        <button wx:if="{{answerItem.canSkip}}" class="product-v0-skip" hover-class="product-v0-skip--pressed" data-item-id="{{answerItem.itemId}}" bind:tap="skipItem">{{copy.skipAction}}</button>
       </view>
     </view>
   </view>
+  <view wx:if="{{syncing || syncError}}" class="product-v0-sync"><text wx:if="{{syncing}}">{{copy.syncingLabel}}</text><text wx:if="{{syncError}}">{{syncError}}</text></view>
   <view class="action-bar product-v0-actions"><button class="dl-button" disabled="{{!canContinue}}" bind:tap="handleContinue">{{continueLabel}}</button></view>
 </view>

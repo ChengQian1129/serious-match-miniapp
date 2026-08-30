@@ -91,12 +91,17 @@ function completeAssessmentToCloud(session, callbacks) {
   return callProfile('assessmentComplete', { session }, callbacks)
 }
 
-function getAssessmentFromCloud(assessmentId, callbacks) {
-  return callProfile('assessmentGet', { assessmentId }, callbacks)
+function getAssessmentFromCloud(assessmentId, callbacks, assessmentType) {
+  return callProfile('assessmentGet', { assessmentId, assessmentType }, callbacks)
 }
-function getAssessmentHistoryFromCloud(callbacks) {
-  return callProfile('assessmentHistory', {}, callbacks)
+function getAssessmentHistoryFromCloud(callbacks, assessmentType) {
+  return callProfile('assessmentHistory', { assessmentType }, callbacks)
 }
+function saveProductV0DraftToCloud(session, callbacks) { return callProfile('assessmentSaveDraft', { session }, callbacks) }
+function completeProductV0ToCloud(session, callbacks) { return callProfile('assessmentComplete', { session }, callbacks) }
+function getProductV0FromCloud(assessmentId, callbacks) { return getAssessmentFromCloud(assessmentId, callbacks, 'v3-product-v0') }
+function getProductV0HistoryFromCloud(callbacks) { return getAssessmentHistoryFromCloud(callbacks, 'v3-product-v0') }
+function deleteProductV0FromCloud(callbacks) { return callProfile('assessmentDelete', { assessmentType: 'v3-product-v0' }, callbacks) }
 
 function appendAssessmentFeedbackToCloud(reportId, feedbackEvent, callbacks) {
   return callProfile('assessmentFeedbackAppend', { reportId, feedbackEvent }, callbacks)
@@ -135,6 +140,11 @@ module.exports = {
   completeAssessmentToCloud,
   getAssessmentFromCloud,
   getAssessmentHistoryFromCloud,
+  saveProductV0DraftToCloud,
+  completeProductV0ToCloud,
+  getProductV0FromCloud,
+  getProductV0HistoryFromCloud,
+  deleteProductV0FromCloud,
   appendAssessmentFeedbackToCloud,
   saveAssessmentShareSettings,
   deleteCloudProfile,

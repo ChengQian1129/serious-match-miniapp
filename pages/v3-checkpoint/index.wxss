@@ -18,7 +18,7 @@
 }
 
 .v3-text-action {
-  min-height: 52rpx;
+  min-height: 88rpx;
   margin: 0;
   padding: 8rpx 0;
   border: 0;
@@ -125,7 +125,7 @@
 }
 
 .v3-evidence-link {
-  min-height: 52rpx;
+  min-height: 88rpx;
   margin: 14rpx 0 0;
   padding: 8rpx 0;
   border: 0;
@@ -135,6 +135,26 @@
   line-height: 36rpx;
   text-align: left;
   text-decoration: underline;
+}
+
+/* Keep inline navigation compact, while evidence and footer actions span the reading column. */
+.v3-checkpoint-page .v3-checkpoint-topline .v3-text-action {
+  box-sizing: border-box;
+  width: auto;
+  min-width: 88rpx;
+  max-width: 100%;
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.v3-checkpoint-page .v3-text-action--center,
+.v3-checkpoint-page .v3-evidence-link {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  margin-right: 0;
+  margin-left: 0;
 }
 
 .v3-checkpoint-transition {

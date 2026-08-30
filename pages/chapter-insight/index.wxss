@@ -9,9 +9,10 @@
 
 .chapter-insight__back {
   display: flex;
+  min-height: 88rpx;
   align-items: center;
   margin: 0 0 42rpx;
-  padding: 0;
+  padding: 26rpx 0;
   border: 0;
   background: transparent;
   color: var(--dl-grey-500);
@@ -19,7 +20,16 @@
   line-height: 36rpx;
 }
 
-.chapter-insight__back text {
+.chapter-insight-page .chapter-insight__back {
+  box-sizing: border-box;
+  width: auto;
+  min-width: 88rpx;
+  max-width: 100%;
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.chapter-insight__back-icon {
   margin-right: 6rpx;
   color: var(--dl-black);
   font-size: 36rpx;
@@ -60,7 +70,7 @@
 .chapter-insight__evidence-toggle {
   display: flex;
   width: 100%;
-  min-height: 82rpx;
+  min-height: 88rpx;
   align-items: center;
   justify-content: space-between;
   margin: 0;
@@ -77,6 +87,16 @@
 .chapter-insight__evidence-toggle .dl-chevron {
   color: var(--dl-grey-500);
   font-size: 32rpx;
+}
+
+.chapter-insight-page .chapter-insight__evidence-toggle,
+.chapter-insight-page .chapter-insight__later {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  margin-right: 0;
+  margin-left: 0;
 }
 
 .chapter-insight__evidence-list {
@@ -113,8 +133,10 @@
 
 .chapter-insight__later {
   width: 100%;
+  min-height: 88rpx;
+  box-sizing: border-box;
   margin: 14rpx 0 0;
-  padding: 16rpx;
+  padding: 26rpx 16rpx;
   border: 0;
   background: transparent;
   color: var(--dl-grey-500);

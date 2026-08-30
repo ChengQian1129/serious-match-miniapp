@@ -195,8 +195,8 @@ function main() {
   const forbidden = readYaml('PUBLIC_FORBIDDEN_LANGUAGE.yaml')
   const publicUi = {
     navigation: pickPublic(ui.navigation, ['globalFallback', 'welcome', 'home', 'questionnaire', 'chapterInsight', 'result', 'relationshipMapRouteVisibleTitle', 'claimEvidence', 'followupIntro', 'followupSettings', 'profile', 'privacy', 'v3Pilot']),
-    welcome: pickPublic(ui.welcome, ['title', 'intro', 'questions', 'boundary', 'meta', 'action', 'methodAction']),
-    home: pickPublic(ui.home, ['titleFirstTime', 'titleResume', 'description', 'exampleLabel', 'example', 'action', 'guideAction', 'progressTitle', 'completedTitle', 'completedDescription', 'topicsTitle', 'topics', 'followupHint']),
+    welcome: pickPublic(ui.welcome, ['title', 'intro', 'questions', 'boundary', 'meta', 'action', 'methodAction', 'privacyAction']),
+    home: pickPublic(ui.home, ['titleFirstTime', 'titleResume', 'description', 'exampleLabel', 'example', 'action', 'guideAction', 'progressTitle', 'completedTitle', 'completedDescription', 'progressDescriptionTemplate', 'privacyAction', 'deleteAction', 'deleteDialogTitle', 'deleteDialogContent', 'deleteConfirm', 'deleteCancel', 'deleteSuccess', 'retryAction', 'topicsTitle', 'topics', 'followupHint']),
     methodGuide: pickPublic(ui.methodGuide, ['title', 'body', 'focus', 'detailAction', 'closeAction']),
     chapters: projectChapters(ui.chapters),
     chapterInsight: projectChapterInsight(ui.chapterInsight),

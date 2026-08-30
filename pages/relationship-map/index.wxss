@@ -58,7 +58,7 @@
   gap: 18rpx;
 }
 
-.map-section__heading > view:last-child {
+.map-section__heading-body {
   min-width: 0;
 }
 
@@ -147,6 +147,19 @@
 
 .map-claim--active {
   background: var(--dl-grey-50);
+}
+
+.relationship-map .map-claim,
+.relationship-map .map-history,
+.relationship-map .map-next__button,
+.relationship-map .dl-list-row--button,
+.relationship-map .dl-button {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  margin-right: 0;
+  margin-left: 0;
 }
 
 .map-claim__topline,

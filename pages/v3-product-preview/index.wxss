@@ -98,6 +98,16 @@
   background: #f0f0ee;
 }
 
+.v3-preview-page .v3-persona,
+.v3-preview-page .v3-preview-secondary {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  margin-right: 0;
+  margin-left: 0;
+}
+
 .v3-persona__body {
   min-width: 0;
   flex: 1;
