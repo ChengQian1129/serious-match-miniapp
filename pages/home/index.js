@@ -10,6 +10,7 @@ const { navigateOnce, resetNavigation } = require('../../utils/navigation')
 const { recordEvent } = require('../../utils/storage')
 const { home, guide, CONTENT_VERSION } = require('../../shared/content/ui-copy')
 const PRODUCT_V0_COPY = require('../../shared/content/public-language.generated').v3.productV0
+const { resolveProductRestoreDecision, updatedAt } = require('../../utils/assessment-v3-product-v0/restore')
 
 function progressPercentLabel(ratio) {
   if (ratio > 0 && ratio < 0.01) return '<1%'
@@ -104,8 +105,8 @@ Page({
       recordEvent('home_view')
       return
     }
-    this.applyProductState(session, { restoreState: 'RESTORING' })
     if (!this._productRestoreAttempted) {
+      this.applyProductState(session, { restoreState: 'RESTORING' })
       const restoreToken = (this._productRestoreToken || 0) + 1
       this._productRestoreToken = restoreToken
       this._productRestoreAttempted = true
@@ -114,9 +115,9 @@ Page({
         success: data => {
           if (restoreToken !== this._productRestoreToken || this._productRestoreCancelled) return
           const local = productStore.getSession()
-          const localHasUnsyncedAnswers = local.answerEvents.length > 0 && local.status === 'pending_cloud'
-          const remoteIsNewer = data.session && Number(data.session.updatedAt) > Number(local.updatedAt)
-          if (remoteIsNewer && localHasUnsyncedAnswers) {
+          const remote = data && data.session || null
+          const decision = resolveProductRestoreDecision(local, remote)
+          if (decision === 'conflict') {
             this._productRemoteCandidate = data
             this._productRestoreAttempted = true
             this.setData({
@@ -131,20 +132,23 @@ Page({
             recordEvent('assessment_restore_fail', { networkState: 'conflict' })
             return
           }
-          if (data.session && (!productStore.hasSession() || remoteIsNewer)) productStore.replaceSession(data.session)
-          if (data.session && data.session.status !== 'completed') productStore.clearReport()
-          const localReport = productStore.getReport()
-          const cloudReport = data.report
-          const cloudVersion = Number(cloudReport && cloudReport.reportVersion) || 0
-          const localVersion = Number(localReport && localReport.reportVersion) || 0
-          const cloudGeneratedAt = Number(cloudReport && cloudReport.generatedAt) || Number(data.session && data.session.completedAt) || 0
-          const localGeneratedAt = Number(localReport && localReport.generatedAt) || Number(local.completedAt) || 0
-          if (cloudReport && (!localReport || cloudVersion > localVersion || (cloudVersion === localVersion && cloudGeneratedAt > localGeneratedAt))) productStore.replaceReport(cloudReport)
+          if (decision === 'local-sync') return this.syncRestoredLocal(local, restoreToken)
+          if (decision === 'cloud' && remote) productStore.replaceSession(remote)
+          if (decision === 'cloud' && remote && remote.status !== 'completed') productStore.clearReport()
+          if (decision === 'cloud') {
+            const localReport = productStore.getReport()
+            const cloudReport = data && data.report
+            const cloudVersion = Number(cloudReport && cloudReport.reportVersion) || 0
+            const localVersion = Number(localReport && localReport.reportVersion) || 0
+            const cloudGeneratedAt = Number(cloudReport && cloudReport.generatedAt) || Number(remote && remote.completedAt) || 0
+            const localGeneratedAt = Number(localReport && localReport.generatedAt) || Number(local.completedAt) || 0
+            if (cloudReport && (!localReport || cloudVersion > localVersion || (cloudVersion === localVersion && cloudGeneratedAt > localGeneratedAt))) productStore.replaceReport(cloudReport)
+          }
           this._productRestoreAttempted = false
           this._productRemoteCandidate = null
           this.applyProductState(productStore.getSession(), { restoreState: 'READY' })
           this.setData({ productSyncError: '', productRestoreError: '' })
-          recordEvent('assessment_restore_success', { networkState: 'online' })
+          recordEvent('assessment_restore_success', { networkState: decision === 'new' ? 'online_empty' : decision })
           this.orchestrateStartIntent()
         },
         fail: error => {
@@ -158,6 +162,32 @@ Page({
       })
     }
     recordEvent('home_view')
+  },
+
+  syncRestoredLocal(session, restoreToken) {
+    const requestedRevision = `${updatedAt(session)}|${(session.answerEvents || []).length}|${session.status || ''}`
+    cloud.saveProductV0DraftToCloud(session, {
+      success: data => {
+        if (restoreToken !== this._productRestoreToken || this._productRestoreCancelled) return
+        const current = productStore.getSession()
+        const currentRevision = `${updatedAt(current)}|${(current.answerEvents || []).length}|${current.status || ''}`
+        if (currentRevision !== requestedRevision) return this.syncRestoredLocal(current, restoreToken)
+        productStore.markSynced(data && data.syncedAt)
+        this._productRestoreAttempted = true
+        this.applyProductState(productStore.getSession(), { restoreState: 'READY' })
+        this.setData({ productSyncError: '', productRestoreError: '' })
+        recordEvent('assessment_restore_success', { networkState: 'local_preferred_synced' })
+        this.orchestrateStartIntent()
+      },
+      fail: error => {
+        if (restoreToken !== this._productRestoreToken || this._productRestoreCancelled) return
+        this._productRestoreAttempted = true
+        this.applyProductState(productStore.getSession(), { restoreState: 'READY' })
+        this.setData({ productSyncError: cloud.cloudErrorMessage(error), productRestoreError: '' })
+        recordEvent('assessment_restore_fail', { networkState: 'local_preferred_sync_failed' })
+        this.orchestrateStartIntent()
+      }
+    })
   },
 
   applyProductState(session, options = {}) {

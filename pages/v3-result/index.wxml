@@ -36,7 +36,7 @@
       <view class="v3-result-section__title">{{copy.preview.journeyTitle}}</view>
       <view class="v3-result-section__hint">{{completedSectionsLabel}}</view>
       <view class="v3-journey-list">
-        <view wx:for="{{journeySections}}" wx:key="id" wx:for-item="section" class="v3-journey-item {{section.status === 'locked' ? 'v3-journey-item--locked' : ''}}">
+        <view wx:for="{{journeySections}}" wx:key="id" wx:for-item="section" id="{{section.id}}" class="v3-journey-item {{section.status === 'locked' ? 'v3-journey-item--locked' : ''}}">
           <button wx:if="{{section.canOpen}}" class="v3-journey-item__button" data-section-id="{{section.id}}" bind:tap="openSection">
             <view class="v3-journey-item__body">
               <view class="v3-journey-item__topline"><text>{{section.sectionNumber}} / {{section.sectionCount}}</text><text>{{section.statusLabel}}</text></view>
@@ -89,7 +89,7 @@
               <text>{{copy.preview.dimensionTitle}}</text><text class="dl-chevron">{{chapter.expanded ? '⌃' : '›'}}</text>
             </button>
             <view wx:if="{{chapter.expanded}}" class="v3-result-chapter__dimension-list">
-              <view wx:for="{{chapter.dimensionCards}}" wx:key="id" wx:for-item="dimension" class="v3-result-dimension">
+          <view wx:for="{{chapter.dimensionCards}}" wx:key="id" wx:for-item="dimension" id="dimension-{{dimension.id}}" class="v3-result-dimension">
                 <view class="v3-result-dimension__title">{{dimension.title}}</view>
                 <view class="v3-result-dimension__headline">{{dimension.headline}}</view>
                 <view class="v3-result-dimension__summary">{{dimension.summary}}</view>

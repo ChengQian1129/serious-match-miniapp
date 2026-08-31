@@ -666,13 +666,13 @@
   },
   {
     "surface": "pages/chapter-insight/index.wxml",
-    "key": "text.33",
-    "text": "稍后继续"
+    "key": "text.3",
+    "text": "修改这一部分"
   },
   {
     "surface": "pages/chapter-insight/index.wxml",
-    "key": "text.3",
-    "text": "修改这一部分"
+    "key": "text.33",
+    "text": "稍后继续"
   },
   {
     "surface": "pages/chapter-insight/index.wxml",
@@ -706,6 +706,11 @@
   },
   {
     "surface": "pages/home/index.js",
+    "key": "literal.1",
+    "text": "继续答题"
+  },
+  {
+    "surface": "pages/home/index.js",
     "key": "literal.10",
     "text": "查看结果"
   },
@@ -728,11 +733,6 @@
     "surface": "pages/home/index.js",
     "key": "literal.14",
     "text": "开始"
-  },
-  {
-    "surface": "pages/home/index.js",
-    "key": "literal.1",
-    "text": "继续答题"
   },
   {
     "surface": "pages/home/index.js",
@@ -816,6 +816,11 @@
   },
   {
     "surface": "pages/privacy/index.wxml",
+    "key": "text.2",
+    "text": "隐私说明"
+  },
+  {
+    "surface": "pages/privacy/index.wxml",
     "key": "text.22",
     "text": "04"
   },
@@ -823,11 +828,6 @@
     "surface": "pages/privacy/index.wxml",
     "key": "text.27",
     "text": "后续联系"
-  },
-  {
-    "surface": "pages/privacy/index.wxml",
-    "key": "text.2",
-    "text": "隐私说明"
   },
   {
     "surface": "pages/privacy/index.wxml",
@@ -871,13 +871,13 @@
   },
   {
     "surface": "pages/privacy/index.wxml",
-    "key": "text.40",
-    "text": "你可以随时取消后续联系，也可以删除联系信息。删除问卷和结果时，本次答题相关的记录也会一起删除。"
+    "key": "text.4",
+    "text": "问卷回答会默认保存在云端，方便你换设备后继续，也方便你随时修改或删除。"
   },
   {
     "surface": "pages/privacy/index.wxml",
-    "key": "text.4",
-    "text": "问卷回答会默认保存在云端，方便你换设备后继续，也方便你随时修改或删除。"
+    "key": "text.40",
+    "text": "你可以随时取消后续联系，也可以删除联系信息。删除问卷和结果时，本次答题相关的记录也会一起删除。"
   },
   {
     "surface": "pages/privacy/index.wxml",
@@ -906,13 +906,13 @@
   },
   {
     "surface": "pages/questionnaire-result/index.wxml",
-    "key": "text.20",
-    "text": "›"
+    "key": "text.2",
+    "text": "你的结果"
   },
   {
     "surface": "pages/questionnaire-result/index.wxml",
-    "key": "text.2",
-    "text": "你的结果"
+    "key": "text.20",
+    "text": "›"
   },
   {
     "surface": "pages/questionnaire-result/index.wxml",
@@ -931,18 +931,23 @@
   },
   {
     "surface": "pages/questionnaire-v3/index.js",
+    "key": "literal.1",
+    "text": "已保存在本机，同步失败 · 重试"
+  },
+  {
+    "surface": "pages/questionnaire-v3/index.js",
     "key": "literal.10",
     "text": "这项回答暂时无法保存"
   },
   {
     "surface": "pages/questionnaire-v3/index.js",
     "key": "literal.11",
-    "text": "这里还需要一个回答"
+    "text": "这项回答暂时无法保存"
   },
   {
     "surface": "pages/questionnaire-v3/index.js",
-    "key": "literal.1",
-    "text": "已保存在本机，同步失败 · 重试"
+    "key": "literal.12",
+    "text": "这里还需要一个回答"
   },
   {
     "surface": "pages/questionnaire-v3/index.js",
@@ -972,17 +977,17 @@
   {
     "surface": "pages/questionnaire-v3/index.js",
     "key": "literal.7",
-    "text": "${questionnaireCopy.incompleteField || '这里还需要完成'}：${entry.item.prompt || entry.parent.prompt || ''}"
+    "text": "这道题还没有回答"
   },
   {
     "surface": "pages/questionnaire-v3/index.js",
     "key": "literal.8",
-    "text": "这里还需要一个回答"
+    "text": "${questionnaireCopy.incompleteField || '这里还需要完成'}：${entry.item.prompt || entry.parent.prompt || ''}"
   },
   {
     "surface": "pages/questionnaire-v3/index.js",
     "key": "literal.9",
-    "text": "这项回答暂时无法保存"
+    "text": "这里还需要一个回答"
   },
   {
     "surface": "pages/questionnaire/index.js",
@@ -1031,17 +1036,17 @@
   },
   {
     "surface": "pages/record-claim/index.wxml",
+    "key": "text.3",
+    "text": "回到你的结果"
+  },
+  {
+    "surface": "pages/record-claim/index.wxml",
     "key": "text.34",
     "text": "修改相关回答"
   },
   {
     "surface": "pages/record-claim/index.wxml",
     "key": "text.36",
-    "text": "回到你的结果"
-  },
-  {
-    "surface": "pages/record-claim/index.wxml",
-    "key": "text.3",
     "text": "回到你的结果"
   },
   {
@@ -1160,14 +1165,14 @@
     "text": "已完成 ${global.completedSections} / ${global.totalSections} 个部分"
   },
   {
-    "surface": "pages/v3-answer-review/index.wxml",
-    "key": "text.30",
-    "text": "›"
+    "surface": "pages/v3-answer-review/index.js",
+    "key": "literal.4",
+    "text": "这道题还没有回答"
   },
   {
     "surface": "pages/v3-answer-review/index.wxml",
-    "key": "text.8",
-    "text": "{{completedSectionsLabel}} · 修改后会重新计算结果。"
+    "key": "text.30",
+    "text": "›"
   },
   {
     "surface": "pages/v3-checkpoint/index.js",
@@ -1203,6 +1208,11 @@
     "surface": "pages/v3-checkpoint/index.wxml",
     "key": "text.39",
     "text": "›"
+  },
+  {
+    "surface": "pages/v3-result-evidence/index.js",
+    "key": "literal.0",
+    "text": "这道题还没有回答"
   },
   {
     "surface": "pages/v3-result-evidence/index.wxml",
@@ -10891,13 +10901,13 @@
   },
   {
     "surface": "shared/assessment-v3-pilot/runtime-bundle.js",
-    "key": "runtime.option.L5-CH06.10",
-    "text": "其他"
+    "key": "runtime.option.L5-CH06.1",
+    "text": "还没有形成明确愿望"
   },
   {
     "surface": "shared/assessment-v3-pilot/runtime-bundle.js",
-    "key": "runtime.option.L5-CH06.1",
-    "text": "还没有形成明确愿望"
+    "key": "runtime.option.L5-CH06.10",
+    "text": "其他"
   },
   {
     "surface": "shared/assessment-v3-pilot/runtime-bundle.js",
@@ -20606,6 +20616,11 @@
   },
   {
     "surface": "shared/content/followup-copy.js",
+    "key": "CONTENT_VERSION",
+    "text": "relationship-manual-copy-1.2.0"
+  },
+  {
+    "surface": "shared/content/followup-copy.js",
     "key": "channels.email",
     "text": "邮箱"
   },
@@ -20703,11 +20718,6 @@
     "surface": "shared/content/followup-copy.js",
     "key": "contactFields.wechat.placeholder",
     "text": "例如：wxid_xxxxx 或你的微信号"
-  },
-  {
-    "surface": "shared/content/followup-copy.js",
-    "key": "CONTENT_VERSION",
-    "text": "relationship-manual-copy-1.2.0"
   },
   {
     "surface": "shared/content/followup-copy.js",
@@ -21316,6 +21326,11 @@
   },
   {
     "surface": "shared/content/public-language.generated.js",
+    "key": "ui.home.topicsTitle",
+    "text": "会问到这些"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
     "key": "ui.home.topics[0]",
     "text": "你现在想不想谈恋爱"
   },
@@ -21333,11 +21348,6 @@
     "surface": "shared/content/public-language.generated.js",
     "key": "ui.home.topics[3]",
     "text": "难受或吵架时，你希望两个人怎么处理"
-  },
-  {
-    "surface": "shared/content/public-language.generated.js",
-    "key": "ui.home.topicsTitle",
-    "text": "会问到这些"
   },
   {
     "surface": "shared/content/public-language.generated.js",
@@ -21711,21 +21721,6 @@
   },
   {
     "surface": "shared/content/public-language.generated.js",
-    "key": "ui.v3P0Research.missingStatus.answered",
-    "text": "已回答"
-  },
-  {
-    "surface": "shared/content/public-language.generated.js",
-    "key": "ui.v3P0Research.missingStatus.coded",
-    "text": "已记录"
-  },
-  {
-    "surface": "shared/content/public-language.generated.js",
-    "key": "ui.v3P0Research.missingStatus.needsCoding",
-    "text": "待记录"
-  },
-  {
-    "surface": "shared/content/public-language.generated.js",
     "key": "ui.v3P0Research.missingStatus.NOT_APPLICABLE",
     "text": "不适用"
   },
@@ -21741,11 +21736,6 @@
   },
   {
     "surface": "shared/content/public-language.generated.js",
-    "key": "ui.v3P0Research.missingStatus.unanswered",
-    "text": "未回答"
-  },
-  {
-    "surface": "shared/content/public-language.generated.js",
     "key": "ui.v3P0Research.missingStatus.UNKNOWN",
     "text": "不清楚 / 无法判断"
   },
@@ -21758,6 +21748,26 @@
     "surface": "shared/content/public-language.generated.js",
     "key": "ui.v3P0Research.missingStatus.WITHDRAWN",
     "text": "已撤回"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3P0Research.missingStatus.answered",
+    "text": "已回答"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3P0Research.missingStatus.coded",
+    "text": "已记录"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3P0Research.missingStatus.needsCoding",
+    "text": "待记录"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "ui.v3P0Research.missingStatus.unanswered",
+    "text": "未回答"
   },
   {
     "surface": "shared/content/public-language.generated.js",
@@ -22281,11 +22291,6 @@
   },
   {
     "surface": "shared/content/public-language.generated.js",
-    "key": "v3Narrative.chapters.C1.label",
-    "text": "你现在想不想谈恋爱"
-  },
-  {
-    "surface": "shared/content/public-language.generated.js",
     "key": "v3Narrative.chapters.C1.LOW_INITIATION.headline",
     "text": "现阶段，谈恋爱不是你最想推进的事"
   },
@@ -22336,6 +22341,11 @@
   },
   {
     "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C1.label",
+    "text": "你现在想不想谈恋爱"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
     "key": "v3Narrative.chapters.C2.HIGH_HIGH.headline",
     "text": "你现在有时间和精力，答应下来的事也通常能做到。"
   },
@@ -22348,11 +22358,6 @@
     "surface": "shared/content/public-language.generated.js",
     "key": "v3Narrative.chapters.C2.HIGH_MID.headline",
     "text": "时间和精力还可以，但忙起来时有些安排未必一直稳定。"
-  },
-  {
-    "surface": "shared/content/public-language.generated.js",
-    "key": "v3Narrative.chapters.C2.label",
-    "text": "你现在有没有时间和精力"
   },
   {
     "surface": "shared/content/public-language.generated.js",
@@ -22386,6 +22391,11 @@
   },
   {
     "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C2.label",
+    "text": "你现在有没有时间和精力"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
     "key": "v3Narrative.chapters.C3.label",
     "text": "对方态度变了，你通常会怎样"
   },
@@ -22403,11 +22413,6 @@
     "surface": "shared/content/public-language.generated.js",
     "key": "v3Narrative.chapters.C4.HIGH_MID.headline",
     "text": "你对亲近和互相依靠比较自在，同时也希望各自保留一点自己的生活。"
-  },
-  {
-    "surface": "shared/content/public-language.generated.js",
-    "key": "v3Narrative.chapters.C4.label",
-    "text": "关系越来越亲近以后"
   },
   {
     "surface": "shared/content/public-language.generated.js",
@@ -22441,13 +22446,13 @@
   },
   {
     "surface": "shared/content/public-language.generated.js",
-    "key": "v3Narrative.chapters.C5.BALANCED.headline",
-    "text": "你大致知道自己需要什么，也比较能说出来；从情境题看，你也会留意对方需要什么。"
+    "key": "v3Narrative.chapters.C4.label",
+    "text": "关系越来越亲近以后"
   },
   {
     "surface": "shared/content/public-language.generated.js",
-    "key": "v3Narrative.chapters.C5.label",
-    "text": "你希望对方怎么支持你"
+    "key": "v3Narrative.chapters.C5.BALANCED.headline",
+    "text": "你大致知道自己需要什么，也比较能说出来；从情境题看，你也会留意对方需要什么。"
   },
   {
     "surface": "shared/content/public-language.generated.js",
@@ -22496,6 +22501,11 @@
   },
   {
     "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C5.label",
+    "text": "你希望对方怎么支持你"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
     "key": "v3Narrative.chapters.C6.HIGH_ANY_LOW.headline",
     "text": "你不只是在吵的时候容易被带进去，停下来以后也比较容易让问题一直搁着。"
   },
@@ -22508,11 +22518,6 @@
     "surface": "shared/content/public-language.generated.js",
     "key": "v3Narrative.chapters.C6.HIGH_SHORT_HIGH.headline",
     "text": "吵起来时你的情绪会比较强，但停一会儿以后，你通常还是愿意回来把事情说完。"
-  },
-  {
-    "surface": "shared/content/public-language.generated.js",
-    "key": "v3Narrative.chapters.C6.label",
-    "text": "吵架以后，你通常怎么处理"
   },
   {
     "surface": "shared/content/public-language.generated.js",
@@ -22548,6 +22553,11 @@
     "surface": "shared/content/public-language.generated.js",
     "key": "v3Narrative.chapters.C6.RETURN_WITHOUT_ISSUE.headline",
     "text": "你比较容易恢复正常相处，但恢复正常不等于那件事真的解决了。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3Narrative.chapters.C6.label",
+    "text": "吵架以后，你通常怎么处理"
   },
   {
     "surface": "shared/content/public-language.generated.js",
@@ -23551,6 +23561,11 @@
   },
   {
     "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.feedback.reasonTitle",
+    "text": "哪个地方不太符合？"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
     "key": "v3ProductV0.feedback.reasons.answer_inaccurate",
     "text": "我的回答没表达准确"
   },
@@ -23573,11 +23588,6 @@
     "surface": "shared/content/public-language.generated.js",
     "key": "v3ProductV0.feedback.reasons.overreached",
     "text": "这条结论推得太远"
-  },
-  {
-    "surface": "shared/content/public-language.generated.js",
-    "key": "v3ProductV0.feedback.reasonTitle",
-    "text": "哪个地方不太符合？"
   },
   {
     "surface": "shared/content/public-language.generated.js",
@@ -24031,6 +24041,16 @@
   },
   {
     "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.questionnaire.editSaved",
+    "text": "已更新"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.questionnaire.editUnavailable",
+    "text": "这道题还没有回答"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
     "key": "v3ProductV0.questionnaire.firstBackAction",
     "text": "退出"
   },
@@ -24091,13 +24111,13 @@
   },
   {
     "surface": "shared/content/public-language.generated.js",
-    "key": "v3ProductV0.questionnaire.syncedLabel",
-    "text": "已保存"
+    "key": "v3ProductV0.questionnaire.syncFailedLabel",
+    "text": "已保存在本机，同步失败 · 重试"
   },
   {
     "surface": "shared/content/public-language.generated.js",
-    "key": "v3ProductV0.questionnaire.syncFailedLabel",
-    "text": "已保存在本机，同步失败 · 重试"
+    "key": "v3ProductV0.questionnaire.syncedLabel",
+    "text": "已保存"
   },
   {
     "surface": "shared/content/public-language.generated.js",
@@ -24136,8 +24156,23 @@
   },
   {
     "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.answerReviewNoAnswer",
+    "text": "还没有回答这一部分"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.answerReviewNotice",
+    "text": "修改后会重新计算结果。"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
     "key": "v3ProductV0.real.preview.answerReviewTitle",
     "text": "回答复核"
+  },
+  {
+    "surface": "shared/content/public-language.generated.js",
+    "key": "v3ProductV0.real.preview.answerReviewUnavailable",
+    "text": "先继续完成前面的内容"
   },
   {
     "surface": "shared/content/public-language.generated.js",
@@ -24362,7 +24397,7 @@
   {
     "surface": "shared/content/public-language.generated.js",
     "key": "v3ProductV0.real.preview.startAction",
-    "text": "继续答题"
+    "text": "继续完成"
   },
   {
     "surface": "shared/content/public-language.generated.js",
@@ -24406,6 +24441,16 @@
   },
   {
     "surface": "shared/content/report-copy.js",
+    "key": "CONTENT_VERSION",
+    "text": "relationship-manual-copy-1.2.0"
+  },
+  {
+    "surface": "shared/content/report-copy.js",
+    "key": "REPORT_COPY_VERSION",
+    "text": "relationship-manual-report-copy-1.2.0"
+  },
+  {
+    "surface": "shared/content/report-copy.js",
     "key": "boundary",
     "text": "这些结果只根据你这次的回答整理，不是心理诊断，也不能预测一段关系会不会成功。"
   },
@@ -24418,11 +24463,6 @@
     "surface": "shared/content/report-copy.js",
     "key": "claimAction",
     "text": "为什么这么说"
-  },
-  {
-    "surface": "shared/content/report-copy.js",
-    "key": "CONTENT_VERSION",
-    "text": "relationship-manual-copy-1.2.0"
   },
   {
     "surface": "shared/content/report-copy.js",
@@ -24558,11 +24598,6 @@
     "surface": "shared/content/report-copy.js",
     "key": "observationTitle",
     "text": "你平时可能会这样做"
-  },
-  {
-    "surface": "shared/content/report-copy.js",
-    "key": "REPORT_COPY_VERSION",
-    "text": "relationship-manual-report-copy-1.2.0"
   },
   {
     "surface": "shared/content/report-copy.js",
@@ -24771,6 +24806,11 @@
   },
   {
     "surface": "shared/content/ui-copy.js",
+    "key": "home.topicsTitle",
+    "text": "会问到这些"
+  },
+  {
+    "surface": "shared/content/ui-copy.js",
     "key": "home.topics[0]",
     "text": "你现在想不想谈恋爱"
   },
@@ -24788,11 +24828,6 @@
     "surface": "shared/content/ui-copy.js",
     "key": "home.topics[3]",
     "text": "难受或吵架时，你希望两个人怎么处理"
-  },
-  {
-    "surface": "shared/content/ui-copy.js",
-    "key": "home.topicsTitle",
-    "text": "会问到这些"
   },
   {
     "surface": "shared/content/ui-copy.js",

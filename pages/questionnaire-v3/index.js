@@ -6,6 +6,7 @@ const cloud = require('../../utils/cloud')
 const { navigateOnce, resetNavigation } = require('../../utils/navigation')
 const { recordEvent, hasSeenProductTrust, markProductTrustSeen } = require('../../utils/storage')
 const journey = require('../../utils/assessment-v3-product-v0/journey-model')
+const { resolveReturnContext, contextUrl } = require('../../utils/assessment-v3-product-v0/return-context')
 
 const PRODUCT_V0_COPY = publicLanguage.v3.productV0
 const CHAPTER_LABELS = Object.freeze(PRODUCT_V0_COPY.chapters || {})
@@ -47,6 +48,11 @@ function isFirstTask(taskId) {
 }
 
 function itemAnchor(itemId) { return `product-v0-item-${String(itemId || '').replace(/[^a-zA-Z0-9_-]/g, '-')}` }
+
+function sectionIdForTask(taskId) {
+  const section = journey.getSectionForTask(taskId)
+  return section && section.id || ''
+}
 
 function syncLabel(state) {
   const copy = PRODUCT_V0_COPY.questionnaire || {}
@@ -135,28 +141,54 @@ Page({
   onLoad(options = {}) {
     if (!FEATURES.v3ProductV0) return navigateOnce(this, 'reLaunch', { url: '/pages/home/index' })
     this.pendingInputs = {}
-    this.returnTo = ''
-    if (options.returnTo) {
-      try { this.returnTo = decodeURIComponent(String(options.returnTo)) } catch (error) { this.returnTo = '' }
-    }
-    this.editing = Boolean(options.taskId && this.returnTo)
+    this.returnContext = resolveReturnContext(options, { source: 'result' })
+    this.returnTo = contextUrl(this.returnContext)
+    this.editTaskId = options.mode === 'edit' ? String(options.taskId || '') : ''
+    this.editing = Boolean(this.editTaskId)
     let session = store.getSession()
-    if (options.taskId) {
-      const positioned = store.setTaskId(options.taskId)
+    this.resumeTaskIndex = session.currentTaskIndex
+    this.wasAssessmentComplete = Boolean(session.completedAt && journey.isAssessmentComplete(session))
+    const invalidTaskMessage = (PRODUCT_V0_COPY.questionnaire && PRODUCT_V0_COPY.questionnaire.invalidTask) || '暂时没能加载这道题'
+    if ((options.mode === 'edit' && !this.editing) || (options.taskId && !this.editing)) {
+      return this.rejectRoute(invalidTaskMessage)
+    }
+    if (this.editing) {
+      if (!journey.canFinishEditing(session, this.editTaskId)) return this.rejectEdit()
+      const positioned = store.setTaskId(this.editTaskId)
       if (!positioned) {
-        this.setData({ ready: true, invalidRoute: true, validationMessage: (PRODUCT_V0_COPY.questionnaire && PRODUCT_V0_COPY.questionnaire.invalidTask) || '暂时没能加载这道题' })
-        return
+        return this.rejectRoute(invalidTaskMessage)
       }
       session = positioned
-    } else if (options.index !== undefined) session = store.setTaskIndex(Number(options.index))
+    } else if (options.index !== undefined) {
+      const requestedIndex = Number(options.index)
+      if (Number.isInteger(requestedIndex) && requestedIndex === Number(session.currentTaskIndex)) session = store.setTaskIndex(requestedIndex)
+      else if (Number.isInteger(requestedIndex) && requestedIndex !== Number(session.currentTaskIndex)) recordEvent('questionnaire_route_guard', { requestedIndex, currentTaskIndex: Number(session.currentTaskIndex) || 0 })
+    }
     if (!session.startedAt) session = store.saveSession(store.emptySession())
     this.session = session
-    const showTrustNote = isFirstTask(store.currentTaskId(session)) && !hasSeenProductTrust()
+    this._sectionStartedAt = Date.now()
+    const currentTaskId = store.currentTaskId(session)
+    const showTrustNote = !this.editing && isFirstTask(currentTaskId) && !hasSeenProductTrust()
     if (showTrustNote) markProductTrustSeen()
-    if (this.editing) recordEvent('answer_edit_start', { taskId: store.currentTaskId(session) })
+    if (!this.editing && !session.answerEvents.length && Number(session.currentTaskIndex) === 0) recordEvent('assessment_start', { source: 'questionnaire' })
+    if (this.editing) recordEvent('answer_edit_start', { taskId: currentTaskId, sectionId: sectionIdForTask(currentTaskId), taskIndex: Number(session.currentTaskIndex) || 0 })
     const initialSyncState = session.status === 'pending_cloud' ? 'LOCAL_SAVED' : (session.answerEvents.length ? 'SYNCED' : '')
     this.setData(Object.assign({ ready: true, editing: this.editing, showTrustNote, syncState: initialSyncState, syncStatusLabel: syncLabel(initialSyncState) }, pageState(session, this.pendingInputs)))
-    recordEvent('section_start', { sectionId: journey.getSectionForTask(store.currentTaskId(session)) && journey.getSectionForTask(store.currentTaskId(session)).id, sectionIndex: pageState(session, this.pendingInputs).sectionNumber })
+    recordEvent('section_start', { sectionId: sectionIdForTask(currentTaskId), sectionIndex: pageState(session, this.pendingInputs).sectionNumber, taskId: currentTaskId, taskIndex: Number(session.currentTaskIndex) || 0, sectionEnterAt: this._sectionStartedAt })
+  },
+
+  rejectRoute(message) {
+    this.setData({ ready: true, invalidRoute: true, validationMessage: message })
+    if (typeof wx !== 'undefined' && typeof wx.showToast === 'function') wx.showToast({ title: message, icon: 'none' })
+    const url = contextUrl(this.returnContext || { source: 'result' })
+    return navigateOnce(this, 'redirectTo', { url, fail: () => navigateOnce(this, 'reLaunch', { url }) })
+  },
+
+  rejectEdit() {
+    const questionnaireCopy = PRODUCT_V0_COPY.questionnaire || {}
+    const message = questionnaireCopy.editUnavailable || questionnaireCopy.invalidTask || '这道题还没有回答'
+    recordEvent('questionnaire_edit_guard', { taskId: this.editTaskId || '', reason: 'not_answered' })
+    return this.rejectRoute(message)
   },
 
   onShow() { resetNavigation(this); if (this.data.ready) { this.refresh(); this.syncPending() } },
@@ -281,18 +313,24 @@ Page({
   finishEditing() {
     if (!this.editing || this._editRouting) return false
     const session = store.getSession()
-    if (!journey.isAssessmentComplete(session)) {
+    const targetTaskId = this.editTaskId || store.currentTaskId(session)
+    if (!journey.canFinishEditing(session, targetTaskId)) {
       this.showIncomplete()
       return false
     }
+    const wasAssessmentComplete = Boolean(this.wasAssessmentComplete)
     try {
-      store.completeAssessment()
+      if (wasAssessmentComplete) store.completeAssessment()
+      else if (Number.isInteger(this.resumeTaskIndex)) store.setTaskIndex(this.resumeTaskIndex)
       this.markLocalSaved()
-      recordEvent('answer_edit_complete', { taskId: store.currentTaskId(session) })
+      const saved = store.getSession()
+      recordEvent('answer_edit_complete', { taskId: targetTaskId, sectionId: sectionIdForTask(targetTaskId), taskIndex: Number(saved.currentTaskIndex) || 0, wasAssessmentComplete, reportVersion: Number(saved.reportRevision) || 0 })
+      const editSavedLabel = PRODUCT_V0_COPY.questionnaire && PRODUCT_V0_COPY.questionnaire.editSaved
+      if (editSavedLabel && typeof wx !== 'undefined' && typeof wx.showToast === 'function') wx.showToast({ title: editSavedLabel, icon: 'success' })
       this.syncPending()
       this._editRouting = true
-      const returnTo = this.returnTo || '/pages/v3-result/index?mode=product-v0'
-      return navigateOnce(this, 'redirectTo', { url: returnTo, fail: () => navigateOnce(this, 'reLaunch', { url: '/pages/v3-result/index?mode=product-v0' }) })
+      const returnTo = contextUrl(this.returnContext || { source: wasAssessmentComplete ? 'result' : 'partial-result' })
+      return navigateOnce(this, 'redirectTo', { url: returnTo, fail: () => navigateOnce(this, 'reLaunch', { url: returnTo }) })
     } catch (error) {
       this.setData({ validationMessage: (PRODUCT_V0_COPY.errors && PRODUCT_V0_COPY.errors.saveFailed) || '这项回答暂时无法保存' })
       return false
@@ -305,7 +343,9 @@ Page({
     this.syncPending()
     const session = store.getSession()
     if (session.currentTaskIndex <= 0) {
-      recordEvent('section_pause', { sectionId: journey.currentSection(session) && journey.currentSection(session).id })
+      const section = journey.currentSection(session)
+      const sectionPauseAt = Date.now()
+      recordEvent('section_pause', { sectionId: section && section.id || '', taskId: store.currentTaskId(session), taskIndex: Number(session.currentTaskIndex) || 0, sectionPauseAt, sectionDurationMs: this._sectionStartedAt ? Math.max(0, sectionPauseAt - this._sectionStartedAt) : null })
       return navigateOnce(this, 'navigateBack', { fail: () => navigateOnce(this, 'reLaunch', { url: '/pages/home/index' }) })
     }
     this.session = store.goPrevious()
@@ -326,7 +366,10 @@ Page({
       const next = store.goNext()
       const nextSection = journey.currentSection(next)
       if (next.status === 'completed' && next.completedAt) {
-        if (currentSection) recordEvent('section_complete', { sectionId: currentSection.id, sectionIndex: journey.getSectionProgress(before, currentSection.id).sectionNumber })
+        if (currentSection) {
+          const sectionCompleteAt = Date.now()
+          recordEvent('section_complete', { sectionId: currentSection.id, sectionIndex: journey.getSectionProgress(before, currentSection.id).sectionNumber, taskId: store.currentTaskId(before), taskIndex: Number(before.currentTaskIndex) || 0, sectionCompleteAt, sectionDurationMs: this._sectionStartedAt ? Math.max(0, sectionCompleteAt - this._sectionStartedAt) : null })
+        }
         recordEvent('final_result_view', { completedCount: journey.getGlobalProgress(next).completedTasks })
         this.syncPending()
         return navigateOnce(this, 'redirectTo', { url: '/pages/v3-result/index?mode=product-v0' })
@@ -334,7 +377,8 @@ Page({
       const crossedSection = currentSection && nextSection && currentSection.id !== nextSection.id
       this.syncPending()
       if (crossedSection) {
-        recordEvent('section_complete', { sectionId: currentSection.id, sectionIndex: journey.getSectionProgress(before, currentSection.id).sectionNumber })
+        const sectionCompleteAt = Date.now()
+        recordEvent('section_complete', { sectionId: currentSection.id, sectionIndex: journey.getSectionProgress(before, currentSection.id).sectionNumber, taskId: store.currentTaskId(before), taskIndex: Number(before.currentTaskIndex) || 0, sectionCompleteAt, sectionDurationMs: this._sectionStartedAt ? Math.max(0, sectionCompleteAt - this._sectionStartedAt) : null })
         return navigateOnce(this, 'redirectTo', { url: `/pages/v3-checkpoint/index?mode=product-v0&section=${encodeURIComponent(currentSection.id)}&nextIndex=${next.currentTaskIndex}` })
       }
       const nextTask = runtime.getTask(store.currentTaskId(next))

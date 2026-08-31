@@ -7,6 +7,7 @@ let deferredRestoreSuccess = null
 let cloudSession = null
 let toastTitle = ''
 const cloudCalls = []
+const draftSaves = []
 
 global.wx = {
   getStorageSync(key) { return storage.get(key) },
@@ -22,6 +23,10 @@ global.wx = {
       if (options.data.action === 'assessmentGet' && deferRestore) { deferredRestoreSuccess = options.success; return }
       if (options.data.action === 'assessmentGet' && failRestore) return options.fail({ errMsg: 'request:fail network error' })
       if (options.data.action === 'assessmentGet') return options.success({ result: { ok: true, data: { session: cloudSession, report: null } } })
+      if (options.data.action === 'assessmentSaveDraft') {
+        draftSaves.push(options.data.session)
+        return options.success({ result: { ok: true, data: { session: Object.assign({}, options.data.session, { status: 'synced' }), syncedAt: 999 } } })
+      }
       return options.success({ result: { ok: true, data: { deleted: true } } })
     }
   }
@@ -54,6 +59,21 @@ failRestore = false
 page.onProductShow()
 assert.equal(productStore.getReport(), null)
 
+// A newer local unsynced draft wins over an older cloud snapshot and is
+// uploaded without replacing the user's local answers.
+cloudSession = Object.assign(runtime.answerItem(productStore.emptySession(350), 'RR01', 1, 351), { status: 'synced', updatedAt: 352 })
+let localNewer = runtime.answerItem(productStore.emptySession(400), 'RR01', 2, 401)
+localNewer.status = 'pending_cloud'
+localNewer.updatedAt = 500
+productStore.saveSession(localNewer)
+page._productRestoreAttempted = false
+page.onProductShow()
+assert.equal(draftSaves.length, 1)
+assert.equal(productStore.getSession().latestAnswers.RR01, 2)
+assert.equal(productStore.getSession().status, 'synced')
+page.onProductShow()
+assert.equal(page.data.productRestoreState, 'READY')
+
 failRestore = true
 page._productRestoreAttempted = false
 page.onProductShow()
@@ -66,6 +86,7 @@ productStore.resetSession()
 page.onProductShow()
 assert.equal(typeof deferredRestoreSuccess, 'function')
 page.handleStart()
+assert.equal(page.data.productRestoreState, 'RESTORING')
 deferredRestoreSuccess({ result: { ok: true, data: { session: cloudSession, report: null } } })
 assert.equal(productStore.hasSession(), true)
 assert.equal(page.data.productRestoreState, 'READY')

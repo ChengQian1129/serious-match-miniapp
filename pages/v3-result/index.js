@@ -9,6 +9,7 @@ const productJourney = require('../../utils/assessment-v3-product-v0/journey-mod
 const cloud = require('../../utils/cloud')
 const { recordEvent } = require('../../utils/storage')
 const { CONTENT_VERSION } = require('../../shared/content/version')
+const { encodeReturnContext, resolveReturnContext } = require('../../utils/assessment-v3-product-v0/return-context')
 
 function feedbackFields() {
   return {
@@ -75,6 +76,12 @@ function questionnaireVersionForReport(report) {
   return report && (report.questionnaireVersion || report.productQuestionnaireVersion || (report.assessmentMeta && report.assessmentMeta.productQuestionnaireVersion)) || null
 }
 
+function feedbackEventId(targetType, targetId, value, reasonCode, reportVersion) {
+  return ['product-feedback', targetType, targetId, value, reasonCode || 'none', Number(reportVersion) || 0]
+    .map(part => String(part).replace(/[^a-zA-Z0-9_.-]/g, '_'))
+    .join('-')
+}
+
 function updateTargetViews(page, targetType, targetId, fields) {
   if (targetType === 'pattern') {
     const report = page.data.report || {}
@@ -138,6 +145,7 @@ Page({
       if (!FEATURES.v3ProductV0) return navigateOnce(this, 'reLaunch', { url: '/pages/home/index' })
       this.mode = 'product-v0'
       this.scope = options.scope || ''
+      this.returnContext = resolveReturnContext(options, { source: this.scope === 'partial' ? 'partial-result' : 'result' })
       this.setData({ copy: PRODUCT_V0_COPY })
       this.loadReport()
       return
@@ -165,8 +173,10 @@ Page({
         return
       }
       let report = isComplete ? productStore.getReport() : null
-      const profile = session.derivedProfile || productRuntime.deriveProfile(session)
-      if (!report || report.source !== 'THEORY_DRIVEN_PRODUCT_V0' || !isComplete) {
+      const expectedReportVersion = Number(session.reportRevision) || Number(session.reportVersion) || 0
+      const reportVersionMismatch = Boolean(report && expectedReportVersion > 0 && Number(report.reportVersion) !== expectedReportVersion)
+      const profile = isComplete && session.derivedProfile ? session.derivedProfile : productRuntime.deriveProfile(session)
+      if (!report || report.source !== 'THEORY_DRIVEN_PRODUCT_V0' || reportVersionMismatch || !isComplete) {
         const completedSections = productJourney.getCompletedSections(session, PRODUCT_V0_COPY).map(section => section.id)
         report = isComplete
           ? Object.assign({ reportVersion: session.reportRevision || Number(session.reportVersion) || 1, generatedAt: session.completedAt || Date.now() }, buildReport(profile))
@@ -197,10 +207,25 @@ Page({
         feedbackReasons: Object.keys((PRODUCT_V0_COPY.feedback && PRODUCT_V0_COPY.feedback.reasons) || {}).map(id => ({ id, label: PRODUCT_V0_COPY.feedback.reasons[id] })),
         syncError: ''
       })
+      this.restoreReturnAnchor()
+      if (!this._resultViewRecorded) {
+        recordEvent(partial ? 'partial_result_view' : 'final_result_view', { completedSections: global.completedSections, totalSections: global.totalSections, reportVersion: Number(report.reportVersion) || Number(session.reportRevision) || 0 })
+        this._resultViewRecorded = true
+      }
       return
     }
     const report = buildReport(getFixture(this.personaId))
     this.setData({ ready: true, emptyState: false, mode: '', copy: PRODUCT_COPY, report, chapters: chapterViews(report), personaId: this.personaId || '', isPartial: false, isComplete: true, resultNotice: report.notice, summaryFallback: (PRODUCT_COPY.fallback && PRODUCT_COPY.fallback.patternSummary) || '', hasPatterns: Boolean(report.executiveSummary.patterns.length), hasDecisions: true, hasUnknowns: true, hasInterview: true })
+  },
+
+  restoreReturnAnchor() {
+    if (this._returnAnchorRestored || !this.returnContext || !this.returnContext.scrollAnchor) return
+    if (typeof wx === 'undefined' || typeof wx.pageScrollTo !== 'function') return
+    this._returnAnchorRestored = true
+    const selector = `#${this.returnContext.scrollAnchor}`
+    const scroll = () => wx.pageScrollTo({ selector, offsetTop: -24, duration: 0 })
+    if (typeof wx.nextTick === 'function') wx.nextTick(scroll)
+    else scroll()
   },
 
   syncProductReport() {
@@ -243,8 +268,10 @@ Page({
   openEvidence(event) {
     const dimensionId = event.currentTarget.dataset.dimensionId
     if (!dimensionId) return
-    const returnTo = this.mode === 'product-v0' ? `&returnTo=${encodeURIComponent(productResultUrl(this.data.isPartial ? 'partial' : ''))}` : ''
-    const query = this.mode === 'product-v0' ? `mode=product-v0&dimension=${encodeURIComponent(dimensionId)}${returnTo}` : `persona=${encodeURIComponent(this.personaId)}&dimension=${encodeURIComponent(dimensionId)}`
+    const returnContext = this.mode === 'product-v0'
+      ? encodeReturnContext({ source: 'evidence', targetId: dimensionId, scrollAnchor: '', reportVersion: Number((this.data.report || {}).reportVersion) || 0 })
+      : ''
+    const query = this.mode === 'product-v0' ? `mode=product-v0&dimension=${encodeURIComponent(dimensionId)}&returnContext=${returnContext}` : `persona=${encodeURIComponent(this.personaId)}&dimension=${encodeURIComponent(dimensionId)}`
     navigateOnce(this, 'navigateTo', { url: `/pages/v3-result-evidence/index?${query}` })
   },
 
@@ -277,8 +304,8 @@ Page({
 
   openAnswerReview() {
     if (this.mode !== 'product-v0') return this.startAtFirstChapter()
-    const returnTo = productResultUrl(this.data.isPartial ? 'partial' : '')
-    navigateOnce(this, 'navigateTo', { url: `/pages/v3-answer-review/index?mode=product-v0&returnTo=${encodeURIComponent(returnTo)}` })
+    const returnContext = encodeReturnContext({ source: this.data.isPartial ? 'partial-result' : 'result', targetId: '', scrollAnchor: '', reportVersion: Number((this.data.report || {}).reportVersion) || 0 })
+    navigateOnce(this, 'navigateTo', { url: `/pages/v3-answer-review/index?mode=product-v0&returnContext=${returnContext}` })
   },
 
   openContinue() {
@@ -324,8 +351,9 @@ Page({
     const target = targetView(this, targetType, targetId)
     if (!target || !target.feedbackValue || target.feedbackSubmitted || this._targetFeedbackInFlight) return
     const report = this.data.report
+    const reportVersion = Number((report || {}).reportVersion) || 0
     const feedbackEvent = {
-      eventId: `product-feedback-${targetType}-${targetId}-${Date.now()}`,
+      eventId: feedbackEventId(targetType, targetId, target.feedbackValue, target.feedbackReason || '', reportVersion),
       targetType,
       targetId,
       value: target.feedbackValue,
@@ -334,12 +362,13 @@ Page({
       contentVersion: CONTENT_VERSION,
       questionnaireVersion: questionnaireVersionForReport(report)
     }
-    recordEvent('assessment_feedback', {
-      targetType,
-      targetId,
-      value: feedbackEvent.value,
-      reasonCode: feedbackEvent.reasonCode
-    })
+    const telemetryKey = feedbackEvent.eventId
+    if (!this._feedbackTelemetryKeys || !this._feedbackTelemetryKeys.has(telemetryKey)) {
+      if (!this._feedbackTelemetryKeys) this._feedbackTelemetryKeys = new Set()
+      this._feedbackTelemetryKeys.add(telemetryKey)
+      recordEvent('assessment_feedback', { targetType, targetId, value: feedbackEvent.value, reasonCode: feedbackEvent.reasonCode })
+      recordEvent('result_feedback_submit', { targetType, targetId, value: feedbackEvent.value, reasonCode: feedbackEvent.reasonCode, reportVersion })
+    }
     if (!report || !report._id || !cloud.isCloudReady()) {
       return this.setData(updateTargetViews(this, targetType, targetId, { feedbackSubmitted: true, feedbackSyncing: false, feedbackSyncError: '' }))
     }
@@ -362,7 +391,7 @@ Page({
     const value = this.data.feedbackValue
     const reasonCode = this.data.feedbackReason || ''
     const feedbackEvent = {
-      eventId: `product-feedback-${Date.now()}`,
+      eventId: feedbackEventId('result', 'overall', value, reasonCode, Number((this.data.report || {}).reportVersion) || 0),
       targetType: 'result',
       targetId: 'overall',
       value,
@@ -371,12 +400,13 @@ Page({
       contentVersion: CONTENT_VERSION,
       questionnaireVersion: questionnaireVersionForReport(this.data.report)
     }
-    recordEvent('assessment_feedback', {
-      targetType: 'result',
-      targetId: 'overall',
-      value,
-      reasonCode
-    })
+    const telemetryKey = feedbackEvent.eventId
+    if (!this._feedbackTelemetryKeys || !this._feedbackTelemetryKeys.has(telemetryKey)) {
+      if (!this._feedbackTelemetryKeys) this._feedbackTelemetryKeys = new Set()
+      this._feedbackTelemetryKeys.add(telemetryKey)
+      recordEvent('assessment_feedback', { targetType: 'result', targetId: 'overall', value, reasonCode })
+      recordEvent('result_feedback_submit', { targetType: 'result', targetId: 'overall', value, reasonCode, reportVersion: Number((this.data.report || {}).reportVersion) || 0 })
+    }
     const report = this.data.report
     if (this.mode !== 'product-v0' || !report || !report._id || !cloud.isCloudReady()) return this.setData({ feedbackSubmitted: true, feedbackSyncing: false, feedbackSyncError: '' })
     this._feedbackInFlight = true

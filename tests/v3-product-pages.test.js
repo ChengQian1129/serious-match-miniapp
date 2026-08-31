@@ -1,11 +1,26 @@
 const assert = require('node:assert/strict')
+const productStore = require('../utils/assessment-v3-product-v0/session-store')
+const productRuntime = require('../shared/assessment-v3-product-v0/runtime-engine')
+const productJourney = require('../utils/assessment-v3-product-v0/journey-model')
 
 let lastNavigation = null
+const checkpointStorage = new Map()
 global.wx = {
+  getStorageSync(key) { return checkpointStorage.get(key) },
+  setStorageSync(key, value) { checkpointStorage.set(key, JSON.parse(JSON.stringify(value))) },
+  removeStorageSync(key) { checkpointStorage.delete(key) },
   navigateTo(options) { lastNavigation = { method: 'navigateTo', url: options.url }; if (options.success) options.success({}) },
   redirectTo(options) { lastNavigation = { method: 'redirectTo', url: options.url }; if (options.success) options.success({}) },
   reLaunch(options) { lastNavigation = { method: 'reLaunch', url: options.url }; if (options.success) options.success({}) },
   navigateBack(options = {}) { lastNavigation = { method: 'navigateBack' }; if (options.success) options.success({}) }
+}
+
+function valueFor(entry) {
+  const format = productRuntime.resolveFormat(entry.item.response)
+  if (format.type === 'single_select') return format.options[0].code
+  if (format.type === 'multi_select') return format.options.slice(0, Number(format.validation && format.validation.minSelections) || 1).map(option => option.code)
+  if (format.type === 'number') return String(format.validation && format.validation.min !== undefined ? format.validation.min : 1)
+  return 'checkpoint page test'
 }
 
 function loadPage(relative) {
@@ -26,6 +41,13 @@ assert.equal(lastNavigation.method, 'reLaunch')
 assert.equal(lastNavigation.url, '/pages/home/index')
 
 const checkpoint = loadPage('../pages/v3-checkpoint/index.js')
+let checkpointSession = productStore.emptySession(10)
+productJourney.getSections()[0].taskIds.forEach(taskId => {
+  productRuntime.itemEntries(productRuntime.getTask(taskId)).forEach(entry => {
+    checkpointSession = productRuntime.answerItem(checkpointSession, entry.itemId, valueFor(entry), 20)
+  })
+})
+productStore.saveSession(checkpointSession)
 checkpoint.onLoad({ mode: 'product-v0', chapter: 'C1' })
 assert.equal(checkpoint.data.chapter.id, 'C1')
 assert.equal(checkpoint.data.chapter.dimensionCards.length, 2)
@@ -46,8 +68,6 @@ result.openFollowup()
 assert.equal(lastNavigation.url, '/pages/followup-intro/index?returnTo=product-v0')
 
 const cloud = require('../utils/cloud')
-const productStore = require('../utils/assessment-v3-product-v0/session-store')
-const productRuntime = require('../shared/assessment-v3-product-v0/runtime-engine')
 const storage = new Map()
 global.wx.getStorageSync = key => storage.get(key)
 global.wx.setStorageSync = (key, value) => storage.set(key, JSON.parse(JSON.stringify(value)))
@@ -76,6 +96,9 @@ cloud.isCloudReady = originalCloudReady
 cloud.completeProductV0ToCloud = originalComplete
 cloud.deleteProductV0FromCloud = originalDelete
 
+// Evidence is a real Product v0 surface, so seed the same completed C1
+// context used by the checkpoint route instead of relying on synthetic data.
+productStore.saveSession(checkpointSession)
 const evidence = loadPage('../pages/v3-result-evidence/index.js')
 evidence.onLoad({ mode: 'product-v0', dimension: 'relationship_readiness' })
 assert.equal(evidence.data.finding.title, '开始一段关系的准备')

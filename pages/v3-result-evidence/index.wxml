@@ -8,11 +8,11 @@
     <view class="v3-evidence-note">{{finding.sourceNote}}</view>
 
     <view wx:if="{{finding.evidence.length}}" class="v3-evidence-list">
-      <view wx:for="{{finding.evidence}}" wx:key="question" wx:for-item="item" class="v3-evidence-item">
+      <view wx:for="{{finding.evidence}}" wx:key="sourceKey" wx:for-item="item" id="evidence-{{item.taskId}}-{{item.itemId || 'task'}}" class="v3-evidence-item">
         <view class="v3-evidence-item__label">{{item.label}}</view>
         <view class="v3-evidence-item__question">{{item.question}}</view>
         <view class="v3-evidence-item__answer">{{copy.evidence.answerPrefix}}{{item.answer}}</view>
-        <button wx:if="{{mode === 'product-v0' && item.taskId}}" class="v3-evidence-item__edit" data-task-id="{{item.taskId}}" bind:tap="editEvidence">{{copy.home.editAction}} <text>›</text></button>
+        <button wx:if="{{mode === 'product-v0' && item.taskId}}" class="v3-evidence-item__edit" data-task-id="{{item.taskId}}" data-item-id="{{item.itemId}}" bind:tap="editEvidence">{{copy.home.editAction}} <text>›</text></button>
       </view>
     </view>
     <view wx:else class="v3-evidence-empty">{{finding.empty}}</view>

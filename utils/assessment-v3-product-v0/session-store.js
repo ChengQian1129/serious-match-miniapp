@@ -119,5 +119,6 @@ function completeAssessment() {
   return saveSession(recordTaskEvent(next, 'COMPLETE', { status: next.status, reportRevision }))
 }
 function getProgress() { return runtime.progress(getSession()) }
+function canFinishEditing(session, taskId) { return journey.canFinishEditing(session || getSession(), taskId) }
 
-module.exports = { SESSION_KEY, REPORT_KEY, emptySession, normalizeSession, getSession, hasSession, getReport, saveReport, clearReport, replaceSession, replaceReport, markSynced, saveSession, resetSession, currentTaskId, getTaskIndexById, setTaskId, answerItem, markMissing, isCurrentComplete, goNext, goPrevious, setTaskIndex, completeAssessment, getProgress, isAssessmentComplete: journey.isAssessmentComplete }
+module.exports = { SESSION_KEY, REPORT_KEY, emptySession, normalizeSession, getSession, hasSession, getReport, saveReport, clearReport, replaceSession, replaceReport, markSynced, saveSession, resetSession, currentTaskId, getTaskIndexById, setTaskId, answerItem, markMissing, isCurrentComplete, goNext, goPrevious, setTaskIndex, completeAssessment, getProgress, canFinishEditing, isAssessmentComplete: journey.isAssessmentComplete }

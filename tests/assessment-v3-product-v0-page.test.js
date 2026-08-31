@@ -45,6 +45,7 @@ const inputEntry = runtime.BUNDLE.orderedParentTaskIds.flatMap(taskId => runtime
   return format && (format.type === 'free_text' || format.allowBlank)
 })
 const inputIndex = runtime.BUNDLE.orderedParentTaskIds.indexOf(inputEntry.parent.taskId)
+store.setTaskIndex(inputIndex)
 page.setData = function setData(update) {
   const next = Object.assign({}, this.data)
   Object.entries(update).forEach(([key, value]) => {
@@ -114,6 +115,16 @@ store.saveSession(newerDraft)
 pendingSync.success({ session: Object.assign({}, syncCalls[0], { status: 'synced', clientUpdatedAt: 3010, updatedAt: 3012 }), syncedAt: 3012 })
 assert.equal(syncCalls.length, 2)
 assert.equal(syncCalls[1].currentTaskIndex, 1)
+let failedSync
+cloud.saveProductV0DraftToCloud = (requested, callbacks) => { failedSync = callbacks }
+const failedDraft = runtime.answerItem(store.getSession(), 'RR01', runtime.resolveFormat(runtime.getEntry('RR01').item.response).options[1].code, 3020)
+failedDraft.status = 'pending_cloud'
+store.saveSession(failedDraft)
+page._cloudSyncing = false
+page.syncPending()
+failedSync.fail({ errMsg: 'request:fail network error' })
+assert.equal(page.data.syncState, 'CLOUD_FAILED')
+assert.match(page.data.syncStatusLabel, /已保存在本机/)
 cloud.isCloudReady = originalCloudReady
 cloud.saveProductV0DraftToCloud = originalSaveDraft
 

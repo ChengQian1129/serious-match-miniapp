@@ -1,12 +1,13 @@
 const { FEATURES } = require('../../utils/features')
 const { CHAPTERS } = require('../../shared/assessment-v3-product/contract')
 const { getFixture } = require('../../shared/assessment-v3-product/fixtures')
-const { buildReport, buildChapterView, PRODUCT_COPY, PRODUCT_V0_COPY } = require('../../shared/assessment-v3-product/report-renderer')
+const { buildReport, buildPartialReport, buildChapterView, PRODUCT_COPY, PRODUCT_V0_COPY } = require('../../shared/assessment-v3-product/report-renderer')
 const { navigateOnce, resetNavigation } = require('../../utils/navigation')
 const productRuntime = require('../../shared/assessment-v3-product-v0/runtime-engine')
 const productStore = require('../../utils/assessment-v3-product-v0/session-store')
 const productJourney = require('../../utils/assessment-v3-product-v0/journey-model')
 const { recordEvent } = require('../../utils/storage')
+const { encodeReturnContext } = require('../../utils/assessment-v3-product-v0/return-context')
 
 function chapterIndex(chapterId) {
   const index = CHAPTERS.findIndex(chapter => chapter.id === chapterId)
@@ -24,7 +25,7 @@ function chapterView(personaId, chapterId) {
 
 function productChapterView(chapterId) {
   const session = productStore.getSession()
-  const profile = session.derivedProfile || productRuntime.deriveProfile(session)
+  const profile = productRuntime.deriveProfile(session)
   const report = buildReport(profile)
   const currentId = CHAPTERS[chapterIndex(chapterId)].id
   const current = buildChapterView(report, currentId)
@@ -63,8 +64,8 @@ function productCheckpointView(sectionId, nextIndex) {
   const globalProgress = productJourney.getGlobalProgress(session)
   const nextTaskId = nextIndex === undefined ? '' : productRuntime.BUNDLE.orderedParentTaskIds[Number(nextIndex)]
   const nextSection = nextTaskId ? productJourney.getSectionForTask(nextTaskId) : sections[progress.sectionNumber]
-  const profile = session.derivedProfile || productRuntime.deriveProfile(session)
-  const report = buildReport(profile)
+  const profile = productRuntime.deriveProfile(session)
+  const report = buildPartialReport(profile, productJourney.getCompletedSections(session, PRODUCT_V0_COPY).map(item => item.id))
   const current = section.id.startsWith('C') ? buildChapterView(report, section.id) : transitionView(section, nextSection)
   const resolvedCurrent = current || transitionView(section, nextSection)
   if (section.id === 'C6' && nextSection && section.remainingSectionsTemplate) {
@@ -162,7 +163,9 @@ Page({
   openEvidence(event) {
     const dimensionId = event.currentTarget.dataset.dimensionId
     if (!dimensionId) return
-    const query = this.mode === 'product-v0' ? `mode=product-v0&dimension=${encodeURIComponent(dimensionId)}` : `persona=${encodeURIComponent(this.personaId)}&dimension=${encodeURIComponent(dimensionId)}`
+    const query = this.mode === 'product-v0'
+      ? `mode=product-v0&dimension=${encodeURIComponent(dimensionId)}&returnContext=${encodeReturnContext({ source: 'evidence', targetId: dimensionId, scrollAnchor: '', reportVersion: Number((productStore.getReport() || {}).reportVersion) || 0 })}`
+      : `persona=${encodeURIComponent(this.personaId)}&dimension=${encodeURIComponent(dimensionId)}`
     navigateOnce(this, 'navigateTo', { url: `/pages/v3-result-evidence/index?${query}` })
   },
 
@@ -193,7 +196,7 @@ Page({
 
   pause() {
     if (this.mode !== 'product-v0') return this.backToPreview()
-    recordEvent('section_pause', { sectionId: this.sectionId })
+    recordEvent('section_pause', { sectionId: this.sectionId, sectionPauseAt: Date.now() })
     navigateOnce(this, 'reLaunch', { url: '/pages/home/index' })
   }
 })

@@ -144,11 +144,16 @@ async function run() {
   assert.equal(result.data.session.status, 'completed')
   assert.equal(result.data.report.reportVersion, 2)
   assert.notEqual(result.data.report._id, reportId)
+  const revisedReportId = result.data.report._id
+  assert.equal(result.data.session.activeReportId, revisedReportId)
 
   result = await cloudFunction.main({ action: 'assessmentHistory', assessmentType: 'v3-product-v0' })
   assert.equal(result.ok, true)
   assert.equal(result.data.reports.length, 2)
+  assert.equal(result.data.reports[0]._id, revisedReportId)
+  assert.equal(result.data.reports[0].reportVersion, 2)
   assert.equal(result.data.reports[1]._id, reportId)
+  assert.equal(result.data.reports[1].reportVersion, 1)
   assert.ok(result.data.reports[0].generatedAt > 0)
 
   result = await cloudFunction.main({ action: 'assessmentDelete', assessmentType: 'v3-product-v0' })

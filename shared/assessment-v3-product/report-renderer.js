@@ -71,6 +71,7 @@ function publicResponseForEvidence(entry, copy = PRODUCT_COPY) {
     return {
       taskId: entry.taskId || '',
       itemId: entry.itemId || null,
+      sourceKey: `${entry.taskId || ''}:${entry.itemId || entry.taskId || ''}`,
       question: entry.question,
       answer: entry.answer,
       label: evidenceLabel(entry.role, copy),
@@ -80,6 +81,7 @@ function publicResponseForEvidence(entry, copy = PRODUCT_COPY) {
   return {
     taskId: entry.taskId || '',
     itemId: entry.itemId || null,
+    sourceKey: `${entry.taskId || ''}:${entry.itemId || entry.taskId || ''}`,
     question: entry.question || entry.taskId || '',
     answer: entry.answer || entry.answerText || String(entry.answerCode || ''),
     label: evidenceLabel(entry.role, copy),
@@ -88,21 +90,53 @@ function publicResponseForEvidence(entry, copy = PRODUCT_COPY) {
 }
 
 function buildPartialReport(profileInput, completedSectionIds = []) {
-  const report = buildReport(profileInput)
+  const profile = clone(profileInput)
+  assertDerivedV3Profile(profile)
+  const copy = copyForProfile(profile)
   const completed = new Set(completedSectionIds)
-  const coreCompleted = CHAPTERS.filter(chapter => completed.has(chapter.id)).map(chapter => chapter.id)
-  const allCoreCompleted = coreCompleted.length === CHAPTERS.length
-  const allDecisionSectionsCompleted = ['PART_B_L3_OPERATING_MODEL', 'PART_B_L4_PARTNER_DECISION', 'PART_B_L5_LIFE_DESIGN'].every(id => completed.has(id))
-  return Object.assign({}, report, {
-    executiveSummary: Object.assign({}, report.executiveSummary, {
-      patterns: allCoreCompleted ? report.executiveSummary.patterns : [],
-      unknownPreview: allCoreCompleted ? report.executiveSummary.unknownPreview : []
-    }),
-    chapterSyntheses: report.chapterSyntheses.filter(chapter => completed.has(chapter.id)),
-    decisionMap: allDecisionSectionsCompleted ? report.decisionMap : Object.assign({}, report.decisionMap, { sections: [] }),
-    unknowns: Object.assign({}, report.unknowns, { items: allCoreCompleted ? report.unknowns.items : [] }),
-    interviewPriorities: Object.assign({}, report.interviewPriorities, { items: allCoreCompleted ? report.interviewPriorities.items : [] })
-  })
+  const completedChapters = CHAPTERS.filter(chapter => completed.has(chapter.id))
+  const dimensionCards = completedChapters.flatMap(chapter => chapter.dimensionIds.map(dimensionId => dimensionCard(profile, dimensionId, copy)))
+  const chapterSyntheses = completedChapters.map(chapter => chapterSynthesis(profile, chapter, copy))
+  // Cross-chapter patterns, unknown summaries, interview priorities, and the
+  // overall decision map are final-only. Do not calculate them and then hide
+  // them in the view: an incomplete session must never carry final content.
+  const emptyDecisionMap = { title: copy.preview.reportDecisionTitle, sections: [] }
+  return {
+    contractVersion: 'v3.product-report.v1.0',
+    contentVersion: CONTENT_VERSION,
+    questionnaireVersion: profile.assessmentMeta && profile.assessmentMeta.productQuestionnaireVersion || null,
+    source: profile.source,
+    isSynthetic: profile.isSynthetic,
+    personaId: profile.persona && profile.persona.id ? profile.persona.id : (profile.assessmentMeta && profile.assessmentMeta.assessmentId) || '',
+    assessmentMeta: clone(profile.assessmentMeta),
+    title: copy.preview.partialTitle,
+    notice: copy.preview.partialNotice,
+    executiveSummary: {
+      title: copy.preview.coreInsightTitle,
+      patterns: [],
+      unknownPreview: []
+    },
+    dimensionCards,
+    chapterSyntheses,
+    decisionMap: emptyDecisionMap,
+    unknowns: {
+      title: copy.preview.reportUnknownTitle,
+      description: copy.unknowns.description,
+      items: []
+    },
+    interviewPriorities: {
+      title: copy.preview.reportInterviewTitle,
+      description: copy.interview.description,
+      optional: copy.interview.optional,
+      items: []
+    },
+    methodNote: {
+      title: copy.preview.reportMethodTitle,
+      body: copy.method.body,
+      structure: copy.method.structure,
+      privacy: copy.method.privacy
+    }
+  }
 }
 
 function dimensionCard(profile, dimensionId, copy = copyForProfile(profile)) {

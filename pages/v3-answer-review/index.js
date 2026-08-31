@@ -5,10 +5,12 @@ const journey = require('../../utils/assessment-v3-product-v0/journey-model')
 const publicLanguage = require('../../shared/content/public-language.generated')
 const { navigateOnce, resetNavigation } = require('../../utils/navigation')
 const { recordEvent } = require('../../utils/storage')
+const { resolveReturnContext, contextUrl, questionnaireEditUrl, parentResultUrl } = require('../../utils/assessment-v3-product-v0/return-context')
 
 const COPY = publicLanguage.v3.productV0
 
 function hasOwn(value, key) { return Object.prototype.hasOwnProperty.call(value || {}, key) }
+function reviewAnchor(taskId) { return `review-task-${String(taskId || '').replace(/[^a-zA-Z0-9_-]/g, '-')}` }
 
 function publicEntry(entry) {
   const task = runtime.publicTask(entry.parent.taskId)
@@ -32,21 +34,27 @@ function answerSummary(entry, session) {
 function reviewItems(section, session) {
   return section.taskIds.flatMap(taskId => runtime.itemEntries(runtime.getTask(taskId)).map(entry => {
     const publicValue = publicEntry(entry)
+    const answered = journey.canFinishEditing(session, entry.parent.taskId)
     return {
       itemId: entry.itemId,
       taskId: entry.parent.taskId,
       prompt: publicValue.prompt,
       answer: answerSummary(entry, session),
       isComplete: journey.isTaskComplete(session, entry.parent.taskId),
-      hasAnswer: hasOwn(session.latestAnswers || session.answers || {}, entry.itemId) || hasOwn(session.missingness || {}, entry.itemId)
+      hasAnswer: hasOwn(session.latestAnswers || session.answers || {}, entry.itemId) || hasOwn(session.missingness || {}, entry.itemId),
+      answered,
+      editable: answered
     }
   }))
 }
 
 function buildReviewSections(session, activeSectionId) {
-  const firstIncomplete = journey.getNextIncompleteSection(session)
-  return journey.getSections(COPY).map(section => {
+  let firstAnsweredSectionId = ''
+  const sections = journey.getSections(COPY).map(section => {
     const progress = journey.getSectionProgress(session, section.id, COPY)
+    const items = reviewItems(section, session)
+    const hasAnsweredItems = items.some(item => item.answered)
+    if (!firstAnsweredSectionId && hasAnsweredItems) firstAnsweredSectionId = section.id
     return {
       id: section.id,
       title: section.title,
@@ -56,10 +64,14 @@ function buildReviewSections(session, activeSectionId) {
       progressText: `${progress.completedTasks} / ${progress.totalTasks}`,
       isComplete: progress.isComplete,
       status: progress.isComplete ? 'complete' : progress.completedTasks ? 'in_progress' : 'locked',
-      expanded: section.id === activeSectionId || (!activeSectionId && firstIncomplete && section.id === firstIncomplete.id),
-      items: reviewItems(section, session)
+      expanded: false,
+      hasAnsweredItems,
+      items
     }
   })
+  return sections.map(section => Object.assign({}, section, {
+    expanded: section.hasAnsweredItems && (section.id === activeSectionId || (!activeSectionId && section.id === firstAnsweredSectionId))
+  }))
 }
 
 Page({
@@ -75,7 +87,8 @@ Page({
   onLoad(options = {}) {
     if (!FEATURES.v3ProductV0) return navigateOnce(this, 'reLaunch', { url: '/pages/home/index' })
     this.activeSectionId = options.section || ''
-    try { this.returnTo = options.returnTo ? decodeURIComponent(String(options.returnTo)) : '/pages/v3-result/index?mode=product-v0' } catch (error) { this.returnTo = '/pages/v3-result/index?mode=product-v0' }
+    this.returnContext = resolveReturnContext(options, { source: 'result' })
+    this.returnTo = contextUrl(this.returnContext)
     this.setData({ returnTo: this.returnTo, copy: COPY })
     this.loadReview()
   },
@@ -86,11 +99,18 @@ Page({
     const session = store.getSession()
     const global = journey.getGlobalProgress(session, COPY)
     const sections = buildReviewSections(session, this.activeSectionId)
+    const isComplete = Boolean(session.completedAt && journey.isAssessmentComplete(session, COPY))
+    this.returnTo = parentResultUrl(this.returnContext || { source: 'result' }, !isComplete)
     if (!session.answerEvents.length && !session.completedAt) {
-      this.setData({ ready: true, emptyState: true, sections: [], completedSectionsLabel: `已完成 ${global.completedSections} / ${global.totalSections} 个部分` })
+      this.setData({ ready: true, emptyState: true, returnTo: this.returnTo, sections: [], completedSectionsLabel: `已完成 ${global.completedSections} / ${global.totalSections} 个部分` })
       return
     }
-    this.setData({ ready: true, emptyState: false, sections, completedSectionsLabel: `已完成 ${global.completedSections} / ${global.totalSections} 个部分` })
+    this.setData({ ready: true, emptyState: false, returnTo: this.returnTo, sections, completedSectionsLabel: `已完成 ${global.completedSections} / ${global.totalSections} 个部分` })
+    this.restoreReturnAnchor()
+    if (!this._reviewViewed) {
+      this._reviewViewed = true
+      recordEvent('answer_review_view', { completedSections: global.completedSections, totalSections: global.totalSections, isComplete })
+    }
   },
 
   toggleSection(event) {
@@ -103,9 +123,26 @@ Page({
   editItem(event) {
     const taskId = event.currentTarget.dataset.taskId
     if (!taskId) return
-    recordEvent('answer_edit_open', { taskId })
-    const returnTo = this.returnTo || '/pages/v3-result/index?mode=product-v0'
-    navigateOnce(this, 'navigateTo', { url: `/pages/questionnaire-v3/index?taskId=${encodeURIComponent(taskId)}&returnTo=${encodeURIComponent(returnTo)}` })
+    const session = store.getSession()
+    if (!journey.canFinishEditing(session, taskId)) {
+      const message = (COPY.preview && COPY.preview.answerReviewUnavailable) || (COPY.questionnaire && COPY.questionnaire.editUnavailable) || '这道题还没有回答'
+      recordEvent('questionnaire_edit_guard', { taskId, reason: 'not_answered' })
+      if (typeof wx !== 'undefined' && typeof wx.showToast === 'function') wx.showToast({ title: message, icon: 'none' })
+      return false
+    }
+    const section = journey.getSectionForTask(taskId, COPY)
+    const context = { source: 'answer-review', targetId: this.activeSectionId || section && section.id || '', scrollAnchor: reviewAnchor(taskId), reportVersion: Number(session.reportRevision) || 0 }
+    recordEvent('answer_edit_open', { taskId, sectionId: section && section.id || '' })
+    return navigateOnce(this, 'navigateTo', { url: questionnaireEditUrl(taskId, context) })
+  },
+
+  restoreReturnAnchor() {
+    if (this._returnAnchorRestored || !this.returnContext || !this.returnContext.scrollAnchor) return
+    if (typeof wx === 'undefined' || typeof wx.pageScrollTo !== 'function') return
+    this._returnAnchorRestored = true
+    const scroll = () => wx.pageScrollTo({ selector: `#${this.returnContext.scrollAnchor}`, offsetTop: -24, duration: 0 })
+    if (typeof wx.nextTick === 'function') wx.nextTick(scroll)
+    else scroll()
   },
 
   back() {

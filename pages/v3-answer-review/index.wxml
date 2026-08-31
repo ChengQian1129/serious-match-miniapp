@@ -3,7 +3,7 @@
     <button class="v3-text-action" bind:tap="back">{{copy.preview.backAction}}</button>
     <view class="v3-answer-review-kicker">{{copy.preview.answerReviewTitle}}</view>
     <view class="v3-answer-review-title">{{copy.preview.answerReviewTitle}}</view>
-    <view class="v3-answer-review-notice">{{completedSectionsLabel}} · 修改后会重新计算结果。</view>
+    <view class="v3-answer-review-notice">{{completedSectionsLabel}} · {{copy.preview.answerReviewNotice}}</view>
 
     <view class="v3-answer-review-list">
       <view wx:for="{{sections}}" wx:key="id" wx:for-item="section" class="v3-review-section {{section.status === 'locked' ? 'v3-review-section--locked' : ''}}">
@@ -14,10 +14,11 @@
           <text class="v3-review-section__chevron">{{section.expanded ? '⌃' : '›'}}</text>
         </button>
         <view wx:if="{{section.expanded}}" class="v3-review-items">
-          <view wx:for="{{section.items}}" wx:key="itemId" wx:for-item="item" class="v3-review-item">
+          <view wx:for="{{section.items}}" wx:key="itemId" wx:for-item="item" id="review-task-{{item.taskId}}" class="v3-review-item">
             <view class="v3-review-item__prompt">{{item.prompt}}</view>
             <view class="v3-review-item__answer {{item.hasAnswer ? '' : 'v3-review-item__answer--missing'}}">{{item.answer}}</view>
-            <button class="v3-review-item__edit" data-task-id="{{item.taskId}}" bind:tap="editItem">{{copy.home.editAction}} <text>›</text></button>
+            <button wx:if="{{item.editable}}" class="v3-review-item__edit" data-task-id="{{item.taskId}}" bind:tap="editItem">{{copy.home.editAction}} <text>›</text></button>
+            <view wx:else class="v3-review-item__locked">{{copy.preview.answerReviewNoAnswer}}</view>
           </view>
         </view>
       </view>

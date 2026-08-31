@@ -149,11 +149,22 @@ function collectPublicStrings() {
   Object.entries(registry.publicErrors || {}).forEach(([key, text]) => {
     if (typeof text === 'string') entries.push(normalizedSnapshotEntry('shared/content/public-language.generated.js', `error.${key}`, text))
   })
-  return entries.filter(entry => entry.text).sort((left, right) => `${left.surface}\u0000${left.key}\u0000${left.text}`.localeCompare(`${right.surface}\u0000${right.key}\u0000${right.text}`))
+  return entries.filter(entry => entry.text).sort(comparePublicLanguageEntries)
 }
 
 function hardBlockRegex(pattern) {
   try { return new RegExp(pattern, 'iu') } catch (error) { return new RegExp(pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'iu') }
+}
+
+// Snapshot ordering must not depend on the host locale. Windows and Ubuntu
+// produce different results for the default localeCompare() collation when
+// the registry contains Chinese copy, which made a clean CI run fail before
+// the actual product tests started.
+function comparePublicLanguageEntries(left, right) {
+  const leftKey = `${left.surface}\u0000${left.key}\u0000${left.text}`
+  const rightKey = `${right.surface}\u0000${right.key}\u0000${right.text}`
+  if (leftKey === rightKey) return 0
+  return leftKey < rightKey ? -1 : 1
 }
 
 function checkHardBlocks(entries) {
@@ -245,4 +256,4 @@ if (process.argv.includes('--write-snapshot')) {
   main()
 }
 
-module.exports = { collectPublicStrings, checkHardBlocks, checkRawErrorDisplays, checkSourceLanguageLeaks, snapshotPath }
+module.exports = { collectPublicStrings, comparePublicLanguageEntries, checkHardBlocks, checkRawErrorDisplays, checkSourceLanguageLeaks, snapshotPath }

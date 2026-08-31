@@ -7,7 +7,7 @@ module.exports = {
     "V2_PUBLIC_COPY_REWRITE.yaml": "aa49d69eb91f4820bea1160ec4699289b31da033b6b383f7af8dc243bb409db1",
     "V3_ALL_USER_FACING_STRINGS_AUDIT.csv": "82fc5e9a1df6fc74701994d3b4670bca132d199ea81e0c717900923942310413",
     "V3_PUBLIC_NARRATIVE_OVERRIDE.yaml": "5f72e3b7c2b9d9b9003e5b28c331e8c937e187e73e1edd2711f85573210363b5",
-    "V3_PRODUCT_PREVIEW_COPY.yaml": "ba6341ad128cbe1b385b40b9ac5d14a723274244031e43bd1dea2b37fc5ef2f2",
+    "V3_PRODUCT_PREVIEW_COPY.yaml": "f517fba56403ef0e945f9b06be08604e552eef74c0a1d4401d14ce420c7fcd3a",
     "PUBLIC_FORBIDDEN_LANGUAGE.yaml": "58a52e6589929b11ade6fb79cf0378dd2478d0f329046b74595143dfbeb96add"
   },
   "ui": {
@@ -2129,6 +2129,8 @@ module.exports = {
         "incomplete": "这里还需要一个回答",
         "incompleteField": "这里还需要完成",
         "invalidTask": "暂时没能加载这道题",
+        "editUnavailable": "这道题还没有回答",
+        "editSaved": "已更新",
         "retryAction": "重试",
         "homeAction": "回到首页"
       },
@@ -2191,7 +2193,7 @@ module.exports = {
           "notice": "这份结果只基于你这次的回答；它描述的是现在的线索，不是固定结论。",
           "choosePersona": "选择回答情况",
           "choosePersonaHint": "请选择与你这次回答相符的内容。",
-          "startAction": "继续答题",
+          "startAction": "继续完成",
           "fullReportAction": "查看目前已经完成的部分",
           "previewBadge": "本次回答",
           "syncingLabel": "正在保存…",
@@ -2217,6 +2219,9 @@ module.exports = {
           "completedSectionsTemplate": "已完成 {completed} / {total} 个部分",
           "answerReviewAction": "查看并修改回答",
           "answerReviewTitle": "回答复核",
+          "answerReviewNotice": "修改后会重新计算结果。",
+          "answerReviewNoAnswer": "还没有回答这一部分",
+          "answerReviewUnavailable": "先继续完成前面的内容",
           "lockedSectionTitle": "继续回答后，这里会出现新的线索",
           "lockedSectionBody": "这部分还没有完成，所以暂时不提前下结论。",
           "followupAction": "了解一下",

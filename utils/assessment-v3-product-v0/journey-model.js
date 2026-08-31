@@ -85,7 +85,28 @@ function isTaskComplete(session, taskId) {
   const task = runtime.getTask(taskId)
   if (!task) return false
   const maps = answerMaps(session)
-  return runtime.itemEntries(task).every(entry => runtime.isAccounted(entry.itemId, maps.answers, maps.missingness))
+  return runtime.itemEntries(task).every(entry => {
+    if (Object.prototype.hasOwnProperty.call(maps.missingness, entry.itemId)) return true
+    if (!Object.prototype.hasOwnProperty.call(maps.answers, entry.itemId)) return false
+    return runtime.validateValue(entry, maps.answers[entry.itemId]).ok
+  })
+}
+
+// Assessment completion is intentionally broader than edit completion. An edit
+// only needs a valid, persisted answer for its own task; it must not wait for
+// the remaining journey sections to be answered.
+function canFinishEditing(session, taskId) {
+  const task = runtime.getTask(taskId)
+  if (!task || !session) return false
+  const maps = answerMaps(session)
+  const answerEvents = Array.isArray(session.answerEvents) ? session.answerEvents : []
+  return runtime.itemEntries(task).every(entry => {
+    if (Object.prototype.hasOwnProperty.call(maps.missingness, entry.itemId)) return true
+    if (!Object.prototype.hasOwnProperty.call(maps.answers, entry.itemId)) return false
+    if (!runtime.validateValue(entry, maps.answers[entry.itemId]).ok) return false
+    const latestEvent = answerEvents.filter(event => event && event.itemId === entry.itemId).slice(-1)[0]
+    return Boolean(latestEvent && latestEvent.immutable === true)
+  })
 }
 
 function getSectionProgress(session, sectionIdOrTaskId, copy = PRODUCT_COPY) {
@@ -162,6 +183,7 @@ module.exports = {
   isSectionComplete,
   isAssessmentComplete,
   isTaskComplete,
+  canFinishEditing,
   currentSection,
   clone
 }
