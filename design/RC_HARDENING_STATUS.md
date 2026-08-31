@@ -14,7 +14,7 @@
 | --- | --- | --- |
 | `npm run sync:release` | PASS | 2026-08-31，本地生成链和 `check-release` 通过 |
 | `npm test` | PASS | 2026-08-31，本地全量回归退出码 0；包含本轮 Product v0 RC 测试 |
-| GitHub Actions `release checks` | NOT VERIFIED | 基线运行曾因跨平台 locale 排序失败；已修复并补回归，待推送后的新运行 |
+| GitHub Actions `release checks` | NOT VERIFIED | 基线运行曾因跨平台 locale 排序失败；已修复并补回归，修复已推送至 `80d1d90`，待新运行结果 |
 | 生成文件无 drift | PASS | `sync:release` 后 `check-release` 通过 |
 | 项目 Node runtime | PASS | workflow 固定 Node 20；Actions runtime warning 与项目 runtime 分开处理 |
 
